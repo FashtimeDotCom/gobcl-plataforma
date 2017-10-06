@@ -52,7 +52,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!%o*uer2h6ur2xa_ml4!%&2qvxa*cio4h(yh&h6i6ji7d$yv4h'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'gobcl.magnet.cl',
+]
 
 SITE_ID = 1
 
