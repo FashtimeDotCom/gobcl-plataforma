@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
+    url(r'^ministeries/', include('institutions.urls')),
     url(r'^$', base_views.index, name='home'),
 ]
 

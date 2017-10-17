@@ -40,7 +40,7 @@ ADMINS = []
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
 #   * Receive x-headers
-INTERNAL_IPS = []
+INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
 
 PROJECT_DIR = os.path.dirname(__file__)
@@ -53,7 +53,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 SECRET_KEY = '!%o*uer2h6ur2xa_ml4!%&2qvxa*cio4h(yh&h6i6ji7d$yv4h'
 
 ALLOWED_HOSTS = [
-    'gobcl.magnet.cl',
+    'gobcl.magnet.cl', 'localhost',
 ]
 
 SITE_ID = 1
@@ -70,19 +70,25 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+
     # external
     'compressor',
     'captcha',
     'loginas',
+    'phonenumber_field',
 
     # internal
     'base',
     'users',
+    'governments',
+    'public_servants',
+    'institutions',
+    'regions',
 ]
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+DEFAULT_FROM_EMAIL = 'no-reply@localhost'
 EMAIL_SENDER_NAME = 'My project'
 
 if DEBUG:
@@ -102,6 +108,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'governments.middleware.get_current_government.GovernmentSetter',
 ]
 
 if DEBUG:
@@ -125,6 +132,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'governments.context_processors.add_government_to_context',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
