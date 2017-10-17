@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-""" Forms for the {{app_name}} application. """
+""" Forms for the governments application. """
 # standard library
 
 # django
 from django import forms
 
 # models
-from .models import {{model_name}}
+from .models import Government
 
 # views
 from base.forms import BaseModelForm
 
 
-class {{model_name}}Form(BaseModelForm):
+class GovernmentForm(BaseModelForm):
     """
-    Form {{model_name}} model.
+    Form Government model.
     """
 
     class Meta:
-        model = {{model_name}}
+        model = Government
         exclude = ()
