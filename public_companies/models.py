@@ -25,6 +25,7 @@ class PublicCompany(Institution):
     class Meta:
         verbose_name = _('public company')
         verbose_name_plural = _('public companies')
+        unique_together = ('name', 'government')
         permissions = (
             ('view_publiccompany', _('Can view public company')),
         )
