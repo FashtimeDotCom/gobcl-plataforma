@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'ministries',
     'institutions',
     'regions',
+    'public_companies',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -301,3 +302,5 @@ LOGGING = {
 CAN_LOGIN_AS = 'base.utils.can_loginas'
 LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
+
+MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'
