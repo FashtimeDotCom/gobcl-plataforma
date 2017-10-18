@@ -247,7 +247,12 @@ NPM_FILE_PATTERNS = {
     'moment': ['min/moment-with-locales.min.js'],
     'eonasdan-bootstrap-datetimepicker': [
         'build/js/bootstrap-datetimepicker.min.js',
+        'build/css/bootstrap-datetimepicker.min.css'
     ],
+    'gob.cl': [
+        'dist/js/gob.cl.js',
+        'dist/css/gob.cl.css'
+    ]
 }
 
 # default keys, replace with somethign your own

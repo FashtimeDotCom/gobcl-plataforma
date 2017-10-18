@@ -39,6 +39,11 @@ html(lang="es")
       rel="stylesheet"
     )
 
+    link(
+      href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
+      rel="stylesheet"
+    )
+
     {% compress css %}
     block stylesheets
     {% endcompress %}
@@ -81,6 +86,7 @@ html(lang="es")
       if debug
         script(src="{% static 'jquery/dist/jquery.min.js' %}")
         script(src="{% static 'bootstrap-sass/assets/javascripts/bootstrap.min.js' %}")
+        script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
       {% endcompress %}
 
       // templates
@@ -98,3 +104,5 @@ html(lang="es")
       script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
       script(src="{% static 'js/forms.js' %}")
       {% endcompress %}
+
+      

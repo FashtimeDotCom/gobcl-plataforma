@@ -8,7 +8,8 @@
     "jquery": "^3.2.1",
     "pug-cli": "^1.0.0-alpha6",
     "select2": "^4.0.3",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.47"
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "gob.cl": "github:jgab-net/gob.cl#feature/magnet-refactor"
   },
   "description": "A base for a django project on python 3",
   "main": "index.js",
