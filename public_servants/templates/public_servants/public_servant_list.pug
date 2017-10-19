@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.public_servants.add_publicservant
+        a.btn.btn-primary(href="{% url 'public_servant_create' %}")
+          {% trans 'Add public servant' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.public_servants.change_publicservant
+          th
+        if perms.public_servants.delete_publicservant
+          th
+    tbody
+      for public_servant in object_list
+        tr
+          td
+            a(href="{{ public_servant.get_absolute_url }}")
+              | {{public_servant.id}}
+          td
+            a(href="{{ public_servant.get_absolute_url }}")
+              | {{public_servant}}
+          if perms.public_servants.change_publicservant
+            td
+              a.btn.btn-primary(href="{% url 'public_servant_update' public_servant.id %}")
+                {% trans 'Update public servant' %}
+                i.fa.fa-edit
+          if perms.public_servants.delete_publicservant
+            td
+              a.btn.btn-danger(href="{% url 'public_servant_delete' public_servant.id %}")
+                {% trans 'Delete public servant' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

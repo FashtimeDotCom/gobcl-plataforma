@@ -40,15 +40,6 @@ class Institution(BaseGovernmentStructureModel):
         _('url'),
         max_length=200,
     )
-    procedures_and_benefits = models.URLField(
-        _('procedures and benefits'),
-        max_length=200,
-        blank=True,
-    )
-    authority = models.ForeignKey(
-        'public_servants.PublicServant',
-        verbose_name=_('authority'),
-    )
 
     class Meta:
         abstract = True

@@ -40,10 +40,9 @@ class PublicServant(BaseGovernmentStructureModel):
         )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
-        # TODO this is an example, change it
+
         return reverse('public_servant_detail', args=(self.pk,))

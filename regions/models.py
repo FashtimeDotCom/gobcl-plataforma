@@ -10,17 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 # models
-from base.models import BaseGovernmentStructureModel, BaseModel
+from base.models import BaseModel
+from institutions.models import Institution
 
 
-class Region(BaseGovernmentStructureModel):
-    name = models.CharField(
-        _('name'),
-        max_length=50,
-    )
-    description = models.TextField(
-        _('description'),
-    )
+class Region(Institution):
     governor = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('governor'),
@@ -35,10 +29,6 @@ class Region(BaseGovernmentStructureModel):
     twitter = models.CharField(
         max_length=50,
     )
-    url = models.URLField(
-        _('url'),
-        max_length=200,
-    )
 
     class Meta:
         verbose_name = _('region')
@@ -48,12 +38,11 @@ class Region(BaseGovernmentStructureModel):
         )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
-        # TODO this is an example, change it
+
         return reverse('region_detail', args=(self.pk,))
 
 
@@ -92,10 +81,9 @@ class Commune(BaseModel):
         )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
-        # TODO this is an example, change it
+
         return reverse('commune_detail', args=(self.pk,))

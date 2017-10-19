@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.regions.add_region
+        a.btn.btn-primary(href="{% url 'region_create' %}")
+          {% trans 'Add region' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.regions.change_region
+          th
+        if perms.regions.delete_region
+          th
+    tbody
+      for region in object_list
+        tr
+          td
+            a(href="{{ region.get_absolute_url }}")
+              | {{region.id}}
+          td
+            a(href="{{ region.get_absolute_url }}")
+              | {{region}}
+          if perms.regions.change_region
+            td
+              a.btn.btn-primary(href="{% url 'region_update' region.id %}")
+                {% trans 'Update region' %}
+                i.fa.fa-edit
+          if perms.regions.delete_region
+            td
+              a.btn.btn-danger(href="{% url 'region_delete' region.id %}")
+                {% trans 'Delete region' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

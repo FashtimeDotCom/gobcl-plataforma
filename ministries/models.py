@@ -12,6 +12,10 @@ from institutions.models import Institution
 
 
 class Ministry(Institution):
+    minister = models.ForeignKey(
+        'public_servants.PublicServant',
+        verbose_name=_('minister'),
+    )
     public_servants = models.ManyToManyField(
         'public_servants.PublicServant',
         verbose_name=_('public servants'),
@@ -20,6 +24,11 @@ class Ministry(Institution):
     public_enterprises = models.ManyToManyField(
         'institutions.InstitutionURL',
         verbose_name=_('public enterprises'),
+    )
+    procedures_and_benefits = models.URLField(
+        _('procedures and benefits'),
+        max_length=200,
+        blank=True,
     )
 
     class Meta:
@@ -32,5 +41,4 @@ class Ministry(Institution):
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
-        # TODO this is an example, change it
         return reverse('ministry_detail', args=(self.slug,))
