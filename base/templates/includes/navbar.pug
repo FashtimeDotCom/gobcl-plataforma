@@ -7,11 +7,7 @@ header.site-header
         i.icon-gob
       
       .site-header_right.hidden-xs
-        - if user.is_authenticated 
-          {% if user.is_staff %}
-          a(href="{% url 'admin:index' %}").link.link--dib Administración
-          {% endif %}
-          a(href="{% url 'user_list' %}").link.link--dib Usuarios
+
         a(href="tramites.html").link.link--dib Trámites y beneficios
         a(href="noticias.html").link.link--dib Noticias
         a(href="instituciones.html").link.link--dib Instituciones
@@ -36,8 +32,6 @@ header.site-header
       a(href="#").btn-search.btn-search--mobile.toggle-search
         i.ic-search.btn-search_icon
         i.ic-close.btn-search_icon
-
-      {% include 'includes/login.pug' %}
 
       nav.navigation
         .container

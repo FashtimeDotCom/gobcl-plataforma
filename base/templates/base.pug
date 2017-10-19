@@ -16,6 +16,8 @@ html(lang="es")
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
       rel="stylesheet"
     )
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab")
 
     //if lte IE 7
       script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
@@ -48,8 +50,20 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  {% include 'includes/navbar.pug' %}
   body(class='{{body_class|default:""}}')
+    {% include 'includes/navbar.pug' %}
+    //=
+      main.site-main
+        section.section.bg-bluedark
+          .container
+            .row
+              .col-xs-12.col-sm-12.col-md-5.pull-md-right.col-lg-4.col-lg-offset-1
+                {% include 'includes/toolbar.pug' %}
+              .col-xs-12.col-sm-12.col-md-7
+                article.text-light
+                  h2.heading-large Instituciones
+                  p Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.
+
     div
       div.container
         div.row
@@ -58,51 +72,51 @@ html(lang="es")
           div(class="alert alert-{{ message.tags }}") {{ message }}
           {% endfor %}
           {% endif %}
-      div.container
-        ol.breadcrumb
-          li
-            a(href="{% url 'home' %}") 
-              {% trans 'Home' %}
-          block breadcrumbs
-          if title
-            li {{title}}
-        block content_title 
-          h1 {{ title }}
+    section.section
+      .container
+        - if user.is_authenticated
+          {% if user.is_staff %}
+          a(href="{% url 'admin:index' %}").link.link--dib Administración
+          {% endif %}
+          a(href="{% url 'user_list' %}").link.link--dib Usuarios
+    section.section
+      .container
         block content
 
-      // Javascript Placed at the end of the document so the pages load faster
-      // uncompressible javascripts
-      if not debug
-        script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
-        script(
-          src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
-          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa",
-          crossorigin="anonymous"
-        )
+    {% include 'includes/footer.pug' %}
+    // Javascript Placed at the end of the document so the pages load faster
+    // uncompressible javascripts
+    if not debug
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+      script(src="https://cdnjs.com/libraries/popper.js")
+      script(
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js",
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa",
+        crossorigin="anonymous"
+      )
 
-      block uncompressible_javascripts
+    block uncompressible_javascripts
 
-      {% compress js %}
-      if debug
-        script(src="{% static 'jquery/dist/jquery.min.js' %}")
-        script(src="{% static 'bootstrap-sass/assets/javascripts/bootstrap.min.js' %}")
-        script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
-      {% endcompress %}
+    {% compress js %}
+    if debug
+      script(src="{% static 'jquery/dist/jquery.min.js' %}")
+      script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
+      script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
+    {% endcompress %}
 
-      // templates
+    // templates
 
-      {% compress js %}
-      script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-      script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
-      {% endcompress %}
+    {% compress js %}
+    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
+    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
+    {% endcompress %}
 
-      block javascript_data
+    block javascript_data
 
-      {% compress js %}
-      block javascripts
-      script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
-      script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
-      script(src="{% static 'js/forms.js' %}")
-      {% endcompress %}
+    {% compress js %}
+    block javascripts
+    script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
+    script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+    script(src="{% static 'js/forms.js' %}")
+    {% endcompress %}
 
-      
