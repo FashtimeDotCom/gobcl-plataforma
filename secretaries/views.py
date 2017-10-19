@@ -28,7 +28,7 @@ class SecretaryListView(BaseListView):
 
     def get_queryset(self):
         queryset = super(SecretaryListView, self).get_queryset()
-        queryset = queryset.by_government(self.request.government)
+        queryset = queryset.by_government_structure(self.request.government)
         return queryset
 
 
@@ -52,7 +52,7 @@ class SecretaryDetailView(BaseDetailView):
 
     def get_queryset(self):
         queryset = super(SecretaryDetailView, self).get_queryset()
-        queryset = queryset.by_government(self.request.government)
+        queryset = queryset.by_government_structure(self.request.government)
         return queryset
 
 

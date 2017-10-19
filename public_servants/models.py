@@ -10,10 +10,10 @@ from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 # models
-from base.models import BaseGovernmentModel
+from base.models import BaseGovernmentStructureModel
 
 
-class PublicServant(BaseGovernmentModel):
+class PublicServant(BaseGovernmentStructureModel):
     name = models.CharField(
         _('name'),
         max_length=100,

@@ -15,7 +15,7 @@ class Secretary(Institution):
     public_servants = models.ManyToManyField(
         'public_servants.PublicServant',
         verbose_name=_('public servants'),
-        related_name='ministries'
+        related_name='secretaries',
     )
     public_enterprises = models.ManyToManyField(
         'institutions.InstitutionURL',
@@ -23,7 +23,7 @@ class Secretary(Institution):
     )
 
     class Meta:
-        unique_together = ('name', 'government')
+        unique_together = ('name', 'government_structure')
         verbose_name = _('secretary')
         verbose_name_plural = _('secretaries')
         permissions = (

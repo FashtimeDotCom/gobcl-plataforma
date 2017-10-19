@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
 # models
-from base.models import BaseGovernmentModel, BaseModel
+from base.models import BaseGovernmentStructureModel, BaseModel
 
 
 class InstitutionURL(BaseModel):
@@ -21,7 +21,7 @@ class InstitutionURL(BaseModel):
         return self.url
 
 
-class Institution(BaseGovernmentModel):
+class Institution(BaseGovernmentStructureModel):
     # foreign keys
     name = models.CharField(
         _('name'),

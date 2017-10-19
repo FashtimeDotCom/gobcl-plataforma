@@ -80,13 +80,14 @@ INSTALLED_APPS = [
 
     # internal
     'base',
+    'government_structures',
     'users',
-    'governments',
     'public_servants',
     'ministries',
     'institutions',
     'regions',
     'public_companies',
+    'secretaries',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -111,7 +112,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'governments.middleware.get_current_government.GovernmentSetter',
+    'government_structures.middleware.get_current_government.GovernmentSetter',
 ]
 
 if DEBUG:
@@ -135,7 +136,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'governments.context_processors.add_government_to_context',
+                'government_structures.context_processors.add_government_structure_to_context',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (

@@ -25,7 +25,7 @@ class Ministry(Institution):
     class Meta:
         verbose_name = _('ministry')
         verbose_name_plural = _('ministries')
-        unique_together = ('name', 'government')
+        unique_together = ('name', 'government_structure')
 
     def __str__(self):
         return self.name

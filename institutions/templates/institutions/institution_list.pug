@@ -1,0 +1,12 @@
+extends base.pug
+
+- load i18n
+
+block title
+  {% trans 'institutions' %}
+
+block content
+  for ministry in ministry_list
+    a(href="{{ ministry.get_absolute_url }}")
+      {{ ministry }}
+  

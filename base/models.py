@@ -129,10 +129,10 @@ class BaseModel(models.Model):
         return 'http://{site}{path}'.format(site=site, path=absolute_url)
 
 
-class BaseGovernmentModel(BaseModel):
-    government = models.ForeignKey(
-        'governments.Government',
-        verbose_name=_('government'),
+class BaseGovernmentStructureModel(BaseModel):
+    government_structure = models.ForeignKey(
+        'government_structures.GovernmentStructure',
+        verbose_name=_('government structure'),
     )
 
     objects = BaseGovernmentQuerySet.as_manager()

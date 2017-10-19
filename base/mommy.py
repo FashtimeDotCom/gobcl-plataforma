@@ -13,6 +13,7 @@ from base.utils import random_string
 
 # in the module code.path:
 class CustomMommy(mommy.Mommy):
+
     def generate_value(self, field, commit=True):
         if field.name == 'rut':
             return '{}.{}.{}-{}'.format(

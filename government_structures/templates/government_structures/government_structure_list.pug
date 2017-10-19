@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.government_structures.add_governmentstructure
+        a.btn.btn-primary(href="{% url 'government_structure_create' %}")
+          {% trans 'Add government structure' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.government_structures.change_governmentstructure
+          th
+        if perms.government_structures.delete_governmentstructure
+          th
+    tbody
+      for government_structure in object_list
+        tr
+          td
+            a(href="{{ government_structure.get_absolute_url }}")
+              | {{government_structure.id}}
+          td
+            a(href="{{ government_structure.get_absolute_url }}")
+              | {{government_structure}}
+          if perms.government_structures.change_governmentstructure
+            td
+              a.btn.btn-primary(href="{% url 'government_structure_update' government_structure.id %}")
+                {% trans 'Update government structure' %}
+                i.fa.fa-edit
+          if perms.government_structures.delete_governmentstructure
+            td
+              a.btn.btn-danger(href="{% url 'government_structure_delete' government_structure.id %}")
+                {% trans 'Delete government structure' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

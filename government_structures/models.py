@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
-""" Models for the governments application. """
+""" Models for the government_structures application. """
 # standard library
 import copy
 
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 
 # models
 from base.models import BaseModel
 
 
-class Government(BaseModel):
+class GovernmentStructure(BaseModel):
     publication_date = models.DateField(
         _('publication date'),
         unique=True,
@@ -23,10 +22,10 @@ class Government(BaseModel):
     )
 
     class Meta:
-        verbose_name = _('government')
-        verbose_name_plural = _('governments')
+        verbose_name = _('government structure')
+        verbose_name_plural = _('government structures')
         permissions = (
-            ('view_government', _('Can view governments')),
+            ('view_government_structure', _('Can view government structures')),
         )
 
     def __str__(self):
@@ -35,12 +34,12 @@ class Government(BaseModel):
     def save(self, **kwargs):
         # Make sure the default government are unique
         if self.current_government:
-            Government.objects.filter(
+            GovernmentStructure.objects.filter(
                 current_government=True,
             ).update(
                 current_government=False,
             )
-        super(Government, self).save(**kwargs)
+        super(GovernmentStructure, self).save(**kwargs)
 
     @classmethod
     def get_government(cls, date=None):
@@ -49,20 +48,21 @@ class Government(BaseModel):
         now = timezone.datetime.now()
 
     def duplicate(self, date):
-        governments = Government.objects.filter(publication_date=date)
-        if governments.exists():
+        government_structures = GovernmentStructure.objects.filter(
+            publication_date=date)
+        if government_structures.exists():
             return
 
-        government = copy.copy(self)
-        government.id = None
-        government.publication_date = date
-        government.save()
+        government_structure = copy.copy(self)
+        government_structure.id = None
+        government_structure.publication_date = date
+        government_structure.save()
 
-        for field in government._meta.fields_map.values():
+        for field in government_structure._meta.fields_map.values():
             model = field.related_model
-            objects = model.objects.filter(government=self)
+            objects = model.objects.filter(government_structure=self)
             for obj in objects:
                 new_obj = copy.copy(obj)
                 new_obj.id = None
-                new_obj.government = government
+                new_obj.government_structure = government_structure
                 new_obj.save()

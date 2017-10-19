@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='PublicCompany',
+            name='Secretary',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, help_text='creation date')),
@@ -31,16 +31,16 @@ class Migration(migrations.Migration):
                 ('authority', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='public_servants.PublicServant', verbose_name='authority')),
                 ('government_structure', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='government_structures.GovernmentStructure', verbose_name='government structure')),
                 ('public_enterprises', models.ManyToManyField(to='institutions.InstitutionURL', verbose_name='public enterprises')),
-                ('public_servants', models.ManyToManyField(related_name='public_companies', to='public_servants.PublicServant', verbose_name='public servants')),
+                ('public_servants', models.ManyToManyField(related_name='secretaries', to='public_servants.PublicServant', verbose_name='public servants')),
             ],
             options={
-                'verbose_name': 'public company',
-                'verbose_name_plural': 'public companies',
-                'permissions': (('view_publiccompany', 'Can view public company'),),
+                'verbose_name': 'secretary',
+                'verbose_name_plural': 'secretaries',
+                'permissions': (('view_secretary', 'Can view secretary'),),
             },
         ),
         migrations.AlterUniqueTogether(
-            name='publiccompany',
+            name='secretary',
             unique_together=set([('name', 'government_structure')]),
         ),
     ]

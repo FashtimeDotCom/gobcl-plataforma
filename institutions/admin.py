@@ -11,7 +11,7 @@ from .models import InstitutionURL
 class InstitutionAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'government',
+        'government_structure',
         'url',
     )
     search_fields = (
@@ -20,7 +20,7 @@ class InstitutionAdmin(admin.ModelAdmin):
         'description',
     )
     list_filter = (
-        'government__current_government',
+        'government_structure__current_government',
     )
 
 
