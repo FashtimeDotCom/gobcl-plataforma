@@ -86,7 +86,6 @@ INSTALLED_APPS = [
     'ministries',
     'institutions',
     'regions',
-    'public_companies',
     'secretaries',
 ]
 

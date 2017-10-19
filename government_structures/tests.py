@@ -1,7 +1,6 @@
 from django.utils import timezone
 
 from base.tests import BaseTestCase
-from django_dynamic_fixture import G
 
 from .models import GovernmentStructure
 from regions.models import Region
@@ -14,7 +13,10 @@ class GovernmentStructureModelTest(BaseTestCase):
         self.now = timezone.datetime.now()
         self.government_structure = self.create_government_structure(
             publication_date=self.now)
+        self.public_servant = self.create_public_servant(
+            government_structure=self.government_structure)
         self.region = self.create_region(
+            governor=self.public_servant,
             government_structure=self.government_structure)
 
     def test_duplicate_government_structure_with_existing_date(self):
