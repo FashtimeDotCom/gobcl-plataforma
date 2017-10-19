@@ -48,9 +48,9 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
+  {% include 'includes/navbar.pug' %}
   body(class='{{body_class|default:""}}')
     div
-      {% include 'includes/navbar.pug' %}
       div.container
         div.row
           {% if messages %}
