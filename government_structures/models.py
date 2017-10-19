@@ -12,7 +12,7 @@ from base.models import BaseModel
 
 
 class GovernmentStructure(BaseModel):
-    publication_date = models.DateField(
+    publication_date = models.DateTimeField(
         _('publication date'),
         unique=True,
     )
