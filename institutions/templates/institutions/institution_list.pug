@@ -2,10 +2,21 @@ extends base.pug
 
 - load i18n
 
-block title
-  {% trans 'institutions' %}
+block header
+  section.section.bg-bluedark
+    .container
+      .row
+        .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
+          .pull-md-right
+            {% include 'includes/toolbar.pug' %}
+        .col-sm-12.col-md-12.col-lg-7
+          article.text-light
+            h2.heading-large Instituciones
+            p Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.
+
 
 block content
+
   for ministry in ministry_list
     a(href="{{ ministry.get_absolute_url }}")
       {{ ministry }}
