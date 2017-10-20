@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.ministries.add_ministry
+        a.btn.btn-primary(href="{% url 'ministry_create' %}")
+          {% trans 'Add ministry' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.ministries.change_ministry
+          th
+        if perms.ministries.delete_ministry
+          th
+    tbody
+      for ministry in object_list
+        tr
+          td
+            a(href="{{ ministry.get_absolute_url }}")
+              | {{ministry.id}}
+          td
+            a(href="{{ ministry.get_absolute_url }}")
+              | {{ministry}}
+          if perms.ministries.change_ministry
+            td
+              a.btn.btn-primary(href="{% url 'ministry_update' ministry.id %}")
+                {% trans 'Update ministry' %}
+                i.fa.fa-edit
+          if perms.ministries.delete_ministry
+            td
+              a.btn.btn-danger(href="{% url 'ministry_delete' ministry.id %}")
+                {% trans 'Delete ministry' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # base
 from base import utils
-from base.managers import BaseManager
+from base.managers import BaseManager, BaseGovernmentQuerySet
 from base.serializers import ModelEncoder
 
 
@@ -127,3 +127,16 @@ class BaseModel(models.Model):
         absolute_url = self.get_absolute_url()
         site = Site.objects.get_current().domain
         return 'http://{site}{path}'.format(site=site, path=absolute_url)
+
+
+class BaseGovernmentStructureModel(BaseModel):
+    government_structure = models.ForeignKey(
+        'government_structures.GovernmentStructure',
+        verbose_name=_('government structure'),
+    )
+
+    objects = BaseGovernmentQuerySet.as_manager()
+
+    class Meta:
+        """ set to abstract """
+        abstract = True

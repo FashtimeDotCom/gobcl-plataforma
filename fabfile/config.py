@@ -7,13 +7,13 @@ from fabric.api import task
 
 # local and remote paths
 env.local_root_dir = path.join(path.dirname(__file__), "..")
-env.server_root_dir = 'example/path'
+env.server_root_dir = '/home/magnet/plataforma-gobcl'
 
 # server domain used by nginx
-env.server_domain = 'example.com'
+env.server_domain = 'gobcl.magnet.cl'
 
 # git repositories
-env.server_git_url = 'example/url.git'
+env.server_git_url = 'git@github.com:e-gob/plataforma-gobcl.git'
 
 # prefix used by configuration files
 env.prefix = path.split(env.server_git_url)[1]  # split tail
@@ -25,7 +25,11 @@ def set(address='default', user='magnet', branch='master', django_port='8000'):
     """ Address, user, branch and django port setter with shortcuts. """
     # host
     if address == 'default':
-        env.hosts = ['example.com']
+        print("Default host unset")
+        exit()
+    elif address == 'testing':
+        env.hosts = ['45.55.34.218']
+        branch = 'testing'
     else:
         # TODO Validate input
         env.hosts = [address]

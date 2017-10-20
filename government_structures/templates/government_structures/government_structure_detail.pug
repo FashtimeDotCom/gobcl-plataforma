@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'government_structure_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.government_structures.change_government_structure
+        a.btn.btn-primary(href="{% url 'government_structure_update' government_structure.id %}")
+          {% trans 'Update government structure' %}
+          i.fa.fa-edit
+      if perms.government_structures.delete_government_structure
+        a.btn.btn-danger(href="{% url 'government_structure_delete' government_structure.id %}")
+          {% trans 'Delete government structure' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{government_structure.id}}

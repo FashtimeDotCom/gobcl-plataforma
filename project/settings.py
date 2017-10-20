@@ -40,7 +40,7 @@ ADMINS = []
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
 #   * Receive x-headers
-INTERNAL_IPS = []
+INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
 
 PROJECT_DIR = os.path.dirname(__file__)
@@ -50,9 +50,12 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'gobcl.magnet.cl', 'localhost',
+]
 
 SITE_ID = 1
 
@@ -68,19 +71,26 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+
     # external
     'compressor',
     'captcha',
     'loginas',
+    'phonenumber_field',
 
     # internal
     'base',
+    'government_structures',
     'users',
+    'public_servants',
+    'ministries',
+    'institutions',
+    'regions',
 ]
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+DEFAULT_FROM_EMAIL = 'no-reply@localhost'
 EMAIL_SENDER_NAME = 'My project'
 
 if DEBUG:
@@ -100,6 +110,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'government_structures.middleware.get_current_government.GovernmentSetter',
 ]
 
 if DEBUG:
@@ -123,6 +134,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'government_structures.context_processors.add_government_structure_to_context',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -286,6 +298,8 @@ LOGGING = {
 
 
 # ### Login as settings ###
-CAN_LOGIN_AS = "base.utils.can_loginas"
+CAN_LOGIN_AS = 'base.utils.can_loginas'
 LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
+
+MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'

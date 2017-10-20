@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'ministry_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.ministries.change_ministry
+        a.btn.btn-primary(href="{% url 'ministry_update' ministry.id %}")
+          {% trans 'Update ministry' %}
+          i.fa.fa-edit
+      if perms.ministries.delete_ministry
+        a.btn.btn-danger(href="{% url 'ministry_delete' ministry.id %}")
+          {% trans 'Delete ministry' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{ministry.id}}
