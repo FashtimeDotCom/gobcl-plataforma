@@ -10,7 +10,7 @@ from .models import Ministry
 # views
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
-from base.views import BaseDetailView
+from django.views.generic import DetailView
 from base.views import BaseListView
 from base.views import BaseUpdateView
 
@@ -24,7 +24,6 @@ class MinistryListView(BaseListView):
     """
     model = Ministry
     template_name = 'ministries/ministry_list.pug'
-    permission_required = 'ministries.view_ministry'
 
     def get_queryset(self):
         queryset = super(MinistryListView, self).get_queryset()
@@ -43,13 +42,12 @@ class MinistryCreateView(BaseCreateView):
     permission_required = 'ministries.add_ministry'
 
 
-class MinistryDetailView(BaseDetailView):
+class MinistryDetailView(DetailView):
     """
     A view for displaying a single ministry
     """
     model = Ministry
     template_name = 'ministries/ministry_detail.pug'
-    permission_required = 'ministries.view_ministry'
 
     def get_queryset(self):
         queryset = super(MinistryDetailView, self).get_queryset()
