@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'presidency_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.presidencies.change_presidency
+        a.btn.btn-primary(href="{% url 'presidency_update' presidency.id %}")
+          {% trans 'Update presidency' %}
+          i.fa.fa-edit
+      if perms.presidencies.delete_presidency
+        a.btn.btn-danger(href="{% url 'presidency_delete' presidency.id %}")
+          {% trans 'Delete presidency' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{presidency.id}}

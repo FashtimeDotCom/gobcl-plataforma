@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.presidencies.add_presidency
+        a.btn.btn-primary(href="{% url 'presidency_create' %}")
+          {% trans 'Add presidency' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.presidencies.change_presidency
+          th
+        if perms.presidencies.delete_presidency
+          th
+    tbody
+      for presidency in object_list
+        tr
+          td
+            a(href="{{ presidency.get_absolute_url }}")
+              | {{presidency.id}}
+          td
+            a(href="{{ presidency.get_absolute_url }}")
+              | {{presidency}}
+          if perms.presidencies.change_presidency
+            td
+              a.btn.btn-primary(href="{% url 'presidency_update' presidency.id %}")
+                {% trans 'Update presidency' %}
+                i.fa.fa-edit
+          if perms.presidencies.delete_presidency
+            td
+              a.btn.btn-danger(href="{% url 'presidency_delete' presidency.id %}")
+                {% trans 'Delete presidency' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

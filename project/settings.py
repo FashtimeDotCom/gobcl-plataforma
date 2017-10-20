@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'ministries',
     'institutions',
     'regions',
+    'presidencies',
 ]
 
 # Default email address to use for various automated correspondence from
