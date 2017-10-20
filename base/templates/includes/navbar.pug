@@ -8,21 +8,21 @@ header.site-header
       
       .site-header_right.d-none.d-sm-block
 
-        a(href="tramites.html").link.link--dib Trámites y beneficios
-        a(href="noticias.html").link.link--dib Noticias
-        a(href="{% url 'institution_list' %}").link.link--dib Instituciones
+        a(href="tramites.html").link.link--dib {% trans 'Trámites y beneficios' %}
+        a(href="noticias.html").link.link--dib {% trans 'Noticias' %}
+        a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Instituciones' %}
         a(href="#").btn-search.toggle-search
           i.ic-search.btn-search_icon
           i.ic-close.btn-search_icon 
         if user.is_authenticated
           .site-header_login
           if request.session.loginas_from_user
-              a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark Logout
+              a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
             else
-              a(href="{% url 'logout' %}").link.link--dib.text-dark Logout
+              a(href="{% url 'logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
         else 
           .site-header_login
-              a(href="#")#loginBtn.link.link--dib.text-dark Iniciar sesion
+              a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Iniciar sesion' %}
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
@@ -35,28 +35,28 @@ header.site-header
 
       nav.navigation
         .container
-          h6.heading-label Secciones
+          h6.heading-label {% trans 'Secciones' %}
           ul
-            li: a(href="#").link.link--medium.overflowed-xs Trámites y beneficios
-            li: a(href="#").link.link--medium.overflowed-xs Noticias
-            li: a(href="#").link.link--medium.overflowed-xs Instituciones
-            li: a(href="#").link.link--medium.overflowed-xs Acerca de Chile
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Trámites y beneficios' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Noticias' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Instituciones' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Acerca de Chile' %}
           
           
           // FIn ejes opcionales 
           .navigation_bottom
             a.navigation_logo(href="#"): i.icon-gob-footer
-            h4.heading-label.text-white Loreim
+            h4.heading-label.text-white {% trans 'Loreim' %}
             .row
-              .col-xs-12
+              .col-sm-12
                 ul
-                  li: a(href="#").link.link--text-light.overflowed-xs Programa de Gobierno 2014 - 2018
-                  li: a(href="#").link.link--text-light.overflowed-xs Programa de Gobierno 2014 - 2018
-                  li: a(href="#").link.link--text-light.overflowed-xs Programa de Gobierno 2014 - 2018
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
             .row
-              .col-xs-4
-                p.text-white Escríbenos
-              .col-xs-8
+              .col-sm-4
+                p.text-white {% trans 'Escríbenos' %}
+              .col-sm-8
                 ul.social
                   li: a(href="#"): i.ic-facebook
                   li: a(href="#"): i.ic-twitter
