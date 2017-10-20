@@ -20,10 +20,12 @@ class Mockup(object):
         return GovernmentStructure.objects.create(**kwargs)
 
     def create_public_servant(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return PublicServant.objects.create(**kwargs)
 
     def create_ministry(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
         return Ministry.objects.create(**kwargs)
 
     def create_region(self, **kwargs):
