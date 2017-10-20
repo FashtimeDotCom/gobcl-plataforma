@@ -55,6 +55,6 @@ class BaseManager(models.Manager):
 
 class BaseGovernmentQuerySet(QuerySet):
 
-    def by_government(self, government):
+    def by_government_structure(self, government_structure):
         qs = self
-        return qs.filter(government=government)
+        return qs.filter(government_structure=government_structure)

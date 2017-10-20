@@ -21,13 +21,14 @@ from project.urls import urlpatterns
 # utils
 from inflection import underscore
 from base.utils import get_our_models
+from base.mockups import Mockup
 
 # Third-party app imports
 from model_mommy import mommy
 from model_mommy import random_gen
 
 
-class BaseTestCase(TestCase):
+class BaseTestCase(TestCase, Mockup):
 
     def setUp(self):
         super(BaseTestCase, self).setUp()

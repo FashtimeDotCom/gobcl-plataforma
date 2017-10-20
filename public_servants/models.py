@@ -10,13 +10,18 @@ from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 # models
-from base.models import BaseGovernmentModel
+from base.models import BaseGovernmentStructureModel
 
 
-class PublicServant(BaseGovernmentModel):
+class PublicServant(BaseGovernmentStructureModel):
     name = models.CharField(
         _('name'),
         max_length=100,
+    )
+    charge = models.CharField(
+        _('charge'),
+        max_length=100,
+        null=True,
     )
     description = models.TextField(
         _('description'),
@@ -40,10 +45,9 @@ class PublicServant(BaseGovernmentModel):
         )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
-        # TODO this is an example, change it
+
         return reverse('public_servant_detail', args=(self.pk,))

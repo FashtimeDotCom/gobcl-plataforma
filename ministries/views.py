@@ -28,7 +28,8 @@ class MinistryListView(BaseListView):
 
     def get_queryset(self):
         queryset = super(MinistryListView, self).get_queryset()
-        queryset = queryset.by_government(self.request.government)
+        queryset = queryset.by_government_structure(
+            self.request.government_structure)
         return queryset
 
 
@@ -52,7 +53,8 @@ class MinistryDetailView(BaseDetailView):
 
     def get_queryset(self):
         queryset = super(MinistryDetailView, self).get_queryset()
-        queryset = queryset.by_government(self.request.government)
+        queryset = queryset.by_government_structure(
+            self.request.government_structure)
         return queryset
 
 

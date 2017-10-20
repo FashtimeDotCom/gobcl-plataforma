@@ -14,15 +14,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='InstitutionURL',
+            name='GovernmentStructure',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, help_text='creation date')),
                 ('updated_at', models.DateTimeField(auto_now=True, help_text='edition date', null=True)),
-                ('url', models.URLField(verbose_name='url')),
+                ('publication_date', models.DateTimeField(unique=True, verbose_name='publication date')),
+                ('current_government', models.BooleanField(default=False, verbose_name='current government')),
             ],
             options={
-                'abstract': False,
+                'verbose_name': 'government structure',
+                'verbose_name_plural': 'government structures',
+                'permissions': (('view_government_structure', 'Can view government structures'),),
             },
         ),
     ]

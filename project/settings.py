@@ -80,8 +80,8 @@ INSTALLED_APPS = [
 
     # internal
     'base',
+    'government_structures',
     'users',
-    'governments',
     'public_servants',
     'ministries',
     'institutions',
@@ -110,7 +110,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'governments.middleware.get_current_government.GovernmentSetter',
+    'government_structures.middleware.get_current_government.GovernmentSetter',
 ]
 
 if DEBUG:
@@ -134,7 +134,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'governments.context_processors.add_government_to_context',
+                'government_structures.context_processors.add_government_structure_to_context',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -308,3 +308,5 @@ LOGGING = {
 CAN_LOGIN_AS = 'base.utils.can_loginas'
 LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
+
+MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'

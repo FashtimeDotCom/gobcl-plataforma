@@ -11,10 +11,10 @@ from .models import PublicServant
 
 @admin.register(PublicServant)
 class PublicServantAdmin(admin.ModelAdmin):
-    list_filter = ('government',)
+    list_filter = ('government_structure',)
     list_display = (
         'name',
-        'government',
+        'government_structure',
         'email',
         'phone',
         'twitter',
