@@ -71,7 +71,7 @@ def random_string(length=6, chars=None, include_spaces=True):
 
     if include_spaces:
         chars += ' '
-
+    length = int(length)
     return ''.join(random.choice(chars) for x in range(length))
 
 
