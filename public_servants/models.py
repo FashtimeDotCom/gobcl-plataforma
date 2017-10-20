@@ -8,9 +8,11 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
+from easy_thumbnails.fields import ThumbnailerImageField
 
 # models
 from base.models import BaseGovernmentStructureModel
+from base.models import file_path
 
 
 class PublicServant(BaseGovernmentStructureModel):
@@ -21,6 +23,11 @@ class PublicServant(BaseGovernmentStructureModel):
     charge = models.CharField(
         _('charge'),
         max_length=100,
+        null=True,
+    )
+    photo = ThumbnailerImageField(
+        _('photo'),
+        upload_to=file_path,
         null=True,
     )
     description = models.TextField(
