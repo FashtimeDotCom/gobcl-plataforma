@@ -18,6 +18,11 @@ class PublicServant(BaseGovernmentStructureModel):
         _('name'),
         max_length=100,
     )
+    charge = models.CharField(
+        _('charge'),
+        max_length=100,
+        null=True,
+    )
     description = models.TextField(
         _('description'),
     )
