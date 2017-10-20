@@ -2,7 +2,8 @@ extends base.pug
 
 - load i18n
 
-block header
+block content
+
   section.section.bg-bluedark
     .container
       .row
@@ -11,13 +12,63 @@ block header
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-7
           article.text-light
-            h2.heading-large Instituciones
-            p Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.
+            h2.heading-large {% trans 'Instituciones' %}
+            p {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
 
+  section.section
+    .container
+      .row
+        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-lightgray.top
+          .card-data-small
+            h1.card-data-small_title
+              span &nbsp;
+              small {% trans 'Presidencia' %}
+            p.card-data-small_text {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+            .clearfix
+              a.pull-right(href='#') {% trans 'Ver más' %}
+        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+          .card-data-small
+            h1.card-data-small_title
+              span {{ ministry_list|length }}
+              small {% trans 'Ministerios' %}
+            p.card-data-small_text
+              | {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+          .card-data-small
+            h1.card-data-small_title
+              span 244
+              small {% trans 'Servicios Públicos' %}
+            p.card-data-small_text
+              | {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+          .card-data-small
+            h1.card-data-small_title
+              span {{ region_list|length }}
+              small {% trans 'Regiones y sus Municipios' %}
+            p.card-data-small_text {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
 
-block content
+  section.section--medium.nopadding-top
+    .container
+      h2.heading-medium {% trans 'Ministerios' %}
+      .row
+        for ministry in ministry_list
+          .col-sm-12.col-md-4
+            p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
 
-  for ministry in ministry_list
-    a(href="{{ ministry.get_absolute_url }}")
-      {{ ministry }}
-  
+      - if service_list
+        br
+        h2.heading-medium {% trans 'Servicios Públicos' %}
+        .row
+          .col-sm-12.col-lg-8.col-xl-7
+            .search-form.search-form--large.nomargin-top
+              input(type="search" placeholder="{% trans 'Escribe aquí lo que quieres buscar' %}").search-form_input
+              button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+              button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+
+      - if region_list
+        br
+        h2.heading-medium {% trans 'Regiones' %}
+        .row
+          for region in region_list
+            .col-sm-12.col-lg-4
+              p: a(href="#") {{ region }}
