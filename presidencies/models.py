@@ -6,12 +6,15 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
 # models
 from base.models import BaseModel
 from base.models import file_path
+
+from base.managers import BaseGovernmentQuerySet
 
 
 class Presidency(BaseModel):
@@ -46,6 +49,14 @@ class Presidency(BaseModel):
         'institutions.InstitutionURL',
         verbose_name=_('urls'),
     )
+    slug = models.SlugField(
+        _('slug'),
+        blank=True,
+        max_length=255,
+        editable=False,
+    )
+
+    objects = BaseGovernmentQuerySet.as_manager()
 
     class Meta:
         verbose_name = _('presidency')
@@ -54,10 +65,14 @@ class Presidency(BaseModel):
             ('view_presidency', _('Can view presidency')),
         )
 
+    def save(self, **kwargs):
+        self.slug = slugify(self.name)
+        super(Presidency, self).save(**kwargs)
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the Presidency object """
 
-        return reverse('presidency_detail', args=(self.pk,))
+        return reverse('presidency_detail', args=(self.slug,))

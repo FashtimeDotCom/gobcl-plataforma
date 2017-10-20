@@ -45,6 +45,12 @@ class PresidencyDetailView(BaseDetailView):
     template_name = 'presidencies/presidency_detail.pug'
     permission_required = 'presidencies.view_presidency'
 
+    def get_queryset(self):
+        queryset = super(PresidencyDetailView, self).get_queryset()
+        queryset = queryset.by_government_structure(
+            self.request.government_structure)
+        return queryset
+
 
 class PresidencyUpdateView(BaseUpdateView):
     """

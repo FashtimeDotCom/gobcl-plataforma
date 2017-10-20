@@ -12,6 +12,9 @@ from .models import Presidency
 @admin.register(Presidency)
 class PresidencyAdmin(admin.ModelAdmin):
     list_display = (
+        'name',
         'title',
         'government_structure',
+        'twitter',
+        'url',
     )
