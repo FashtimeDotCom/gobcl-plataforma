@@ -4,7 +4,7 @@ extends form.pug
 
 block breadcrumbs
   li
-    a(href="%} url 'presidency_list' %}")
+    a(href="{% url 'presidency_list' %}")
       | {{opts.verbose_name_plural|capfirst}}
   li
     a(href="{{object.get_absolute_url}}")

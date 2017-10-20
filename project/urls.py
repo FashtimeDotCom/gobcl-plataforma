@@ -26,7 +26,6 @@ urlpatterns = [
     url(r'^accounts/', include('users.urls')),
     url(r'^institutions/', include('institutions.urls')),
     url(r'^ministries/', include('ministries.urls')),
-    url(r'^presidencies/', include('presidencies.urls')),
     url(r'^$', base_views.index, name='home'),
 ]
 

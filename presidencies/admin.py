@@ -6,7 +6,7 @@
 from django.contrib import admin
 
 # models
-from .models import Presidency
+from .models import Presidency, PresidencyURL
 
 
 @admin.register(Presidency)
@@ -18,3 +18,8 @@ class PresidencyAdmin(admin.ModelAdmin):
         'twitter',
         'url',
     )
+
+
+@admin.register(PresidencyURL)
+class PresidencyURLAdmin(admin.ModelAdmin):
+    list_display = ('url',)
