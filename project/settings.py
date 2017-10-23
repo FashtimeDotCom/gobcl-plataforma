@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'captcha',
     'loginas',
     'phonenumber_field',
+    'easy_thumbnails',
 
     # internal
     'base',
@@ -86,6 +87,7 @@ INSTALLED_APPS = [
     'ministries',
     'institutions',
     'regions',
+    'presidencies',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -310,3 +312,9 @@ LOGOUT_URL = reverse_lazy('loginas-logout')
 LOGINAS_LOGOUT_REDIRECT_URL = reverse_lazy('admin:index')
 
 MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (218, 228), 'crop': True},
+    },
+}
