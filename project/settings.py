@@ -244,12 +244,19 @@ COMPRESS_CSS_FILTERS = [
 
 # NPM
 NPM_FILE_PATTERNS = {
-    'bootstrap-sass': ['assets/javascripts/bootstrap.min.js'],
+    'bootstrap': ['dist/js/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
     'moment': ['min/moment-with-locales.min.js'],
     'eonasdan-bootstrap-datetimepicker': [
         'build/js/bootstrap-datetimepicker.min.js',
+        'build/css/bootstrap-datetimepicker.min.css'
     ],
+    'gob.cl': [
+        'dist/js/gob.cl.js',
+        'dist/css/gob.cl.css',
+        'dist/fonts/*',
+        'dist/images/*'
+    ]
 }
 
 # default keys, replace with somethign your own
