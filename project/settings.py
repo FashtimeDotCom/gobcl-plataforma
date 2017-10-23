@@ -242,6 +242,8 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',
 ]
 
+LIBSASS_PRECISION = 10
+
 # NPM
 NPM_FILE_PATTERNS = {
     'bootstrap': ['dist/js/bootstrap.min.js'],

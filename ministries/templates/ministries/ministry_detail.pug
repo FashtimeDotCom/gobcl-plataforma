@@ -1,25 +1,76 @@
 extends base.pug
 
 - load i18n
-
-block breadcrumbs
-  li
-    a(href="{% url 'ministry_list' %}")
-      | {{opts.verbose_name_plural|capfirst}}
+- load thumbnail
 
 block content
-  .text-right
-    .btn-group
-      if perms.ministries.change_ministry
-        a.btn.btn-primary(href="{% url 'ministry_update' ministry.id %}")
-          {% trans 'Update ministry' %}
-          i.fa.fa-edit
-      if perms.ministries.delete_ministry
-        a.btn.btn-danger(href="{% url 'ministry_delete' ministry.id %}")
-          {% trans 'Delete ministry' %}
-          i.fa.fa-times
+  main.site-main
+    section.bg-light
+      .container
+        ol.breadcrumb
+          li: a(href="/") Home
+          li: a(href="{% url 'ministry_list' %}") {% trans 'Instituciones' %}
 
-  table.table.table-bordered.table-hover
-    tbody
-      th Id
-      td {{ministry.id}}
+    section.section.bg-bluedark
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-4
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-7.col-xl-8
+            article.text-light
+              h2.heading-large {{ ministry.name }}
+              .row
+                .col-xl-10
+                  p {{ ministry.description }}
+
+    section
+      .container
+        .row
+          .col-sm-12.col-lg-8
+            .profile.profile--half
+              .profile_image
+                img(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="").img-fluid
+              .profile_header
+                h3.profile_title {{ ministry.minister.name }}
+                span.profile_job {{ ministry.minister.charge }}
+
+              p {{ ministry.minister.description }}
+              p: a(href="#").profile_twitter {{ ministry.minister.twitter }}
+              ul.profile_info
+                li: span {% trans 'Teléfono' %}: {{ ministry.minister.phone }}
+                li: span {% trans 'Correo electrónico' %}: {{ ministry.minister.email }}
+          .col-sm-12.col-lg-4.align-self-end
+            .profile_buttons
+                a(href="#").button.button--block {% trans 'Ir al sitio del Ministerio' %}
+
+    section.bg-light
+      .container
+        .row
+          for servant in ministry.public_servants.all
+            .col-sm-12.col-lg-6
+              .profile.profile--half-small
+                div.profile_image.profile_image--small
+                  img(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="").img-fluid
+                .profile_header
+                  h3.profile_title {{ servant.name }}
+                  span.profile_job {{ servant.charge }}
+
+                p {{ servant.description }}
+                p: a(href="#").profile_twitter {{ servant.twitter }}
+                ul.profile_info
+                  li: span {% trans 'Teléfono' %}: {{ servant.phone }}
+                  li: span {% trans 'Correo electrónico' %}: {{ servant.email }}
+
+    section.section.d-none.d-sm-block
+      .container
+        h2.heading-medium {% trans 'Instituciones del Ministerio de Transporte y Telecomunicaciones' %}
+        h3.heading-sub {% trans 'Empresas públicas' %}
+        .row
+          for enterprise in ministry.public_enterprises.all
+            .col-sm-12.col-md-4
+              .list-links
+                li: a(href="#").link {{ enterprise }}
+    section
+      .container
+        {% include 'includes/social.pug' %}

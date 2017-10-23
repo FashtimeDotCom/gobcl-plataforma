@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
 
 from base import views as base_views
 
@@ -27,8 +28,7 @@ urlpatterns = [
     url(r'^institutions/', include('institutions.urls')),
     url(r'^ministries/', include('ministries.urls')),
     url(r'^$', base_views.index, name='home'),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
