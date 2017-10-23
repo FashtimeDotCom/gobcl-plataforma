@@ -13,4 +13,7 @@ from .models import Ministry
 
 @admin.register(Ministry)
 class MinistryAdmin(InstitutionAdmin):
-    pass
+    filter_horizontal = (
+        'public_servants',
+        'public_enterprises',
+    )

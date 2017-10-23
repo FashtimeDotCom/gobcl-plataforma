@@ -15,6 +15,7 @@ class InstitutionURL(BaseModel):
     url = models.URLField(
         _('url'),
         max_length=200,
+        unique=True,
     )
 
     def __str__(self):
