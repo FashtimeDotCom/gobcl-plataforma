@@ -30,7 +30,7 @@ block content
           .col-sm-12.col-lg-8
             .profile.profile--half
               .profile_image
-                img(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="").img-fluid
+                img(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
               .profile_header
                 h3.profile_title {{ ministry.minister.name }}
                 span.profile_job {{ ministry.minister.charge }}
@@ -51,7 +51,7 @@ block content
             .col-sm-12.col-lg-6
               .profile.profile--half-small
                 div.profile_image.profile_image--small
-                  img(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="").img-fluid
+                  img(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
                 .profile_header
                   h3.profile_title {{ servant.name }}
                   span.profile_job {{ servant.charge }}
