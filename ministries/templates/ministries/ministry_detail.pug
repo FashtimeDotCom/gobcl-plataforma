@@ -70,7 +70,7 @@ block content
           for enterprise in ministry.public_enterprises.all
             .col-sm-12.col-md-4
               .list-links
-                li: a(href="#").link {{ enterprise }}
+                li: a(href="#").link {{ enterprise.name }}
     section
       .container
         {% include 'includes/social.pug' %}
