@@ -15,7 +15,7 @@ urlpatterns = [
         name='region_create'
     ),
     url(
-        r'^(?P<pk>[\d]+)/$',
+        r'^(?P<slug>[\w-]+)/$',
         views.RegionDetailView.as_view(),
         name='region_detail'
     ),
