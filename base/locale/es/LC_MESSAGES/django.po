@@ -45,7 +45,7 @@ msgstr "opcional"
 #: templates/includes/footer.pug:9 templates/includes/navbar.pug:52
 #: templates/includes/navbar.pug:53 templates/includes/navbar.pug:54
 msgid "Government program 2014 - 2018"
-msgstr ""
+msgstr "Programa de Gobierno 2014 - 2018"
 
 #: templates/includes/footer.pug:10
 msgid "Transparency law"

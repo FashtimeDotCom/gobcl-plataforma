@@ -75,7 +75,6 @@ msgid "Regions and their Municipalities."
 msgstr "Regiones y sus Municipios"
 
 #: templates/institutions/institution_list.pug:47
-#, fuzzy
 #| msgid ""
 #| "Your citizen guide for simple and fast access to services and information "
 #| "of Chile"
@@ -84,7 +83,7 @@ msgid ""
 "Chile's government."
 msgstr ""
 "Tu guía ciudadana para acceder simple y rápido a servicios e información del "
-"Gobierno de Chile"
+"Gobierno de Chile."
 
 #: templates/institutions/institution_list.pug:53
 msgid "Write here what you want search."
