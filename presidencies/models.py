@@ -15,6 +15,11 @@ from base.models import file_path
 
 
 class PresidencyURL(BaseModel):
+    name = models.CharField(
+        _('name'),
+        max_length=100,
+        null=True,
+    )
     url = models.URLField(
         _('url'),
         max_length=200,
