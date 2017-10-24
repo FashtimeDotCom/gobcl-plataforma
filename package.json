@@ -8,6 +8,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "gob.cl": "github:jgab-net/gob.cl#feature/bootstrap-4",
     "jquery": "^3.2.1",
+    "popper.js": "^1.12.6",
     "pug-cli": "^1.0.0-alpha6",
     "select2": "^4.0.3"
   },
