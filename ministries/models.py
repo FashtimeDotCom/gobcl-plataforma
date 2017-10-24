@@ -15,6 +15,7 @@ class Ministry(Institution):
     minister = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('minister'),
+        null=True,
     )
     public_servants = models.ManyToManyField(
         'public_servants.PublicServant',

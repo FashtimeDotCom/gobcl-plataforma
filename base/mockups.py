@@ -1,7 +1,7 @@
+# standard library imports
 import string
 import uuid
 import random
-
 
 from django.utils import timezone
 
