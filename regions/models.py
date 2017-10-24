@@ -43,7 +43,7 @@ class Region(Institution):
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
 
-        return reverse('region_detail', args=(self.pk,))
+        return reverse('region_detail', args=(self.slug,))
 
 
 class Commune(BaseModel):

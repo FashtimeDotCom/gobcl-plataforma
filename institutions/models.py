@@ -12,13 +12,19 @@ from base.models import BaseGovernmentStructureModel, BaseModel
 
 
 class InstitutionURL(BaseModel):
+    name = models.CharField(
+        _('name'),
+        max_length=100,
+        null=True,
+    )
     url = models.URLField(
         _('url'),
         max_length=200,
+        unique=True,
     )
 
     def __str__(self):
-        return self.url
+        return self.name
 
 
 class Institution(BaseGovernmentStructureModel):

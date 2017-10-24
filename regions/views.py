@@ -3,6 +3,7 @@
 # standard library
 
 # django
+from django.views.generic import DetailView
 
 # models
 from .models import Region
@@ -10,7 +11,6 @@ from .models import Region
 # views
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
-from base.views import BaseDetailView
 from base.views import BaseListView
 from base.views import BaseUpdateView
 
@@ -37,13 +37,18 @@ class RegionCreateView(BaseCreateView):
     permission_required = 'regions.add_region'
 
 
-class RegionDetailView(BaseDetailView):
+class RegionDetailView(DetailView):
     """
     A view for displaying a single region
     """
     model = Region
-    template_name = 'regions/detail.pug'
-    permission_required = 'regions.view_region'
+    template_name = 'regions/region_detail.pug'
+
+    def get_queryset(self):
+        queryset = super(RegionDetailView, self).get_queryset()
+        queryset = queryset.by_government_structure(
+            self.request.government_structure)
+        return queryset.prefetch_related('commune_set',)
 
 
 class RegionUpdateView(BaseUpdateView):
