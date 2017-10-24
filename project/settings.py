@@ -259,7 +259,11 @@ NPM_FILE_PATTERNS = {
         'dist/fonts/*',
         'dist/images/*'
     ],
-    'popper.js': ['dist/umd/popper.js']
+    'popper.js': ['dist/umd/popper.js'],
+    'select2': [
+      'dist/js/select2.full.js',
+      'dist/css/select2.min.css'
+    ]
 }
 
 # default keys, replace with somethign your own

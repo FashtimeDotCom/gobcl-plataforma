@@ -25,6 +25,11 @@ html(lang="es")
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
 
+    link(
+      href="{% static 'select2/dist/css/select2.min.css' %}",
+      rel="stylesheet"
+    )
+
     {% compress css %}
     link(
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
@@ -98,6 +103,7 @@ html(lang="es")
     block javascripts
     script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
     script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+    script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/forms.js' %}")
     {% endcompress %}
 
