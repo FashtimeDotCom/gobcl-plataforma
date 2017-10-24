@@ -74,6 +74,9 @@ class Commune(BaseModel):
     )
 
     class Meta:
+        ordering = (
+            'name',
+        )
         verbose_name = _('commune')
         verbose_name_plural = _('communes')
         permissions = (

@@ -10,4 +10,6 @@ class CommuneViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ('region',)
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.filter(
+            region__government_structure=self.request.government_structure
+        )
