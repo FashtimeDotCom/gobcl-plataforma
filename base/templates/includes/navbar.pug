@@ -8,9 +8,9 @@ header.site-header
       
       .site-header_right.d-none.d-sm-block
 
-        a(href="tramites.html").link.link--dib {% trans 'Trámites y beneficios' %}
-        a(href="noticias.html").link.link--dib {% trans 'Noticias' %}
-        a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Instituciones' %}
+        a(href="tramites.html").link.link--dib {% trans 'Procedures and benefits' %}
+        a(href="noticias.html").link.link--dib {% trans 'News' %}
+        a(href="{% url 'institution_list' %}").link.link--dib {% trans 'institutions' %}
         a(href="#").btn-search.toggle-search
           i.ic-search.btn-search_icon
           i.ic-close.btn-search_icon 
@@ -22,7 +22,7 @@ header.site-header
               a(href="{% url 'logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
         else 
           .site-header_login
-              a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Iniciar sesion' %}
+              a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
@@ -35,27 +35,26 @@ header.site-header
 
       nav.navigation
         .container
-          h6.heading-label {% trans 'Secciones' %}
+          h6.heading-label {% trans 'Sections' %}
           ul
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Trámites y beneficios' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Noticias' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Instituciones' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Acerca de Chile' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'News' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Institutions' %}
+            li: a(href="#").link.link--medium.overflowed-xs {% trans 'About Chile' %}
           
-          
-          // FIn ejes opcionales 
+
           .navigation_bottom
             a.navigation_logo(href="#"): i.icon-gob-footer
-            h4.heading-label.text-white {% trans 'Loreim' %}
+            h4.heading-label.text-white Loreim
             .row
               .col-sm-12
                 ul
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Programa de Gobierno 2014 - 2018' %}
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
+                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
             .row
               .col-sm-4
-                p.text-white {% trans 'Escríbenos' %}
+                p.text-white {% trans 'Contact us' %}
               .col-sm-8
                 ul.social
                   li: a(href="#"): i.ic-facebook

@@ -1,3 +1,5 @@
+- load i18n
+
 .toolbar
 	.toolbar_content
 		a(href="#").toolbar-button.toolbar-button--contrast
@@ -13,7 +15,7 @@
 			a(href="#track")#listen.toolbar-button.toolbar-button--listen
 				span.toolbar-button_content
 					i.toolbar-button_icon.ic-volume
-					span.toolbar-button_text Escuchar
+					span.toolbar-button_text {% trans 'Listen' %}
 			.toolbar-player.invisible
 				a(href="#").toolbar-player_toggle
 					span.toolbar-button_content

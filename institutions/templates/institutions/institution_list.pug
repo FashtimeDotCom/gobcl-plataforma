@@ -12,9 +12,8 @@ block content
               {% include 'includes/toolbar.pug' %}
           .col-sm-12.col-md-12.col-lg-7
             article.text-light
-              h2.heading-large {% trans 'Instituciones' %}
-              p {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
-
+              h2.heading-large {% trans 'Institutions' %}
+              p {% trans "Your citizen guide for simple and fast access to services and information of Chile's government" %}
     section.section
       .container
         .row
@@ -22,41 +21,39 @@ block content
             .card-data-small
               h1.card-data-small_title
                 span &nbsp;
-                small {% trans 'Presidencia' %}
-              p.card-data-small_text {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+                small {% trans 'Presidency' %}
+              p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government" %}
               .clearfix
-                a.pull-right(href="{% url 'presidency_detail' %}") {% trans 'Ver más' %}
+                a.pull-right(href="{% url 'presidency_detail' %}") {% trans 'See more.' %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
                 span {{ ministry_list|length }}
-                small {% trans 'Ministerios' %}
+                small {% trans 'Ministries' %}
               p.card-data-small_text
-                | {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+                | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government" %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
                 span 244
-                small {% trans 'Servicios Públicos' %}
+                small {% trans 'Public Services.' %}
               p.card-data-small_text
-                | {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
+                | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government" %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
                 span {{ region_list|length }}
-                small {% trans 'Regiones y sus Municipios' %}
-              p.card-data-small_text {% trans 'Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.' %}
-
+                small {% trans 'Regions and their Municipalities.' %}
+              p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
     section.section--medium.nopadding-top
       .container
         .row
           .col-sm-12.col-lg-8.col-xl-7
             .search-form.search-form--large.nomargin-top
-              input(type="search" placeholder="{% trans 'Escribe aquí lo que quieres buscar' %}").search-form_input
+              input(type="search" placeholder="{% trans 'Write here what you want search.' %}").search-form_input
               button(type="submit").search-form_button.search-form_button--submit: i.ic-search
               button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
-
-        h2.heading-medium {% trans 'Ministerios' %}
+        h2.heading-medium {% trans 'Ministries' %}
         .row
           for ministry in ministry_list
             .col-sm-12.col-md-4
@@ -64,7 +61,7 @@ block content
 
         - if region_list
           br
-          h2.heading-medium {% trans 'Regiones' %}
+          h2.heading-medium {% trans 'Regions' %}
           .row
             for region in region_list
               .col-sm-12.col-lg-4

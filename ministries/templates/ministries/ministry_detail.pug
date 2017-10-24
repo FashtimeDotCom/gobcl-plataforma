@@ -9,7 +9,7 @@ block content
       .container
         ol.breadcrumb
           li: a(href="/") Home
-          li: a(href="{% url 'ministry_list' %}") {% trans 'Instituciones' %}
+          li: a(href="{% url 'ministry_list' %}") {% trans 'Institutions' %}
 
     section.section.bg-bluedark
       .container
@@ -38,11 +38,11 @@ block content
               p {{ ministry.minister.description }}
               p: a(href="#").profile_twitter {{ ministry.minister.twitter }}
               ul.profile_info
-                li: span {% trans 'Teléfono' %}: {{ ministry.minister.phone }}
-                li: span {% trans 'Correo electrónico' %}: {{ ministry.minister.email }}
+                li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
+                li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
           .col-sm-12.col-lg-4.align-self-end
             .profile_buttons
-                a(href="#").button.button--block {% trans 'Ir al sitio del Ministerio' %}
+                a(href="#").button.button--block {% trans 'Go to the ministry site' %}
 
     section.bg-light
       .container
@@ -59,13 +59,13 @@ block content
                 p {{ servant.description }}
                 p: a(href="#").profile_twitter {{ servant.twitter }}
                 ul.profile_info
-                  li: span {% trans 'Teléfono' %}: {{ servant.phone }}
-                  li: span {% trans 'Correo electrónico' %}: {{ servant.email }}
+                  li: span {% trans 'Phone' %}: {{ servant.phone }}
+                  li: span {% trans 'E-Mail' %}: {{ servant.email }}
 
     section.section.d-none.d-sm-block
       .container
-        h2.heading-medium {% trans 'Instituciones del Ministerio de Transporte y Telecomunicaciones' %}
-        h3.heading-sub {% trans 'Empresas públicas' %}
+        h2.heading-medium {% trans 'Institutions of the Transport and Telecommunications Ministry' %}
+        h3.heading-sub {% trans 'Public Enterprises' %}
         .row
           for enterprise in ministry.public_enterprises.all
             .col-sm-12.col-md-4

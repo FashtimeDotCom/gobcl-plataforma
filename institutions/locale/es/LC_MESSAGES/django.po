@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-24 16:23-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:16 models.py:40
+msgid "url"
+msgstr "url"
+
+#: models.py:27
+msgid "name"
+msgstr "Nombre"
+
+#: models.py:31
+msgid "description"
+msgstr "Descripción"
+
+#: models.py:34
+msgid "slug"
+msgstr "slug"
+
+#: templates/institutions/institution_list.pug:15
+msgid "Institutions"
+msgstr "Instituciones"
+
+#: templates/institutions/institution_list.pug:16
+#: templates/institutions/institution_list.pug:25
+#: templates/institutions/institution_list.pug:34
+#: templates/institutions/institution_list.pug:41
+#, fuzzy
+#| msgid ""
+#| "Your citizen guide for simple and fast access to services and information "
+#| "of Chile"
+msgid ""
+"Your citizen guide for simple and fast access to services and information of "
+"Chile's government"
+msgstr ""
+"Tu guía ciudadana para acceder simple y rápido a servicios e información del "
+"Gobierno de Chile"
+
+#: templates/institutions/institution_list.pug:24
+msgid "Presidency"
+msgstr "Presidencia"
+
+#: templates/institutions/institution_list.pug:27
+msgid "See more."
+msgstr "Ver más."
+
+#: templates/institutions/institution_list.pug:32
+#: templates/institutions/institution_list.pug:56
+msgid "Ministries"
+msgstr "Ministerios"
+
+#: templates/institutions/institution_list.pug:39
+msgid "Public Services."
+msgstr "Servicios Públicos"
+
+#: templates/institutions/institution_list.pug:46
+msgid "Regions and their Municipalities."
+msgstr "Regiones y sus Municipios"
+
+#: templates/institutions/institution_list.pug:47
+#, fuzzy
+#| msgid ""
+#| "Your citizen guide for simple and fast access to services and information "
+#| "of Chile"
+msgid ""
+"Your citizen guide for simple and fast access to services and information of "
+"Chile's government."
+msgstr ""
+"Tu guía ciudadana para acceder simple y rápido a servicios e información del "
+"Gobierno de Chile"
+
+#: templates/institutions/institution_list.pug:53
+msgid "Write here what you want search."
+msgstr "Escribe aquí lo que quieres buscar"
+
+#: templates/institutions/institution_list.pug:64
+msgid "Regions"
+msgstr "Regiones"
