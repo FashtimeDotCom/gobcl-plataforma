@@ -258,7 +258,8 @@ NPM_FILE_PATTERNS = {
         'dist/css/gob.cl.css',
         'dist/fonts/*',
         'dist/images/*'
-    ]
+    ],
+    'popper.js': ['dist/umd/popper.js']
 }
 
 # default keys, replace with somethign your own

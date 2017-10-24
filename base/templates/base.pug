@@ -80,6 +80,7 @@ html(lang="es")
     {% compress js %}
     if debug
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
+      script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
       script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     {% endcompress %}
