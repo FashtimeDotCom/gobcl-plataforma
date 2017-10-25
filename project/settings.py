@@ -15,6 +15,7 @@ import sys
 
 # django
 from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
 from project.local_settings import DEBUG, LOCAL_DATABASES
 from project.local_settings import LOCALLY_INSTALLED_APPS
@@ -77,7 +78,10 @@ INSTALLED_APPS = [
     'captcha',
     'loginas',
     'phonenumber_field',
+    'filer',
     'easy_thumbnails',
+    'mptt',
+    'sekizai',
 
     # internal
     'base',
@@ -88,6 +92,18 @@ INSTALLED_APPS = [
     'institutions',
     'regions',
     'presidencies',
+
+    # django cms
+    'cms',
+    'menus',
+    'treebeard',
+    'djangocms_text_ckeditor',
+    'djangocms_link',
+    'djangocms_video',
+    'djangocms_googlemap',
+    'djangocms_snippet',
+    'djangocms_style',
+    'djangocms_file',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -105,6 +121,7 @@ if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
 
 MIDDLEWARE = [
+    'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -112,7 +129,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'government_structures.middleware.get_current_government.GovernmentSetter',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 ]
 
 if DEBUG:
@@ -125,7 +147,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -137,6 +159,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'government_structures.context_processors.add_government_structure_to_context',
+                'sekizai.context_processors.sekizai',
+                'cms.context_processors.cms_settings',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -194,6 +218,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'es'
+
+LANGUAGES = (
+    ('es', _('Spanish')),
+    ('en', _('English')),
+)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -318,3 +347,21 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (218, 228), 'crop': True},
     },
 }
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters'
+)
+
+THUMBNAIL_HIGH_RESOLUTION = True
+
+# django cms
+CMS_TEMPLATES = [
+    ('base.pug', 'Home page template'),
+]
+
+DJANGOCMS_STYLE_CHOICES = [
+    'container',
+    'container-fluid',
+]
