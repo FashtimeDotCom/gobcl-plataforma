@@ -139,6 +139,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'government_structures.context_processors.add_government_structure_to_context',
+                'institutions.context_processors.most_visited_urls',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
