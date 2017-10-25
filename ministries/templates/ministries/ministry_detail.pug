@@ -36,13 +36,13 @@ block content
                 span.profile_job {{ ministry.minister.charge }}
 
               p {{ ministry.minister.description }}
-              p: a(href="#").profile_twitter {{ ministry.minister.twitter }}
+              p: a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter {{ ministry.minister.twitter }}
               ul.profile_info
                 li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
                 li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
           .col-sm-12.col-lg-4.align-self-end
             .profile_buttons
-                a(href="#").button.button--block {% trans 'Go to the ministry site' %}
+              a(href="{{ ministry.url }}", target="blank").button.button--block {% trans 'Go to the ministry site' %}
 
     section.bg-light
       .container
@@ -57,7 +57,7 @@ block content
                   span.profile_job {{ servant.charge }}
 
                 p {{ servant.description }}
-                p: a(href="#").profile_twitter {{ servant.twitter }}
+                p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
                 ul.profile_info
                   li: span {% trans 'Phone' %}: {{ servant.phone }}
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
@@ -70,7 +70,7 @@ block content
           for enterprise in ministry.public_enterprises.all
             .col-sm-12.col-md-4
               .list-links
-                li: a(href="#").link {{ enterprise.name }}
+                li: a(href="{{ enterprise.url }}", target="blank").link {{ enterprise.name }}
     section
       .container
         {% include 'includes/social.pug' %}
