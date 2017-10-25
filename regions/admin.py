@@ -5,10 +5,24 @@
 # django
 from django.contrib import admin
 
+from institutions.admin import InstitutionAdmin
+
 # models
-from .models import Region
+from .models import Region, Commune
 
 
 @admin.register(Region)
-class RegionAdmin(admin.ModelAdmin):
+class RegionAdmin(InstitutionAdmin):
     pass
+
+
+@admin.register(Commune)
+class CommuneAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'region',
+        'email',
+        'phone',
+        'twitter',
+        'url',
+    )
