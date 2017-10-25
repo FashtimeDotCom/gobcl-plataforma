@@ -10,6 +10,9 @@ from django.utils.text import slugify
 # models
 from base.models import BaseGovernmentStructureModel, BaseModel
 
+# hitcount
+from hitcount.models import HitCountMixin
+
 
 class InstitutionURL(BaseModel):
     name = models.CharField(
@@ -27,7 +30,7 @@ class InstitutionURL(BaseModel):
         return self.name
 
 
-class Institution(BaseGovernmentStructureModel):
+class Institution(BaseGovernmentStructureModel, HitCountMixin):
     # foreign keys
     name = models.CharField(
         _('name'),

@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'rest_framework',
     'django_filters',
+    'hitcount',
 
     # internal
     'base',
@@ -90,6 +91,7 @@ INSTALLED_APPS = [
     'institutions',
     'regions',
     'presidencies',
+    'links',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -140,6 +142,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'government_structures.context_processors.add_government_structure_to_context',
                 'institutions.context_processors.most_visited_urls',
+                'links.context_processors.footer_links',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
