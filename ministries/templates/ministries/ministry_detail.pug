@@ -8,7 +8,7 @@ block content
     section.bg-light
       .container
         ol.breadcrumb
-          li: a(href="/") Home
+          li: a(href="/") {% trans 'Home' %}
           li: a(href="{% url 'ministry_list' %}") {% trans 'Institutions' %}
 
     section.section.bg-bluedark
