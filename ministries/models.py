@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 # models
+from base.models import BaseModel
 from institutions.models import Institution
 
 
@@ -20,19 +21,20 @@ class Ministry(Institution):
     public_servants = models.ManyToManyField(
         'public_servants.PublicServant',
         verbose_name=_('public servants'),
-        related_name='ministries'
-    )
-    public_enterprises = models.ManyToManyField(
-        'institutions.InstitutionURL',
-        verbose_name=_('public enterprises'),
+        related_name='ministries',
     )
     procedures_and_benefits = models.URLField(
         _('procedures and benefits'),
         max_length=200,
         blank=True,
     )
+    importance = models.PositiveIntegerField(
+        _('importance'),
+        default=0,
+    )
 
     class Meta:
+        ordering = ('importance',)
         verbose_name = _('ministry')
         verbose_name_plural = _('ministries')
         unique_together = ('name', 'government_structure')
@@ -40,6 +42,46 @@ class Ministry(Institution):
     def __str__(self):
         return self.name
 
+    def _sum_importance(self):
+        ministries = Ministry.objects.count()
+        self.importance = ministries + 1
+
+    @classmethod
+    def reorder_importance(cls):
+        ministries = cls.objects.all()
+        importance = 0
+        for ministry in ministries:
+            ministry.importance = importance
+            ministry.save()
+            importance += 1
+
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
         return reverse('ministry_detail', args=(self.slug,))
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self._sum_importance()
+        return super(Ministry, self).save(*args, **kwargs)
+
+
+class PublicService(BaseModel):
+    ministry = models.ForeignKey(
+        Ministry,
+        verbose_name=_('ministry'),
+    )
+    name = models.CharField(
+        _('name'),
+        max_length=100,
+        null=True,
+        unique=True,
+    )
+    url = models.URLField(
+        _('url'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.name

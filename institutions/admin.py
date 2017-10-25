@@ -5,8 +5,6 @@
 # django
 from django.contrib import admin
 
-from .models import InstitutionURL
-
 
 class InstitutionAdmin(admin.ModelAdmin):
     list_display = (
@@ -22,8 +20,3 @@ class InstitutionAdmin(admin.ModelAdmin):
     list_filter = (
         'government_structure__current_government',
     )
-
-
-@admin.register(InstitutionURL)
-class InstitutionURLAdmin(admin.ModelAdmin):
-    pass

@@ -8,12 +8,20 @@ from django.contrib import admin
 from institutions.admin import InstitutionAdmin
 
 # models
-from .models import Ministry
+from .models import Ministry, PublicService
 
 
 @admin.register(Ministry)
 class MinistryAdmin(InstitutionAdmin):
     filter_horizontal = (
         'public_servants',
-        'public_enterprises',
+    )
+
+
+@admin.register(PublicService)
+class PublicServiceAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'ministry',
+        'url',
     )
