@@ -20,51 +20,51 @@ msgstr ""
 
 #: models.py:20
 msgid "governor"
-msgstr ""
+msgstr "Gobernador"
 
 #: models.py:23 models.py:62
 msgid "email"
-msgstr ""
+msgstr "Correo"
 
 #: models.py:27 models.py:66
 msgid "phone"
-msgstr ""
+msgstr "Teléfono"
 
 #: models.py:34 models.py:52
 msgid "region"
-msgstr ""
+msgstr "Región"
 
 #: models.py:35
 msgid "regions"
-msgstr ""
+msgstr "Regiones"
 
 #: models.py:37
 msgid "Can view regions"
-msgstr ""
+msgstr "Puedo ver regiones"
 
 #: models.py:55 templates/regions/region_list.pug:17
 msgid "name"
-msgstr ""
+msgstr "Nombre"
 
 #: models.py:59
 msgid "description"
-msgstr ""
+msgstr "Descripción"
 
 #: models.py:72
 msgid "url"
-msgstr ""
+msgstr "url"
 
 #: models.py:77
 msgid "commune"
-msgstr ""
+msgstr "Comuna"
 
 #: models.py:78
 msgid "communes"
-msgstr ""
+msgstr "Comunas"
 
 #: models.py:80
 msgid "Can view communes"
-msgstr ""
+msgstr "Puedo ver comunas"
 
 #: templates/regions/region_delete.pug:18
 #, python-format
@@ -73,20 +73,20 @@ msgstr ""
 
 #: templates/regions/region_delete.pug:21
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: templates/regions/region_delete.pug:23
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: templates/regions/region_detail.pug:15 templates/regions/region_list.pug:34
 msgid "Update region"
-msgstr ""
+msgstr "Actualizar región"
 
 #: templates/regions/region_detail.pug:19 templates/regions/region_list.pug:39
 msgid "Delete region"
-msgstr ""
+msgstr "Borrar región"
 
 #: templates/regions/region_list.pug:10
 msgid "Add region"
-msgstr ""
+msgstr "Agregar región"

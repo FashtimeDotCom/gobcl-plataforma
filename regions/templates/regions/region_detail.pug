@@ -1,15 +1,74 @@
 extends base.pug
 
 - load i18n
+- load staticfiles
+- load thumbnail
 
-block breadcrumbs
-  li
-    a(href="{% url 'region_list' %}")
-      | {{opts.verbose_name_plural|capfirst}}
+
+block javascripts
+  script(src="{% static 'js/communes.js' %}")
+
 
 block content
-  {{ region.name }}
-  
-  select
-    for commune in region.commune_set.all
-      option(value="{{ commune.id }}") {{ commune.name }}
+  main.site-main
+    section.bg-light
+      .container
+        ol.breadcrumb
+          li: a(href="/") Home
+          li: a(href="{% url 'ministry_list' %}") {% trans 'Institutions' %}
+          li: a(href="{{ region.region.get_absolute_url }}") {{ region.name }}
+    section.section--medium.bg-bluedark
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-4
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-7.col-xl-8
+            article.text-light
+              h1.heading-large {{ region.name }}
+              p {{ region.description }}
+    section
+      .container
+        .row
+          .col-sm-12.col-lg-8
+            .profile.profile--half
+              .profile_image
+                img(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
+              .profile_header
+                h3.profile_title {{ region.governor.name }}
+                span.profile_job {{ region.governor.charge }}
+
+              p {{ region.governor.description }}
+              p: a(href="#").profile_twitter @Intendenciabiobio
+
+              ul.profile_info
+                li: span {% trans 'Phone' %}: {{ region.governor.phone }}
+                li: span {% trans 'E-Mail' %}: {{ region.governor.email }}
+          .col-sm-12.col-lg-4.align-self-end
+            .profile_buttons.overflowed-xs
+              a(href="#").button.button--block {% trans 'Go to the ministry site' %}
+    section.section.bg-light
+      .container
+        .row
+          .col-sm-12.col-lg-4.col-xl-4
+            article
+              h2.heading-medium Municipios
+              h3.heading-label Selecciona una comuna
+              .select
+                select(id="communes")
+                  for commune in region.commune_set.all
+                    option(value="{{ commune.id }}") {{ commune.name }}
+          for commune in region.commune_set.all
+            .commune(id="commune-{{ commune.id }}").col-sm-12.col-lg-6.col-xl-4.d-none
+              article.card-new
+                h2.card-new_title {{ commune.name }}
+                p.card-new_text {{ commune.description }}
+                p: a(href="#").profile_twitter {{ commune.twitter }}
+                ul.profile_info
+                  li: span {% trans 'Phone' %}: {{ commune.phone }}
+                  li: span {% trans 'E-Mail' %}: {{ commune.email }}
+
+                a(href="{{ commune.url }}").link.link--clean.text-red {{ commune.url }}
+    section
+      .container
+        {% include 'includes/social.pug' %}
