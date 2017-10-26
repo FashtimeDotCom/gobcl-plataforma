@@ -1,4 +1,8 @@
-
+/**
+ * Search field for institutions list.
+ *
+ * Search over data-value attribute in tags with class .filterable and hide elements w/o match.
+ */
 $(function () {
   $('#search')
     .find('.search-form_input').on('input', function () {
@@ -14,7 +18,6 @@ $(function () {
     })
     .end()
     .find('.search-form_button--cancel').on('click', function () {
-      console.log('aca');
       $('.filterable').each(function (index, element) {
         $(element).removeClass('d-none');
       });
