@@ -81,6 +81,12 @@ elif [ $2 ] && [ $2 != '-c' ] ; then
     translate $2
 else
     translate "base"
+    translate "government_structures"
+    translate "institutions"
+    translate "ministries"
+    translate "presidencies"
     translate "project"
+    translate "public_servants"
+    translate "regions"
     translate "users"
 fi

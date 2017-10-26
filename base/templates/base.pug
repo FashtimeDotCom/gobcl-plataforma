@@ -27,6 +27,11 @@ html(lang="es")
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
     {% render_block "css" %}
+
+    link(
+      href="{% static 'select2/dist/css/select2.min.css' %}",
+      rel="stylesheet"
+    )
     {% compress css %}
     link(
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
@@ -56,18 +61,6 @@ html(lang="es")
     {% cms_toolbar %}
     {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
-    //=
-      main.site-main
-        section.section.bg-bluedark
-          .container
-            .row
-              .col-xs-12.col-sm-12.col-md-5.pull-md-right.col-lg-4.col-lg-offset-1
-                {% include 'includes/toolbar.pug' %}
-              .col-xs-12.col-sm-12.col-md-7
-                article.text-light
-                  h2.heading-large Instituciones
-                  p Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.
-
     div
       div.container
         div.row
@@ -76,16 +69,8 @@ html(lang="es")
           div(class="alert alert-{{ message.tags }}") {{ message }}
           {% endfor %}
           {% endif %}
-    section.section
-      .container
-        - if user.is_authenticated
-          {% if user.is_staff %}
-          a(href="{% url 'admin:index' %}").link.link--dib Administración
-          {% endif %}
-          a(href="{% url 'user_list' %}").link.link--dib Usuarios
-    section.section
-      .container
-        block content
+
+    block content
 
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
@@ -104,6 +89,7 @@ html(lang="es")
     {% compress js %}
     if debug
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
+      script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
       script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     {% endcompress %}
@@ -121,6 +107,7 @@ html(lang="es")
     block javascripts
     script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
     script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+    script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/forms.js' %}")
     {% endcompress %}
 

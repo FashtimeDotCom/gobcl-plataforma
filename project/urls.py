@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^n/', include('cms.urls')),
 ]
 
-
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
