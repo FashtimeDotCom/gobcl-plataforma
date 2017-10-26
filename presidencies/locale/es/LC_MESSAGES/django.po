@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-24 15:55-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:19 models.py:55
+msgid "url"
+msgstr "url"
+
+#: models.py:23 models.py:49
+msgid "description"
+msgstr "Descripción"
+
+#: models.py:33
+msgid "government structure"
+msgstr "Estructura de gobierno"
+
+#: models.py:36
+msgid "name"
+msgstr "Nombre"
+
+#: models.py:40
+msgid "title"
+msgstr "Título"
+
+#: models.py:44
+msgid "photo"
+msgstr "Foto"
+
+#: models.py:60
+msgid "urls"
+msgstr "urls"
+
+#: models.py:64
+msgid "presidency"
+msgstr "Presidencia"
+
+#: models.py:65
+msgid "presidencies"
+msgstr "Presidencias"
+
+#: models.py:67
+msgid "Can view presidency"
+msgstr "Puede ver presidencia"
+
+#: templates/presidencies/presidency_delete.pug:18
+#, python-format
+msgid "Are you sure you want to delete' \"%(object)s\"?"
+msgstr ""
+
+#: templates/presidencies/presidency_delete.pug:21
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: templates/presidencies/presidency_delete.pug:23
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/presidencies/presidency_detail.pug:12
+msgid "Institutions"
+msgstr "Instituciones"
+
+#: templates/presidencies/presidency_detail.pug:29
+msgid "Go to the presidency site"
+msgstr "Ir al sitio de la presidencia"

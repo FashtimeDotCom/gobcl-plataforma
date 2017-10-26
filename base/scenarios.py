@@ -6,7 +6,7 @@ from base.mockups import Mockup
 
 from government_structures.models import GovernmentStructure
 from ministries.models import Ministry
-from institutions.models import InstitutionURL
+from ministries.models import PublicService
 
 
 def create_government_structure(datetime=None):
@@ -82,23 +82,16 @@ def load_data_from_digital_gob_api(datetime=None, ministry_with_minister=False):
             )[0]
 
             '''
-            if rest has "servicios dependientes"
-            get or create Institution URL and appends in list
+            If rest has "servicios dependientes"
+            get or create PublicService
             '''
-            services = []
             for service in source.get('servicios_dependientes'):
-                url = service.get('url')
-                if not url:
-                    continue
                 name = service.get('nombre')
-                url = InstitutionURL.objects.get_or_create(
-                    url=url,
+                url = service.get('url', None)
+                PublicService.objects.get_or_create(
+                    name=name,
                     defaults={
-                        'name': name,
+                        'url': url,
+                        'ministry': ministry_obj,
                     }
                 )[0]
-                services.append(url)
-
-            # if the list of services has elements, it's added to the ministry
-            if services:
-                ministry_obj.public_enterprises.add(*services)

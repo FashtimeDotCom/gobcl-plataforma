@@ -1,12 +1,73 @@
 extends base.pug
 
 - load i18n
+- load staticfiles
 
-block title
-  {% trans 'institutions' %}
+block javascripts
+  script(src="{% static 'js/search.js' %}")
 
 block content
-  for ministry in ministry_list
-    a(href="{{ ministry.get_absolute_url }}")
-      {{ ministry }}
-  
+  main.site-main
+    section.section.bg-bluedark
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-7
+            article.text-light
+              h2.heading-large {% trans 'Institutions' %}
+              p {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+    section.section
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-lightgray.top
+            .card-data-small
+              h1.card-data-small_title
+                span &nbsp;
+                small {% trans 'Presidency' %}
+              p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              .clearfix
+                a.pull-right(href="{% url 'presidency_detail' %}") {% trans 'See more.' %}
+          .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+            .card-data-small
+              h1.card-data-small_title
+                span {{ ministry_list|length }}
+                small {% trans 'Ministries' %}
+              p.card-data-small_text
+                | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+          .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+            .card-data-small
+              h1.card-data-small_title
+                span 244
+                small {% trans 'Public Services.' %}
+              p.card-data-small_text
+                | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+          .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+            .card-data-small
+              h1.card-data-small_title
+                span {{ region_list|length }}
+                small {% trans 'Regions and their Municipalities.' %}
+              p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+    section.section--medium.nopadding-top
+      .container
+        .row
+          .col-sm-12.col-lg-8.col-xl-7
+            .search-form#search.search-form--large.nomargin-top
+              input(type="search" placeholder="{% trans 'Write here what you want search.' %}").search-form_input
+              button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+              button(type="button").search-form_button.search-form_button--cancel.d-none: i.ic-delete
+        h2.heading-medium {% trans 'Ministries' %}
+        - if ministry_list
+          .row
+            for ministry in ministry_list
+              .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
+                p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+
+        - if region_list
+          br
+          h2.heading-medium {% trans 'Regions' %}
+          .row
+            for region in region_list
+              .filterable(data-value="{{ region.name }}").col-sm-12.col-md-4
+                p: a(href="{{ region.get_absolute_url }}") {{ region }}

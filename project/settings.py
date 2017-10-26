@@ -248,6 +248,8 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',
 ]
 
+LIBSASS_PRECISION = 10
+
 # NPM
 NPM_FILE_PATTERNS = {
     'bootstrap': ['dist/js/bootstrap.min.js'],
@@ -262,6 +264,11 @@ NPM_FILE_PATTERNS = {
         'dist/css/gob.cl.css',
         'dist/fonts/*',
         'dist/images/*'
+    ],
+    'popper.js': ['dist/umd/popper.js'],
+    'select2': [
+      'dist/js/select2.full.js',
+      'dist/css/select2.min.css'
     ]
 }
 
