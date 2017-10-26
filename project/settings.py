@@ -386,6 +386,7 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (218, 228), 'crop': True},
     },
 }
+
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
@@ -414,3 +415,9 @@ CMS_TOOLBARS = [
     # third-party Toolbar
     'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'magnet'
+EMAIL_HOST_PASSWORD = 'necesitamosemails1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

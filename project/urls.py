@@ -29,8 +29,6 @@ urlpatterns = [
     url(r'^ministries/', include('ministries.urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.index, name='home'),
-    # url(r'^blog/', include('aldryn_newsblog.urls',
-    #    namespace = 'aldryn_newsblog_default')),
     url(r'^n/', include('cms.urls')),
 ]
 
@@ -40,5 +38,5 @@ if settings.DEBUG:
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns + static(
         settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
+        document_root=settings.MEDIA_ROOT,
     )

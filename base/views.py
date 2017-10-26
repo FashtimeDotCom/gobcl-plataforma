@@ -13,6 +13,7 @@ from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
