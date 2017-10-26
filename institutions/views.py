@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 # models
 from ministries.models import Ministry
+from ministries.models import PublicService
 from regions.models import Region
 
 
@@ -16,7 +17,12 @@ class InstitutionListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(InstitutionListView, self).get_context_data(**kwargs)
         context['ministry_list'] = Ministry.objects.by_government_structure(
-            self.request.government_structure)
+            self.request.government_structure
+        )
+        context['public_service_list'] = PublicService.objects.filter(
+            ministry__government_structure=self.request.government_structure
+        )
         context['region_list'] = Region.objects.by_government_structure(
-            self.request.government_structure)
+            self.request.government_structure
+        )
         return context
