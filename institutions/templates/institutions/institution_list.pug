@@ -65,4 +65,4 @@ block content
           .row
             for region in region_list
               .col-sm-12.col-md-4
-                p: a(href="#") {{ region }}
+                p: a(href="{{ region.get_absolute_url }}") {{ region }}
