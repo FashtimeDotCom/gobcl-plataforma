@@ -42,11 +42,6 @@ html(lang="es")
     {% endcompress %}
 
     link(
-      href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}",
-      rel="stylesheet"
-    )
-
-    link(
       href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
       rel="stylesheet"
     )
@@ -102,7 +97,6 @@ html(lang="es")
     {% compress js %}
     block javascripts
     script(src="{% static 'moment/min/moment-with-locales.min.js' %}")
-    script(src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/forms.js' %}")
     {% endcompress %}
