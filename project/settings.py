@@ -34,7 +34,12 @@ TEST = 'test' in sys.argv
 #     ('Full Name', 'email@example.com'),
 #     ('Full Name', 'anotheremail@example.com'),
 # ]
-ADMINS = []
+ADMINS = (
+    ('Ignacio Munizaga', 'muni@magnet.cl'),
+    ('Cristian Sepulveda', 'cristian@magnet.cl'),
+    ('Jorge Guerra', 'jorge@magnet.cl'),
+    ('Tito', 'cristobal@magnet.cl'),
+)
 
 
 # List of IP addresses, as strings, that:
@@ -263,8 +268,8 @@ NPM_FILE_PATTERNS = {
     ],
     'popper.js': ['dist/umd/popper.js'],
     'select2': [
-      'dist/js/select2.full.js',
-      'dist/css/select2.min.css'
+        'dist/js/select2.full.js',
+        'dist/css/select2.min.css'
     ]
 }
 
