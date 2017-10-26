@@ -304,8 +304,8 @@ NPM_FILE_PATTERNS = {
     ],
     'popper.js': ['dist/umd/popper.js'],
     'select2': [
-      'dist/js/select2.full.js',
-      'dist/css/select2.min.css'
+        'dist/js/select2.full.js',
+        'dist/css/select2.min.css'
     ]
 }
 
@@ -398,4 +398,14 @@ CMS_TEMPLATES = [
 DJANGOCMS_STYLE_CHOICES = [
     'container',
     'container-fluid',
+]
+
+CMS_TOOLBARS = [
+    # CMS Toolbars
+    'cms.cms_toolbars.PlaceholderToolbar',
+    'cms.cms_toolbars.BasicToolbar',
+    'cms.cms_toolbars.PageToolbar',
+
+    # third-party Toolbar
+    'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
