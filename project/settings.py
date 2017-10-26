@@ -35,7 +35,12 @@ TEST = 'test' in sys.argv
 #     ('Full Name', 'email@example.com'),
 #     ('Full Name', 'anotheremail@example.com'),
 # ]
-ADMINS = []
+ADMINS = (
+    ('Ignacio Munizaga', 'muni@magnet.cl'),
+    ('Cristian Sepulveda', 'cristian@magnet.cl'),
+    ('Jorge Guerra', 'jorge@magnet.cl'),
+    ('Tito', 'cristobal@magnet.cl'),
+)
 
 
 # List of IP addresses, as strings, that:
