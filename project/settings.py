@@ -345,3 +345,9 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (218, 228), 'crop': True},
     },
 }
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'magnet'
+EMAIL_HOST_PASSWORD = 'necesitamosemails1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
