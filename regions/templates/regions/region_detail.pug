@@ -39,14 +39,14 @@ block content
                 span.profile_job {{ region.governor.charge }}
 
               p {{ region.governor.description }}
-              p: a(href="#").profile_twitter @Intendenciabiobio
+              p: a(href="https://twitter.com/{{ region.governor.twitter  }}", target="blank").profile_twitter {{ region.governor.twitter }}
 
               ul.profile_info
                 li: span {% trans 'Phone' %}: {{ region.governor.phone }}
                 li: span {% trans 'E-Mail' %}: {{ region.governor.email }}
           .col-sm-12.col-lg-4.align-self-end
             .profile_buttons.overflowed-xs
-              a(href="#").button.button--block {% trans 'Go to the ministry site' %}
+              a(href="{{ region.url }}", target="blank").button.button--block {% trans 'Go to the ministry site' %}
     section.section.bg-light
       .container
         .row
@@ -63,12 +63,12 @@ block content
               article.card-new
                 h2.card-new_title {{ commune.name }}
                 p.card-new_text {{ commune.description }}
-                p: a(href="#").profile_twitter {{ commune.twitter }}
+                p: a(href="https://twitter.com/{{ commune.twitter }}", target="blank").profile_twitter {{ commune.twitter }}
                 ul.profile_info
                   li: span {% trans 'Phone' %}: {{ commune.phone }}
                   li: span {% trans 'E-Mail' %}: {{ commune.email }}
 
-                a(href="{{ commune.url }}").link.link--clean.text-red {{ commune.url }}
+                a(href="{{ commune.url }}", target="blank").link.link--clean.text-red {{ commune.url }}
     section
       .container
         {% include 'includes/social.pug' %}

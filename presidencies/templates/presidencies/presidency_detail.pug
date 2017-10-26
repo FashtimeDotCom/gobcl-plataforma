@@ -23,10 +23,10 @@ block content
             .col-md-8
               p {{ presidency.description|linebreaks }}
               ul.profile_body
-                li: a(href="#").profile_twitter {{ presidency.twitter }}
+                li: a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter {{ presidency.twitter }}
             .col-sm-12.col-md-12.col-lg-4.offset-lg-4.align-self-end.mt-3
               .overflowed-xs
-                a(href="#").button.button--block {% trans 'Go to the presidency site' %}
+                a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
 
     section.section
       .container
@@ -35,7 +35,7 @@ block content
             .col-sm-12.col-lg-4
               .card-small
                 h5.card-small_title
-                  a(href="{{ url.url }}").card-small_link {{ url.name }}
+                  a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
                     i.icon-arrow-right-black.icon--right
                 .card-small_body
                   p.card-small_text {{ url.description }}
