@@ -14,6 +14,8 @@ from base.views import BaseDeleteView
 from base.views import BaseListView
 from base.views import BaseUpdateView
 
+from hitcount.views import HitCountDetailView
+
 # forms
 from .forms import RegionForm
 
@@ -37,12 +39,13 @@ class RegionCreateView(BaseCreateView):
     permission_required = 'regions.add_region'
 
 
-class RegionDetailView(DetailView):
+class RegionDetailView(HitCountDetailView):
     """
     A view for displaying a single region
     """
     model = Region
     template_name = 'regions/region_detail.pug'
+    count_hit = True
 
     def get_queryset(self):
         queryset = super(RegionDetailView, self).get_queryset()

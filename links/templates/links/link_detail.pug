@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'link_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.links.change_link
+        a.btn.btn-primary(href="{% url 'link_update' link.id %}")
+          {% trans 'Update link' %}
+          i.fa.fa-edit
+      if perms.links.delete_link
+        a.btn.btn-danger(href="{% url 'link_delete' link.id %}")
+          {% trans 'Delete link' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{link.id}}
