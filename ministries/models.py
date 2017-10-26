@@ -43,11 +43,18 @@ class Ministry(Institution):
         return self.name
 
     def _sum_importance(self):
+        '''
+        When add a Ministry object, importance
+        field change to total ministries + 1
+        '''
         ministries = Ministry.objects.count()
         self.importance = ministries + 1
 
     @classmethod
     def reorder_importance(cls):
+        '''
+        Take all ministries and change importance value orderly
+        '''
         ministries = cls.objects.all()
         importance = 0
         for ministry in ministries:
