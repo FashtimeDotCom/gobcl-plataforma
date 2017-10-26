@@ -1,8 +1,41 @@
 extends base.pug
 
 - load i18n
-
-block breadcrumbs
+- load thumbnail
 
 block content
-  {{ presidency }}
+  main.site-main
+    section.bg-light
+      .container
+        ol.breadcrumb
+          li: a(href="/") {% trans 'Home' %}
+          li: a(href="{% url 'ministry_list' %}") {% trans 'Institutions' %}
+
+    section.bg-bluedark
+      .container
+        .profile.profile--bluedark.text-light
+          .profile_header
+            h2.heading-large {{ presidency.name }}
+            span.profile_job {{ presidency.title }}
+          .row
+            .col-md-4
+              img(src="{{ presidency.photo.url }}", alt="").img-fluid.w-100
+            .col-md-8
+              p {{ presidency.description|linebreaks }}
+              ul.profile_body
+                li: a(href="#").profile_twitter {{ presidency.twitter }}
+            .col-sm-12.col-md-12.col-lg-4.offset-lg-4.align-self-end.mt-3
+              .overflowed-xs
+                a(href="#").button.button--block {% trans 'Go to the presidency site' %}
+
+    section.section
+      .container
+        .row
+          for url in presidency.urls.all
+            .col-sm-12.col-lg-4
+              .card-small
+                h5.card-small_title
+                  a(href="{{ url.url }}").card-small_link {{ url.name }}
+                    i.icon-arrow-right-black.icon--right
+                .card-small_body
+                  p.card-small_text {{ url.description }}
