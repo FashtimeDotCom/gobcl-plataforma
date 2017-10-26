@@ -8,26 +8,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
 # models
-from base.models import BaseGovernmentStructureModel, BaseModel
+from base.models import BaseGovernmentStructureModel
 
 # hitcount
 from hitcount.models import HitCountMixin
-
-
-class InstitutionURL(BaseModel):
-    name = models.CharField(
-        _('name'),
-        max_length=100,
-        null=True,
-    )
-    url = models.URLField(
-        _('url'),
-        max_length=200,
-        unique=True,
-    )
-
-    def __str__(self):
-        return self.name
 
 
 class Institution(BaseGovernmentStructureModel, HitCountMixin):
