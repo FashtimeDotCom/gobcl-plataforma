@@ -1,6 +1,10 @@
 extends base.pug
 
 - load i18n
+- load staticfiles
+
+block javascripts
+  script(src="{% static 'js/search.js' %}")
 
 block content
   main.site-main
@@ -49,20 +53,21 @@ block content
       .container
         .row
           .col-sm-12.col-lg-8.col-xl-7
-            .search-form.search-form--large.nomargin-top
+            .search-form#search.search-form--large.nomargin-top
               input(type="search" placeholder="{% trans 'Write here what you want search.' %}").search-form_input
               button(type="submit").search-form_button.search-form_button--submit: i.ic-search
-              button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+              button(type="button").search-form_button.search-form_button--cancel.d-none: i.ic-delete
         h2.heading-medium {% trans 'Ministries' %}
-        .row
-          for ministry in ministry_list
-            .col-sm-12.col-md-4
-              p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+        - if ministry_list
+          .row
+            for ministry in ministry_list
+              .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
+                p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
 
         - if region_list
           br
           h2.heading-medium {% trans 'Regions' %}
           .row
             for region in region_list
-              .col-sm-12.col-md-4
+              .filterable(data-value="{{ region.name }}").col-sm-12.col-md-4
                 p: a(href="{{ region.get_absolute_url }}") {{ region }}
