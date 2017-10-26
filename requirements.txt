@@ -32,3 +32,4 @@ djangocms-snippet==1.9.2
 djangocms-style==2.0.2
 djangocms-video==2.0.4
 git+https://github.com/aldryn/aldryn-newsblog.git@master
+django-hitcount==1.2.3

@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'sekizai',
     'rest_framework',
     'django_filters',
+    'hitcount',
 
     # internal
     'base',
@@ -99,6 +100,7 @@ INSTALLED_APPS = [
     'institutions',
     'regions',
     'presidencies',
+    'links',
 
     # django cms
     'cms',
@@ -180,6 +182,8 @@ TEMPLATES = [
                 'government_structures.context_processors.add_government_structure_to_context',
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
+                'institutions.context_processors.most_visited_urls',
+                'links.context_processors.footer_links',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
