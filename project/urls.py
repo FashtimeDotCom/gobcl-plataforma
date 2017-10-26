@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^ministries/', include('ministries.urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.index, name='home'),
+    url(r'^blog/', include('aldryn_newsblog.urls',
+                           namespace='aldryn_newsblog_default')),
     url(r'^n/', include('cms.urls')),
 ]
 

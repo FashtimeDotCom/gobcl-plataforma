@@ -106,6 +106,18 @@ INSTALLED_APPS = [
     'djangocms_snippet',
     'djangocms_style',
     'djangocms_file',
+
+    'aldryn_apphooks_config',
+    'aldryn_categories',
+    'aldryn_common',
+    'aldryn_newsblog',
+    'aldryn_people',
+    'aldryn_reversion',
+    'aldryn_translation_tools',
+    'parler',
+    'sortedm2m',
+    'taggit',
+    'reversion',
 ]
 
 # Default email address to use for various automated correspondence from
