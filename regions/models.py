@@ -108,4 +108,4 @@ class Commune(BaseModel):
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
 
-        return reverse('commune_detail', args=(self.pk,))
+        return reverse('region_detail', args=(self.region_pk,))
