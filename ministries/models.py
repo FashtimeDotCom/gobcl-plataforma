@@ -92,3 +92,8 @@ class PublicService(BaseModel):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = _('public service')
+        verbose_name_plural = _('public services')

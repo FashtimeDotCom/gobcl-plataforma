@@ -64,6 +64,16 @@ block content
               .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
                 p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
 
+        - if public_service_list
+          br
+          h2.heading-medium {% trans 'public services'|capfirst %}
+          .row
+            for public_service in public_service_list
+              .filterable(data-value="{{ public_service.name }}").col-sm-12.col-md-4
+                p
+                  a(href="{{ public_service.url }}")
+                    {{ public_service }}
+
         - if region_list
           br
           h2.heading-medium {% trans 'Regions' %}

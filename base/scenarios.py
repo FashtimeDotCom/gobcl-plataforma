@@ -94,6 +94,10 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
             for service in source.get('servicios_dependientes'):
                 name = service.get('nombre')
                 url = service.get('url', None)
+
+                if not url:
+                    continue
+
                 PublicService.objects.get_or_create(
                     name=name,
                     defaults={
