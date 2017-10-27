@@ -19,7 +19,6 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
 # utils
@@ -74,11 +73,6 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
         context['title'] = self.get_title()
 
         return context
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseDetailView, self).dispatch(*args, **kwargs)
 
 
 class BaseCreateView(CreateView, PermissionRequiredMixin):
