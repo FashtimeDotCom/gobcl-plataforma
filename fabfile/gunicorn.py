@@ -29,12 +29,14 @@ def install():
 @task
 def start():
     """ Starts the gunicorn service. """
+    print(green('Starting the gunicorn service. '))
     gunicorn_handler('start')
 
 
 @task
 def stop():
     """ Stops the gunicorn service. """
+    print(green('Stoping the gunicorn service. '))
     if search('running', gunicorn_handler('status')):
         gunicorn_handler('stop')
 
@@ -42,7 +44,7 @@ def stop():
 @task
 def restart():
     """ Restarts the gunicorn service. """
-    print(green(' Restarting the gunicorn service. '))
+    print(green('Restarting the gunicorn service. '))
     gunicorn_handler('restart')
 
 

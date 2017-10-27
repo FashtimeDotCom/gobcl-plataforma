@@ -67,10 +67,12 @@ block content
         h2.heading-medium {% trans 'Institutions of the Transport and Telecommunications Ministry' %}
         h3.heading-sub {% trans 'Public Enterprises' %}
         .row
-          for enterprise in ministry.public_enterprises.all
+          for public_service in ministry.publicservice_set.all
             .col-sm-12.col-md-4
               .list-links
-                li: a(href="{{ enterprise.url }}", target="blank").link {{ enterprise.name }}
+                li
+                  a(href="{{ public_service.url }}", target="blank").link
+                    | {{ public_service.name }}
     section
       .container
         {% include 'includes/social.pug' %}
