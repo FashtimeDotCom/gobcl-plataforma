@@ -1,7 +1,9 @@
+# fabric
 from fabric.api import cd
 from fabric.api import env
 from fabric.api import sudo
 from fabric.api import task
+from fabric.colors import green
 from fabric.contrib.files import upload_template
 
 from . import deb_handler
@@ -29,6 +31,7 @@ def stop():
 @task
 def restart():
     """ Restarts the nginx service. """
+    print(green(' Restarting the nginx service. '))
     nginx_handler('restart')
 
 
