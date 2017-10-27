@@ -61,10 +61,12 @@ class Region(Institution):
 
 
 class Commune(BaseModel):
+    # foreign keys
     region = models.ForeignKey(
         'Region',
         verbose_name=_('region'),
     )
+    # required fields
     name = models.CharField(
         _('name'),
         max_length=50,
@@ -85,6 +87,9 @@ class Commune(BaseModel):
     url = models.URLField(
         _('url'),
         max_length=200,
+    )
+    has_own_municipality = models.BooleanField(
+        default=True,
     )
 
     class Meta:

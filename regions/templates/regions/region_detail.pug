@@ -52,7 +52,7 @@ block content
         .row
           .col-sm-12.col-lg-4.col-xl-4
             article
-              h2.heading-medium {{ region.commune_set.count }} Municipios
+              h2.heading-medium {{ region.commune_set.with_own_municipality.count }} Municipios
               h3.heading-label Selecciona una comuna
               .select
                 select(id="communes")
