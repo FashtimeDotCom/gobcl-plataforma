@@ -18,16 +18,21 @@ class Region(Institution):
     governor = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('governor'),
+        null=True,
     )
     email = models.EmailField(
         _('email'),
         max_length=100,
+        null=True,
     )
     phone = PhoneNumberField(
         _('phone'),
+        null=True,
     )
     twitter = models.CharField(
         max_length=50,
+        null=True,
+        blank=True,
     )
 
     class Meta:
