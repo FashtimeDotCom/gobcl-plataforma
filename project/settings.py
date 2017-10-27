@@ -62,6 +62,13 @@ ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
 ]
 
+try:
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+except:
+    pass
+else:
+    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+
 SITE_ID = 1
 
 # Application definition
