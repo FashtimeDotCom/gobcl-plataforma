@@ -33,7 +33,8 @@ block content
                 img(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
               .profile_header
                 h3.profile_title {{ ministry.minister.name }}
-                span.profile_job {{ ministry.minister.charge }}
+                if ministry.minister.charge 
+                  span.profile_job {{ ministry.minister.charge }}
 
               p {{ ministry.minister.description|linebreaks }}
               p: a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter {{ ministry.minister.twitter }}
