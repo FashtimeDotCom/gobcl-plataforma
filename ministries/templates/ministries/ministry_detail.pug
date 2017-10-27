@@ -56,13 +56,8 @@ block content
                   h3.profile_title {{ servant.name }}
                   span.profile_job {{ servant.charge }}
 
-<<<<<<< HEAD
-                p {{ servant.description }}
-                p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
-=======
                 p {{ servant.description|linebreaks }}
-                p: a(href="#").profile_twitter {{ servant.twitter }}
->>>>>>> de78ea96bdfc0e43218b63c9a68af10b84c3cdaf
+                p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
                 ul.profile_info
                   li: span {% trans 'Phone' %}: {{ servant.phone }}
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
