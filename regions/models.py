@@ -38,8 +38,13 @@ class Region(Institution):
         null=True,
         blank=True,
     )
+    order = models.PositiveIntegerField(
+        _('order'),
+        default=0,
+    )
 
     class Meta:
+        ordering = ('order',)
         verbose_name = _('region')
         verbose_name_plural = _('regions')
         permissions = (
