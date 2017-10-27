@@ -13,16 +13,20 @@ from institutions.models import Institution
 
 
 class Ministry(Institution):
+    # foreign keys
     minister = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('minister'),
         null=True,
+        on_delete=models.SET_NULL,
     )
     public_servants = models.ManyToManyField(
         'public_servants.PublicServant',
         verbose_name=_('public servants'),
         related_name='ministries',
     )
+
+    # required fields
     procedures_and_benefits = models.URLField(
         _('procedures and benefits'),
         max_length=200,

@@ -15,11 +15,15 @@ from institutions.models import Institution
 
 
 class Region(Institution):
+    # foreign keys
     governor = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('governor'),
         null=True,
+        on_delete=models.SET_NULL,
     )
+
+    # required fields
     email = models.EmailField(
         _('email'),
         max_length=100,
