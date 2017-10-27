@@ -13,6 +13,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 from base.models import BaseModel
 from institutions.models import Institution
 
+# managers
+from .managers import CommuneQuerySet
+
 
 class Region(Institution):
     # foreign keys
@@ -91,6 +94,8 @@ class Commune(BaseModel):
     has_own_municipality = models.BooleanField(
         default=True,
     )
+
+    objects = CommuneQuerySet.as_manager()
 
     class Meta:
         ordering = (
