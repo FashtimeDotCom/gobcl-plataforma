@@ -1,32 +1,27 @@
 import requests
 
-from django.utils import timezone
-
+# mockups
 from base.mockups import Mockup
+from base.data import regions_data
 
-from government_structures.models import GovernmentStructure
+# models
 from ministries.models import Ministry
 from ministries.models import PublicService
+from regions.models import Commune
+from regions.models import Region
 
 
-def create_government_structure(datetime=None):
-    m = Mockup()
-    if datetime is None:
-        datetime = timezone.datetime.now()
-    return m.create_government_structure(
-        publication_date=datetime,
+def get_current_government_structure():
+    mockup = Mockup()
+
+    return mockup.get_or_create_government_structure(
         current_government=True
-    )
+    )[0]
 
 
 def create_ministry(datetime=None, quantity=10):
     m = Mockup()
-    government_structures = GovernmentStructure.objects.filter(
-        current_government=True)
-    if government_structures.exists():
-        government_structure = government_structures.first()
-    else:
-        government_structure = create_government_structure(datetime)
+    government_structure = get_current_government_structure()
 
     for x in range(quantity):
         minister = m.create_public_servant(
@@ -38,16 +33,27 @@ def create_ministry(datetime=None, quantity=10):
         )
 
 
-def load_data_from_digital_gob_api(datetime=None, ministry_with_minister=False):
+def load_regions(datetime=None, quantity=10):
+    government_structure = get_current_government_structure()
+
+    for region_data in regions_data:
+        region = Region.objects.get_or_create(
+            government_structure=government_structure,
+            name=region_data['name'],
+        )[0]
+
+        for commune_data in region_data['communes']:
+            Commune.objects.get_or_create(
+                name=commune_data['name'],
+                region=region,
+            )
+
+
+def load_data_from_digital_gob_api(ministry_with_minister=False):
 
     # get or create current government structure
     m = Mockup()
-    government_structures = GovernmentStructure.objects.filter(
-        current_government=True)
-    if government_structures.exists():
-        government_structure = government_structures.first()
-    else:
-        government_structure = create_government_structure(datetime)
+    government_structure = get_current_government_structure()
 
     # Get ministries from public json
     headers = {
@@ -88,6 +94,10 @@ def load_data_from_digital_gob_api(datetime=None, ministry_with_minister=False):
             for service in source.get('servicios_dependientes'):
                 name = service.get('nombre')
                 url = service.get('url', None)
+
+                if not url:
+                    continue
+
                 PublicService.objects.get_or_create(
                     name=name,
                     defaults={

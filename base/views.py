@@ -19,7 +19,6 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
 # utils
@@ -27,7 +26,6 @@ from base.view_utils import clean_query_string
 from inflection import underscore
 
 
-@login_required
 def index(request):
     """ view that renders a default home"""
     return render(request, 'index.pug')
@@ -75,11 +73,6 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
         context['title'] = self.get_title()
 
         return context
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.check_permission_required()
-        return super(BaseDetailView, self).dispatch(*args, **kwargs)
 
 
 class BaseCreateView(CreateView, PermissionRequiredMixin):

@@ -1,9 +1,11 @@
+# fabric
 from fabric.api import cd
 from fabric.api import env
 from fabric.api import prefix
 from fabric.api import run
 from fabric.api import task
 from fabric.contrib.files import upload_template
+from fabric.colors import green
 
 from .service import add_systemd_service
 from .service import gunicorn_handler
@@ -27,12 +29,14 @@ def install():
 @task
 def start():
     """ Starts the gunicorn service. """
+    print(green('Starting the gunicorn service. '))
     gunicorn_handler('start')
 
 
 @task
 def stop():
     """ Stops the gunicorn service. """
+    print(green('Stoping the gunicorn service. '))
     if search('running', gunicorn_handler('status')):
         gunicorn_handler('stop')
 
@@ -40,6 +44,7 @@ def stop():
 @task
 def restart():
     """ Restarts the gunicorn service. """
+    print(green('Restarting the gunicorn service. '))
     gunicorn_handler('restart')
 
 

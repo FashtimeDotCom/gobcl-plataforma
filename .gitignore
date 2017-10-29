@@ -104,3 +104,4 @@ project/static
 
 .vscode/
 .idea/
+*/*.dump

@@ -27,9 +27,9 @@ def set(address='default', user='magnet', branch='master', django_port='8000'):
     if address == 'default':
         print("Default host unset")
         exit()
-    elif address == 'testing':
+    elif address == 'staging':
         env.hosts = ['45.55.34.218']
-        branch = 'testing'
+        branch = 'staging'
     else:
         # TODO Validate input
         env.hosts = [address]

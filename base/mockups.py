@@ -1,16 +1,23 @@
 # standard library imports
+import os
+import random
 import string
 import uuid
-import random
 
+# django
 from django.utils import timezone
+from django.apps import apps
 
+# utils
 from base.utils import random_string
+from inflection import underscore
+from model_mommy import mommy
 
+# models
 from government_structures.models import GovernmentStructure
-from regions.models import Region
 from ministries.models import Ministry
 from public_servants.models import PublicServant
+from regions.models import Region
 
 
 class Mockup(object):
@@ -30,8 +37,6 @@ class Mockup(object):
 
     def create_region(self, **kwargs):
         self.set_required_foreign_key(kwargs, 'government_structure')
-        self.set_required_foreign_key(
-            kwargs, 'governor', model='public_servant')
         return Region.objects.create(**kwargs)
 
     #
@@ -122,3 +127,40 @@ class Mockup(object):
         if field not in data:
             data[field] = 'http://{}.com'.format(
                 self.random_string(length=length))
+
+
+def add_get_or_create(cls, model):
+    model_name = underscore(model.__name__)
+    method_name = 'create_{}'.format(model_name)
+
+    if not hasattr(cls, method_name):
+
+        def create_obj(self, *args, **kwargs):
+            return mommy.make(model)
+
+        setattr(cls, method_name, create_obj)
+
+    def get_or_create(self, **kwargs):
+        try:
+            return model.objects.get(**kwargs), False
+        except model.DoesNotExist:
+            pass
+
+        return getattr(cls, method_name)(self, **kwargs), True
+
+    get_or_create.__doc__ = "Get or create for {}".format(model_name)
+    get_or_create.__name__ = "get_or_create_{}".format(model_name)
+    setattr(cls, get_or_create.__name__, get_or_create)
+
+
+def get_our_models():
+    for model in apps.get_models():
+        app_label = model._meta.app_label
+
+        # test only those models that we created
+        if os.path.isdir(app_label):
+            yield model
+
+
+for model in get_our_models():
+    add_get_or_create(Mockup, model)

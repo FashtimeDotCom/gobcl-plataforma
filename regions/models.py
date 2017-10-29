@@ -13,24 +13,41 @@ from phonenumber_field.modelfields import PhoneNumberField
 from base.models import BaseModel
 from institutions.models import Institution
 
+# managers
+from .managers import CommuneQuerySet
+
 
 class Region(Institution):
+    # foreign keys
     governor = models.ForeignKey(
         'public_servants.PublicServant',
         verbose_name=_('governor'),
+        null=True,
+        on_delete=models.SET_NULL,
     )
+
+    # required fields
     email = models.EmailField(
         _('email'),
         max_length=100,
+        null=True,
     )
     phone = PhoneNumberField(
         _('phone'),
+        null=True,
     )
     twitter = models.CharField(
         max_length=50,
+        null=True,
+        blank=True,
+    )
+    order = models.PositiveIntegerField(
+        _('order'),
+        default=0,
     )
 
     class Meta:
+        ordering = ('order',)
         verbose_name = _('region')
         verbose_name_plural = _('regions')
         permissions = (
@@ -47,10 +64,12 @@ class Region(Institution):
 
 
 class Commune(BaseModel):
+    # foreign keys
     region = models.ForeignKey(
         'Region',
         verbose_name=_('region'),
     )
+    # required fields
     name = models.CharField(
         _('name'),
         max_length=50,
@@ -72,6 +91,11 @@ class Commune(BaseModel):
         _('url'),
         max_length=200,
     )
+    has_own_municipality = models.BooleanField(
+        default=True,
+    )
+
+    objects = CommuneQuerySet.as_manager()
 
     class Meta:
         ordering = (
@@ -89,4 +113,4 @@ class Commune(BaseModel):
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
 
-        return reverse('commune_detail', args=(self.pk,))
+        return reverse('region_detail', args=(self.region_pk,))

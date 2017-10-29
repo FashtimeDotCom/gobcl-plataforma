@@ -39,7 +39,7 @@ block content
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
-                span 244
+                span {{public_service_list.count}}
                 small {% trans 'Public Services.' %}
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
@@ -63,6 +63,16 @@ block content
             for ministry in ministry_list
               .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
                 p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+
+        - if public_service_list
+          br
+          h2.heading-medium {% trans 'public services'|capfirst %}
+          .row
+            for public_service in public_service_list
+              .filterable(data-value="{{ public_service.name }}").col-sm-12.col-md-4
+                p
+                  a(href="{{ public_service.url }}")
+                    {{ public_service }}
 
         - if region_list
           br
