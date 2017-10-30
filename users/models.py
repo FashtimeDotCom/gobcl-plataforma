@@ -69,6 +69,13 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         _('date joined'), default=timezone.now,
         help_text=_("The date this user was created in the database"),
     )
+    font_size = models.CharField(
+        _('font size'),
+        max_length=100,
+        blank=True,
+        default="",
+    )
+
     # Use UserManager to get the create_user method, etc.
     objects = UserManager()
 
