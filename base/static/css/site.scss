@@ -1,16 +1,43 @@
+
+@import "variables";
+
 body {
-    
+
+  .page-loading-icon {
+    display: none;
+    left: 10px;
+    position: relative;
+  }
+
+  &.wait {
+    cursor: wait !important;
+
     .page-loading-icon {
-        display: none;
-        left: 10px;
-        position: relative;
+      display: inline-block;
     }
+  }
+}
 
-    &.wait {
-        cursor: wait !important;
+main.site-main {
+  min-height: calc(100vh - #{map-get($footer-height, xs)} - #{map-get($navbar-height, xs)});
 
-        .page-loading-icon {
-            display: inline-block;
-        }
-    }
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    min-height: calc(100vh - #{map-get($footer-height, md)} - #{map-get($navbar-height, md)});
+  }
+
+  @media (min-width: map-get($grid-breakpoints, xl)) {
+    min-height: calc(100vh - #{map-get($footer-height, xl)} - #{map-get($navbar-height, md)});
+  }
+}
+
+footer.site-footer {
+  height: map-get($footer-height, xs);
+
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    height: map-get($footer-height, md);
+  }
+
+  @media (min-width: map-get($grid-breakpoints, xl)) {
+    height: map-get($footer-height, xl);
+  }
 }

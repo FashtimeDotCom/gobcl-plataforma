@@ -1,0 +1,20 @@
+/*
+  Variables
+  override bootstrap variables.
+ -------------------------------------------------- */
+
+$line-height-base: 1.42858;
+
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+$navbar-height: (
+  xs: 64px,
+  md: 71px
+);
+
+$footer-height: (
+  xs: 64px,
+  md: 317px,
+  xl: 223px,
+);
