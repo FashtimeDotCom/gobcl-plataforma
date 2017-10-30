@@ -10,12 +10,12 @@ $(function () {
 
   $('#search')
     .find('.search-form_input').on('input', function () {
-      const value = this.value;
+      const value = accentFold(this.value);
       $('.filterable').each(function (index, element) {
         const $element = $(element);
         $element.removeClass('d-none');
 
-        if (accentFold($element.data('value')).search(new RegExp(accentFold(value), 'gi')) === -1) {
+        if (accentFold($element.data('value')).search(new RegExp(value, 'gi')) === -1) {
           $element.addClass('d-none');
         }
       })
