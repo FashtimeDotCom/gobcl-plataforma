@@ -35,16 +35,19 @@ html(lang="es")
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
       charset="utf-8"
     )
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
-      charset="utf-8"
-    )
     {% endcompress %}
 
     link(
       href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
       rel="stylesheet"
     )
+
+    {% compress css %}
+    link(
+      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
+      charset="utf-8"
+    )
+    {% endcompress %}
 
     {% compress css %}
     block stylesheets

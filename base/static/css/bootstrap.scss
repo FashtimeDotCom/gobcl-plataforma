@@ -14,3 +14,11 @@ $container-max-widths: (
 
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.pv-0-until-md,
+section.pv-0-until-md {
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    padding-top: 0;
+    padding-right: 0;
+  }
+}
