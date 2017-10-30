@@ -35,16 +35,19 @@ html(lang="es")
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
       charset="utf-8"
     )
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
-      charset="utf-8"
-    )
     {% endcompress %}
 
     link(
       href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
       rel="stylesheet"
     )
+
+    {% compress css %}
+    link(
+      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
+      charset="utf-8"
+    )
+    {% endcompress %}
 
     {% compress css %}
     block stylesheets
@@ -95,8 +98,10 @@ html(lang="es")
     block javascript_data
 
     {% compress js %}
-    block javascripts
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
+    script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
+    block javascripts
     {% endcompress %}
 
