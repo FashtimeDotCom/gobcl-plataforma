@@ -10,8 +10,12 @@ from django.utils.text import slugify
 # models
 from base.models import BaseGovernmentStructureModel
 
+# hitcount
+from hitcount.models import HitCountMixin
 
-class Institution(BaseGovernmentStructureModel):
+
+class Institution(BaseGovernmentStructureModel, HitCountMixin):
+    # foreign keys
     name = models.CharField(
         _('name'),
         max_length=100,

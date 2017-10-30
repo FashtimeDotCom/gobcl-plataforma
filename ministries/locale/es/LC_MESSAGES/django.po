@@ -1,51 +1,66 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Translations for the ministires app
+# Copyright (C) 
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ignacio Munizaga <muni@magnet.cl>, 2017.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 15:55-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2017-10-27 19:22-0300\n"
+"PO-Revision-Date: 2017-10-27 19:22-0300\n"
+"Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:17
+#: models.py:18
 msgid "minister"
 msgstr "Ministro"
 
-#: models.py:21
+#: models.py:23
 msgid "public servants"
 msgstr "Servidores públicos"
 
-#: models.py:26
-msgid "public enterprises"
-msgstr "Empresas públicas"
-
-#: models.py:29
+#: models.py:27
 msgid "procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: models.py:35
+#: models.py:32
+msgid "importance"
+msgstr "importancia"
+
+#: models.py:38 models.py:78
 msgid "ministry"
 msgstr "Ministerio"
 
-#: models.py:36
+#: models.py:39
 msgid "ministries"
 msgstr "Ministerios"
+
+#: models.py:81 templates/ministries/ministry_list.pug:17
+msgid "name"
+msgstr "nombre"
+
+#: models.py:87
+msgid "url"
+msgstr "url"
+
+#: models.py:98
+msgid "public service"
+msgstr "servicio público"
+
+#: models.py:99
+msgid "public services"
+msgstr "servicios públicos"
 
 #: templates/ministries/ministry_delete.pug:18
 #, python-format
 msgid "Are you sure you want to delete' \"%(object)s\"?"
-msgstr ""
+msgstr "¿Estas seguro que quieres borrar' \"%(object)s\"?"
 
 #: templates/ministries/ministry_delete.pug:21
 msgid "Confirm"
@@ -55,39 +70,39 @@ msgstr "Confirmar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#: templates/ministries/ministry_detail.pug:11
+msgid "Home"
+msgstr "Inicio"
+
 #: templates/ministries/ministry_detail.pug:12
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/ministries/ministry_detail.pug:41
-#: templates/ministries/ministry_detail.pug:62
+#: templates/ministries/ministry_detail.pug:42
+#: templates/ministries/ministry_detail.pug:63
 msgid "Phone"
 msgstr "Teléfono"
 
-#: templates/ministries/ministry_detail.pug:42
-#: templates/ministries/ministry_detail.pug:63
+#: templates/ministries/ministry_detail.pug:43
+#: templates/ministries/ministry_detail.pug:64
 msgid "E-Mail"
 msgstr "Correo electrónico"
 
-#: templates/ministries/ministry_detail.pug:45
+#: templates/ministries/ministry_detail.pug:46
 msgid "Go to the ministry site"
 msgstr "Ir al sitio del Ministerio"
 
-#: templates/ministries/ministry_detail.pug:67
+#: templates/ministries/ministry_detail.pug:68
 msgid "Institutions of the Transport and Telecommunications Ministry"
 msgstr "Instituciones del Ministerio de Transporte y Telecomunicaciones"
 
-#: templates/ministries/ministry_detail.pug:68
+#: templates/ministries/ministry_detail.pug:69
 msgid "Public Enterprises"
 msgstr "Empresas públicas"
 
 #: templates/ministries/ministry_list.pug:10
 msgid "Add ministry"
 msgstr "Agregra ministerio"
-
-#: templates/ministries/ministry_list.pug:17
-msgid "name"
-msgstr "nombre"
 
 #: templates/ministries/ministry_list.pug:34
 msgid "Update ministry"

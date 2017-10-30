@@ -21,3 +21,4 @@ psycopg2==2.7.1
 pypugjs==4.2.2
 pytz>=2017.2
 requests==2.18.4
+django-hitcount==1.2.3

@@ -34,7 +34,12 @@ TEST = 'test' in sys.argv
 #     ('Full Name', 'email@example.com'),
 #     ('Full Name', 'anotheremail@example.com'),
 # ]
-ADMINS = []
+ADMINS = (
+    ('Ignacio Munizaga', 'muni@magnet.cl'),
+    ('Cristian Sepulveda', 'cristian@magnet.cl'),
+    ('Jorge Guerra', 'jorge@magnet.cl'),
+    ('Tito', 'cristobal@magnet.cl'),
+)
 
 
 # List of IP addresses, as strings, that:
@@ -56,6 +61,13 @@ SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
 ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
 ]
+
+try:
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+except:
+    pass
+else:
+    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
 
 SITE_ID = 1
 
@@ -80,6 +92,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'rest_framework',
     'django_filters',
+    'hitcount',
 
     # internal
     'base',
@@ -90,6 +103,7 @@ INSTALLED_APPS = [
     'institutions',
     'regions',
     'presidencies',
+    'links',
 ]
 
 # Default email address to use for various automated correspondence from
@@ -139,6 +153,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'government_structures.context_processors.add_government_structure_to_context',
+                'institutions.context_processors.most_visited_urls',
+                'links.context_processors.footer_links',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -263,8 +279,8 @@ NPM_FILE_PATTERNS = {
     ],
     'popper.js': ['dist/umd/popper.js'],
     'select2': [
-      'dist/js/select2.full.js',
-      'dist/css/select2.min.css'
+        'dist/js/select2.full.js',
+        'dist/css/select2.min.css'
     ]
 }
 
@@ -340,3 +356,9 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (218, 228), 'crop': True},
     },
 }
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'magnet'
+EMAIL_HOST_PASSWORD = 'necesitamosemails1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

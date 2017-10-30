@@ -1,7 +1,8 @@
 /**
  * Search field for institutions list.
  *
- * Search over data-value attribute in tags with class .filterable and hide elements w/o match.
+ * Search over data-value attribute in tags with class .filterable and hide
+ * elements * w/o match.
  */
 $(function () {
 
