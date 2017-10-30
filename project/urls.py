@@ -18,6 +18,7 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 
 from base import views as base_views
 
@@ -30,6 +31,14 @@ urlpatterns = [
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.index, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += i18n_patterns(
+    url(r'^accounts/', include('users.urls')),
+    url(r'^institutions/', include('institutions.urls')),
+    url(r'^ministries/', include('ministries.urls')),
+    url(r'^api/1.0/', include('api.urls')),
+    url(r'^$', base_views.index, name='home'),
+)
 
 if settings.DEBUG:
     import debug_toolbar
