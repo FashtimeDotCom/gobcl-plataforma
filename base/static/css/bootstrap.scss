@@ -3,16 +3,7 @@
   override bootstrap variables.
  -------------------------------------------------- */
 
-$grid-gutter-width: 30px;
-
-$container-max-widths: (
-  sm: 540px,
-  md: 750px,
-  lg: 970px,
-  xl: 1146px + $grid-gutter-width
-) !default;
-
-
+@import "variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 .pv-0-until-md,
