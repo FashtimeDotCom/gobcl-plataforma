@@ -3,6 +3,8 @@ doctype 5
 - load compress
 - load staticfiles
 - load i18n static
+- load cms_tags
+- load sekizai_tags
 
 html(lang="es")
   head
@@ -24,12 +26,12 @@ html(lang="es")
 
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
+    {% render_block "css" %}
 
     link(
       href="{% static 'select2/dist/css/select2.min.css' %}",
       rel="stylesheet"
     )
-
     {% compress css %}
     link(
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
@@ -54,6 +56,8 @@ html(lang="es")
     {% endcompress %}
 
   body(class='{{body_class|default:""}}')
+    {% cms_toolbar %}
+    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -96,7 +100,7 @@ html(lang="es")
     {% endcompress %}
 
     block javascript_data
-
+    {% render_block "js" %}
     {% compress js %}
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/application.js' %}")

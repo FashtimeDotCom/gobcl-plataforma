@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^ministries/', include('ministries.urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.index, name='home'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^n/', include('cms.urls')),
+]
 
 if settings.DEBUG:
     import debug_toolbar
