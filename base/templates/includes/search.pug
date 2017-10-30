@@ -1,0 +1,75 @@
+- load i18n
+
+.site-search.bg-bluedark
+  section
+    .container
+      p
+        a(href="#").text-white.toggle-search.d-none.d-sm-inline
+          i.ic-arrow-left.icon--left
+          | {% trans 'Back' %}
+      .row
+        .col-sm-12.col-md-12.col-lg-5.pull-lg-right.col-xl-4.col-xl-offset-1
+          .site-search_toolbar
+            {% include 'includes/toolbar.pug' %}
+        .col-md-12.col-lg-7.col-xl-7
+          .search-form.site-search_form.nomargin-bottom#search
+            .search-form_content
+              form(action="resultados.html")
+                input(type="search" placeholder="{% trans 'Write here what you want to search' %}")#input-search.search-form_input
+                button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+                button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+
+      .row
+        .col-sm-12.col-lg-5
+          h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
+          .tags.p-0
+            .select
+              select(name="")
+                option(value="Educación") Educación
+                option(value="Salud") Salud
+                option(value="Seguridad") Seguridad
+                option(value="Economía y empleo") Economía y empleo
+                option(value="Calidad de vida y ciudad") Calidad de vida y ciudad
+
+      .row
+        .col-md-12.col-lg-4.col-xl-4
+          h2.heading-label.heading-label--light {% trans 'Procedures' %}
+          div.search_section.overflowed-xs
+            a(href="#").link.link--text-light.link--has-dot Bono trabajo mujer
+            a(href="#").link.link--text-light Programa Mujer Jefa de Hogar
+            a(href="#").link.link--text-light Programa Mujer Jefa de Hogar
+            a(href="#").link.link--text-light.hidden-xs Programa Mujer Jefa de Hogar
+            a(href="#").link.link--text-light.hidden-xs Programa Mujer Jefa de Hogar
+            a(href="#").link.link--text-light.hidden-xs Programa Mujer Jefa de Hogar
+            .clearfix
+              a(href="#").more.more--right {% trans 'See more' %}
+
+        .col-md-12.col-lg-4.col-xl-4
+          h2.heading-label.heading-label--light {% trans 'News' %}
+          div.search_section.overflowed-xs
+            article.new.new--search
+              span.new_category.new_category--light Economia y empleo
+              h2.new_title: a(href="#").link.link--text-light Mandataria celebró el noveno aniversario de la Reforma Previsional
+            article.new.new--search
+              span.new_category.new_category--light Economia y empleo
+              h2.new_title: a(href="#").link.link--text-light Presidenta promulgó la Ley de Tenencia Responsable de Mascotas y Animales de Compañía
+            article.new.new--search
+              span.new_category.new_category--light Economia y empleo
+              h2.new_title: a(href="#").link.link--text-light Yo Apoyo Tres Causales: El sitio con lo que necesitas saber del histórico proyecto de ley
+            .clearfix
+              a(href="#").more.more--right {% trans 'See more' %}
+
+        .col-md-12.col-lg-4.col-xl-4
+          h2.heading-label.heading-label--light {% trans 'Institutions' %}
+          div.search_section.overflowed-xs
+            a(href="#").link.link--text-light Ministerio de transporte
+            a(href="#").link.link--text-light Ministerio de Relaciones Exteriores de Chile
+            a(href="#").link.link--text-light Gobierno Regional del Biobío
+            a(href="#").link.link--text-light.hidden-xs Ministerio de transporte
+            a(href="#").link.link--text-light.hidden-xs Ministerio de Relaciones Exteriores de Chile
+            a(href="#").link.link--text-light.hidden-xs Gobierno Regional del Biobío
+            .clearfix
+              a(href="#").more.more--right {% trans 'See more' %}
+        .col-sm-12.col-md-12.text-xs-center.text-sm-center
+          .site-search_button-results
+            a(href="resultados.html").button.button--clean.button--more {% trans 'See all results' %}
