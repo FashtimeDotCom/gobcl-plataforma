@@ -36,12 +36,15 @@ class PublicServant(BaseGovernmentStructureModel):
     email = models.EmailField(
         _('email'),
         max_length=50,
+        blank=True,
     )
     phone = PhoneNumberField(
         _('phone'),
+        blank=True,
     )
     twitter = models.CharField(
         max_length=50,
+        blank=True,
     )
 
     class Meta:
