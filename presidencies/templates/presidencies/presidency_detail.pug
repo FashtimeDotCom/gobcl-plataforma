@@ -21,10 +21,15 @@ block content
             .col-md-4
               img(src="{{ presidency.photo.url }}", alt="").img-fluid.w-100
             .col-md-8
-              p {{ presidency.description|linebreaks }}
+              .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
               ul.profile_body
                 li: a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter {{ presidency.twitter }}
-            .col-sm-12.col-md-12.col-lg-4.offset-lg-4.align-self-end.mt-3
+              .row.d-sm-none.d-lg-flex
+                .col-lg-6.mt-3
+                  .overflowed-xs
+                    a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
+          .row.d-sm-none.d-none.d-sm-flex.d-lg-none
+            .col-md-12.mt-3
               .overflowed-xs
                 a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
 
