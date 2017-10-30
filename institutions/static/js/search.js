@@ -4,6 +4,9 @@
  * Search over data-value attribute in tags with class .filterable and hide elements w/o match.
  */
 $(function () {
+
+  const accentFold = App.utils.accentFold;
+
   $('#search')
     .find('.search-form_input').on('input', function () {
       const value = this.value;
@@ -11,7 +14,7 @@ $(function () {
         const $element = $(element);
         $element.removeClass('d-none');
 
-        if ($element.data('value').search(new RegExp(value, 'gi')) === -1) {
+        if (accentFold($element.data('value')).search(new RegExp(accentFold(value), 'gi')) === -1) {
           $element.addClass('d-none');
         }
       })
