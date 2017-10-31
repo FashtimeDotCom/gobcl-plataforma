@@ -41,6 +41,14 @@ urlpatterns += i18n_patterns(
     url(r'^$', base_views.index, name='home'),
 )
 
+urlpatterns += i18n_patterns(
+    url(r'^accounts/', include('users.urls')),
+    url(r'^institutions/', include('institutions.urls')),
+    url(r'^ministries/', include('ministries.urls')),
+    url(r'^api/1.0/', include('api.urls')),
+    url(r'^$', base_views.index, name='home'),
+)
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
