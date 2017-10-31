@@ -3,7 +3,7 @@
   override bootstrap variables.
  -------------------------------------------------- */
 
-@import "variables";
+@import "_variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 .pv-0-until-md,
