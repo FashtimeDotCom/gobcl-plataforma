@@ -17,11 +17,11 @@ body {
     }
   }
 
-  @for $i from 1 through $footer-links-max {
+  @for $i from 0 through $footer-links-max {
     &.footer-links-#{$i} {
 
       main.site-main {
-        min-height: calc(100vh - #{map-get($footer-base-height, xs) + $i * $footer-link-height} - #{map-get($navbar-height, xs)});
+        min-height: calc(100vh - #{(map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)});
 
         @media (min-width: map-get($grid-breakpoints, md)) {
           min-height: calc(100vh - #{map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)});
