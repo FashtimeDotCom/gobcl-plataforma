@@ -52,8 +52,8 @@ block content
         .row
           .col-sm-12.col-lg-4.col-xl-4
             article
-              h2.heading-medium {{ region.commune_set.with_own_municipality.count }} Municipios
-              h3.heading-label Selecciona una comuna
+              h2.heading-medium {{ region.commune_set.with_own_municipality.count }} {% trans 'Municipalities' %}
+              h3.heading-label {% trans 'Select a Comune' %}
               .select
                 select(id="communes")
                   for commune in region.commune_set.all

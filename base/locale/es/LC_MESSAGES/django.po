@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 15:36-0300\n"
+"POT-Creation-Date: 2017-10-31 16:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,32 +42,31 @@ msgstr "Estructura de gobierno"
 msgid "optional"
 msgstr "opcional"
 
-#: templates/includes/footer.pug:9 templates/includes/navbar.pug:52
-#: templates/includes/navbar.pug:53 templates/includes/navbar.pug:54
+#: templates/includes/footer.pug:11
 msgid "Government program 2014 - 2018"
 msgstr "Programa de Gobierno 2014 - 2018"
 
-#: templates/includes/footer.pug:10
+#: templates/includes/footer.pug:14
 msgid "Transparency law"
 msgstr "Ley de transparencia"
 
-#: templates/includes/footer.pug:11
+#: templates/includes/footer.pug:17
 msgid "Transparent Government"
 msgstr "Gobierno transparente"
 
-#: templates/includes/footer.pug:14
+#: templates/includes/footer.pug:22
 msgid "Privacy policy."
 msgstr "Política de privacidad."
 
-#: templates/includes/footer.pug:15
+#: templates/includes/footer.pug:23
 msgid "Terms of use"
 msgstr "Términos de uso"
 
-#: templates/includes/footer.pug:16
+#: templates/includes/footer.pug:26
 msgid "Creative Commons"
 msgstr "Creative Commons"
 
-#: templates/includes/footer.pug:18
+#: templates/includes/footer.pug:28
 msgid "Currency visits"
 msgstr "Visitas a La Moneda"
 
@@ -76,6 +75,7 @@ msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
 #: templates/includes/navbar.pug:12 templates/includes/navbar.pug:41
+#: templates/includes/search.pug:48
 msgid "News"
 msgstr "Noticias"
 
@@ -95,7 +95,7 @@ msgstr "Iniciar sesion"
 msgid "Sections"
 msgstr "Secciones"
 
-#: templates/includes/navbar.pug:42
+#: templates/includes/navbar.pug:42 templates/includes/search.pug:63
 msgid "Institutions"
 msgstr "Instituciones"
 
@@ -103,9 +103,30 @@ msgstr "Instituciones"
 msgid "About Chile"
 msgstr "Acerca de Chile"
 
-#: templates/includes/navbar.pug:57
-msgid "Contact us"
-msgstr "Escríbenos"
+#: templates/includes/search.pug:9
+msgid "Back"
+msgstr "Volver"
+
+#: templates/includes/search.pug:18
+msgid "Write here what you want to search"
+msgstr "Escribe aquí lo que deseas buscar"
+
+#: templates/includes/search.pug:24
+msgid "Filter by Topics"
+msgstr "Filtrar por temas"
+
+#: templates/includes/search.pug:36
+msgid "Procedures"
+msgstr "Trámites"
+
+#: templates/includes/search.pug:45 templates/includes/search.pug:60
+#: templates/includes/search.pug:68
+msgid "See more"
+msgstr "Ver más"
+
+#: templates/includes/search.pug:71
+msgid "See all results"
+msgstr "Ver todos los resultados"
 
 #: templates/includes/social.pug:6
 msgid "Follow us on our social media:"
@@ -115,17 +136,17 @@ msgstr "Síguenos a través de redes sociales:"
 msgid "Listen"
 msgstr "Escuchar"
 
-#: views.py:91 views.py:140
+#: views.py:85 views.py:134
 #, python-format
 msgid "Create %s"
 msgstr "Creado %s"
 
-#: views.py:203
+#: views.py:197
 #, python-format
 msgid "Update %s"
 msgstr "Actualizado %s"
 
-#: views.py:218
+#: views.py:212
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
