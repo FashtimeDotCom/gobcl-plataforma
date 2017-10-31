@@ -22,7 +22,14 @@ from regions.models import Region
 
 class Mockup(object):
 
-    def create_government_structure(self, **kwargs):
+    mockup_government_structure = None
+    mockup_presidency = None
+
+    def create_government_structure(self, use_mockup_if_exists=True, **kwargs):
+
+        if use_mockup_if_exists and self.mockup_government_structure:
+            return self.mockup_government_structure
+
         self.set_required_datetime(kwargs, 'publication_date')
         return GovernmentStructure.objects.create(**kwargs)
 
@@ -32,6 +39,7 @@ class Mockup(object):
         return PublicServant.objects.create(**kwargs)
 
     def create_ministry(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'government_structure')
         self.set_required_string(kwargs, 'name')
         return Ministry.objects.create(**kwargs)
 

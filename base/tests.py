@@ -112,14 +112,29 @@ class UrlsTest(BaseTestCase):
         self.user.save()
         self.login()
 
-        self.default_params = {}
+        # create a current government
+        government_structure = self.get_or_create_government_structure(
+            current_government=True,
+        )[0]
+
+        self.mockup_government_structure = government_structure
+        print(government_structure, government_structure.id)
+        presidency = self.get_or_create_presidency(
+            government_structure=government_structure,
+        )[0]
+        print(presidency)
+
+        self.default_params = {
+            'government_structure_id': government_structure.id,
+            'presidency_id': presidency.id,
+        }
 
         for model in get_our_models():
             model_name = underscore(model.__name__)
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
-            obj = mommy.make(model)
+            obj = getattr(self, method_name)()
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 

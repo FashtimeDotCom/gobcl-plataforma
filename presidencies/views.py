@@ -35,6 +35,7 @@ class PresidencyDetailView(BaseDetailView):
     template_name = 'presidencies/presidency_detail.pug'
 
     def get_object(self, queryset=None):
+        print(self.request.government_structure, self.request.government_structure.id)
         return self.request.government_structure.presidency
 
 
