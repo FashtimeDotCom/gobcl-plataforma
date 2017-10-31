@@ -4,25 +4,10 @@ footer.site-footer
   .container
     a.site-footer_logo(href="#"): i.icon-gob-footer
     .row
-      .col-sm-12.col-md-6.col-xl-3
-        ul.menu
-          li
-            a(href="http://www.gob.cl/programa-de-gobierno/", target="blank").link.link--clean.text-white
-              | {% trans 'Government program 2014 - 2018' %}
-          li
-            a(href="http://transparenciaactiva.presidencia.cl/", target="blank").link.link--clean.text-white
-              | {% trans 'Transparency law' %}
-          li
-            a(href="http://transparenciaactiva.presidencia.cl/", target="blank").link.link--clean.text-white
-              | {% trans 'Transparent Government' %}
-      .col-sm-12.col-md-6.col-lg-3.col-xl-4.col-xl-offset-1
-        ul.menu
-          li
-            a(href="#", target="blank").link.link--clean.text-white
-              | {% trans 'Privacy policy.' %}
-          li: a(href="#").link.link--clean.text-white {% trans 'Terms of use' %}
-          li
-            a(href="https://creativecommons.org/licenses/by/3.0/cl/", target="blank").link.link--clean.text-white
-              | {% trans 'Creative Commons' %}
+      .col-md-12.col-xl-8
+        .row.menu
+          for link in footer_links
+            .col-sm-12.col-md-6.col-lg-3-col-xl-4
+              a(href="{{ link.url }}", target="blank").link.text-white {{ link }}
       .col-md-12.col-xl-4
         a(href="#").button.button--block.site-footer_button {% trans 'Currency visits' %}

@@ -55,7 +55,7 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}}')
+  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
     {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
