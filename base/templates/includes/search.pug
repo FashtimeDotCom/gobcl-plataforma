@@ -62,12 +62,8 @@
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
           div.search_section.overflowed-xs
-            a(href="#").link.link--text-light Ministerio de transporte
-            a(href="#").link.link--text-light Ministerio de Relaciones Exteriores de Chile
-            a(href="#").link.link--text-light Gobierno Regional del Biobío
-            a(href="#").link.link--text-light.hidden-xs Ministerio de transporte
-            a(href="#").link.link--text-light.hidden-xs Ministerio de Relaciones Exteriores de Chile
-            a(href="#").link.link--text-light.hidden-xs Gobierno Regional del Biobío
+            for page in most_visited_urls
+              a(href="{{ page.content_object.get_absolute_url }}").link.link--text-light {{ page.content_object }}
             .clearfix
               a(href="#").more.more--right {% trans 'See more' %}
         .col-sm-12.col-md-12.text-xs-center.text-sm-center
