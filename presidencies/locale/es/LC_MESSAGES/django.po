@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 15:55-0300\n"
+"POT-Creation-Date: 2017-10-31 16:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,43 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:19 models.py:55
-msgid "url"
-msgstr "url"
-
-#: models.py:23 models.py:49
-msgid "description"
-msgstr "Descripción"
-
-#: models.py:33
-msgid "government structure"
-msgstr "Estructura de gobierno"
-
-#: models.py:36
+#: models.py:19 models.py:41
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:40
+#: models.py:24 models.py:60
+msgid "url"
+msgstr "url"
+
+#: models.py:28 models.py:54
+msgid "description"
+msgstr "Descripción"
+
+#: models.py:38
+msgid "government structure"
+msgstr "Estructura de gobierno"
+
+#: models.py:45
 msgid "title"
 msgstr "Título"
 
-#: models.py:44
+#: models.py:49
 msgid "photo"
 msgstr "Foto"
 
-#: models.py:60
+#: models.py:65
 msgid "urls"
 msgstr "urls"
 
-#: models.py:64
+#: models.py:69
 msgid "presidency"
 msgstr "Presidencia"
 
-#: models.py:65
+#: models.py:70
 msgid "presidencies"
 msgstr "Presidencias"
 
-#: models.py:67
+#: models.py:72
 msgid "Can view presidency"
 msgstr "Puede ver presidencia"
 
@@ -71,10 +71,15 @@ msgstr "Confirmar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#: templates/presidencies/presidency_detail.pug:11
+msgid "Home"
+msgstr ""
+
 #: templates/presidencies/presidency_detail.pug:12
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/presidencies/presidency_detail.pug:29
+#: templates/presidencies/presidency_detail.pug:30
+#: templates/presidencies/presidency_detail.pug:34
 msgid "Go to the presidency site"
 msgstr "Ir al sitio de la presidencia"
