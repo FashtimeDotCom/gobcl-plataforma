@@ -8,8 +8,8 @@
           i.ic-arrow-left.icon--left
           | {% trans 'Back' %}
       .row
-        .col-sm-12.col-md-12.col-lg-5.pull-lg-right.col-xl-4.col-xl-offset-1
-          .site-search_toolbar
+        .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
+          .site-search_toolbar.pull-md-right
             {% include 'includes/toolbar.pug' %}
         .col-md-12.col-lg-7.col-xl-7
           .search-form.site-search_form.nomargin-bottom#search
@@ -23,7 +23,7 @@
         .col-sm-12.col-lg-5
           h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
           .tags.p-0
-            .select
+            .select.select--dark
               select(name="")
                 option(value="Educación") Educación
                 option(value="Salud") Salud
