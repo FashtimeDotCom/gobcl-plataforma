@@ -18,8 +18,12 @@ $navbar-height: (
   md: 71px
 );
 
-$footer-height: (
-  xs: 380px,
-  md: 317px,
+$footer-base-height: (
+  xs: 185px,
+  md: 245px,
   xl: 223px,
 );
+
+$footer-link-height: 44px;
+$footer-links-max: 20;
+$footer-links-container-offset: 100px;
