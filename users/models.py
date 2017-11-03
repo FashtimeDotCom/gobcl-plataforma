@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         _('font size'),
         max_length=100,
         blank=True,
-        default="",
+        default="default",
     )
 
     # Use UserManager to get the create_user method, etc.
