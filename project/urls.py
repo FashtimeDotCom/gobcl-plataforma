@@ -19,26 +19,24 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import ugettext_lazy as _
 
 from base import views as base_views
 
 urlpatterns = [
+    url(r'^api/1.0/', include('api.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += i18n_patterns(
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
-    url(r'^institutions/', include('institutions.urls')),
-    url(r'^ministries/', include('ministries.urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.index, name='home'),
-    url(r'^n/', include('cms.urls')),
-]
-
-urlpatterns += i18n_patterns(
-    url(r'^accounts/', include('users.urls')),
-    url(r'^institutions/', include('institutions.urls')),
-    url(r'^ministries/', include('ministries.urls')),
-    url(r'^api/1.0/', include('api.urls')),
-    url(r'^$', base_views.index, name='home'),
+    url(_(r'^news/'), include('cms.urls')),
+    url(_(r'^institutions/'), include('institutions.urls')),
+    url(_(r'^ministries/'), include('ministries.urls')),
 )
 
 if settings.DEBUG:

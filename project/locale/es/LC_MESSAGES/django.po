@@ -18,10 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: settings.py:253
-msgid "Spanish"
-msgstr ""
-
 #: settings.py:254
+msgid "Spanish"
+msgstr "Español"
+
+#: settings.py:255
 msgid "English"
-msgstr ""
+msgstr "Inglés"
+
+#: urls.py:44
+msgid "^institutions/"
+msgstr "^instituciones/"
+
+#: urls.py:45
+msgid "^ministries/"
+msgstr "^ministerios/"
