@@ -1,9 +1,12 @@
 extends base.pug
 
+- load i18n
+- load staticfiles
+
 block content
   main.site-main
     section.section.bg-bluedark.elem-bg
-      img(data-src="http://e-gob.github.io/gob.cl/sitio/images/temp/hero-home.jpg", alt="").img-desktop.img-to-bg
+      img(data-src="{% static 'images/hero-home.jpg' %}", alt="").img-desktop.img-to-bg
       .container
         .row
           .col-12.col-lg-5.order-lg-12.col-xl-5
@@ -11,11 +14,11 @@ block content
               {% include 'includes/toolbar.pug' %}
           .col-12.col-lg-7
             article.article.article--dark.text-light
-              h2.article_title.title--light Estás en Gob.cl
-              p Tu portal para acceder de manera simple y rápida a información del Gobierno de Chile.
+              h2.article_title.title--light {% trans 'You are on Gob.cl' %}
+              p {% trans 'Your portal to access information of the Government of Chile in a simple and fast way.' %}
               .search-form.search-form--large#searchHero
                 .search-form_content
-                  input(type="search" placeholder="Escribe aquí lo que quieres buscar").search-form_input.toggle-search
+                  input(type="search" placeholder="{% trans 'Write here what you want to search'%}").search-form_input.toggle-search
                   button(type="submit").search-form_button.search-form_button--submit: i.ic-search
                   button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
 
@@ -24,13 +27,13 @@ block content
         .row
           .col-md-8
             ul.list-ib
-              li Lo más buscado:
+              li {% trans 'Most searched' %}:
               li: a(href="resultados.html").link.link--clean.text-white Subsidio habitacional
               li: a(href="resultados.html").link.link--clean.text-white Bono por hijo
               li: a(href="resultados.html").link.link--clean.text-white Gratuidad
               li: a(href="resultados.html").link.link--clean.text-white Cuenta pública
           .col-md-2.offset-md-2
-            a(href="#").text-white Visita Chile Mejor
+            a(href="#").text-white {% trans 'Visit Chile Better' %}
 
     section
       .container
@@ -39,17 +42,17 @@ block content
           .row
             .col-12.col-lg-8.col-xl-6
               article.card-new
-                h2.heading-medium Trámites y beneficios
-                p Infórmate sobre los principales beneficios del Estado, además de los trámites que se realizan en ChileAtiende.
-                a(href="tramites.html").card-new_more.hidden-lg Ver más
+                h2.heading-medium {% trans 'Procedures and benefits' %}
+                p {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
+                a(href="tramites.html").card-new_more.hidden-lg {% trans 'See more' %}
               article.card-new.d-block.d-sm-none
-                h2.heading-medium Noticias
-                p Entérate de nuestras propuestas para mejorar el país y revisa como avanzan.
-                a(href="noticias.html").card-new_more.hidden-lg Ver más
+                h2.heading-medium {% trans 'News' %}
+                p {% trans 'Find out about our proposals to improve the country and review how they advance.' %}
+                a(href="noticias.html").card-new_more.hidden-lg {% trans 'See more' %}
               article.card-new.d-block.d-sm-none
-                h2.heading-medium Instituciones
-                p Conoce las principales entidades de Gobierno y sus representantes.
-                a(href="instituciones.html").card-new_more.hidden-lg Ver más
+                h2.heading-medium {% trans 'Institutions' %}
+                p {% trans 'Meet the main government entities and their representatives.' %}
+                a(href="{% url 'institution_list' %}").card-new_more.hidden-lg {% trans 'See more' %}
           .row.d-none.d-sm-flex
             .col-12.col-lg-4
               .overflowed-xs
@@ -62,10 +65,10 @@ block content
                 a(href="#").link.visited Certificación de vehículos a gas
           .row
             .col-lg-4.offset-lg-4.d-none.d-sm-block
-              a(href="#").button.button--block.button--light.button--clean.button--space Ver más
+              a(href="#").button.button--block.button--light.button--clean.button--space {% trans 'See more' %}
 
         section.sub-section.d-none.d-sm-block
-          h2.heading-medium Noticias
+          h2.heading-medium {% trans 'News' %}
           .row
             .col-12.col-lg-6
               article.new.new--has-thumbnail-sm
@@ -98,35 +101,32 @@ block content
         section.sub-section.d-none.d-sm-block
           .row
             .col-12.col-lg-7
-              h2.heading-medium Gobierno
-              p Conoce las principales entidades de Gobierno y sus autoridades.
+              h2.heading-medium {% trans 'Government' %}
+              p {% trans 'Know the main government entities and their authorities.' %}
               br
             .col-12
               .row
                 .col-md-6.col-lg-3
-                  a(href="instituciones.html").card-data
-                    h2.card-data_title: span Presidencia de la República
+                  a(href="{% url 'institution_list' %}").card-data
+                    h2.card-data_title: span {% trans 'Presidency of the Republic' %}
                 .col-md-6.col-lg-3
-                  a(href="instituciones.html").card-data
+                  a(href="{% url 'institution_list' %}").card-data
                     h3.card-data_title
-                      span.card-data_number 23
-                      span.card-data_title-text Ministerios
+                      span.card-data_number {{ ministry_list|length }}
+                      span.card-data_title-text {% trans 'Ministries' %}
                 .col-md-6.col-lg-3
-                  a(href="instituciones.html").card-data
+                  a(href="{% url 'institution_list' %}").card-data
                     h3.card-data_title
-                      span.card-data_number 244
-                      span.card-data_title-text
-                        | Servicios
-                        br
-                        | Públicos
+                      span.card-data_number {{public_service_list.count}}
+                      span.card-data_title-text {% trans 'Public Services.' %}
                 .col-md-6.col-lg-3
-                  a(href="instituciones.html").card-data
+                  a(href="{% url 'institution_list' %}").card-data
                     h3.card-data_title
-                      span.card-data_number 15
-                      span.card-data_title-text Regiones y sus Municipios
+                      span.card-data_number {{ region_list|length }}
+                      span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
         section.sub-section
-          h2.heading-medium Campañas
+          h2.heading-medium {% trans 'Campaigns' %}
           .row
             .col-md-3
               a(href="#").featured-card.has-icon
@@ -154,17 +154,17 @@ block content
           .card-small.d-md-none
             h5.card-small_title
               a(href="acerca-de.html").card-small_link
-                | Acerca de Chile
+                | {% trans 'About Chile' %}
                 i.ic-arrow-right.icon--right
             .card-small_body
-              p Información para turistas, migrantes y quienes quieran estudiar o hacer negocios en Chile.
+              p {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
           .row.d-none.d-lg-flex
             .col-md-5.align-self-center
-                h5.heading-medium Acerca de Chile
-                p Información para turistas, migrantes y quienes quieran estudiar o hacer negocios en Chile.
+                h5.heading-medium {% trans 'About Chile' %}
+                p {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
                 .row
                   .col-lg-10
-                    a(href="acerca-de.html").button.button--block.button--light.button--clean.button--space Ver más
+                    a(href="acerca-de.html").button.button--block.button--light.button--clean.button--space {% trans 'See more' %}
             .col-md-1
             .col-md-6.align-self-center
-              img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/acerca-de.jpg", alt="").img-fluid.w-100
+              img(src="{% static 'images/about-of.jpg' %}", alt="").img-fluid.w-100
