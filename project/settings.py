@@ -152,6 +152,7 @@ MIDDLEWARE = [
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -163,6 +164,7 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'users.middleware.font_size.FontSizeMiddleware',
 ]
 
 if DEBUG:
@@ -186,9 +188,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'government_structures.context_processors.add_government_structure_to_context',
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
+                (
+                    'government_structures.context_processors.'
+                    'add_government_structure_to_context'
+                ),
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
             ],
@@ -260,7 +265,12 @@ LANGUAGES = (
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'America/Santiago'
 
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
 USE_I18N = True
+LOCALE_PATHS = [
+    PROJECT_DIR + '/locale'
+]
 
 USE_L10N = True
 
