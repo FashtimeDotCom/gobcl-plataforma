@@ -4,8 +4,8 @@ class FontSizes(object):
     def next_size(self, size):
         size_index = self.sizes.index(size)
         next_index = size_index + 1
-        if next_index > len(self.sizes):
-            return None
+        if next_index > (len(self.sizes) - 1):
+            return size
         else:
             return self.sizes[next_index]
 
@@ -13,6 +13,6 @@ class FontSizes(object):
         size_index = self.sizes.index(size)
         prev_index = size_index - 1
         if prev_index < 0:
-            return None
+            return size
         else:
             return self.sizes[prev_index]
