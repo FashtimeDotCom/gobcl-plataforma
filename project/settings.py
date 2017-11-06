@@ -164,6 +164,7 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'users.middleware.font_size.FontSizeMiddleware',
 ]
 
 if DEBUG:
@@ -187,9 +188,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'government_structures.context_processors.add_government_structure_to_context',
                 'sekizai.context_processors.sekizai',
                 'cms.context_processors.cms_settings',
+                (
+                    'government_structures.context_processors.'
+                    'add_government_structure_to_context'
+                ),
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
             ],
