@@ -204,11 +204,18 @@ class UserListView(BaseListView):
 
 
 def user_font_size_change(request):
+    """
+    Json view that that handles user font size changes
+    """
+
     if request.method == 'POST':
+        # current font size
         font_size = request.user.font_size
+
         content = json.loads(request.body.decode('utf-8'))
         fonts_object = FontSizes()
 
+        # determine the type of operation
         if content['type'] == 'increase':
             new_size = fonts_object.next_size(font_size)
         elif content['type'] == 'decrease':
@@ -216,6 +223,7 @@ def user_font_size_change(request):
         else:
             return JsonResponse({'error': 'could not parse'})
 
+        # indicate if size was changed
         if new_size != font_size:
             request.user.font_size = new_size
             request.user.save()
