@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'public_enterprise_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.public_enterprises.change_public_enterprise
+        a.btn.btn-primary(href="{% url 'public_enterprise_update' public_enterprise.id %}")
+          {% trans 'Update public enterprise' %}
+          i.fa.fa-edit
+      if perms.public_enterprises.delete_public_enterprise
+        a.btn.btn-danger(href="{% url 'public_enterprise_delete' public_enterprise.id %}")
+          {% trans 'Delete public enterprise' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{public_enterprise.id}}
