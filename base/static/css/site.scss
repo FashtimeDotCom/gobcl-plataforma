@@ -1,5 +1,5 @@
 
-@import "variables";
+@import "_variables";
 
 body {
 
@@ -16,28 +16,49 @@ body {
       display: inline-block;
     }
   }
-}
 
-main.site-main {
-  min-height: calc(100vh - #{map-get($footer-height, xs)} - #{map-get($navbar-height, xs)});
+  @for $i from 0 through $footer-links-max {
+    &.footer-links-#{$i} {
 
-  @media (min-width: map-get($grid-breakpoints, md)) {
-    min-height: calc(100vh - #{map-get($footer-height, md)} - #{map-get($navbar-height, md)});
-  }
+      main.site-main {
+        min-height: calc(100vh - #{(map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)});
 
-  @media (min-width: map-get($grid-breakpoints, xl)) {
-    min-height: calc(100vh - #{map-get($footer-height, xl)} - #{map-get($navbar-height, md)});
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          min-height: calc(100vh - #{map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)});
+        }
+
+        @media (min-width: map-get($grid-breakpoints, xl)) {
+          min-height: calc(100vh - #{max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl)) + map-get($navbar-height, md)});
+        }
+      }
+
+      footer.site-footer {
+        height: map-get($footer-base-height, xs) + $i * $footer-link-height;
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          height: map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height);
+        }
+
+        @media (min-width: map-get($grid-breakpoints, xl)) {
+          height: max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl));
+        }
+
+        .menu {
+          height: $i * $footer-link-height;
+
+          @media (min-width: map-get($grid-breakpoints, md)) {
+            height: round($i / 2) * $footer-link-height;
+          }
+        }
+      }
+    }
   }
 }
 
 footer.site-footer {
-  height: map-get($footer-height, xs);
-
-  @media (min-width: map-get($grid-breakpoints, md)) {
-    height: map-get($footer-height, md);
-  }
-
-  @media (min-width: map-get($grid-breakpoints, xl)) {
-    height: map-get($footer-height, xl);
+  .menu {
+    a {
+      height: $footer-link-height;
+    }
   }
 }

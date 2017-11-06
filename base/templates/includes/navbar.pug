@@ -1,4 +1,5 @@
 - load i18n
+- load menu_tags
 
 header.site-header
   .site-header_fixed
@@ -23,6 +24,15 @@ header.site-header
         else 
           .site-header_login
               a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
+        ul
+          li.dropdown.language-selector
+            a.dropdown-toggle(data-toggle="dropdown")
+              - get_current_language as current_language
+              = current_language|language_name_local|title
+              b.caret
+            ul.dropdown-menu.languages
+              {% language_chooser %}
+
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
@@ -39,26 +49,6 @@ header.site-header
           ul
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'News' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Institutions' %}
+            li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'About Chile' %}
-          
-
-          .navigation_bottom
-            a.navigation_logo(href="#"): i.icon-gob-footer
-            h4.heading-label.text-white Loreim
-            .row
-              .col-sm-12
-                ul
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
-                  li: a(href="#").link.link--text-light.overflowed-xs {% trans 'Government program 2014 - 2018' %}
-            .row
-              .col-sm-4
-                p.text-white {% trans 'Contact us' %}
-              .col-sm-8
-                ul.social
-                  li: a(href="https://www.facebook.com/gobiernodechile", target="blank"): i.ic-facebook
-                  li: a(href="https://twitter.com/gobiernodechile", target="blank"): i.ic-twitter
-                  li: a(href="https://www.instagram.com/gobiernodechile/", target="blank"): i.ic-instagram
-                  li: a(href="https://www.youtube.com/user/LAMONEDA", target="blank"): i.ic-youtube
 
