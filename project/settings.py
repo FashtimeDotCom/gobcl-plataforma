@@ -106,6 +106,7 @@ INSTALLED_APPS = [
     'presidencies',
     'links',
     'public_enterprises',
+    'searches',
 
     # django cms
     'cms',
