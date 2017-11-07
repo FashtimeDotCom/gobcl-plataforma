@@ -5,6 +5,9 @@ python:
 
 services: postgresql
 
+before_install:
+  - npm install
+
 install:
   - pip install -r requirements.txt
 
