@@ -41,5 +41,5 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
         self.name = self.name.strip()
 
     def save(self, **kwargs):
-        self.slug_es = slugify(self.name)
+        self.slug = slugify(self.name)
         super(Institution, self).save(**kwargs)
