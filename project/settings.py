@@ -23,6 +23,7 @@ if 'TRAVIS' not in os.environ:
         LOCAL_DATABASES,
         LOCALLY_INSTALLED_APPS,
         ENABLE_EMAILS,
+        SECRET_KEY,
     )
 else:
     from project.travis_settings import (
@@ -30,6 +31,7 @@ else:
         LOCAL_DATABASES,
         LOCALLY_INSTALLED_APPS,
         ENABLE_EMAILS,
+        SECRET_KEY,
     )
 
 if DEBUG:
