@@ -39,7 +39,7 @@ block content
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
-                span {{public_service_list.count}}
+                span {{ public_service_list|length }}
                 small {% trans 'Public Services.' %}
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
