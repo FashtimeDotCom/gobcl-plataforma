@@ -83,7 +83,7 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
             # get or create ministry by government structure and name
             ministry_obj = Ministry.objects.get_or_create(
                 government_structure=government_structure,
-                name=name,
+                name_es=name,
                 defaults=defaults,
             )[0]
 
