@@ -160,6 +160,7 @@ class UrlsTest(BaseTestCase):
 
         ignored_urls = [
             "/es/noticias/",
+            "/es/news/",
             "/admin/filer/clipboard/operations/upload/no_folder/",
         ]
 
