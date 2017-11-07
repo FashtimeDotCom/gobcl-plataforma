@@ -420,6 +420,8 @@ THUMBNAIL_HIGH_RESOLUTION = True
 # django cms
 CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
+    ('article_list.pug', 'Article list template'),
+    ('article_detail.pug', 'Article detail template'),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [

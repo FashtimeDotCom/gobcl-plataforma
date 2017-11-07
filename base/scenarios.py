@@ -1,5 +1,8 @@
 import requests
 
+# django
+from django.contrib.sites.models import Site
+
 # mockups
 from base.mockups import Mockup
 from base.data import regions_data
@@ -19,6 +22,12 @@ def get_current_government_structure():
     )[0]
 
 
+def create_presidency():
+    m = Mockup()
+    government_structure = get_current_government_structure()
+    m.create_presidency(government_structure=government_structure)
+
+
 def create_ministry(datetime=None, quantity=10):
     m = Mockup()
     government_structure = get_current_government_structure()
@@ -31,6 +40,17 @@ def create_ministry(datetime=None, quantity=10):
             minister=minister,
             government_structure=government_structure,
         )
+
+
+def create_cms_pages():
+    mockup = Mockup()
+    site_id = Site.objects.first().id
+
+    mockup.get_or_create_page(
+        reverse_id=u'Noticias',
+        template=u'base.jade',
+        site_id=site_id,
+    )
 
 
 def load_regions(datetime=None, quantity=10):
