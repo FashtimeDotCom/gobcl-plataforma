@@ -20,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from project.local_settings import DEBUG, LOCAL_DATABASES
 from project.local_settings import LOCALLY_INSTALLED_APPS
 from project.local_settings import ENABLE_EMAILS
+from project.local_settings import SECRET_KEY
 
 if DEBUG:
     env = 'development'
@@ -52,12 +53,7 @@ INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-SECRET_KEY = 'wwrb!e&@-%_scw^v8o-q9)v3x7%(3^%12_r_$rt9prby!l1)h#'
+SECRET_KEY = SECRET_KEY
 
 ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
@@ -97,6 +93,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'hitcount',
+    'haystack',
 
     # internal
     'base',
@@ -128,6 +125,9 @@ INSTALLED_APPS = [
     'aldryn_people',
     'aldryn_reversion',
     'aldryn_translation_tools',
+    'aldryn_search',
+    'standard_form',
+    'spurl',
     'parler',
     'sortedm2m',
     'taggit',
@@ -442,3 +442,10 @@ EMAIL_HOST_USER = 'magnet'
 EMAIL_HOST_PASSWORD = 'necesitamosemails1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
