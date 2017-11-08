@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 16:34-0300\n"
+"POT-Creation-Date: 2017-11-06 15:48-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,40 +42,18 @@ msgstr "Estructura de gobierno"
 msgid "optional"
 msgstr "opcional"
 
-#: templates/includes/footer.pug:11
-msgid "Government program 2014 - 2018"
-msgstr "Programa de Gobierno 2014 - 2018"
-
-#: templates/includes/footer.pug:14
-msgid "Transparency law"
-msgstr "Ley de transparencia"
-
-#: templates/includes/footer.pug:17
-msgid "Transparent Government"
-msgstr "Gobierno transparente"
-
-#: templates/includes/footer.pug:22
-msgid "Privacy policy."
-msgstr "Política de privacidad."
-
-#: templates/includes/footer.pug:23
-msgid "Terms of use"
-msgstr "Términos de uso"
-
-#: templates/includes/footer.pug:26
-msgid "Creative Commons"
-msgstr "Creative Commons"
-
-#: templates/includes/footer.pug:28
+#: templates/includes/footer.pug:18
 msgid "Currency visits"
 msgstr "Visitas a La Moneda"
 
 #: templates/includes/navbar.pug:11 templates/includes/navbar.pug:40
+#: templates/index.pug:45
 msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
 #: templates/includes/navbar.pug:12 templates/includes/navbar.pug:41
-#: templates/includes/search.pug:48
+#: templates/includes/search.pug:48 templates/index.pug:49
+#: templates/index.pug:71
 msgid "News"
 msgstr "Noticias"
 
@@ -96,10 +74,12 @@ msgid "Sections"
 msgstr "Secciones"
 
 #: templates/includes/navbar.pug:42 templates/includes/search.pug:63
+#: templates/index.pug:53
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/includes/navbar.pug:43
+#: templates/includes/navbar.pug:43 templates/index.pug:157
+#: templates/index.pug:163
 msgid "About Chile"
 msgstr "Acerca de Chile"
 
@@ -107,7 +87,7 @@ msgstr "Acerca de Chile"
 msgid "Back"
 msgstr "Volver"
 
-#: templates/includes/search.pug:18
+#: templates/includes/search.pug:18 templates/index.pug:21
 msgid "Write here what you want to search"
 msgstr "Escribe aquí lo que deseas buscar"
 
@@ -120,7 +100,9 @@ msgid "Procedures"
 msgstr "Trámites"
 
 #: templates/includes/search.pug:45 templates/includes/search.pug:60
-#: templates/includes/search.pug:68
+#: templates/includes/search.pug:68 templates/index.pug:47
+#: templates/index.pug:51 templates/index.pug:55 templates/index.pug:68
+#: templates/index.pug:167
 msgid "See more"
 msgstr "Ver más"
 
@@ -135,6 +117,74 @@ msgstr "Síguenos a través de redes sociales:"
 #: templates/includes/toolbar.pug:18
 msgid "Listen"
 msgstr "Escuchar"
+
+#: templates/index.pug:17
+msgid "You are on Gob.cl"
+msgstr "Estás en Gob.cl"
+
+#: templates/index.pug:18
+msgid ""
+"Your portal to access information of the Government of Chile in a simple and "
+"fast way."
+msgstr "Tu portal para acceder de manera simple y rápida a información del Gobierno de Chile."
+
+#: templates/index.pug:30
+msgid "Most searched"
+msgstr "Lo más buscado"
+
+#: templates/index.pug:36
+msgid "Visit Chile Better"
+msgstr "Visita Chile Mejor"
+
+#: templates/index.pug:46
+msgid ""
+"Find out about the main benefits of the State, in addition to the procedures "
+"that are carried out in ChileAtiende."
+msgstr "Infórmate sobre los principales beneficios del Estado, además de los trámites que se realizan en ChileAtiende."
+
+#: templates/index.pug:50
+msgid ""
+"Find out about our proposals to improve the country and review how they "
+"advance."
+msgstr "Entérate de nuestras propuestas para mejorar el país y revisa como avanzan."
+
+#: templates/index.pug:54
+msgid "Meet the main government entities and their representatives."
+msgstr "Conoce las principales entidades de Gobierno y sus representantes."
+
+#: templates/index.pug:104
+msgid "Government"
+msgstr "Gobierno"
+
+#: templates/index.pug:105
+msgid "Know the main government entities and their authorities."
+msgstr "Conoce las principales entidades de Gobierno y sus autoridades."
+
+#: templates/index.pug:111
+msgid "Presidency of the Republic"
+msgstr "Presidencia de la República"
+
+#: templates/index.pug:116
+msgid "Ministries"
+msgstr "Ministerios"
+
+#: templates/index.pug:121
+msgid "Public Services."
+msgstr "Servicios Públicos"
+
+#: templates/index.pug:126
+msgid "Regions and their Municipalities."
+msgstr "Regiones y sus Municipios"
+
+#: templates/index.pug:129
+msgid "Campaigns"
+msgstr "Campañas"
+
+#: templates/index.pug:160 templates/index.pug:164
+msgid ""
+"Information for tourists, migrants and those who want to study or do "
+"business in Chile."
+msgstr "Información para turistas, migrantes y quienes quieran estudiar o hacer negocios en Chile."
 
 #: views.py:85 views.py:134
 #, python-format

@@ -1,0 +1,15 @@
+language: python
+
+python:
+  - 3.6
+
+services: postgresql
+
+before_install:
+  - npm install
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - python manage.py test
