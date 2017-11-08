@@ -18,22 +18,21 @@ from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 # local settings
-
-if 'TRAVIS' not in os.environ:
-    from project.local_settings import (
-        DEBUG,
-        LOCAL_DATABASES,
-        LOCALLY_INSTALLED_APPS,
-        ENABLE_EMAILS,
-    )
+if 'TRAVIS' in os.environ:
+    from project.travis_settings import DEBUG
+    from project.travis_settings import LOCAL_DATABASES
+    from project.travis_settings import LOCALLY_INSTALLED_APPS
+    from project.travis_settings import ENABLE_EMAILS
+elif 'DOCKER' in os.environ:
+    from project.production.local_settings import DEBUG
+    from project.production.local_settings import LOCAL_DATABASES
+    from project.production.local_settings import LOCALLY_INSTALLED_APPS
+    from project.production.local_settings import ENABLE_EMAILS
 else:
-    from project.travis_settings import (
-        DEBUG,
-        LOCAL_DATABASES,
-        LOCALLY_INSTALLED_APPS,
-        ENABLE_EMAILS,
-    )
-
+    from project.local_settings import DEBUG
+    from project.local_settings import LOCAL_DATABASES
+    from project.local_settings import LOCALLY_INSTALLED_APPS
+    from project.local_settings import ENABLE_EMAILS
 
 if DEBUG:
     env = 'development'
