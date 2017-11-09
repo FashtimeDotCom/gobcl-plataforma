@@ -55,7 +55,6 @@ class UserFontSizeTests(BaseTestCase):
             data=json.dumps(data),
             content_type='application/json'
         )
-        print('response')
         response_dict = json.loads(
             str(response.content, encoding='utf-8')
         )
