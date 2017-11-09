@@ -69,6 +69,8 @@ def load_regions(datetime=None, quantity=10):
         if not region.name_en:
             region.name_en = name
 
+        region.save()
+
         for commune_data in region_data['communes']:
             Commune.objects.get_or_create(
                 name=commune_data['name'],
