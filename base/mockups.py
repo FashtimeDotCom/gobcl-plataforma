@@ -73,9 +73,15 @@ class Mockup(object):
 
     def create_ministry(self, **kwargs):
         self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'government_structure')
         return Ministry.objects.create(**kwargs)
 
     def create_region(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return Region.objects.create(**kwargs)
 
