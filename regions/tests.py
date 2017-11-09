@@ -3,7 +3,7 @@ Tests for the regions app
 """
 
 # django
-from django.utils.translation import activate
+from django.utils.translation import activate, deactivate
 # tests
 from base.tests import BaseTestCase
 
@@ -15,6 +15,9 @@ class RegionTranslationTests(BaseTestCase):
         """
         region = self.create_region()
         region.slug_en = 'region-of-mockup'
+        print('names:')
+        print(region.name)
+        print(region.name_es)
         region.save()
 
         activate('es')
@@ -22,3 +25,5 @@ class RegionTranslationTests(BaseTestCase):
 
         activate('en')
         self.assertIn(region.slug_en, region.get_absolute_url())
+
+        deactivate()

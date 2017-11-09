@@ -3,7 +3,7 @@ Tests for the ministries app
 """
 
 # django
-from django.utils.translation import activate
+from django.utils.translation import activate, deactivate
 # tests
 from base.tests import BaseTestCase
 
@@ -22,3 +22,5 @@ class MinisteryTranslationTests(BaseTestCase):
 
         activate('en')
         self.assertIn(ministry.slug_en, ministry.get_absolute_url())
+
+        deactivate()
