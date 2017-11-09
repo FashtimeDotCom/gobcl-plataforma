@@ -5,9 +5,7 @@
 $(function () {
   'use strict';
 
-  window.App = {
-    utils: {}
-  };
+  window.App = {};
 
   /**
    * set utils namespace.

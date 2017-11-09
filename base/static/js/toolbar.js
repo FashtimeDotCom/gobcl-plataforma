@@ -4,7 +4,11 @@
 $(function () {
 
   $('.toolbar').on('change.gl.toolbar', function (e, value) {
-    console.log(value);
+    $.ajax(App.paths.fontSize, {
+      data: JSON.stringify({ font_size: value }),
+      method: 'POST',
+      contentType: 'application/json'
+    });
   });
 
 });

@@ -112,6 +112,14 @@ html(lang="es")
     {% compress js %}
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/application.js' %}")
+    script(type='text/javascript').
+      $(function () {
+        $.extend(App, {
+          paths: {
+            fontSize: "{% url 'user_font_size_change' %}"
+          }
+        });
+      });
     script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
