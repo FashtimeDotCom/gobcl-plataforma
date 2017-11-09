@@ -141,6 +141,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'taggit',
     'reversion',
+
 ]
 
 # Default email address to use for various automated correspondence from
@@ -316,6 +317,7 @@ COMPRESS_PRECOMPILERS = (
 )
 
 COMPRESS_CSS_FILTERS = [
+    'django_compressor_autoprefixer.AutoprefixerFilter',
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
