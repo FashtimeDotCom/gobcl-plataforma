@@ -212,6 +212,8 @@ def user_font_size_change(request):
         request.user.font_size = content['font_size']
         if request.user.is_authenticated:
             request.user.save()
+        else:
+            request.session['font_size'] = content['font_size']
 
         return JsonResponse({'font_size': request.user.font_size})
 
