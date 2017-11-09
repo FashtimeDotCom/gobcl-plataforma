@@ -210,7 +210,8 @@ def user_font_size_change(request):
     if request.method == 'POST':
         content = json.loads(request.body.decode('utf-8'))
         request.user.font_size = content['font_size']
-        request.user.save()
+        if request.user.is_authenticated:
+            request.user.save()
 
         return JsonResponse({'font_size': request.user.font_size})
 
