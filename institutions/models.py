@@ -42,4 +42,11 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
 
     def save(self, **kwargs):
         self.slug = slugify(self.name)
+
+        if hasattr(self, 'slug_es'):
+            self.slug_es = slugify(self.name_es)
+
+        if hasattr(self, 'slug_en'):
+            self.slug_en = slugify(self.name_en)
+
         super(Institution, self).save(**kwargs)
