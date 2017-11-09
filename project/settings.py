@@ -321,7 +321,6 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',
 ]
 
-COMPRESS_ENABLED = True
 LIBSASS_PRECISION = 10
 
 # NPM
