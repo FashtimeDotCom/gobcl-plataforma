@@ -2,6 +2,7 @@ import requests
 
 # django
 from django.contrib.sites.models import Site
+from django.db.models import F
 
 # mockups
 from base.mockups import Mockup
@@ -146,3 +147,5 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
 def load_base_data():
     load_regions()
     load_data_from_digital_gob_api()
+    PublicService.objects.filter(name_es=None).update(name_es=F('name'))
+    PublicService.objects.filter(name_en=None).update(name_es=F('name'))
