@@ -31,9 +31,6 @@ from users.models import User
 # views
 from base.views import BaseListView
 
-# utils
-from users.font_size import FontSizes
-
 
 class LoginView(auth_views.LoginView):
     """ view that renders the login """
@@ -209,33 +206,10 @@ def user_font_size_change(request):
     """
 
     if request.method == 'POST':
-        # current font size
-        font_size = request.user.font_size
-
         content = json.loads(request.body.decode('utf-8'))
-        fonts_object = FontSizes()
+        request.user.font_size = content['font_size']
+        request.user.save()
 
-        # determine the type of operation
-        if content['type'] == 'increase':
-            new_size = fonts_object.next_size(font_size)
-        elif content['type'] == 'decrease':
-            new_size = fonts_object.prev_size(font_size)
-        else:
-            return JsonResponse({'error': 'could not parse'})
+        return JsonResponse({'font_size': request.user.font_size})
 
-        # indicate if size was changed
-        if new_size != font_size:
-            request.user.font_size = new_size
-            request.user.save()
-            data = {
-                'changed': True,
-                'size': new_size,
-            }
-        else:
-            data = {
-                'changed': False,
-                'size': font_size,
-            }
-
-        return JsonResponse(data)
     return JsonResponse({'method error': 'must post'})
