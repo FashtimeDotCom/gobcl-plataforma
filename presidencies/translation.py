@@ -11,7 +11,7 @@ translator.register(PresidencyURL, PresidencyURLTranslationOptions)
 
 
 class PresidencyTranslationOptions(TranslationOptions):
-    fields = ('name', 'title', 'description')
+    fields = ('title', 'description')
 
 
 translator.register(Presidency, PresidencyTranslationOptions)
