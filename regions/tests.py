@@ -15,9 +15,6 @@ class RegionTranslationTests(BaseTestCase):
         """
         region = self.create_region()
         region.slug_en = 'region-of-mockup'
-        print('names:')
-        print(region.name)
-        print(region.name_es)
         region.save()
 
         activate('es')
