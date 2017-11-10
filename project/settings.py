@@ -454,7 +454,7 @@ EMAIL_HOST_PASSWORD = 'necesitamosemails1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-if DEBUG:
+if not DEBUG:
     from .local_settings import AWS_ACCESS_KEY_ID
     from .local_settings import AWS_SECRET_ACCESS_KEY
     AWS_STORAGE_BUCKET_NAME = 'gob.cl'
