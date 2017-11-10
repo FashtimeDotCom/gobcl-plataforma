@@ -17,22 +17,25 @@ import sys
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-if 'TRAVIS' not in os.environ:
-    from project.local_settings import (
-        DEBUG,
-        LOCAL_DATABASES,
-        LOCALLY_INSTALLED_APPS,
-        ENABLE_EMAILS,
-        SECRET_KEY,
-    )
+# local settings
+if 'TRAVIS' in os.environ:
+    from project.travis_settings import DEBUG
+    from project.travis_settings import LOCAL_DATABASES
+    from project.travis_settings import LOCALLY_INSTALLED_APPS
+    from project.travis_settings import ENABLE_EMAILS
+    from project.travis_settings import SECRET_KEY
+elif 'DOCKER' in os.environ:
+    from project.production.local_settings import DEBUG
+    from project.production.local_settings import LOCAL_DATABASES
+    from project.production.local_settings import LOCALLY_INSTALLED_APPS
+    from project.production.local_settings import ENABLE_EMAILS
+    from project.production.local_settings import SECRET_KEY
 else:
-    from project.travis_settings import (
-        DEBUG,
-        LOCAL_DATABASES,
-        LOCALLY_INSTALLED_APPS,
-        ENABLE_EMAILS,
-        SECRET_KEY,
-    )
+    from project.local_settings import DEBUG
+    from project.local_settings import LOCAL_DATABASES
+    from project.local_settings import LOCALLY_INSTALLED_APPS
+    from project.local_settings import ENABLE_EMAILS
+    from project.local_settings import SECRET_KEY
 
 if DEBUG:
     env = 'development'
@@ -100,6 +103,7 @@ INSTALLED_APPS = [
     'django_filters',
     'hitcount',
     'haystack',
+    'modeltranslation',
 
     # internal
     'base',
@@ -140,6 +144,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'taggit',
     'reversion',
+
 ]
 
 # Default email address to use for various automated correspondence from
@@ -315,6 +320,7 @@ COMPRESS_PRECOMPILERS = (
 )
 
 COMPRESS_CSS_FILTERS = [
+    'django_compressor_autoprefixer.AutoprefixerFilter',
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]

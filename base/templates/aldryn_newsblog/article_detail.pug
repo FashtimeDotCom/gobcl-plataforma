@@ -1,0 +1,19 @@
+- load i18n cms_tags apphooks_config_tags
+
+{% include "aldryn_newsblog/includes/article.pug" with detail_view="true" %}
+
+{% static_placeholder "newsblog_social" %}
+
+ul
+  if prev_article
+    li
+      a(href="{{ prev_article.get_absolute_url }}")
+        | {% trans "Previous Article" %}
+
+  li
+    a(href="{% namespace_url 'article-list' %}")
+      {% trans "Back to Overview" %}
+  if next_article
+    li
+      a(href="{{ next_article.get_absolute_url }}")
+        {% trans "Next Article" %}

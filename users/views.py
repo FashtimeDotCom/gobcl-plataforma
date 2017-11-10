@@ -16,6 +16,7 @@ from django.utils.http import base36_to_int
 from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.edit import CreateView
 
@@ -30,9 +31,6 @@ from users.models import User
 
 # views
 from base.views import BaseListView
-
-# utils
-from users.font_size import FontSizes
 
 
 class LoginView(auth_views.LoginView):
@@ -203,39 +201,20 @@ class UserListView(BaseListView):
         return context
 
 
+@csrf_exempt
 def user_font_size_change(request):
     """
     Json view that that handles user font size changes
     """
 
     if request.method == 'POST':
-        # current font size
-        font_size = request.user.font_size
-
         content = json.loads(request.body.decode('utf-8'))
-        fonts_object = FontSizes()
-
-        # determine the type of operation
-        if content['type'] == 'increase':
-            new_size = fonts_object.next_size(font_size)
-        elif content['type'] == 'decrease':
-            new_size = fonts_object.prev_size(font_size)
-        else:
-            return JsonResponse({'error': 'could not parse'})
-
-        # indicate if size was changed
-        if new_size != font_size:
-            request.user.font_size = new_size
+        request.user.font_size = content['font_size']
+        if request.user.is_authenticated:
             request.user.save()
-            data = {
-                'changed': True,
-                'size': new_size,
-            }
         else:
-            data = {
-                'changed': False,
-                'size': font_size,
-            }
+            request.session['font_size'] = content['font_size']
 
-        return JsonResponse(data)
+        return JsonResponse({'font_size': request.user.font_size})
+
     return JsonResponse({'method error': 'must post'})
