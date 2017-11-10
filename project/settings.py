@@ -453,3 +453,16 @@ EMAIL_HOST_USER = 'magnet'
 EMAIL_HOST_PASSWORD = 'necesitamosemails1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+if DEBUG:
+    from .local_settings import AWS_ACCESS_KEY_ID
+    from .local_settings import AWS_SECRET_ACCESS_KEY
+    AWS_STORAGE_BUCKET_NAME = 'gob.cl'
+    AWS_S3_SECURE_URLS = True
+    AWS_QUERYSTRING_AUTH = False
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
+    STATIC_URL = 'https://gob.cl.s3.amazonaws.com/'
+    MEDIA_URL = 'https://gob.cl.s3.amazonaws.com/'
