@@ -206,6 +206,7 @@ TEMPLATES = [
                 ),
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
+                'base.context_processors.categories',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (

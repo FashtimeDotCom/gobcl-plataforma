@@ -42,31 +42,34 @@ block content
         h2.heading-label Filtrar por Temas:
         .tags.overflowed-xs
           .tags_content
-            .tags_item: a(href="#").ctag.ctag--light Todas
-            .tags_item: a(href="#").ctag.ctag--light Salud
-            .tags_item: a(href="#").ctag.ctag--light Seguridad
-            .tags_item: a(href="#").ctag.ctag--light Economía y empleo
-            .tags_item: a(href="#").ctag.ctag--light Calidad de vida y ciudad
+            .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light Todas
+            for category in categories
+              .tags_item
+                a.ctag.ctag--light(
+                  href="{% namespace_url 'article-list-by-category' category.slug namespace=namespace default='' %}"
+                )
+                  {{ category }}
 
         .row
           each article in article_list
-            .col-sm-12.col-md-12.col-lg-6.col-xl-6
-              article.new.new--mobile
-                time.new_date 
-                  {{ article.publishing_date|date }}
-                figure.new_figure-mobile
-                  if article.featured_image_id
-                    img.img-responsive(
-                      src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
-                      alt="{{ article.featured_image.alt }}"
-                    )
-                  else
-                    img(
-                      src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg",
-                      alt="{{ article.featured_image.alt }}"
-                    ).img-responsive
-                h2.new_title: a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").link.link--text-dark.visited 
-                  {% render_model article "title" %}
+            if not forloop.first
+              .col-sm-12.col-md-12.col-lg-6.col-xl-6
+                article.new.new--mobile
+                  time.new_date 
+                    {{ article.publishing_date|date }}
+                  figure.new_figure-mobile
+                    if article.featured_image_id
+                      img.img-responsive(
+                        src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                        alt="{{ article.featured_image.alt }}"
+                      )
+                    else
+                      img(
+                        src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg",
+                        alt="{{ article.featured_image.alt }}"
+                      ).img-responsive
+                  h2.new_title: a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").link.link--text-dark.visited 
+                    {% render_model article "title" %}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br
