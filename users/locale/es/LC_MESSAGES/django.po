@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 18:19-0300\n"
+"POT-Creation-Date: 2017-11-10 17:50-0300\n"
 "PO-Revision-Date: 2013-01-10 18:54+0000\n"
 "Last-Translator: Antoni Aloy <aaloy@apsl.net>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -354,35 +354,35 @@ msgstr "Regístrarme"
 msgid "Create new account"
 msgstr "Crea una nueva cuenta"
 
-#: views.py:35
+#: views.py:40
 msgid "Login"
 msgstr "Ingreso"
 
-#: views.py:93
+#: views.py:98
 #, fuzzy
 #| msgid "Register"
 msgid "Registration"
 msgstr "Regístrarme"
 
-#: views.py:106
+#: views.py:111
 msgid "An email has been sent to you. Please check it to verify your email."
 msgstr ""
 "Se te ha enviado un correo electrónico. Por favor revísalo para verificar tu "
 "correo electrónico"
 
-#: views.py:120
+#: views.py:125
 msgid "Your data has been successfully saved."
 msgstr "Tus datos han sido guardados exitósamente."
 
-#: views.py:136
+#: views.py:141
 msgid "My profile"
 msgstr ""
 
-#: views.py:163
+#: views.py:168
 msgid "Your email address has been verified."
 msgstr "Tu dirección correo electrónico ha sido verificada"
 
-#: views.py:166
+#: views.py:171
 msgid "Invalid verification link"
 msgstr "Link de verificación inválido"
 

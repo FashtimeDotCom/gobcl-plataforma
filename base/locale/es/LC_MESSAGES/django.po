@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-06 15:48-0300\n"
+"POT-Creation-Date: 2017-11-10 17:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,43 @@ msgstr "Fecha de edición"
 msgid "government structure"
 msgstr "Estructura de gobierno"
 
+#: templates/aldryn_newsblog/article_detail.pug:17
+msgid "Share this news through your social networks"
+msgstr "Comparte esta noticia a través de tus redes sociales"
+
+#: templates/aldryn_newsblog/article_detail.pug:28
+msgid "Related news"
+msgstr "Noticias relacionadas"
+
+#: templates/aldryn_newsblog/article_list.pug:14
+#: templates/includes/navbar.pug:23 templates/includes/navbar.pug:63
+#: templates/includes/search.pug:45 templates/index.pug:49
+#: templates/index.pug:71
+msgid "News"
+msgstr "Noticias"
+
+#: templates/aldryn_newsblog/article_list.pug:38
+msgid "See complete news"
+msgstr "Ver noticia completa"
+
+#: templates/aldryn_newsblog/article_list.pug:43
+msgid "Filter by Topic"
+msgstr "Filtrar por Temas"
+
+#: templates/aldryn_newsblog/article_list.pug:46
+msgid "All"
+msgstr "Todas"
+
+#: templates/aldryn_newsblog/includes/pagination.pug:6
+#: templates/aldryn_newsblog/includes/pagination.pug:8
+msgid "Previous"
+msgstr "Anterior"
+
+#: templates/aldryn_newsblog/includes/pagination.pug:10
+#: templates/aldryn_newsblog/includes/pagination.pug:11
+msgid "Next"
+msgstr "Siguiente"
+
 #: templates/includes/field.pug:19
 msgid "optional"
 msgstr "opcional"
@@ -46,39 +83,33 @@ msgstr "opcional"
 msgid "Currency visits"
 msgstr "Visitas a La Moneda"
 
-#: templates/includes/navbar.pug:11 templates/includes/navbar.pug:40
+#: templates/includes/navbar.pug:22 templates/includes/navbar.pug:62
 #: templates/index.pug:45
 msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: templates/includes/navbar.pug:12 templates/includes/navbar.pug:41
-#: templates/includes/search.pug:48 templates/index.pug:49
-#: templates/index.pug:71
-msgid "News"
-msgstr "Noticias"
-
-#: templates/includes/navbar.pug:13
+#: templates/includes/navbar.pug:24
 msgid "institutions"
 msgstr "Instituciones"
 
-#: templates/includes/navbar.pug:20 templates/includes/navbar.pug:22
+#: templates/includes/navbar.pug:31 templates/includes/navbar.pug:33
 msgid "Logout"
 msgstr "Salir"
 
-#: templates/includes/navbar.pug:25
+#: templates/includes/navbar.pug:36
 msgid "Sign in"
 msgstr "Iniciar sesion"
 
-#: templates/includes/navbar.pug:38
+#: templates/includes/navbar.pug:60
 msgid "Sections"
 msgstr "Secciones"
 
-#: templates/includes/navbar.pug:42 templates/includes/search.pug:63
+#: templates/includes/navbar.pug:64 templates/includes/search.pug:60
 #: templates/index.pug:53
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/includes/navbar.pug:43 templates/index.pug:157
+#: templates/includes/navbar.pug:65 templates/index.pug:157
 #: templates/index.pug:163
 msgid "About Chile"
 msgstr "Acerca de Chile"
@@ -95,18 +126,18 @@ msgstr "Escribe aquí lo que deseas buscar"
 msgid "Filter by Topics"
 msgstr "Filtrar por temas"
 
-#: templates/includes/search.pug:36
+#: templates/includes/search.pug:33
 msgid "Procedures"
 msgstr "Trámites"
 
-#: templates/includes/search.pug:45 templates/includes/search.pug:60
-#: templates/includes/search.pug:68 templates/index.pug:47
+#: templates/includes/search.pug:42 templates/includes/search.pug:57
+#: templates/includes/search.pug:65 templates/index.pug:47
 #: templates/index.pug:51 templates/index.pug:55 templates/index.pug:68
 #: templates/index.pug:167
 msgid "See more"
 msgstr "Ver más"
 
-#: templates/includes/search.pug:71
+#: templates/includes/search.pug:68
 msgid "See all results"
 msgstr "Ver todos los resultados"
 
@@ -114,7 +145,7 @@ msgstr "Ver todos los resultados"
 msgid "Follow us on our social media:"
 msgstr "Síguenos a través de redes sociales:"
 
-#: templates/includes/toolbar.pug:18
+#: templates/includes/toolbar.pug:19 templates/includes/toolbar.pug:50
 msgid "Listen"
 msgstr "Escuchar"
 
@@ -126,7 +157,9 @@ msgstr "Estás en Gob.cl"
 msgid ""
 "Your portal to access information of the Government of Chile in a simple and "
 "fast way."
-msgstr "Tu portal para acceder de manera simple y rápida a información del Gobierno de Chile."
+msgstr ""
+"Tu portal para acceder de manera simple y rápida a información del Gobierno "
+"de Chile."
 
 #: templates/index.pug:30
 msgid "Most searched"
@@ -140,13 +173,16 @@ msgstr "Visita Chile Mejor"
 msgid ""
 "Find out about the main benefits of the State, in addition to the procedures "
 "that are carried out in ChileAtiende."
-msgstr "Infórmate sobre los principales beneficios del Estado, además de los trámites que se realizan en ChileAtiende."
+msgstr ""
+"Infórmate sobre los principales beneficios del Estado, además de los "
+"trámites que se realizan en ChileAtiende."
 
 #: templates/index.pug:50
 msgid ""
 "Find out about our proposals to improve the country and review how they "
 "advance."
-msgstr "Entérate de nuestras propuestas para mejorar el país y revisa como avanzan."
+msgstr ""
+"Entérate de nuestras propuestas para mejorar el país y revisa como avanzan."
 
 #: templates/index.pug:54
 msgid "Meet the main government entities and their representatives."
@@ -184,7 +220,9 @@ msgstr "Campañas"
 msgid ""
 "Information for tourists, migrants and those who want to study or do "
 "business in Chile."
-msgstr "Información para turistas, migrantes y quienes quieran estudiar o hacer negocios en Chile."
+msgstr ""
+"Información para turistas, migrantes y quienes quieran estudiar o hacer "
+"negocios en Chile."
 
 #: views.py:85 views.py:134
 #, python-format
