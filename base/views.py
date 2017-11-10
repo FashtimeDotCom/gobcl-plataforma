@@ -223,3 +223,11 @@ class BaseRedirectView(RedirectView, PermissionRequiredMixin):
     def dispatch(self, *args, **kwargs):
         self.check_permission_required()
         return super(BaseRedirectView, self).dispatch(*args, **kwargs)
+
+
+class AboutTemplateView(TemplateView):
+    template_name = 'about.pug'
+
+
+class AboutInteriorTemplateView(TemplateView):
+    template_name = 'about_interior.pug'
