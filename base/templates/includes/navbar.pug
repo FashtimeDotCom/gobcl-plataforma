@@ -9,6 +9,16 @@ header.site-header
       
       .site-header_right
 
+        ul.link.link--dib
+          li.dropdown.language-selector
+            a.dropdown-toggle(data-toggle="dropdown")
+              i.fa.fa-language(aria-hidden="true")
+              - get_current_language as current_language
+              span= current_language | language_name_local | title
+              b.caret
+            ul.dropdown-menu.languages
+              {% language_chooser %}
+
         a(href="#").link.link--dib {% trans 'Procedures and benefits' %}
         a(href="#").link.link--dib {% trans 'News' %}
         a(href="{% url 'institution_list' %}").link.link--dib {% trans 'institutions' %}
@@ -24,24 +34,26 @@ header.site-header
         else 
           .site-header_login
               a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
-        ul
-          li.dropdown.language-selector
-            a.dropdown-toggle(data-toggle="dropdown")
-              - get_current_language as current_language
-              = current_language|language_name_local|title
-              b.caret
-            ul.dropdown-menu.languages
-              {% language_chooser %}
-
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
       label(for="menu-trigger").menu-trigger
         span
-      
+
       a(href="#").btn-search.btn-search--mobile.toggle-search
         i.ic-search.btn-search_icon
         i.ic-close.btn-search_icon
+
+      .menu-mobile
+        ul.link.link--dib
+          li.dropdown.language-selector
+            a.dropdown-toggle(data-toggle="dropdown")
+              i.fa.fa-language(aria-hidden="true")
+              - get_current_language as current_language
+              span= current_language
+              b.caret
+            ul.dropdown-menu.languages
+              {% language_chooser %}
 
       nav.navigation
         .container
