@@ -26,7 +26,6 @@ from base import views as base_views
 urlpatterns = [
     url(r'^api/1.0/', include('api.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(_(r'^news/'), include('cms.urls')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -37,7 +36,8 @@ urlpatterns += i18n_patterns(
     url(r'^$', base_views.index, name='home'),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
-    url(r'^search/', include('haystack.urls')),
+    url(_(r'^news/'), include('cms.urls')),
+    url(_(r'^search/'), include('searches.urls')),
 )
 
 if settings.DEBUG:

@@ -36,6 +36,6 @@ djangocms-style==2.0.2
 djangocms-video==2.0.4
 django-hitcount==1.2.3
 django-haystack==2.6.1
+aldryn-search==0.4.1
 git+https://github.com/Angoreher/aldryn-apphooks-config.git@master
 git+https://github.com/aldryn/aldryn-newsblog.git@master
-git+https://github.com/aldryn/aldryn-haystack.git@master

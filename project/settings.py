@@ -138,8 +138,6 @@ INSTALLED_APPS = [
     'aldryn_reversion',
     'aldryn_translation_tools',
     'aldryn_search',
-    'standard_form',
-    'spurl',
     'parler',
     'sortedm2m',
     'taggit',
@@ -446,9 +444,6 @@ CMS_TOOLBARS = [
     'cms.cms_toolbars.PlaceholderToolbar',
     'cms.cms_toolbars.BasicToolbar',
     'cms.cms_toolbars.PageToolbar',
-
-    # third-party Toolbar
-    'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
 
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -463,3 +458,5 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+ALDRYN_NEWSBLOG_SEARCH = False
