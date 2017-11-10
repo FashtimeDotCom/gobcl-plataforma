@@ -10,7 +10,7 @@ header.site-header
       .site-header_right
 
         a(href="#").link.link--dib {% trans 'Procedures and benefits' %}
-        a(href="#").link.link--dib {% trans 'News' %}
+        a(href="{% url 'pages-root' %}").link.link--dib {% trans 'News' %}
         a(href="{% url 'institution_list' %}").link.link--dib {% trans 'institutions' %}
         a(href="#").btn-search.toggle-search
           i.ic-search.btn-search_icon
@@ -18,12 +18,12 @@ header.site-header
         if user.is_authenticated
           .site-header_login
           if request.session.loginas_from_user
-              a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
-            else
-              a(href="{% url 'logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
+            a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
+          else
+            a(href="{% url 'logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
         else 
-          .site-header_login
-              a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
+          .site-header_login.hidden
+            a(href="#")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
         ul
           li.dropdown.language-selector
             a.dropdown-toggle(data-toggle="dropdown")

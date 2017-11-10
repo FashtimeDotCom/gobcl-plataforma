@@ -1,0 +1,9 @@
+{% extends "aldryn_newsblog/base.html" %}
+
+{% block title %}
+    {{ article.title }} - {{ block.super }}
+{% endblock %}
+
+{% block newsblog_content %}
+{% include 'aldryn_newsblog/article_detail.pug' %}
+{% endblock %}
