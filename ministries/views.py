@@ -51,6 +51,9 @@ class MinistryDetailView(BaseDetailView, HitCountDetailView):
     template_name = 'ministries/ministry_detail.pug'
     count_hit = True
 
+    def get_slug_field(self):
+        return "slug_{}".format(self.request.LANGUAGE_CODE)
+
     def get_queryset(self):
         queryset = super(MinistryDetailView, self).get_queryset()
         queryset = queryset.by_government_structure(
