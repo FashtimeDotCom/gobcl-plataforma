@@ -5,89 +5,27 @@ block content
     section.section
       .container
         .row
-          .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-4.offset-xl-8
-            .d-none.d-lg-block
-              - var toolbarDark = true
-              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-5.offset-xl-7
+            .d-none.d-lg-block.pull-md-right
+              {% include 'includes/toolbar.pug' with dark=True %}
           .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
             article.main-post
-              time.main-post_date 11 AGO 2017
-              h1.main-post_title Presidenta en el inicio de la Campaña de Vacunación contra el Virus Papiloma Humano: “Esta una vacuna necesaria y segura”
-              h2.main-post_subtitle Es el momento de emprender este cambio, de dar un nuevo paso que permita ampliar la protección y las garantías para nuestros compatriotas”, dijo la Presidenta Michelle Bachelet.
-
-              .post-video
-                .post-video_wrapper
-                  a(href="#").post-video_play: i.icon-play-video
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", alt="").article-hero_img.img-responsive
-                p.post-video_text 2017-11-10  Ministerio de Vivienda y Urbanismo (MINVU)
+              time.main-post_date {{ article.publishing_date|date }}
+              h1.main-post_title {% render_model article "title" %}
 
               ul.main-post_social
-                li: p Comparte esta noticia a través de tus redes sociales
+                li: p {% trans 'Share this news through your social networks' %}
                 li: a(href="#"): i.ic-messenger
                 li: a(href="#"): i.ic-facebook
                 li: a(href="#"): i.ic-twitter
 
-              p “Es el momento de emprender este cambio, de dar un nuevo paso que permita ampliar la protección y las garantías para nuestros compatriotas”, dijo la Presidenta Michelle Bachelet.
-              p La Mandataria, Michelle Bachelet, junto a la ministra de Salud, Carmen Castillo, inició en el Colegio Poeta Vicente Huidobro, de la comuna de Lo Prado, la Campaña de Vacunación contra el Virus Papiloma Humano (VPH). Este año se contempla la administración de 234.872 dosis para niñas de 4° básico (primera dosis) y 5° básico (segunda dosis). Desde 2014, se han administrado 855.000 dosis de la vacuna en la población escolar: “Estamos contentos porque ya hemos cumplido una primera etapa y ya entramos en régimen con esta vacuna. ¿Qué quiere decir esto? Que, a partir de ahora, cada año se vacunará a las alumnas de 4° y 5° básico para asegurar que reciban las dos dosis que se requieren para prevenir.
-              blockquote
-                p Luego, hizo un llamado a la ciudadanía a ser responsables con la salud personal en el que destacó “lo importante es vacunarse para la protección de la salud futura de estas niñas, y pedimos también a los medios que informen, que puedan transmitir a los papás y mamás la certeza de que esta es una vacuna necesaria y es una vacuna segura.
-                span Loreim Ipsum
-
-              .post-gallery
-                a(href="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg").post-gallery_item
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg", alt="").img-responsive
-                .row
-                  .col-6.col-md-3.col-lg-3
-                    a(href="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg").post-gallery_item
-                      img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg", alt="").img-responsive
-                  .col-6.col-md-3.col-lg-3
-                    a(href="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg").post-gallery_item
-                      img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg", alt="").img-responsive
-                  .col-6.col-md-3.col-lg-3
-                    a(href="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg").post-gallery_item
-                      img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg", alt="").img-responsive
-                  .col-6.col-md-3.col-lg-3
-                    a(href="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg").post-gallery_item
-                      span.post-gallery_more
-                        span +10
-                      img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/gallery-1.jpg", alt="").img-responsive
-
-              p
-                | Once dismissed as a figurehead, Kim Jong-un, at only 33, is emerging as a powerful leader and a nuclear threat.
-                i Fue a una sucursal
-
-              p La Mandataria, Michelle Bachelet, junto a la ministra de Salud, Carmen Castillo, inició en el Colegio Poeta Vicente Huidobro, de la comuna de Lo Prado, la Campaña de Vacunación contra el Virus Papiloma Humano (VPH). Este año se contempla la administración de 234.872 dosis para niñas de 4° básico (primera dosis) y 5° básico (segunda dosis). Desde 2014, se han administrado 855.000 dosis de la vacuna en la población escolar: “Estamos contentos porque ya hemos cumplido una primera etapa y ya entramos en régimen con esta vacuna. ¿Qué quiere decir esto? Que, a partir de ahora, cada año se vacunará a las alumnas de 4° y 5° básico para asegurar que reciban las dos dosis que se requieren para prevenir.
-
-              .post-audio
-                a(href="#").post-audio_button: i.ic-volume.post-audio_icon
-                p.post-audio_title Michelle Bachelet: las garantías para nuestros compatriotas I
-                .post-audio_time 5:35
-                a(href="#").post-audio_download: i.ic-download
-
-              .post-audio.active
-                a(href="#").post-audio_button: i.ic-play.post-audio_icon
-                p.post-audio_title Michelle Bachelet: las garantías para nuestros compatriotas II
-                .post-audio_timeline
-                .post-audio_time 8:00
-                a(href="#").post-audio_download: i.ic-download
-
-              .post-audio
-                a(href="#").post-audio_button: i.ic-volume.post-audio_icon
-                p.post-audio_title Michelle Bachelet: las garantías para nuestros compatriotas III
-                .post-audio_time 7:59
-                a(href="#").post-audio_download: i.ic-download
-
-              div
-                a(href="#")
-                  | Descargar todos los archivos de audio original
-                  i.ic-download
-
+              {% render_model article "lead_in" %}
 
     section
       .container
         .row
           .col-12
-            h3.heading-medium Noticias relacionadas
+            h3.heading-medium {% trans 'Related news' %}
           .col-12.col-lg-6
             article.new.new--mobile
               time.new_date 11 AGO 2017
@@ -128,20 +66,3 @@ block content
       .container
         {% include 'includes/social.pug' %}
 
-{% include "aldryn_newsblog/includes/article.pug" with detail_view="true" %}
-
-{% static_placeholder "newsblog_social" %}
-
-ul
-  if prev_article
-    li
-      a(href="{{ prev_article.get_absolute_url }}")
-        | {% trans "Previous Article" %}
-
-  li
-    a(href="{% namespace_url 'article-list' %}")
-      {% trans "Back to Overview" %}
-  if next_article
-    li
-      a(href="{{ next_article.get_absolute_url }}")
-        {% trans "Next Article" %}

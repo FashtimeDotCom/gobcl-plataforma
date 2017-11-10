@@ -8,9 +8,10 @@ block content
         article.article-hero.article--dark.text-light
           .row
             .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
-              {% include 'includes/toolbar.pug' %}
+              .pull-md-right
+                {% include 'includes/toolbar.pug' %}
             .col-sm-12.col-md-12.col-lg-6.col-xl-7
-              h1.heading-large Noticias
+              h1.heading-large {% trans 'News' %}
           .row
             .col-sm-12.col-md-12.col-lg-6.col-xl-5
               p
@@ -32,17 +33,17 @@ block content
                 a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
                   {% render_model article "title" %}
 
-              p 
+              .resume.fixme
                 {% render_model article "lead_in" %}
-              a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").text-red Ver noticia completa
+              a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").text-red {% trans 'See complete news' %}
         {% endwith %}
 
     section.section
       .container
-        h2.heading-label Filtrar por Temas:
+        h2.heading-label {% trans 'Filter by Topic' %}:
         .tags.overflowed-xs
           .tags_content
-            .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light Todas
+            .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light {% trans 'All' %}
             for category in categories
               .tags_item
                 a.ctag.ctag--light(
@@ -73,9 +74,9 @@ block content
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br
-            a(href="#").button.button--block Cargar más
+            {% include 'aldryn_newsblog/includes/pagination.pug' %}
     section
       .container
         {% include 'includes/social.pug' %}
 
-{% include "aldryn_newsblog/includes/pagination.html" %}
+
