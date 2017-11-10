@@ -1,10 +1,10 @@
-
-- load i18n
+- load i18n staticfiles thumbnail cms_tags apphooks_config_tags
 
 block content
   main.site-main
     section.section.nopadding.bg-bluedark
       .container
+        {% with article=article_list.first %}
         article.article-hero.article--dark.text-light
           .row
             .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
@@ -13,14 +13,29 @@ block content
               h1.heading-large Noticias
           .row
             .col-sm-12.col-md-12.col-lg-6.col-xl-5
-              img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", alt="").article-hero_img.img-fluid.w-100
+              p
+                // The image is only shown on the detail view by using the condition "and detail_view"
+                if article.featured_image_id
+                  img.article-hero_img.img-fluid.w-100(
+                    src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                    alt="{{ article.featured_image.alt }}"
+                  )
+                else
+                  img.article-hero_img.img-fluid.w-100(
+                    src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
+                    alt="{{ article.featured_image.alt }}"
+                  )
             .col-sm-12.col-md-12.col-lg-6.col-xl-6
-              time.article-hero_date 11 AGO 2017
+              time.article-hero_date
+                {{ article.publishing_date|date }}
               h2.article-hero_main-title
-                a(href="noticia.html") Jefa de Estado firmó Proyectos de Ley que crean un nuevo ahorro colectivo en el marco de la Reforma al Sistema de Pensiones
+                a(href="noticia.html")
+                  {% render_model article "title" %}
 
-              p “Es el momento de emprender este cambio, de dar un nuevo paso que permita ampliar la protección y las garantías para nuestros compatriotas”, dijo la Presidenta Michelle Bachelet.
+              p 
+                {% render_model article "lead_in" %}
               a(href="noticia.html").text-red Ver noticia completa
+        {% endwith %}
 
     section.section
       .container
@@ -34,78 +49,24 @@ block content
             .tags_item: a(href="#").ctag.ctag--light Calidad de vida y ciudad
 
         .row
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-          .col-sm-12.col-md-12.col-lg-6.col-xl-6
-            article.new.new--mobile
-              time.new_date 11 AGO 2017
-              figure.new_figure-mobile
-                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
-              h2.new_title: a(href="noticia.html").link.link--text-dark.visited Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          each article in article_list
+            .col-sm-12.col-md-12.col-lg-6.col-xl-6
+              article.new.new--mobile
+                time.new_date 
+                  {{ article.publishing_date|date }}
+                figure.new_figure-mobile
+                  if article.featured_image_id
+                    img.img-responsive(
+                      src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                      alt="{{ article.featured_image.alt }}"
+                    )
+                  else
+                    img(
+                      src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg",
+                      alt="{{ article.featured_image.alt }}"
+                    ).img-responsive
+                h2.new_title: a(href="noticia.html").link.link--text-dark.visited 
+                  {% render_model article "title" %}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br
@@ -113,10 +74,5 @@ block content
     section
       .container
         {% include 'includes/social.pug' %}
-
-each article in article_list
-  {% include "aldryn_newsblog/includes/article.pug" %}
-  - empty
-    p {% trans "No items available" %}
 
 {% include "aldryn_newsblog/includes/pagination.html" %}
