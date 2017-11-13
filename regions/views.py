@@ -44,6 +44,9 @@ class RegionDetailView(HitCountDetailView):
     template_name = 'regions/region_detail.pug'
     count_hit = True
 
+    def get_slug_field(self):
+        return "slug_{}".format(self.request.LANGUAGE_CODE)
+
     def get_queryset(self):
         queryset = super(RegionDetailView, self).get_queryset()
         queryset = queryset.by_government_structure(
