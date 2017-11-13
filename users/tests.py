@@ -1,6 +1,8 @@
 """
 Tests for the user app
 """
+# standard
+import json
 
 # django
 from django.core.urlresolvers import reverse
@@ -34,3 +36,27 @@ class UserTests(BaseTestCase):
 
         # user is logged out, sow redirects to login
         self.assertEqual(response.status_code, 302)
+
+
+class UserFontSizeTests(BaseTestCase):
+    def test_font_size_change(self):
+        """
+        Tests that a user can increase font size.
+        """
+        url = reverse('user_font_size_change')
+
+        font_size = '20px'
+
+        data = {
+            'font_size': font_size,
+        }
+        response = self.client.post(
+            url,
+            data=json.dumps(data),
+            content_type='application/json'
+        )
+        response_dict = json.loads(
+            str(response.content, encoding='utf-8')
+        )
+
+        self.assertEqual(response_dict['font_size'], font_size)

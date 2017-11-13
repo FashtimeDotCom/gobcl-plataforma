@@ -5,8 +5,13 @@ import string
 import uuid
 
 # django
-from django.utils import timezone
 from django.apps import apps
+from django.utils import timezone
+from django.utils.text import slugify
+from easy_thumbnails.files import get_thumbnailer
+
+# cms
+from cms.models import Page
 
 # utils
 from base.utils import random_string
@@ -18,6 +23,7 @@ from government_structures.models import GovernmentStructure
 from ministries.models import Ministry
 from public_servants.models import PublicServant
 from regions.models import Region
+from presidencies.models import Presidency
 
 
 class Mockup(object):
@@ -26,18 +32,71 @@ class Mockup(object):
         self.set_required_datetime(kwargs, 'publication_date')
         return GovernmentStructure.objects.create(**kwargs)
 
+    def create_page(self, **kwargs):
+        title = kwargs['reverse_id']
+
+        if 'site_id' not in kwargs:
+            kwargs['site_id'] = 1
+
+        page = Page.objects.create(**kwargs)
+
+        for language in ('es', 'en'):
+            page.title_set.get_or_create(
+                title=title,
+                language=language,
+                slug=slugify(title),
+            )
+            page.publish(language)
+
+        return page
+
     def create_public_servant(self, **kwargs):
         self.set_required_string(kwargs, 'name')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return PublicServant.objects.create(**kwargs)
 
+    def create_presidency(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_string(kwargs, 'twitter')
+        self.set_required_url(kwargs, 'url')
+
+        if 'photo' not in kwargs:
+            test_root = os.path.realpath(os.path.dirname(__file__))
+            photo = open('{}/tests/gondola.jpg'.format(test_root), 'rb')
+            photo = get_thumbnailer(photo, relative_name='photos/gondola.jpg')
+            kwargs['photo'] = photo
+
+        return Presidency.objects.create(**kwargs)
+
     def create_ministry(self, **kwargs):
         self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'government_structure')
         return Ministry.objects.create(**kwargs)
 
     def create_region(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return Region.objects.create(**kwargs)
+
+    def get_or_create_page(self, **kwargs):
+        try:
+            return Page.objects.get(
+                reverse_id=kwargs['reverse_id'],
+                site_id=kwargs['site_id'],
+            ), False
+        except Page.DoesNotExist:
+            pass
+        except Page.MultipleObjectsReturned:
+            return Page.objects.filter(**kwargs).first(), False
+
+        return self.create_page(**kwargs), True
 
     #
     def random_email(self):

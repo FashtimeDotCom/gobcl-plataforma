@@ -13,5 +13,9 @@
   },
   "description": "A base for a django project on python 3",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^7.1.6",
+    "postcss-cli": "^4.1.1"
+  }
 }

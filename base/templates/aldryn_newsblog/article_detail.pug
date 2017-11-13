@@ -1,0 +1,80 @@
+- load i18n cms_tags apphooks_config_tags
+
+block content
+  main.site-main
+    section.section
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-5.offset-xl-7
+            .d-none.d-lg-block.pull-md-right
+              {% include 'includes/toolbar.pug' with dark=True %}
+          .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
+            article.main-post
+              time.main-post_date {{ article.publishing_date|date }}
+              h1.main-post_title {% render_model article "title" %}
+
+              ul.main-post_social
+                li: p {% trans 'Share this news through your social networks' %}
+                li: a(href="#"): i.ic-messenger
+                li: a(href="#"): i.ic-facebook
+                li: a(href="#"): i.ic-twitter
+
+              {% render_model article "lead_in" %}
+
+    section
+      .container
+        .row
+          .col-12
+            h3.heading-medium {% trans 'Related news' %}
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                  | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                 | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                  | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                 | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                  | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+          .col-12.col-lg-6
+            article.new.new--mobile
+              time.new_date 11 AGO 2017
+              figure.new_figure-mobile
+                img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-responsive
+              h2.new_title
+                a(href="noticia.html").link
+                  | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+    section
+      .container
+        {% include 'includes/social.pug' %}
+

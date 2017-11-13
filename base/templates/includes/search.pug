@@ -8,8 +8,8 @@
           i.ic-arrow-left.icon--left
           | {% trans 'Back' %}
       .row
-        .col-sm-12.col-md-12.col-lg-5.pull-lg-right.col-xl-4.col-xl-offset-1
-          .site-search_toolbar
+        .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
+          .site-search_toolbar.pull-md-right
             {% include 'includes/toolbar.pug' %}
         .col-md-12.col-lg-7.col-xl-7
           .search-form.site-search_form.nomargin-bottom#search
@@ -23,13 +23,10 @@
         .col-sm-12.col-lg-5
           h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
           .tags.p-0
-            .select
+            .select.select--dark
               select(name="")
-                option(value="Educación") Educación
-                option(value="Salud") Salud
-                option(value="Seguridad") Seguridad
-                option(value="Economía y empleo") Economía y empleo
-                option(value="Calidad de vida y ciudad") Calidad de vida y ciudad
+                for category in categories
+                  option(value="{{category.slug}}") {{category}}
 
       .row
         .col-md-12.col-lg-4.col-xl-4
@@ -62,12 +59,8 @@
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
           div.search_section.overflowed-xs
-            a(href="#").link.link--text-light Ministerio de transporte
-            a(href="#").link.link--text-light Ministerio de Relaciones Exteriores de Chile
-            a(href="#").link.link--text-light Gobierno Regional del Biobío
-            a(href="#").link.link--text-light.hidden-xs Ministerio de transporte
-            a(href="#").link.link--text-light.hidden-xs Ministerio de Relaciones Exteriores de Chile
-            a(href="#").link.link--text-light.hidden-xs Gobierno Regional del Biobío
+            for page in most_visited_urls
+              a(href="{{ page.content_object.get_absolute_url }}").link.link--text-light {{ page.content_object }}
             .clearfix
               a(href="#").more.more--right {% trans 'See more' %}
         .col-sm-12.col-md-12.text-xs-center.text-sm-center

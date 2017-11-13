@@ -2,9 +2,6 @@
 """ Views for the regions application. """
 # standard library
 
-# django
-from django.views.generic import DetailView
-
 # models
 from .models import Region
 
@@ -35,7 +32,7 @@ class RegionCreateView(BaseCreateView):
     """
     model = Region
     form_class = RegionForm
-    template_name = 'regions/create.pug'
+    template_name = 'regions/region_create.pug'
     permission_required = 'regions.add_region'
 
 
@@ -46,6 +43,9 @@ class RegionDetailView(HitCountDetailView):
     model = Region
     template_name = 'regions/region_detail.pug'
     count_hit = True
+
+    def get_slug_field(self):
+        return "slug_{}".format(self.request.LANGUAGE_CODE)
 
     def get_queryset(self):
         queryset = super(RegionDetailView, self).get_queryset()

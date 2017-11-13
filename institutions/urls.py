@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.conf.urls import include
+from django.utils.translation import ugettext_lazy as _
 
 from . import views
 from presidencies.views import PresidencyDetailView
@@ -12,7 +13,7 @@ urlpatterns = [
         name='institution_list'
     ),
     url(
-        r'^presidency/$',
+        _(r'^presidency/$'),
         PresidencyDetailView.as_view(),
         name='presidency_detail'
     ),

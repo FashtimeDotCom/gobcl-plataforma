@@ -1,16 +1,98 @@
+
+@import "_variables";
+
 body {
-    
+
+  .page-loading-icon {
+    display: none;
+    left: 10px;
+    position: relative;
+  }
+
+  &.wait {
+    cursor: wait !important;
+
     .page-loading-icon {
-        display: none;
-        left: 10px;
-        position: relative;
+      display: inline-block;
     }
+  }
 
-    &.wait {
-        cursor: wait !important;
+  @for $i from 0 through $footer-links-max {
+    &.footer-links-#{$i} {
 
-        .page-loading-icon {
-            display: inline-block;
+      main.site-main {
+        min-height: calc(100vh - #{(map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)});
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          min-height: calc(100vh - #{map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)});
         }
+
+        @media (min-width: map-get($grid-breakpoints, xl)) {
+          min-height: calc(100vh - #{max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl)) + map-get($navbar-height, md)});
+        }
+      }
+
+      footer.site-footer {
+        height: map-get($footer-base-height, xs) + $i * $footer-link-height;
+
+        @media (min-width: map-get($grid-breakpoints, md)) {
+          height: map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height);
+        }
+
+        @media (min-width: map-get($grid-breakpoints, xl)) {
+          height: max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl));
+        }
+
+        .menu {
+          height: $i * $footer-link-height;
+
+          @media (min-width: map-get($grid-breakpoints, md)) {
+            height: round($i / 2) * $footer-link-height;
+          }
+        }
+      }
     }
+  }
+}
+
+header.site-header {
+  .language-selector {
+    .dropdown-toggle {
+      & > i {
+        margin-right: 0.255rem;
+      }
+    }
+
+    .dropdown-menu {
+      padding: 0;
+      .lang {
+        margin: 10px 10px 0;
+
+        &:last-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+footer.site-footer {
+  .menu {
+    a {
+      height: $footer-link-height;
+    }
+  }
+}
+
+
+.fixme {
+  &.resume {
+    & > p {
+      display: none;
+
+      &:first-child {
+        display: block;
+      }
+    }
+  }
 }

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """ The users app views"""
 
+# standard
+import json
+
 # django
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
@@ -10,8 +13,10 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
+from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.edit import CreateView
 
@@ -194,3 +199,22 @@ class UserListView(BaseListView):
             obj.group_names = ' '.join([g.name for g in obj.groups.all()])
 
         return context
+
+
+@csrf_exempt
+def user_font_size_change(request):
+    """
+    Json view that that handles user font size changes
+    """
+
+    if request.method == 'POST':
+        content = json.loads(request.body.decode('utf-8'))
+        request.user.font_size = content['font_size']
+        if request.user.is_authenticated:
+            request.user.save()
+        else:
+            request.session['font_size'] = content['font_size']
+
+        return JsonResponse({'font_size': request.user.font_size})
+
+    return JsonResponse({'method error': 'must post'})

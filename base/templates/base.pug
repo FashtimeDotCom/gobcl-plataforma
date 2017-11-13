@@ -3,6 +3,8 @@ doctype 5
 - load compress
 - load staticfiles
 - load i18n static
+- load cms_tags
+- load sekizai_tags
 
 html(lang="es")
   head
@@ -24,12 +26,12 @@ html(lang="es")
 
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
+    {% render_block "css" %}
 
     link(
       href="{% static 'select2/dist/css/select2.min.css' %}",
       rel="stylesheet"
     )
-
     {% compress css %}
     link(
       type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
@@ -53,7 +55,9 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}}')
+  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
+    {% cms_toolbar %}
+    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -70,11 +74,19 @@ html(lang="es")
     // Javascript Placed at the end of the document so the pages load faster
     // uncompressible javascripts
     if not debug
-      script(src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
-      script(src="https://cdnjs.com/libraries/popper.js")
       script(
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js",
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa",
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js",
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js",
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ",
         crossorigin="anonymous"
       )
 
@@ -96,12 +108,21 @@ html(lang="es")
     {% endcompress %}
 
     block javascript_data
-
+    {% render_block "js" %}
     {% compress js %}
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/application.js' %}")
+    script(type='text/javascript').
+      $(function () {
+        $.extend(App, {
+          paths: {
+            fontSize: "{% url 'user_font_size_change' %}"
+          }
+        });
+      });
     script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
+    script(src="{% static 'js/toolbar.js' %}")
     block javascripts
     {% endcompress %}
 

@@ -71,4 +71,9 @@ urlpatterns = [
         users_views.user_profile,
         name='user_profile'
     ),
+    url(
+        r'^font-size-change/$',
+        users_views.user_font_size_change,
+        name='user_font_size_change'
+    ),
 ]

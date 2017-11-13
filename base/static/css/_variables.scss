@@ -1,0 +1,34 @@
+/*
+  Variables
+  override bootstrap variables.
+ -------------------------------------------------- */
+
+$line-height-base: 1.42858;
+
+$container-max-widths: (
+  lg: 960px,
+  xl: 1140px
+) !default;
+
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+$navbar-height: (
+  xs: 64px,
+  md: 71px
+);
+
+$footer-base-height: (
+  xs: 185px,
+  md: 245px,
+  xl: 223px,
+);
+
+$footer-link-height: 44px;
+$footer-links-max: 20;
+$footer-links-container-offset: 100px;
+
+
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;

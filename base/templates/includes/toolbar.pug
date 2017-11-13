@@ -1,32 +1,64 @@
 - load i18n
 
-.toolbar
-	.toolbar_content
-		a(href="#").toolbar-button.toolbar-button--contrast
-			span.toolbar-button_content
-				i.ic-contrast.toolbar-button_icon
-		a(href="#").toolbar-button.toolbar-button--less
-			span.toolbar-button_content
-				i.ic-font-size-less.toolbar-button_icon
-		a(href="#").toolbar-button.toolbar-button--plus
-			span.toolbar-button_content
-				i.ic-font-size-plus.toolbar-button_icon
-		.toolbar_player
-			a(href="#track")#listen.toolbar-button.toolbar-button--listen
-				span.toolbar-button_content
-					i.toolbar-button_icon.ic-volume
-					span.toolbar-button_text {% trans 'Listen' %}
-			.toolbar-player.invisible
-				a(href="#").toolbar-player_toggle
-					span.toolbar-button_content
-						i.ic-pause.toolbar-button_icon-pause
-						i.ic-play.toolbar-button_icon-play
-				.toolbar-player_timeline
-					span
-				a(href="#").toolbar-player_download
-					span.toolbar-button_content
-						i.ic-download
-	a(href="#").toolbar-button.toolbar-button--toggle
-		span.toolbar-button_content
-			i.ic-accessibility.toolbar-button_icon
-			i.ic-close.toolbar-button_icon
+if dark
+  .toolbar.dark(data-value="{{ request.user.font_size }}")
+    .toolbar_content
+      a(href="#").toolbar-button.toolbar-button--contrast
+        span.toolbar-button_content
+          i.ic-contrast.toolbar-button_icon
+      a(href="#").toolbar-button.toolbar-button--less
+        span.toolbar-button_content
+          i.ic-font-size-less.toolbar-button_icon
+      a(href="#").toolbar-button.toolbar-button--plus
+        span.toolbar-button_content
+          i.ic-font-size-plus.toolbar-button_icon
+      .toolbar_player
+        a(href="#track")#listen.toolbar-button.toolbar-button--listen
+          span.toolbar-button_content
+            i.toolbar-button_icon.ic-volume
+            span.toolbar-button_text {% trans 'Listen' %}
+        .toolbar-player.invisible
+          a(href="#").toolbar-player_toggle
+            span.toolbar-button_content
+              i.ic-pause.toolbar-button_icon-pause
+              i.ic-play.toolbar-button_icon-play
+          .toolbar-player_timeline
+            span
+          a(href="#").toolbar-player_download
+            span.toolbar-button_content
+              i.ic-download
+    a(href="#").toolbar-button.toolbar-button--toggle
+      span.toolbar-button_content
+        i.ic-accessibility.toolbar-button_icon
+        i.ic-close.toolbar-button_icon
+else
+  .toolbar(data-value="{{ request.user.font_size }}")
+    .toolbar_content
+      a(href="#").toolbar-button.toolbar-button--contrast
+        span.toolbar-button_content
+          i.ic-contrast.toolbar-button_icon
+      a(href="#").toolbar-button.toolbar-button--less
+        span.toolbar-button_content
+          i.ic-font-size-less.toolbar-button_icon
+      a(href="#").toolbar-button.toolbar-button--plus
+        span.toolbar-button_content
+          i.ic-font-size-plus.toolbar-button_icon
+      .toolbar_player
+        a(href="#track")#listen.toolbar-button.toolbar-button--listen
+          span.toolbar-button_content
+            i.toolbar-button_icon.ic-volume
+            span.toolbar-button_text {% trans 'Listen' %}
+        .toolbar-player.invisible
+          a(href="#").toolbar-player_toggle
+            span.toolbar-button_content
+              i.ic-pause.toolbar-button_icon-pause
+              i.ic-play.toolbar-button_icon-play
+          .toolbar-player_timeline
+            span
+          a(href="#").toolbar-player_download
+            span.toolbar-button_content
+              i.ic-download
+    a(href="#").toolbar-button.toolbar-button--toggle
+      span.toolbar-button_content
+        i.ic-accessibility.toolbar-button_icon
+        i.ic-close.toolbar-button_icon

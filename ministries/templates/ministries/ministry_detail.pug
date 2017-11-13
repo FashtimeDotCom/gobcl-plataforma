@@ -14,10 +14,10 @@ block content
     section.section.bg-bluedark
       .container
         .row
-          .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-4
+          .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
             .pull-md-right
               {% include 'includes/toolbar.pug' %}
-          .col-sm-12.col-md-12.col-lg-7.col-xl-8
+          .col-sm-12.col-md-12.col-lg-7.col-xl-7
             article.text-light
               h2.heading-large {{ ministry.name }}
               .row
@@ -39,8 +39,10 @@ block content
               p {{ ministry.minister.description|linebreaks }}
               p: a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter {{ ministry.minister.twitter }}
               ul.profile_info
-                li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
-                li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
+                - if ministry.minister.phone
+                  li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
+                - if ministry.minister.email
+                  li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
           .col-sm-12.col-lg-4.align-self-end
             .profile_buttons
               a(href="{{ ministry.url }}", target="blank").button.button--block {% trans 'Go to the ministry site' %}
@@ -60,16 +62,18 @@ block content
                 p {{ servant.description|linebreaks }}
                 p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
                 ul.profile_info
-                  li: span {% trans 'Phone' %}: {{ servant.phone }}
-                  li: span {% trans 'E-Mail' %}: {{ servant.email }}
+                  - if servant.phone
+                    li: span {% trans 'Phone' %}: {{ servant.phone }}
+                  - if servant.email
+                    li: span {% trans 'E-Mail' %}: {{ servant.email }}
 
-    section.section.d-none.d-sm-block
+    section.section
       .container
-        h2.heading-medium {% trans 'Institutions of the Transport and Telecommunications Ministry' %}
+        h2.heading-medium {% trans 'Institutions of' %} {{ ministry.name }}
         h3.heading-sub {% trans 'Public Enterprises' %}
         .row
           for public_service in ministry.publicservice_set.all
-            .col-sm-12.col-md-4
+            .col-12.col-md-4
               .list-links
                 li
                   a(href="{{ public_service.url }}", target="blank").link
