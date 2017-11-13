@@ -1,0 +1,16 @@
+extends 'base.pug'
+- load i18n
+
+block content
+  h2 Search
+
+  form(action="", method="get").form
+    input(type="text", placeholder="{{ query }}", name="q")
+    input(type="submit", value="Search")
+
+  if query
+    h2 Results
+    for article in object_list
+      p
+        a(href="{{ article.get_absolute_url }}")
+          {{ article.title }}
