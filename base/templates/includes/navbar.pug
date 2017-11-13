@@ -60,7 +60,7 @@ header.site-header
           h6.heading-label {% trans 'Sections' %}
           ul
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'News' %}
+            li: a(href="{% url 'pages-root' %}").link.link--medium.overflowed-xs {% trans 'News' %}
             li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'About Chile' %}
 
