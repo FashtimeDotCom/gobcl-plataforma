@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 17:50-0300\n"
+"POT-Creation-Date: 2017-11-13 13:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,15 +53,15 @@ msgstr "Noticias relacionadas"
 msgid "News"
 msgstr "Noticias"
 
-#: templates/aldryn_newsblog/article_list.pug:38
+#: templates/aldryn_newsblog/article_list.pug:39
 msgid "See complete news"
 msgstr "Ver noticia completa"
 
-#: templates/aldryn_newsblog/article_list.pug:43
+#: templates/aldryn_newsblog/article_list.pug:44
 msgid "Filter by Topic"
 msgstr "Filtrar por Temas"
 
-#: templates/aldryn_newsblog/article_list.pug:46
+#: templates/aldryn_newsblog/article_list.pug:47
 msgid "All"
 msgstr "Todas"
 
