@@ -13,6 +13,9 @@ from base.models import BaseGovernmentStructureModel
 # hitcount
 from hitcount.models import HitCountMixin
 
+#
+from institutions.managers import InstitutionQuerySet
+
 
 class Institution(BaseGovernmentStructureModel, HitCountMixin):
     # foreign keys
@@ -33,6 +36,8 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
         _('url'),
         max_length=200,
     )
+
+    objects = InstitutionQuerySet.as_manager()
 
     class Meta:
         abstract = True
