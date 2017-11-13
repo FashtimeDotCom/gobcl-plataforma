@@ -21,4 +21,4 @@ LOCALLY_INSTALLED_APPS = [
 
 ENABLE_EMAILS = True
 
-SECRET_KEY = '567ghsw%dshfoj)ty='
+ADMINS = (())

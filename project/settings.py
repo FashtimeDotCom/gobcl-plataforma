@@ -17,25 +17,25 @@ import sys
 from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
+PROJECT_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+
 # local settings
 if 'TRAVIS' in os.environ:
     from project.travis_settings import DEBUG
-    from project.travis_settings import LOCAL_DATABASES
     from project.travis_settings import LOCALLY_INSTALLED_APPS
     from project.travis_settings import ENABLE_EMAILS
-    from project.travis_settings import SECRET_KEY
+    from project.travis_settings import ADMINS
 elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEBUG
-    from project.production.local_settings import LOCAL_DATABASES
     from project.production.local_settings import LOCALLY_INSTALLED_APPS
     from project.production.local_settings import ENABLE_EMAILS
-    from project.production.local_settings import SECRET_KEY
+    from project.production.local_settings import ADMINS
 else:
     from project.local_settings import DEBUG
-    from project.local_settings import LOCAL_DATABASES
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
-    from project.local_settings import SECRET_KEY
+    from project.local_settings import ADMINS
 
 if DEBUG:
     env = 'development'
@@ -45,12 +45,7 @@ else:
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
 
-ADMINS = (
-    ('Ignacio Munizaga', 'muni@magnet.cl'),
-    ('Cristian Sepulveda', 'cristian@magnet.cl'),
-    ('Jorge Guerra', 'jorge@magnet.cl'),
-    ('Tito', 'cristobal@magnet.cl'),
-)
+ADMINS = ADMINS
 
 
 # List of IP addresses, as strings, that:
@@ -58,11 +53,7 @@ ADMINS = (
 #   * Receive x-headers
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
-
-PROJECT_DIR = os.path.dirname(__file__)
-BASE_DIR = os.path.dirname(PROJECT_DIR)
-
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
@@ -147,8 +138,8 @@ INSTALLED_APPS = [
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'no-reply@localhost'
-EMAIL_SENDER_NAME = 'My project'
+DEFAULT_FROM_EMAIL = 'no-reply@gob.cl'
+EMAIL_SENDER_NAME = 'GOB'
 
 if DEBUG:
     INSTALLED_APPS += [
@@ -223,9 +214,16 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-DATABASES = {}
-DATABASES.update(LOCAL_DATABASES)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', ''),
+        'USER': os.getenv('DB_USER', ''),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
+        'PORT': os.getenv('DB_PORT', ''),
+    }
+}
 
 # The email backend to use. For possible shortcuts see django.core.mail.
 # The default is to use the SMTP backend.
@@ -284,7 +282,6 @@ LOCALE_PATHS = [
 ]
 
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -292,10 +289,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static/')
-STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
-MEDIA_URL = '/uploads/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -348,8 +342,8 @@ NPM_FILE_PATTERNS = {
 }
 
 # default keys, replace with somethign your own
-RECAPTCHA_PUBLIC_KEY = '6LcqFiMUAAAAAF5emCxyuzFJsD2tn2C84MoHc-Va'
-RECAPTCHA_PRIVATE_KEY = '6LcqFiMUAAAAAP12IhWi3v06FjQ0Vk8_vCRfFMMt'
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY', '')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY', '')
 NOCAPTCHA = True
 # un comment when we start using only SSL
 # RECAPTCHA_USE_SSL = True
@@ -446,10 +440,10 @@ CMS_TOOLBARS = [
     'cms.cms_toolbars.PageToolbar',
 ]
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'magnet'
-EMAIL_HOST_PASSWORD = 'necesitamosemails1'
-EMAIL_PORT = 587
+EMAIL_HOST = os.getenv('EMAIL_HOST', '')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
 
 HAYSTACK_CONNECTIONS = {
@@ -460,3 +454,19 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 ALDRYN_NEWSBLOG_SEARCH = False
+
+AWS_STORAGE_BUCKET_NAME = 'gob.cl'
+AWS_S3_SECURE_URLS = True
+AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+STATIC_URL = os.getenv('STATIC_URL', '/static/')
+MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
+DEFAULT_FILE_STORAGE = os.getenv(
+    'DEFAULT_FILE_STORAGE',
+    'django.core.files.storage.FileSystemStorage'
+)
+STATICFILES_STORAGE = os.getenv(
+    'STATICFILES_STORAGE',
+    'django.contrib.staticfiles.storage.StaticFilesStorage'
+)
