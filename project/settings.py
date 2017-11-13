@@ -198,6 +198,7 @@ TEMPLATES = [
                 ),
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
+                'base.context_processors.categories',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -216,7 +217,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.getenv('DB_NAME', 'plataforma-gobcl'),
         'USER': os.getenv('DB_USER', ''),
         'PASSWORD': os.getenv('DB_PASSWORD', ''),

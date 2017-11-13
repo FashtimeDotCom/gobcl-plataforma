@@ -83,3 +83,16 @@ footer.site-footer {
     }
   }
 }
+
+
+.fixme {
+  &.resume {
+    & > p {
+      display: none;
+
+      &:first-child {
+        display: block;
+      }
+    }
+  }
+}
