@@ -53,7 +53,7 @@ ADMINS = ADMINS
 #   * Receive x-headers
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
 
-SECRET_KEY = os.getenv('SECRET_KEY', '')
+SECRET_KEY = os.getenv('SECRET_KEY', '=64Gh@&uwc7')
 
 ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
@@ -217,7 +217,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', ''),
+        'NAME': os.getenv('DB_NAME', 'plataforma-gocl'),
         'USER': os.getenv('DB_USER', ''),
         'PASSWORD': os.getenv('DB_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', ''),
