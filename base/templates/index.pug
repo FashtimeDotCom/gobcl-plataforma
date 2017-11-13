@@ -153,7 +153,7 @@ block content
         section.sub-section.d-md-none.d-lg-block
           .card-small.d-md-none
             h5.card-small_title
-              a(href="acerca-de.html").card-small_link
+              a(href="{% url 'about' %}").card-small_link
                 | {% trans 'About Chile' %}
                 i.ic-arrow-right.icon--right
             .card-small_body
@@ -164,7 +164,7 @@ block content
                 p {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
                 .row
                   .col-lg-10
-                    a(href="acerca-de.html").button.button--block.button--light.button--clean.button--space {% trans 'See more' %}
+                    a(href="{% url 'about' %}").button.button--block.button--light.button--clean.button--space {% trans 'See more' %}
             .col-md-1
             .col-md-6.align-self-center
               img(src="{% static 'images/about-of.jpg' %}", alt="").img-fluid.w-100
