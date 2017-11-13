@@ -10,6 +10,7 @@ from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseListView
 from base.views import BaseUpdateView
+from base.views import BaseSlugDetailView
 
 from hitcount.views import HitCountDetailView
 
@@ -36,7 +37,7 @@ class RegionCreateView(BaseCreateView):
     permission_required = 'regions.add_region'
 
 
-class RegionDetailView(HitCountDetailView):
+class RegionDetailView(BaseSlugDetailView, HitCountDetailView):
     """
     A view for displaying a single region
     """
