@@ -97,7 +97,6 @@ html(lang="es")
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
       script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
-      script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     {% endcompress %}
 
     // templates
@@ -110,6 +109,7 @@ html(lang="es")
     block javascript_data
     {% render_block "js" %}
     {% compress js %}
+    script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/application.js' %}")
     script(type='text/javascript').
