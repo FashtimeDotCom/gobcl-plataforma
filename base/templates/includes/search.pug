@@ -25,11 +25,8 @@
           .tags.p-0
             .select.select--dark
               select(name="")
-                option(value="Educación") Educación
-                option(value="Salud") Salud
-                option(value="Seguridad") Seguridad
-                option(value="Economía y empleo") Economía y empleo
-                option(value="Calidad de vida y ciudad") Calidad de vida y ciudad
+                for category in categories
+                  option(value="{{category.slug}}") {{category}}
 
       .row
         .col-md-12.col-lg-4.col-xl-4

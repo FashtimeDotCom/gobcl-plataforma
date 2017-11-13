@@ -15,9 +15,9 @@ do
      esac
 done
 
-engine=`python -c"from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['default']['ENGINE'])"`
+engine=`python -c"from project.settings import DATABASES; print(DATABASES['default']['ENGINE'])"`
 debug=`python -c"from project.settings import DEBUG; print(DEBUG)"`
-dbname=`python -c"from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['default']['NAME'])"`
+dbname=`python -c"from project.settings import DATABASES; print(DATABASES['default']['NAME'])"`
 
 if [ $debug = "True" ] ; then
 echo "----------------------drop-database------------------------------"
@@ -27,8 +27,8 @@ echo "----------------------drop-database------------------------------"
             rm $dbname
         fi
     else
-        dbuser=`python -c"from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['default']['USER'])"`
-        dbpass=`python -c"from project.settings import LOCAL_DATABASES; print(LOCAL_DATABASES['default']['PASSWORD'])"`
+        dbuser=`python -c"from project.settings import DATABASES; print(DATABASES['default']['USER'])"`
+        dbpass=`python -c"from project.settings import DATABASES; print(DATABASES['default']['PASSWORD'])"`
         if [ $engine == "django.db.backends.mysql" ]; then
             echo "drop database $dbname" | mysql --user=$dbuser --password=$dbpass
             echo "create database $dbname" | mysql --user=$dbuser --password=$dbpass
