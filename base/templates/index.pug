@@ -24,19 +24,14 @@ block content
 
     section.section.section--medium.bg-bluedark.d-none.d-sm-block
       .container
-        .row
-          .col-md-8
-            ul.list-ib
-              li {% trans 'Most searched' %}:
-              for category in categories
-                li
-                  a.link.link--clean.text-white(
-                    href="{% url 'article_list' %}?category={{category.slug}}"
-                  )
-                    {{ category }}
-          .col-md-2.offset-md-2
-            a(target="_blank" href="http://chilemejor.gob.cl/").text-white
-              {% trans 'Visit Chile Better' %}
+        ul.list-ib
+          li {% trans 'Most searched' %}:
+          for category in categories
+            li
+              a.link.link--clean.text-white(
+                href="{% url 'article_list' %}?category={{category.slug}}"
+              )
+                {{ category }}
 
     section
       .container
