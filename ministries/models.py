@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 from institutions.models import Institution
+from ministries.managers import PublicServiceQuerySet
 
 
 class Ministry(Institution):
@@ -93,6 +94,8 @@ class PublicService(BaseModel):
         blank=True,
         null=True,
     )
+
+    objects = PublicServiceQuerySet.as_manager()
 
     def __str__(self):
         return self.name
