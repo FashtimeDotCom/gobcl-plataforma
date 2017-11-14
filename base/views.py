@@ -43,17 +43,23 @@ def index(request):
         is_published=True,
     ).order_by('-publishing_date')[:4]
 
+    gov_structure = request.government_structure
+
     context = {
         'procedures_and_benefits': None,
         'campaigns': None,
         'articles': articles,
-        'ministries_count': Ministry.objects.current_government().count(),
+        'ministries_count': (
+            Ministry.objects.by_government_structure(gov_structure).count()
+        ),
         'public_services_count': (
-            PublicService.objects.current_government().count()
+            PublicService.objects.by_government_structure(
+                gov_structure
+            ).count()
         ),
         'regions_and_communes_count': (
-            Region.objects.current_government().count()
-            + Commune.objects.current_government().count()
+            Region.objects.by_government_structure(gov_structure).count()
+            + Commune.objects.by_government_structure(gov_structure).count()
         ),
     }
 
