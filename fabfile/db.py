@@ -53,6 +53,7 @@ def backup_db():
     db_name = get_db_data(setting='NAME')
     db_host = get_db_data(setting='HOST')
     db_user = get_db_data(setting='USER')
+    db_port = get_db_data(setting='PORT')
 
     # dumps folder creation
     dumps_folder = 'db_dumps/{}'.format(env.branch)
@@ -63,8 +64,8 @@ def backup_db():
     dump_name = '{}/{}.dump'.format(dumps_folder, dump_name)
 
     if db_host and db_user:
-        cmd = 'pg_dump --host {} --username {} -Fc "{}" -f "{}"'.format(
-            db_host, db_user, db_name, dump_name)
+        cmd = 'pg_dump --host {} --username {} -p {} -Fc "{}" -f "{}"'.format(
+            db_host, db_user, db_port, db_name, dump_name)
     else:
         cmd = 'pg_dump -Fc "{}" -f "{}"'.format(db_name, dump_name)
     run(cmd)
