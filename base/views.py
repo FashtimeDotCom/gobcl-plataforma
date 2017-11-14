@@ -47,10 +47,13 @@ def index(request):
         'procedures_and_benefits': None,
         'campaigns': None,
         'articles': articles,
-        'ministries_count': Ministry.objects.count(),
-        'public_services_count': PublicService.objects.count(),
+        'ministries_count': Ministry.objects.current_government().count(),
+        'public_services_count': (
+            PublicService.objects.current_government().count()
+        ),
         'regions_and_communes_count': (
-            Region.objects.count() + Commune.objects.count()
+            Region.objects.current_government().count()
+            + Commune.objects.current_government().count()
         ),
     }
 
