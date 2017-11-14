@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-13 14:56-0300\n"
+"POT-Creation-Date: 2017-11-14 13:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,21 +27,25 @@ msgid "English"
 msgstr "Inglés"
 
 #: urls.py:37
-msgid "^news/"
-msgstr "^noticias/"
-
-#: urls.py:38
 msgid "^about/$"
 msgstr "^acerca-de/$"
 
-#: urls.py:39
+#: urls.py:38
 msgid "^about-interior/$"
 msgstr "^acerca-de-interior/$"
 
-#: urls.py:41
+#: urls.py:40
 msgid "^institutions/"
 msgstr "^instituciones/"
 
-#: urls.py:42
+#: urls.py:41
 msgid "^ministries/"
 msgstr "^ministerios/"
+
+#: urls.py:42
+msgid "^news/"
+msgstr "^noticias/"
+
+#: urls.py:43
+msgid "^search/"
+msgstr "^buscar/"

@@ -1,4 +1,98 @@
 extends base.pug
 
+- load i18n
+- load staticfiles
+
 block content
-  h1 About template
+  main.site-main
+    section.bg-light
+      .container
+        ol.breadcrumb
+          li: a(href="#") {% trans 'Home' %}
+          li: a(href="#") {% trans 'About of Chile' %}
+    section.section--medium.bg-bluedark
+      .container
+        .row
+          .col-12.d-lg-none
+            {% include 'includes/toolbar.pug' %}
+          .col-xs-12.col-sm-12.col-md-7.col-lg-7
+            article.text-light
+              h1.heading-large {% trans 'About of Chile' %}
+              p Lorem ipsum dolor sit amet, consecte adipiscing elit. Cras finibus ligula ac mi condiment facilisis.
+                | Cras finibus ligula ac condimentum facilisis.
+              p Lorem ipsum dolor sit amet, consecte adipiscing elit. Cras finibus ligula ac mi condiment facilisis.
+                | Cras finibus ligula ac condimentum facilisis. Lorem ipsum dolor sit amet, consecte adipiscing elit.
+                | Cras finibus ligula ac mi condiment facilisis. Cras finibus ligula ac condimentum facilisis.
+
+          .col-12.col-lg-5.col-xl-5
+            .d-none.d-lg-block.pull-md-right
+              {% include 'includes/toolbar.pug' %}
+            .clearfix
+            a(href="acerca-de-interior.html").button.button--block.button--side {% trans 'See more about our country' %}
+
+    section
+      .container
+        section.sub-section
+          article
+            h2.heading-medium {% trans 'Tourism' %}
+            .row
+              .col-12.col-md-6
+                p
+                  | Planea tu próximo viaje por Chile. Lorem ipsum dolor sit amet, consecte adipiscing elit.
+                  | Cras finibus ligula ac mi condiment facilisis. Cras finibus ligula ac condimentum facilisis.
+                  | Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  | pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                  | mollit anim id est laborum.
+                h3.heading-label.heading-label--small {% trans 'If you are foreign' %}
+                p: a(href="#") {% trans 'Chile Travel' %}
+                br
+                h3.heading-label.heading-label--small {% trans 'If you are Chilean' %}
+                p: a(href="#") {% trans 'Meet Chile' %}
+              .col-12.col-md-6.d-none.d-sm-block
+                img(src="{% static 'images/about-of.jpg' %}", alt="").img-fluid.w-100
+
+        section.sub-section
+          article
+            h2.heading-medium {% trans 'Deal' %}
+            .row
+              .col-12.col-md-6
+                p Planea tu próximo viaje por Chile. Lorem ipsum dolor sit amet, consecte adipiscing elit. Cras
+                  | finibus ligula ac mi condiment facilisis. Cras finibus ligula ac condimentum facilisis.
+                  | Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  | pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                  | mollit anim id est laborum.
+                p: a(href="#") {% trans 'This is Chile' %}
+                p: a(href="#") {% trans 'Startup Chile' %}
+                p: a(href="#") {% trans 'Invest Chile' %}
+                p: a(href="#") {% trans 'Pro Chile' %}
+              .col-12.col-md-6.d-none.d-sm-block
+                img(src="{% static 'images/business.jpg' %}", alt="").img-fluid.w-100
+        section.sub-section
+          article
+            h2.heading-medium {% trans 'Migration' %}
+            .row
+              .col-12.col-md-6
+                p Planea tu próximo viaje por Chile. Lorem ipsum dolor sit amet, consecte adipiscing elit.
+                  | Cras finibus ligula ac mi condiment facilisis. Cras finibus ligula ac condimentum facilisis.
+                  | Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  | pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                  | mollit anim id est laborum.
+                a(href="#") {% trans 'Immigration' %}
+              .col-12.col-md-6.d-none.d-sm-block
+                img(src="{% static 'images/migration.jpg' %}", alt="").img-fluid.w-100
+        section.sub-section
+          article
+            h2.heading-medium {% trans 'Studies' %}
+            .row
+              .col-12.col-md-6
+                p Planea tu próximo viaje por Chile. Lorem ipsum dolor sit amet, consecte adipiscing elit.
+                  | Cras finibus ligula ac mi condiment facilisis. Cras finibus ligula ac condimentum facilisis.
+                  | Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  | pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                  | deserunt mollit anim id est laborum.
+                p: a(href="#") {% trans 'Learn Chile' %}
+              .col-12.col-md-6.d-none.d-sm-block
+                img(src="{% static 'images/study.jpg' %}", alt="").img-fluid.w-100
+    section
+      .container
+        {% include 'includes/social.pug' %}
