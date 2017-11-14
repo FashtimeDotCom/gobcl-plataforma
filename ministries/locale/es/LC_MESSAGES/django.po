@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 16:34-0300\n"
+"POT-Creation-Date: 2017-11-14 13:55-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,43 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:19
+#: models.py:20
 msgid "minister"
 msgstr "Ministro"
 
-#: models.py:25
+#: models.py:26
 msgid "public servants"
 msgstr "Servidores públicos"
 
-#: models.py:31
+#: models.py:32
 msgid "procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: models.py:36
+#: models.py:37
 msgid "importance"
 msgstr "importancia"
 
-#: models.py:42 models.py:82
+#: models.py:43 models.py:83
 msgid "ministry"
 msgstr "Ministerio"
 
-#: models.py:43
+#: models.py:44
 msgid "ministries"
 msgstr "Ministerios"
 
-#: models.py:85 templates/ministries/ministry_list.pug:17
+#: models.py:86 templates/ministries/ministry_list.pug:17
 msgid "name"
 msgstr "nombre"
 
-#: models.py:91
+#: models.py:92
 msgid "url"
 msgstr "url"
 
-#: models.py:102
+#: models.py:105
 msgid "public service"
 msgstr "servicio público"
 
-#: models.py:103
+#: models.py:106
 msgid "public services"
 msgstr "servicios públicos"
 
