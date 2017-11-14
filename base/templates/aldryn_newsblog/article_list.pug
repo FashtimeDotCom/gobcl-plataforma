@@ -52,10 +52,7 @@ block content
                 )
                   {{ category }}
 
-        .row
-          each article in article_list
-            if not forloop.first
-              {%  include 'aldryn_newsblog/includes/article_miniature.pug' with article=article %}
+          {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br
