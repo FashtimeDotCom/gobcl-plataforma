@@ -96,3 +96,17 @@ footer.site-footer {
     }
   }
 }
+
+// django cms support
+html{
+  &.cms-ready{
+    .site-header_fixed {
+      top: 5px;
+    }
+    &.cms-toolbar-expanded {
+      .site-header_fixed {
+        top: 49px;
+      }
+    }
+  }
+}
