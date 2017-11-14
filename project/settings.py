@@ -487,3 +487,7 @@ COMPRESS_STORAGE = os.getenv(
     'compressor.storage.CompressorFileStorage'
 )
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
+THUMBNAIL_DEFAULT_STORAGE = os.getenv(
+    'THUMBNAIL_DEFAULT_STORAGE',
+    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+)
