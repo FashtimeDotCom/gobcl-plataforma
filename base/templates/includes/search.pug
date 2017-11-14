@@ -30,7 +30,13 @@
             .tags_content
               for category in categories
                 .tags_item
-                  a(href="#").ctag.ctag--clarity {{category}}
+                  label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
+                    input.d-none(
+                      type="radio",
+                      id="category-input-{{category.slug}}",
+                      name="category_slug",
+                      value="{{category.slug}}"
+                    )
       .row
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'Procedures' %}
