@@ -33,7 +33,7 @@ urlpatterns += i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
     url(r'^api/1.0/', include('api.urls')),
-    url(r'^$', base_views.index, name='home'),
+    url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
     url(_(r'^about/$'), base_views.AboutTemplateView.as_view(), name='about'),
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
