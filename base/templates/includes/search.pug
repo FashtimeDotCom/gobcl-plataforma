@@ -20,14 +20,13 @@
                 button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
 
       .row
-        .col-sm-12.col-lg-5
+        .col-12
           h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
-          .tags.p-0
-            .select.select--dark
-              select(name="")
-                for category in categories
-                  option(value="{{category.slug}}") {{category}}
-
+          .tags
+            .tags_content
+              for category in categories
+                .tags_item
+                  a(href="#").ctag.ctag--clarity {{category}}
       .row
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'Procedures' %}

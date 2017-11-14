@@ -457,7 +457,7 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 ALDRYN_NEWSBLOG_SEARCH = False
 
-AWS_STORAGE_BUCKET_NAME = 'gob.cl'
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
@@ -471,4 +471,9 @@ DEFAULT_FILE_STORAGE = os.getenv(
 STATICFILES_STORAGE = os.getenv(
     'STATICFILES_STORAGE',
     'django.contrib.staticfiles.storage.StaticFilesStorage'
+)
+COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
+COMPRESS_STORAGE = os.getenv(
+    'COMPRESS_STORAGE',
+    'compressor.storage.CompressorFileStorage'
 )

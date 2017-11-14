@@ -42,7 +42,7 @@ block content
     section.section
       .container
         h2.heading-label {% trans 'Filter by Topic' %}:
-        .tags.overflowed-xs
+        .tags
           .tags_content
             .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light {% trans 'All' %}
             for category in categories
