@@ -480,3 +480,4 @@ COMPRESS_STORAGE = os.getenv(
     'COMPRESS_STORAGE',
     'compressor.storage.CompressorFileStorage'
 )
+COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
