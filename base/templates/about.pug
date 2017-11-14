@@ -8,8 +8,11 @@ block content
     section.bg-light
       .container
         ol.breadcrumb
-          li: a(href="#") {% trans 'Home' %}
-          li: a(href="#") {% trans 'About of Chile' %}
+          li
+            a(href="{% url 'home' %}") {% trans 'Home' %}
+          li 
+            a(href="{% url 'about' %}") 
+              {% trans 'About of Chile' %}
     section.section--medium.bg-bluedark
       .container
         .row
@@ -28,7 +31,7 @@ block content
             .d-none.d-lg-block.pull-md-right
               {% include 'includes/toolbar.pug' %}
             .clearfix
-            a(href="acerca-de-interior.html").button.button--block.button--side {% trans 'See more about our country' %}
+            a(href="{% url 'about_interior' %}").button.button--block.button--side {% trans 'See more about our country' %}
 
     section
       .container
