@@ -13,6 +13,9 @@ from base.models import BaseGovernmentStructureModel
 # hitcount
 from hitcount.models import HitCountMixin
 
+#
+from institutions.managers import InstitutionQuerySet
+
 
 class Institution(BaseGovernmentStructureModel, HitCountMixin):
     # foreign keys
@@ -34,6 +37,8 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
         max_length=200,
     )
 
+    objects = InstitutionQuerySet.as_manager()
+
     class Meta:
         abstract = True
 
@@ -42,4 +47,11 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
 
     def save(self, **kwargs):
         self.slug = slugify(self.name)
+
+        if hasattr(self, 'slug_es'):
+            self.slug_es = slugify(self.name_es)
+
+        if hasattr(self, 'slug_en'):
+            self.slug_en = slugify(self.name_en)
+
         super(Institution, self).save(**kwargs)

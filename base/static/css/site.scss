@@ -55,10 +55,44 @@ body {
   }
 }
 
+header.site-header {
+  .language-selector {
+    .dropdown-toggle {
+      & > i {
+        margin-right: 0.255rem;
+      }
+    }
+
+    .dropdown-menu {
+      padding: 0;
+      .lang {
+        margin: 10px 10px 0;
+
+        &:last-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
 footer.site-footer {
   .menu {
     a {
       height: $footer-link-height;
+    }
+  }
+}
+
+
+.fixme {
+  &.resume {
+    & > p {
+      display: none;
+
+      &:first-child {
+        display: block;
+      }
     }
   }
 }

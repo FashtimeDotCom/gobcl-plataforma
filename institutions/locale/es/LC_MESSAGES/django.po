@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 16:34-0300\n"
+"POT-Creation-Date: 2017-11-10 16:22-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -82,3 +82,7 @@ msgstr "servicios públicos"
 #: templates/institutions/institution_list.pug:79
 msgid "Regions"
 msgstr "Regiones"
+
+#: urls.py:16
+msgid "^presidency/$"
+msgstr "^presidencia/$"

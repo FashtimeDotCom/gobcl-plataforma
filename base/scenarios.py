@@ -2,6 +2,7 @@ import requests
 
 # django
 from django.contrib.sites.models import Site
+from django.db.models import F
 
 # mockups
 from base.mockups import Mockup
@@ -57,10 +58,19 @@ def load_regions(datetime=None, quantity=10):
     government_structure = get_current_government_structure()
 
     for region_data in regions_data:
+        name = region_data['name']
         region = Region.objects.get_or_create(
             government_structure=government_structure,
-            name=region_data['name'],
+            name=name,
         )[0]
+
+        if not region.name_es:
+            region.name_es = name
+
+        if not region.name_en:
+            region.name_en = name
+
+        region.save()
 
         for commune_data in region_data['communes']:
             Commune.objects.get_or_create(
@@ -106,6 +116,13 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
                 name=name,
                 defaults=defaults,
             )[0]
+            if not ministry_obj.name_es:
+                ministry_obj.name_es = name
+
+            if not ministry_obj.name_en:
+                ministry_obj.name_en = name
+
+            ministry_obj.save()
 
             '''
             If rest has "servicios dependientes"
@@ -125,3 +142,10 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
                         'ministry': ministry_obj,
                     }
                 )[0]
+
+
+def load_base_data():
+    load_regions()
+    load_data_from_digital_gob_api()
+    PublicService.objects.filter(name_es=None).update(name_es=F('name'))
+    PublicService.objects.filter(name_en=None).update(name_es=F('name'))

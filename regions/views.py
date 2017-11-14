@@ -10,6 +10,7 @@ from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseListView
 from base.views import BaseUpdateView
+from base.views import BaseSlugDetailView
 
 from hitcount.views import HitCountDetailView
 
@@ -36,13 +37,16 @@ class RegionCreateView(BaseCreateView):
     permission_required = 'regions.add_region'
 
 
-class RegionDetailView(HitCountDetailView):
+class RegionDetailView(BaseSlugDetailView, HitCountDetailView):
     """
     A view for displaying a single region
     """
     model = Region
     template_name = 'regions/region_detail.pug'
     count_hit = True
+
+    def get_slug_field(self):
+        return "slug_{}".format(self.request.LANGUAGE_CODE)
 
     def get_queryset(self):
         queryset = super(RegionDetailView, self).get_queryset()

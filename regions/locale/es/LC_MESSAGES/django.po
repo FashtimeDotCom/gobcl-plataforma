@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-31 16:34-0300\n"
+"POT-Creation-Date: 2017-11-09 10:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,9 @@ msgid "E-Mail"
 msgstr "Correo Electronico"
 
 #: templates/regions/region_detail.pug:49
-msgid "Go to the ministry site"
+#, fuzzy
+#| msgid "Go to the ministry site"
+msgid "Go to the regional government site"
 msgstr "Ir al sitio del Ministerio"
 
 #: templates/regions/region_detail.pug:55
