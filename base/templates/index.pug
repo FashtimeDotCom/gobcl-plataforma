@@ -93,7 +93,7 @@ block content
                         | {{ news.title}}
 
               .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-                a(href="#").button.button--block.button--light.button--clean.button--space Ver más
+                a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
 
         if ministries_count or public_services_count or regions_and_communes_count
           section.sub-section.d-none.d-md-block
