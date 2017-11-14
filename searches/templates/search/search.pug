@@ -12,33 +12,37 @@ block content
               {% include 'includes/toolbar.pug' %}
           .col-12.col-lg-7
             .search-form.search-form.nomargin-top.search-form--large
-              form(action="", method="get").search-form_content
-                input(type="search", placeholder="{% trans 'Write here what you want to search' %}", name="q").search-form_input
-                button(type="submit").search-form_button.search-form_button--submit: i.ic-search
-                button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+              form.search-form_content(action="", method="get")
+                input.search-form_input(
+                  type="search",
+                  placeholder="{% trans 'Write here what you want to search' %}",
+                  name="q"
+                )
+                button.search-form_button.search-form_button--submit(type="submit"): i.ic-search
+                button.search-form_button.search-form_button--cancel(type="button"): i.ic-delete
             .tags
-              label(for="").heading-label {% trans 'Filter by Topics' %}
+              label.heading-label(for="") {% trans 'Filter by Topics' %}
               .tags_content
                 for category in categories
                   .tags_item
                     label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
                       input.d-none(
-                      type="radio",
-                      id="category-input-{{category.slug}}",
-                      name="category_slug",
-                      value="{{category.slug}}"
+                        type="radio",
+                        id="category-input-{{category.slug}}",
+                        name="category_slug",
+                        value="{{category.slug}}"
                       )
             .filters
               .row
                 .col-6
                   div
-                    label(for="").heading-label {% trans 'Topic' %}
+                    label.heading-label(for="") {% trans 'Topic' %}
                     .select.select--dark
                       select(name="")
                         option {% trans 'All' %}
                 .col-6
                   div
-                    label(for="").heading-label {% trans 'Institution' %}
+                    label.heading-label(for="") {% trans 'Institution' %}
                     .select.select--dark
                       select(name="")
                         option {% trans 'All' %}
@@ -51,7 +55,7 @@ block content
             .col-12.col-md-10.col-lg-7
               for article in object_list
                 .result
-                  a(href="{{ article.get_absolute_url }}").result_link
+                  a.result_link(href="{{ article.get_absolute_url }}")
                     {% render_model article "title" %}
                   p.result_excerpt
                     {{ article.lead_in|striptags|truncatechars:100 }}
