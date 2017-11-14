@@ -114,7 +114,10 @@ def import_db(dump_name=None):
 
     local('dropdb "{}"'.format(local_name))
     local('createdb "{}"'.format(local_name))
-    local('pg_restore -d "{}" -O -j 2 "{}"'.format(local_name, dump_name))
+    local('pg_restore -d "{}" -O -j 2 "{}" --no-owner --no-privileges'.format(
+        local_name,
+        dump_name
+    ))
 
     print(green('Remember that there are settings established at DB level'))
 
