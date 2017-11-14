@@ -80,12 +80,11 @@ block content
         if articles
           section.sub-section.d-none.d-md-block
             h2.heading-medium {% trans 'News' %}
-            .row
-              for article in articles
-                {%  include 'aldryn_newsblog/includes/article_miniature.pug' with article=article %}
 
-              .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-                a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
+            {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
+
+            .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
+              a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
 
         if ministries_count or public_services_count or regions_count
           section.sub-section.d-none.d-md-block
