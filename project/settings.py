@@ -471,3 +471,8 @@ STATICFILES_STORAGE = os.getenv(
     'STATICFILES_STORAGE',
     'django.contrib.staticfiles.storage.StaticFilesStorage'
 )
+COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
+COMPRESS_STORAGE = os.getenv(
+    'COMPRESS_STORAGE',
+    'compressor.storage.CompressorFileStorage'
+)
