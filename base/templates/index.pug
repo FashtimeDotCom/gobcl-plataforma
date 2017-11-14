@@ -28,12 +28,15 @@ block content
           .col-md-8
             ul.list-ib
               li {% trans 'Most searched' %}:
-              li: a(href="resultados.html").link.link--clean.text-white Subsidio habitacional
-              li: a(href="resultados.html").link.link--clean.text-white Bono por hijo
-              li: a(href="resultados.html").link.link--clean.text-white Gratuidad
-              li: a(href="resultados.html").link.link--clean.text-white Cuenta pública
+              for category in categories
+                li
+                  a.link.link--clean.text-white(
+                    href="{% url 'article_list' %}?category={{category.slug}}"
+                  )
+                    {{ category }}
           .col-md-2.offset-md-2
-            a(href="#").text-white {% trans 'Visit Chile Better' %}
+            a(target="_blank" href="http://chilemejor.gob.cl/").text-white
+              {% trans 'Visit Chile Better' %}
 
     section
       .container
