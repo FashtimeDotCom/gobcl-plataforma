@@ -1,15 +1,65 @@
-extends 'base.pug'
-- load i18n
+extends base.pug
+
+- load i18n cms_tags
 
 block content
-  h2 Search
+  main.site-main
+    section.section.bg-bluedark.text-light
+      .container
+        .row
+          .col-12.col-lg-5.order-lg-12
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-12.col-lg-7
+            .search-form.search-form.nomargin-top.search-form--large
+              form(action="", method="get").search-form_content
+                input(type="search", placeholder="{% trans 'Write here what you want to search' %}", name="q").search-form_input
+                button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+                button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+            .tags
+              label(for="").heading-label {% trans 'Filter by Topics' %}
+              .tags_content
+                for category in categories
+                  .tags_item
+                    label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
+                      input.d-none(
+                      type="radio",
+                      id="category-input-{{category.slug}}",
+                      name="category_slug",
+                      value="{{category.slug}}"
+                      )
+            .filters
+              .row
+                .col-6
+                  div
+                    label(for="").heading-label {% trans 'Topic' %}
+                    .select.select--dark
+                      select(name="")
+                        option {% trans 'All' %}
+                .col-6
+                  div
+                    label(for="").heading-label {% trans 'Institution' %}
+                    .select.select--dark
+                      select(name="")
+                        option {% trans 'All' %}
 
-  form(action="", method="get").form
-    input(type="text", placeholder="{{ query }}", name="q")
-    input(type="submit", value="Search")
+    section.section
+      .container
+        h3.heading-medium {{ object_list|length }} {% trans 'Results' %}
+        .results
+          .row
+            .col-12.col-md-10.col-lg-7
+              for article in object_list
+                .result
+                  a(href="{{ article.get_absolute_url }}").result_link
+                    {% render_model article "title" %}
+                  p.result_excerpt
+                    {{ article.lead_in|striptags|truncatechars:100 }}
+                  span.result_date {{ article.publishing_date|date }}
 
-  h2 Results
-  for article in object_list
-    p
-      a(href="{{ article.get_absolute_url }}")
-        {{ article.title }}
+
+    section
+      .container
+        {% include 'includes/social.pug' %}
+
+
