@@ -30,7 +30,13 @@
             .tags_content
               for category in categories
                 .tags_item
-                  a(href="#").ctag.ctag--clarity {{category}}
+                  label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
+                    input.d-none(
+                      type="radio",
+                      id="category-input-{{category.slug}}",
+                      name="category_slug",
+                      value="{{category.slug}}"
+                    )
       .row
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'Procedures' %}
@@ -47,15 +53,12 @@
         .col-md-12.col-lg-4.col-xl-4
           h2.heading-label.heading-label--light {% trans 'News' %}
           div.search_section.overflowed-xs
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Mandataria celebró el noveno aniversario de la Reforma Previsional
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Presidenta promulgó la Ley de Tenencia Responsable de Mascotas y Animales de Compañía
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Yo Apoyo Tres Causales: El sitio con lo que necesitas saber del histórico proyecto de ley
+            for news in feature_news
+              article.new.new--search
+                span.new_category.new_category--light
+                  {{ news.categories.all|join:", " }}
+                h2.new_title: a(href="{{ news.get_absolute_url }}").link.link--text-light
+                  {{ news.title }}
             .clearfix
               a(href="#").more.more--right {% trans 'See more' %}
 

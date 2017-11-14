@@ -80,7 +80,7 @@ msgid "optional"
 msgstr "opcional"
 
 #: templates/includes/footer.pug:18
-msgid "Currency visits"
+msgid "Visits to the La Moneda palace"
 msgstr "Visitas a La Moneda"
 
 #: templates/includes/navbar.pug:22 templates/includes/navbar.pug:62

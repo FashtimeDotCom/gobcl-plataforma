@@ -199,6 +199,7 @@ TEMPLATES = [
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
                 'base.context_processors.categories',
+                'searches.context_processors.get_feature_news',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -439,6 +440,9 @@ CMS_TOOLBARS = [
     'cms.cms_toolbars.PlaceholderToolbar',
     'cms.cms_toolbars.BasicToolbar',
     'cms.cms_toolbars.PageToolbar',
+
+    # Aldryn newsblog toolbar
+    'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
 
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
@@ -458,6 +462,10 @@ ALDRYN_NEWSBLOG_SEARCH = False
 
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
+AWS_S3_CALLING_FORMAT_STATIC = os.getenv(
+    'AWS_S3_CALLING_FORMAT_STATIC',
+    'boto.s3.connection.SubdomainCallingFormat'
+)
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
@@ -476,3 +484,4 @@ COMPRESS_STORAGE = os.getenv(
     'COMPRESS_STORAGE',
     'compressor.storage.CompressorFileStorage'
 )
+COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'

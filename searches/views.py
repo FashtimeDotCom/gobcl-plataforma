@@ -11,6 +11,9 @@ class ArticleListView(ListView):
 
     def get(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
+
+        self.category_slug = request.GET.get('q', '')
+
         return super(ArticleListView, self).get(request)
 
     def get_context_data(self, **kwargs):
@@ -20,11 +23,17 @@ class ArticleListView(ListView):
 
     def get_queryset(self):
         queryset = super(ArticleListView, self).get_queryset().published()
+
         if self.query:
-            return queryset.filter(
+            queryset = queryset.filter(
                 Q(translations__title__icontains=self.query) |
                 Q(translations__lead_in__icontains=self.query) |
                 Q(translations__search_data__icontains=self.query)
             ).distinct()
-        else:
-            return queryset.none()
+
+        if self.category_slug:
+            queryset = queryset.filter(
+                categories__slug=self.category_slug
+            ).distinct()
+
+        return queryset

@@ -40,135 +40,117 @@ block content
 
     section
       .container
-        {% include 'includes/social.pug' %}
-        section.sub-section
-          .row
-            .col-12.col-lg-8.col-xl-6
-              article.card-new
-                h2.heading-medium {% trans 'Procedures and benefits' %}
-                p
-                  {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
-                a(href="tramites.html").card-new_more.d-md-none
+        {% include 'includes/social-small.pug' %}
+        if procedures_and_benefits
+          section.sub-section
+            .row
+              .col-12.col-lg-8.col-xl-6
+                article.card-new
+                  h2.heading-medium {% trans 'Procedures and benefits' %}
+                  p
+                    {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
+                  a(href="tramites.html").card-new_more.d-md-none
+                    {% trans 'See more' %}
+                article.card-new.d-block.d-md-none
+                  h2.heading-medium {% trans 'News' %}
+                  p
+                    {% trans 'Find out about our proposals to improve the country and review how they advance.' %}
+                  a(href="noticias.html").card-new_more.d-md-none
+                    {% trans 'See more' %}
+                article.card-new.d-block.d-md-none
+                  h2.heading-medium {% trans 'Institutions' %}
+                  p
+                    {% trans 'Meet the main government entities and their representatives.' %}
+                  a(href="{% url 'institution_list' %}").card-new_more.d-md-none
+                    {% trans 'See more' %}
+            .row.d-none.d-md-flex
+              .col-12.col-lg-4
+                .overflowed-xs
+                  a(href="#").link.link--text-dark.link--has-dot.visited
+                    | Certificación de convertidores catalíticos de reposición
+              .col-12.col-lg-4
+                .overflowed-xs
+                  a(href="#").link.link--text-dark.visited
+                    | Concurso para inscribir nuevos taxis
+              .col-12.col-lg-4
+                .overflowed-xs
+                  a(href="#").link.visited
+                    | Certificación de vehículos a gas
+            .row
+              .col-lg-4.offset-lg-4.d-none.d-md-block
+                a(href="#").button.button--block.button--light.button--clean.button--space
                   {% trans 'See more' %}
-              article.card-new.d-block.d-md-none
-                h2.heading-medium {% trans 'News' %}
-                p
-                  {% trans 'Find out about our proposals to improve the country and review how they advance.' %}
-                a(href="noticias.html").card-new_more.d-md-none
-                  {% trans 'See more' %}
-              article.card-new.d-block.d-md-none
-                h2.heading-medium {% trans 'Institutions' %}
-                p
-                  {% trans 'Meet the main government entities and their representatives.' %}
-                a(href="{% url 'institution_list' %}").card-new_more.d-md-none
-                  {% trans 'See more' %}
-          .row.d-none.d-md-flex
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.link--text-dark.link--has-dot.visited
-                  | Certificación de convertidores catalíticos de reposición
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.link--text-dark.visited
-                  | Concurso para inscribir nuevos taxis
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.visited
-                  | Certificación de vehículos a gas
-          .row
-            .col-lg-4.offset-lg-4.d-none.d-md-block
-              a(href="#").button.button--block.button--light.button--clean.button--space
-                {% trans 'See more' %}
 
-        section.sub-section.d-none.d-md-block
-          h2.heading-medium {% trans 'News' %}
-          .row
-            .col-12.col-lg-6
-              article.new.new--has-thumbnail-sm
-                figure.new_figure
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-desktop.img-responsive
-                time.new_date 25 de Septiembre de 2017
-                h2.new_title
-                  a(href="/").text-dark.visited
-                    | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-            .col-12.col-lg-6
-              article.new.new--has-thumbnail-sm
-                figure.new_figure
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-desktop.img-responsive
-                time.new_date 25 de Septiembre de 2017
-                h2.new_title
-                  a(href="noticia.html").text-dark.visited
-                    | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-            .col-12.col-lg-6
-              article.new.new--has-thumbnail-sm
-                figure.new_figure
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-desktop.img-responsive
-                time.new_date 25 de Septiembre de 2017
-                h2.new_title
-                  a(href="noticia.html").text-dark.visited
-                    | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
-            .col-12.col-lg-6
-              article.new.new--has-thumbnail-sm
-                figure.new_figure
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg" alt="").img-desktop.img-responsive
-                time.new_date 25 de Septiembre de 2017
-                h2.new_title: a(href="noticia.html").text-dark.visited
-                  | Chile Crece Contigo tiene nuevo ajuar para todo recién nacido en el sistema público de salud
+        if articles
+          section.sub-section.d-none.d-md-block
+            h2.heading-medium {% trans 'News' %}
+            .row
+              for news in articles
+                .col-12.col-lg-6
+                  article.new.new--has-thumbnail-sm
+                    figure.new_figure
+                      img(src="{{ news.featured_image.url }}" alt="").img-desktop.img-responsive
+                    time.new_date {{ news.publishing_date }}
+                    h2.new_title
+                      a(href="/").text-dark.visited
+                        | {{ news.title}}
 
-            .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-              a(href="#").button.button--block.button--light.button--clean.button--space Ver más
+              .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
+                a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
 
-        section.sub-section.d-none.d-md-block
-          .row
-            .col-12.col-lg-7
-              h2.heading-medium {% trans 'Government' %}
-              p {% trans 'Know the main government entities and their authorities.' %}
-              br
-            .col-12
-              .row
-                .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
-                    h2.card-data_title: span {% trans 'Presidency of the Republic' %}
-                .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
-                    h3.card-data_title
-                      span.card-data_number {{ ministry_list|length }}
-                      span.card-data_title-text {% trans 'Ministries' %}
-                .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
-                    h3.card-data_title
-                      span.card-data_number {{ public_service_list|length }}
-                      span.card-data_title-text {% trans 'Public Services.' %}
-                .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
-                    h3.card-data_title
-                      span.card-data_number {{ region_list|length }}
-                      span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
+        if ministries_count or public_services_count or regions_and_communes_count
+          section.sub-section.d-none.d-md-block
+            .row
+              .col-12.col-lg-7
+                h2.heading-medium {% trans 'Government' %}
+                p {% trans 'Know the main government entities and their authorities.' %}
+                br
+              .col-12
+                .row
+                  .col-md-6.col-lg-3
+                    a(href="{% url 'institution_list' %}").card-data
+                      h2.card-data_title: span {% trans 'Presidency of the Republic' %}
+                  .col-md-6.col-lg-3
+                    a(href="{% url 'institution_list' %}").card-data
+                      h3.card-data_title
+                        span.card-data_number {{ ministries_count }}
+                        span.card-data_title-text {% trans 'Ministries' %}
+                  .col-md-6.col-lg-3
+                    a(href="{% url 'institution_list' %}").card-data
+                      h3.card-data_title
+                        span.card-data_number {{ public_services_count }}
+                        span.card-data_title-text {% trans 'Public Services.' %}
+                  .col-md-6.col-lg-3
+                    a(href="{% url 'institution_list' %}").card-data
+                      h3.card-data_title
+                        span.card-data_number {{ regions_and_communes_count }}
+                        span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
-        section.sub-section
-          h2.heading-medium {% trans 'Campaigns' %}
-          .row
-            .col-md-3
-              a(href="#").featured-card.has-icon
-                .featured-card_figure.elem-bg
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/chilemejor.jpg", alt="").card_image.img-to-bg
-                .featured-card_body
-                  h2.featured-card_title Visita Chile mejor
-                  p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            .col-md-4
-              a(href="#").featured-card.has-icon
-                .featured-card_figure.elem-bg
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner.jpg", alt="").card_image.img-to-bg
-                .featured-card_body
-                  h2.featured-card_title Medidas que mejoran el acceso a la energía en Chile
-                  p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            .col-md-5
-              a(href="#").featured-card.has-icon
-                .featured-card_figure.elem-bg
-                  img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner2.jpg", alt="").card_image.img-to-bg
-                .featured-card_body
-                  h2.featured-card_title Ley de Unión Civil
-                  p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus inventore aperiam dolor vitae culpa.
+        if campaigns
+          section.sub-section
+            h2.heading-medium {% trans 'Campaigns' %}
+            .row
+              .col-md-3
+                a(href="#").featured-card.has-icon
+                  .featured-card_figure.elem-bg
+                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/chilemejor.jpg", alt="").card_image.img-to-bg
+                  .featured-card_body
+                    h2.featured-card_title Visita Chile mejor
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              .col-md-4
+                a(href="#").featured-card.has-icon
+                  .featured-card_figure.elem-bg
+                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner.jpg", alt="").card_image.img-to-bg
+                  .featured-card_body
+                    h2.featured-card_title Medidas que mejoran el acceso a la energía en Chile
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              .col-md-5
+                a(href="#").featured-card.has-icon
+                  .featured-card_figure.elem-bg
+                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner2.jpg", alt="").card_image.img-to-bg
+                  .featured-card_body
+                    h2.featured-card_title Ley de Unión Civil
+                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus inventore aperiam dolor vitae culpa.
 
         section.sub-section.d-md-none.d-lg-block
           .card-small.d-md-none
