@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 16:22-0300\n"
+"POT-Creation-Date: 2017-11-14 13:55-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:20
+#: models.py:23
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:24
+#: models.py:27
 msgid "description"
 msgstr "Descripción"
 
-#: models.py:27
+#: models.py:30
 msgid "slug"
 msgstr "slug"
 
-#: models.py:33
+#: models.py:36
 msgid "url"
 msgstr "url"
 
