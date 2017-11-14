@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-14 13:55-0300\n"
+"POT-Creation-Date: 2017-11-14 17:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,124 +38,124 @@ msgstr "Fecha de edición"
 msgid "government structure"
 msgstr "Estructura de gobierno"
 
-#: templates/about.pug:11 templates/about_interior.pug:11
+#: templates/about.pug:12 templates/about_interior.pug:12
 msgid "Home"
 msgstr "Home"
 
-#: templates/about.pug:12 templates/about.pug:20
-#: templates/about_interior.pug:12
+#: templates/about.pug:15 templates/about.pug:23
+#: templates/about_interior.pug:15
 #, fuzzy
 #| msgid "About Chile"
 msgid "About of Chile"
 msgstr "Acerca de Chile"
 
-#: templates/about.pug:28
+#: templates/about.pug:34
 msgid "See more about our country"
 msgstr "Ver más sobre nuestro país"
 
-#: templates/about.pug:34
+#: templates/about.pug:40
 msgid "Tourism"
 msgstr "Turismo"
 
-#: templates/about.pug:39
+#: templates/about.pug:49
 msgid "If you are foreign"
 msgstr "SI eres extranjero"
 
-#: templates/about.pug:40
+#: templates/about.pug:50
 msgid "Chile Travel"
 msgstr "Chile Travel"
 
-#: templates/about.pug:42
+#: templates/about.pug:52
 msgid "If you are Chilean"
 msgstr "Si eres chileno"
 
-#: templates/about.pug:43
+#: templates/about.pug:53
 msgid "Meet Chile"
 msgstr "Conoce chile"
 
-#: templates/about.pug:49
+#: templates/about.pug:59
 msgid "Deal"
 msgstr "Negocio"
 
-#: templates/about.pug:53
+#: templates/about.pug:67
 msgid "This is Chile"
 msgstr "This is Chile"
 
-#: templates/about.pug:54
+#: templates/about.pug:68
 msgid "Startup Chile"
 msgstr "Startup Chile"
 
-#: templates/about.pug:55
+#: templates/about.pug:69
 msgid "Invest Chile"
 msgstr "Invest Chile"
 
-#: templates/about.pug:56
+#: templates/about.pug:70
 msgid "Pro Chile"
 msgstr "Pro Chile"
 
-#: templates/about.pug:61
+#: templates/about.pug:75
 msgid "Migration"
 msgstr "Migración"
 
-#: templates/about.pug:65
+#: templates/about.pug:83
 msgid "Immigration"
 msgstr "Extranjería"
 
-#: templates/about.pug:70
+#: templates/about.pug:88
 msgid "Studies"
 msgstr "Estudios"
 
-#: templates/about.pug:74
+#: templates/about.pug:96
 msgid "Learn Chile"
 msgstr "Learn Chile"
 
-#: templates/about_interior.pug:13 templates/about_interior.pug:22
+#: templates/about_interior.pug:18 templates/about_interior.pug:27
 msgid "Our country"
 msgstr "Nuestro País"
 
-#: templates/about_interior.pug:35
+#: templates/about_interior.pug:40
 msgid "Surface"
 msgstr "Superficie"
 
-#: templates/about_interior.pug:65 templates/about_interior.pug:130
-#: templates/about_interior.pug:164 templates/about_interior.pug:181
-#: templates/about_interior.pug:197
+#: templates/about_interior.pug:70 templates/about_interior.pug:135
+#: templates/about_interior.pug:169 templates/about_interior.pug:186
+#: templates/about_interior.pug:202
 msgid "Download original file"
 msgstr "Descargar archivo original"
 
-#: templates/about_interior.pug:71
+#: templates/about_interior.pug:76
 msgid "Geographical areas"
 msgstr "Zonas geográficas"
 
-#: templates/about_interior.pug:78
+#: templates/about_interior.pug:83
 msgid "Regions and their Municipalities"
 msgstr "Regiones y sus Municipios"
 
-#: templates/about_interior.pug:100
+#: templates/about_interior.pug:105
 msgid "Population"
 msgstr "Población"
 
-#: templates/about_interior.pug:106
+#: templates/about_interior.pug:111
 msgid "Weather"
 msgstr "Clima"
 
-#: templates/about_interior.pug:140
+#: templates/about_interior.pug:145
 msgid "Patriotic symbols"
 msgstr "Símbolos patrios"
 
-#: templates/about_interior.pug:143
+#: templates/about_interior.pug:148
 msgid "National flag"
 msgstr "Bandera Nacional"
 
-#: templates/about_interior.pug:169
+#: templates/about_interior.pug:174
 msgid "Shield"
 msgstr "Escudo"
 
-#: templates/about_interior.pug:186
+#: templates/about_interior.pug:191
 msgid "National anthem"
 msgstr "Himno nacional"
 
-#: templates/about_interior.pug:202
+#: templates/about_interior.pug:207
 msgid "National anthem of Chile"
 msgstr "Himno nacional de Chile"
 
@@ -169,8 +169,8 @@ msgstr "Noticias relacionadas"
 
 #: templates/aldryn_newsblog/article_list.pug:14
 #: templates/includes/navbar.pug:23 templates/includes/navbar.pug:63
-#: templates/includes/search.pug:54 templates/index.pug:55
-#: templates/index.pug:86
+#: templates/includes/search.pug:54 templates/index.pug:51
+#: templates/index.pug:82
 msgid "News"
 msgstr "Noticias"
 
@@ -205,12 +205,12 @@ msgid "Visits to the La Moneda palace"
 msgstr "Visitas a La Moneda"
 
 #: templates/includes/navbar.pug:22 templates/includes/navbar.pug:62
-#: templates/index.pug:49
+#: templates/index.pug:45
 msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
 #: templates/includes/navbar.pug:24 templates/includes/navbar.pug:64
-#: templates/includes/search.pug:66 templates/index.pug:61
+#: templates/includes/search.pug:66 templates/index.pug:57
 msgid "Institutions"
 msgstr "Instituciones"
 
@@ -226,8 +226,8 @@ msgstr "Iniciar sesion"
 msgid "Sections"
 msgstr "Secciones"
 
-#: templates/includes/navbar.pug:65 templates/index.pug:159
-#: templates/index.pug:165
+#: templates/includes/navbar.pug:65 templates/index.pug:148
+#: templates/index.pug:154
 msgid "About Chile"
 msgstr "Acerca de Chile"
 
@@ -235,7 +235,7 @@ msgstr "Acerca de Chile"
 msgid "Back"
 msgstr "Volver"
 
-#: templates/includes/search.pug:20 templates/index.pug:21
+#: templates/includes/search.pug:20 templates/index.pug:22
 msgid "Write here what you want to search"
 msgstr "Escribe aquí lo que deseas buscar"
 
@@ -248,9 +248,9 @@ msgid "Procedures"
 msgstr "Trámites"
 
 #: templates/includes/search.pug:51 templates/includes/search.pug:63
-#: templates/includes/search.pug:71 templates/index.pug:53
-#: templates/index.pug:59 templates/index.pug:65 templates/index.pug:82
-#: templates/index.pug:170
+#: templates/includes/search.pug:71 templates/index.pug:49
+#: templates/index.pug:55 templates/index.pug:61 templates/index.pug:78
+#: templates/index.pug:159
 msgid "See more"
 msgstr "Ver más"
 
@@ -266,11 +266,11 @@ msgstr "Síguenos a través de redes sociales:"
 msgid "Listen"
 msgstr "Escuchar"
 
-#: templates/index.pug:17
+#: templates/index.pug:18
 msgid "You are on Gob.cl"
 msgstr "Estás en Gob.cl"
 
-#: templates/index.pug:18
+#: templates/index.pug:19
 msgid ""
 "Your portal to access information of the Government of Chile in a simple and "
 "fast way."
@@ -278,15 +278,11 @@ msgstr ""
 "Tu portal para acceder de manera simple y rápida a información del Gobierno "
 "de Chile."
 
-#: templates/index.pug:30
+#: templates/index.pug:29
 msgid "Most searched"
 msgstr "Lo más buscado"
 
-#: templates/index.pug:39
-msgid "Visit Chile Better"
-msgstr "Visita Chile Mejor"
-
-#: templates/index.pug:51
+#: templates/index.pug:47
 msgid ""
 "Find out about the main benefits of the State, in addition to the procedures "
 "that are carried out in ChileAtiende."
@@ -294,46 +290,46 @@ msgstr ""
 "Infórmate sobre los principales beneficios del Estado, además de los "
 "trámites que se realizan en ChileAtiende."
 
-#: templates/index.pug:57
+#: templates/index.pug:53
 msgid ""
 "Find out about our proposals to improve the country and review how they "
 "advance."
 msgstr ""
 "Entérate de nuestras propuestas para mejorar el país y revisa como avanzan."
 
-#: templates/index.pug:63
+#: templates/index.pug:59
 msgid "Meet the main government entities and their representatives."
 msgstr "Conoce las principales entidades de Gobierno y sus representantes."
 
-#: templates/index.pug:105
+#: templates/index.pug:94
 msgid "Government"
 msgstr "Gobierno"
 
-#: templates/index.pug:106
+#: templates/index.pug:95
 msgid "Know the main government entities and their authorities."
 msgstr "Conoce las principales entidades de Gobierno y sus autoridades."
 
-#: templates/index.pug:112
+#: templates/index.pug:101
 msgid "Presidency of the Republic"
 msgstr "Presidencia de la República"
 
-#: templates/index.pug:117
+#: templates/index.pug:106
 msgid "Ministries"
 msgstr "Ministerios"
 
-#: templates/index.pug:122
+#: templates/index.pug:111
 msgid "Public Services."
 msgstr "Servicios Públicos"
 
-#: templates/index.pug:127
+#: templates/index.pug:116
 msgid "Regions and their Municipalities."
 msgstr "Regiones y sus Municipios"
 
-#: templates/index.pug:131
+#: templates/index.pug:120
 msgid "Campaigns"
 msgstr "Campañas"
 
-#: templates/index.pug:162 templates/index.pug:166
+#: templates/index.pug:151 templates/index.pug:155
 msgid ""
 "Information for tourists, migrants and those who want to study or do "
 "business in Chile."
@@ -360,6 +356,9 @@ msgstr "Actualizado %s"
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
+
+#~ msgid "Visit Chile Better"
+#~ msgstr "Visita Chile Mejor"
 
 #~ msgid "institutions"
 #~ msgstr "Instituciones"
