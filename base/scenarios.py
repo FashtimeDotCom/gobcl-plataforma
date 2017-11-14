@@ -3,6 +3,7 @@ import requests
 # django
 from django.contrib.sites.models import Site
 from django.db.models import F
+from django.utils.translation import activate
 
 # mockups
 from base.mockups import Mockup
@@ -13,6 +14,18 @@ from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Commune
 from regions.models import Region
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
+
+
+def create_articles(quantity=20, language='en'):
+    activate(language)
+    app_config = NewsBlogConfig.objects.first()
+    m = Mockup()
+    for x in range(quantity):
+        m.create_article(
+            is_published=True,
+            app_config=app_config,
+        )
 
 
 def get_current_government_structure():

@@ -24,6 +24,10 @@ from ministries.models import Ministry
 from public_servants.models import PublicServant
 from regions.models import Region
 from presidencies.models import Presidency
+from aldryn_newsblog.models import Article
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
+from users.models import User
+from aldryn_people.models import Person
 
 
 class Mockup(object):
@@ -49,6 +53,26 @@ class Mockup(object):
             page.publish(language)
 
         return page
+
+    def create_user(self, **kwargs):
+        self.set_required_email(kwargs, 'email')
+        self.set_required_string(kwargs, 'first_name')
+        self.set_required_string(kwargs, 'last_name')
+        return User.objects.create(**kwargs)
+
+    def create_article(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
+        self.set_required_foreign_key(kwargs, 'app_config')
+        self.set_required_foreign_key(kwargs, 'owner', 'user')
+        self.set_required_foreign_key(kwargs, 'author', 'person')
+        return Article.objects.create(**kwargs)
+
+    def create_person(self, **kwargs):
+        return Person.objects.create(**kwargs)
+
+    def create_app_config(self, **kwargs):
+        self.set_required_string(kwargs, 'namespace')
+        return NewsBlogConfig.objects.create(**kwargs)
 
     def create_public_servant(self, **kwargs):
         self.set_required_string(kwargs, 'name')
