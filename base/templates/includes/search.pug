@@ -14,8 +14,8 @@
         .col-md-12.col-lg-7.col-xl-7
           .search-form.site-search_form.nomargin-bottom#search
             .search-form_content
-              form(action="resultados.html")
-                input(type="search" placeholder="{% trans 'Write here what you want to search' %}")#input-search.search-form_input
+              form(action="{% url 'article_list' %}")
+                input(type="search", placeholder="{% trans 'Write here what you want to search' %}", name="q")#input-search.search-form_input
                 button(type="submit").search-form_button.search-form_button--submit: i.ic-search
                 button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
 
@@ -45,7 +45,8 @@
           div.search_section.overflowed-xs
             for news in feature_news
               article.new.new--search
-                span.new_category.new_category--light Economia y empleo
+                span.new_category.new_category--light
+                  {{ news.categories.all|join:", " }}
                 h2.new_title: a(href="{{ news.get_absolute_url }}").link.link--text-light
                   {{ news.title }}
             .clearfix
