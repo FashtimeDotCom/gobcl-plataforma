@@ -19,7 +19,7 @@ header.site-header
             ul.dropdown-menu.languages
               {% language_chooser %}
 
-        a(href="#").link.link--dib {% trans 'Procedures and benefits' %}
+        a(href="#").link.link--dib.d-none {% trans 'Procedures and benefits' %}
         a(href="{% url 'pages-root' %}").link.link--dib {% trans 'News' %}
         a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Institutions' %}
         a(href="#").btn-search.toggle-search
