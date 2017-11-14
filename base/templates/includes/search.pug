@@ -15,7 +15,11 @@
           .search-form.site-search_form.nomargin-bottom#search
             .search-form_content
               form(action="{% url 'article_list' %}")
-                input(type="search", placeholder="{% trans 'Write here what you want to search' %}", name="q")#input-search.search-form_input
+                input(
+                  type="search",
+                  placeholder="{% trans 'Write here what you want to search' %}",
+                  name="q"
+                )#input-search.search-form_input
                 button(type="submit").search-form_button.search-form_button--submit: i.ic-search
                 button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
 
