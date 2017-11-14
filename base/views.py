@@ -3,6 +3,9 @@
 
 # standard library
 
+# external library
+from aldryn_newsblog.models import Article
+
 # django
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -27,10 +30,40 @@ from django.views.generic.list import ListView
 from base.view_utils import clean_query_string
 from inflection import underscore
 
+# models
+from ministries.models import Ministry
+from ministries.models import PublicService
+from regions.models import Region
+from regions.models import Commune
+
 
 def index(request):
     """ view that renders a default home"""
-    return render(request, 'index.pug')
+    articles = Article.objects.filter(
+        is_published=True,
+    ).order_by('-publishing_date')[:4]
+
+    gov_structure = request.government_structure
+
+    context = {
+        'procedures_and_benefits': None,
+        'campaigns': None,
+        'articles': articles,
+        'ministries_count': (
+            Ministry.objects.by_government_structure(gov_structure).count()
+        ),
+        'public_services_count': (
+            PublicService.objects.by_government_structure(
+                gov_structure
+            ).count()
+        ),
+        'regions_and_communes_count': (
+            Region.objects.by_government_structure(gov_structure).count()
+            + Commune.objects.by_government_structure(gov_structure).count()
+        ),
+    }
+
+    return render(request, 'index.pug', context)
 
 
 def bad_request_view(request):
