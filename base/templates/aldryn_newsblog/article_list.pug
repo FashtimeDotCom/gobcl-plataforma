@@ -42,7 +42,7 @@ block content
     section.section
       .container
         h2.heading-label {% trans 'Filter by Topic' %}:
-        .tags.overflowed-xs
+        .tags
           .tags_content
             .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light {% trans 'All' %}
             for category in categories
@@ -62,7 +62,7 @@ block content
                   figure.new_figure-mobile
                     if article.featured_image_id
                       img.img-responsive(
-                        src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                        src="{% thumbnail article.featured_image 495x270 crop subject_location=article.featured_image.subject_location %}",
                         alt="{{ article.featured_image.alt }}"
                       )
                     else

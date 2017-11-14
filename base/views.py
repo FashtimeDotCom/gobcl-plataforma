@@ -3,9 +3,14 @@
 
 # standard library
 
+# external library
+from aldryn_newsblog.models import Article
+
 # django
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -13,22 +18,52 @@ from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.generic import RedirectView
 
 # utils
 from base.view_utils import clean_query_string
 from inflection import underscore
 
+# models
+from ministries.models import Ministry
+from ministries.models import PublicService
+from regions.models import Region
+from regions.models import Commune
+
 
 def index(request):
     """ view that renders a default home"""
-    return render(request, 'index.pug')
+    articles = Article.objects.filter(
+        is_published=True,
+    ).order_by('-publishing_date')[:4]
+
+    gov_structure = request.government_structure
+
+    context = {
+        'procedures_and_benefits': None,
+        'campaigns': None,
+        'articles': articles,
+        'ministries_count': (
+            Ministry.objects.by_government_structure(gov_structure).count()
+        ),
+        'public_services_count': (
+            PublicService.objects.by_government_structure(
+                gov_structure
+            ).count()
+        ),
+        'regions_and_communes_count': (
+            Region.objects.by_government_structure(gov_structure).count()
+            + Commune.objects.by_government_structure(gov_structure).count()
+        ),
+    }
+
+    return render(request, 'index.pug', context)
 
 
 def bad_request_view(request):
@@ -73,6 +108,31 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
         context['title'] = self.get_title()
 
         return context
+
+
+class BaseSlugDetailView(BaseDetailView):
+    slug_url_kwarg = 'slug'
+
+    def get_slug_field(self):
+        return "slug_{}".format(self.request.LANGUAGE_CODE)
+
+    def get_object(self, *args, **kwargs):
+        try:
+            obj = self.model.objects.get_by_slug(self.kwargs['slug'])
+        except:
+            raise Http404(
+                _("No %(verbose_name)s found matching the query") %
+                {'verbose_name': self.model._meta.verbose_name}
+            )
+        return obj
+
+    def get(self, request, **kwargs):
+        self.object = self.get_object()
+        if self.request.path != self.object.get_absolute_url():
+            return HttpResponseRedirect(self.object.get_absolute_url())
+        else:
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
 
 
 class BaseCreateView(CreateView, PermissionRequiredMixin):
