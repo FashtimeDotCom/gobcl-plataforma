@@ -106,3 +106,4 @@ project/static
 .vscode/
 .idea/
 */*.dump
+*/*.tar.gz

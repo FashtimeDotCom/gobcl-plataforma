@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load staticfiles
+- load thumbnail
 
 block content
   main.site-main
@@ -24,19 +25,14 @@ block content
 
     section.section.section--medium.bg-bluedark.d-none.d-sm-block
       .container
-        .row
-          .col-md-8
-            ul.list-ib
-              li {% trans 'Most searched' %}:
-              for category in categories
-                li
-                  a.link.link--clean.text-white(
-                    href="{% url 'article_list' %}?category={{category.slug}}"
-                  )
-                    {{ category }}
-          .col-md-2.offset-md-2
-            a(target="_blank" href="http://chilemejor.gob.cl/").text-white
-              {% trans 'Visit Chile Better' %}
+        ul.list-ib
+          li {% trans 'Most searched' %}:
+          for category in categories
+            li
+              a.link.link--clean.text-white(
+                href="{% url 'article_list' %}?category={{category.slug}}"
+              )
+                {{ category }}
 
     section
       .container
@@ -85,15 +81,8 @@ block content
           section.sub-section.d-none.d-md-block
             h2.heading-medium {% trans 'News' %}
             .row
-              for news in articles
-                .col-12.col-lg-6
-                  article.new.new--has-thumbnail-sm
-                    figure.new_figure
-                      img(src="{{ news.featured_image.url }}" alt="").img-desktop.img-responsive
-                    time.new_date {{ news.publishing_date }}
-                    h2.new_title
-                      a(href="/").text-dark.visited
-                        | {{ news.title}}
+              for article in articles
+                {%  include 'aldryn_newsblog/includes/article_miniature.pug' with article=article %}
 
               .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
                 a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
@@ -133,21 +122,21 @@ block content
               .col-md-3
                 a(href="#").featured-card.has-icon
                   .featured-card_figure.elem-bg
-                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/chilemejor.jpg", alt="").card_image.img-to-bg
+                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/chilemejor.jpg", alt="").card_image.img-to-bg
                   .featured-card_body
                     h2.featured-card_title Visita Chile mejor
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               .col-md-4
                 a(href="#").featured-card.has-icon
                   .featured-card_figure.elem-bg
-                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner.jpg", alt="").card_image.img-to-bg
+                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/banner.jpg", alt="").card_image.img-to-bg
                   .featured-card_body
                     h2.featured-card_title Medidas que mejoran el acceso a la energía en Chile
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               .col-md-5
                 a(href="#").featured-card.has-icon
                   .featured-card_figure.elem-bg
-                    img(src="http://e-gob.github.io/gob.cl/sitio/images/temp/banner2.jpg", alt="").card_image.img-to-bg
+                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/banner2.jpg", alt="").card_image.img-to-bg
                   .featured-card_body
                     h2.featured-card_title Ley de Unión Civil
                     p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus inventore aperiam dolor vitae culpa.
