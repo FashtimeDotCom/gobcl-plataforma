@@ -440,6 +440,9 @@ CMS_TOOLBARS = [
     'cms.cms_toolbars.PlaceholderToolbar',
     'cms.cms_toolbars.BasicToolbar',
     'cms.cms_toolbars.PageToolbar',
+
+    # Aldryn newsblog toolbar
+    'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
 
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
