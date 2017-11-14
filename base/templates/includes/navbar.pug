@@ -28,12 +28,12 @@ header.site-header
         if user.is_authenticated
           .site-header_login
           if request.session.loginas_from_user
-            a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
+            a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
           else
-            a(href="{% url 'logout' %}").link.link--dib.text-dark {% trans 'Logout' %}
+            a(href="{% url 'logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
         else 
           .site-header_login.hidden
-            a(href="{% url 'login' %}")#loginBtn.link.link--dib.text-dark {% trans 'Sign in' %}
+            a(href="{% url 'login' %}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       

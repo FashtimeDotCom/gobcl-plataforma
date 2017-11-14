@@ -8,11 +8,11 @@ footer.site-footer
         .row.menu
           for link in footer_links
             .col-sm-12.col-md-6.col-lg-3-col-xl-4
-              a(href="{{ link.url }}", target="blank").link.text-white {{ link }}
+              a(href="{{ link.url }}", target="_blank").link.text-white {{ link }}
       .col-md-12.col-xl-4
         ul.social
-          li: a(href="https://www.facebook.com/gobiernodechile", target="blank"): i.ic-facebook
-          li: a(href="https://twitter.com/gobiernodechile", target="blank"): i.ic-twitter
-          li: a(href="https://www.instagram.com/gobiernodechile/", target="blank"): i.ic-instagram
-          li: a(href="https://www.youtube.com/user/LAMONEDA", target="blank"): i.ic-youtube
-        a(href="https://www.youtube.com/user/LAMONEDA", target="blank").button.button--block.site-footer_button {% trans 'Visits to the La Moneda palace' %}
+          li: a(href="https://www.facebook.com/gobiernodechile", target="_blank"): i.ic-facebook
+          li: a(href="https://twitter.com/gobiernodechile", target="_blank"): i.ic-twitter
+          li: a(href="https://www.instagram.com/gobiernodechile/", target="_blank"): i.ic-instagram
+          li: a(href="https://www.youtube.com/user/LAMONEDA", target="_blank"): i.ic-youtube
+        a(href="http://visitasguiadas.presidencia.cl/", target="_blank").button.button--block.site-footer_button {% trans 'Visits to the La Moneda palace' %}

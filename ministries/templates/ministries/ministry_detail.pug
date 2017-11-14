@@ -8,7 +8,7 @@ block content
     section.bg-light
       .container
         ol.breadcrumb
-          li: a(href="/") {% trans 'Home' %}
+          li: a(href="{% url 'home' %}") {% trans 'Home' %}
           li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
 
     section.section.bg-bluedark
@@ -37,7 +37,7 @@ block content
                   span.profile_job {{ ministry.minister.charge }}
 
               p {{ ministry.minister.description|linebreaks }}
-              p: a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter {{ ministry.minister.twitter }}
+              p: a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter @{{ ministry.minister.twitter }}
               ul.profile_info
                 - if ministry.minister.phone
                   li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
@@ -57,7 +57,7 @@ block content
                   img(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
                 .profile_header
                   h3.profile_title {{ servant.name }}
-                  span.profile_job {{ servant.charge }}
+                  span.profile_job {{ servant.charge|default_if_none:"" }}
 
                 p {{ servant.description|linebreaks }}
                 p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
