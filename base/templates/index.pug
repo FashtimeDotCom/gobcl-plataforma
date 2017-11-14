@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load staticfiles
+- load thumbnail
 
 block content
   main.site-main
@@ -80,15 +81,8 @@ block content
           section.sub-section.d-none.d-md-block
             h2.heading-medium {% trans 'News' %}
             .row
-              for news in articles
-                .col-12.col-lg-6
-                  article.new.new--has-thumbnail-sm
-                    figure.new_figure
-                      img(src="{{ news.featured_image.url }}" alt="").img-desktop.img-responsive
-                    time.new_date {{ news.publishing_date }}
-                    h2.new_title
-                      a(href="/").text-dark.visited
-                        | {{ news.title }}
+              for article in articles
+                {%  include 'aldryn_newsblog/includes/article_miniature.pug' with article=article %}
 
               .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
                 a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
