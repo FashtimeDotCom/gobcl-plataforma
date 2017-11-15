@@ -63,7 +63,7 @@ header.site-header
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
             li
               a.link.link--medium.overflowed-xs(
-                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' %}"
+                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}"
               )
                 {% trans 'News' %}
             li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
