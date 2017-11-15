@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
+    'galleries',
 
     # django cms
     'cms',
