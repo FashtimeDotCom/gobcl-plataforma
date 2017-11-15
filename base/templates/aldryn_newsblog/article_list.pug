@@ -54,7 +54,7 @@ block content
                 )
                   {{ category }}
 
-          {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
+          {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list skip_first=True%}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br
