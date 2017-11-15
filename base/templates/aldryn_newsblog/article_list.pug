@@ -16,16 +16,17 @@ block content
             .col-sm-12.col-md-12.col-lg-6.col-xl-5
               p
                 // The image is only shown on the detail view by using the condition "and detail_view"
-                if article.featured_image_id
-                  img.article-hero_img.img-fluid.w-100(
-                    src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
-                    alt="{{ article.featured_image.alt }}"
-                  )
-                else
-                  img.article-hero_img.img-fluid.w-100(
-                    src="https://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
-                    alt="{{ article.featured_image.alt }}"
-                  )
+                a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
+                  if article.featured_image_id
+                    img.article-hero_img.img-fluid.w-100(
+                      src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                      alt="{{ article.featured_image.alt }}"
+                    )
+                  else
+                    img.article-hero_img.img-fluid.w-100(
+                      src="https://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
+                      alt="{{ article.featured_image.alt }}"
+                    )
             .col-sm-12.col-md-12.col-lg-6.col-xl-6
               time.article-hero_date
                 {{ article.publishing_date|date }}
@@ -33,8 +34,8 @@ block content
                 a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
                   {% render_model article "title" %}
 
-              .resume.fixme
-                {% render_model article "lead_in" %}
+              p
+                {{ article.lead_in|striptags }}
               a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").text-red
                 {% trans 'See complete news' %}
         {% endwith %}
@@ -54,7 +55,7 @@ block content
                 )
                   {{ category }}
 
-          {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
+          {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list skip_first=True%}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br

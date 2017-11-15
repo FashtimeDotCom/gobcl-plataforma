@@ -4,16 +4,17 @@
 
 .row
   for article in articles
-    .col-12.col-lg-6
-      article.new.new--has-thumbnail-sm
-        figure.new_figure
-          img(
-            src="{% thumbnail article.featured_image 495x270 crop subject_location=article.featured_image.subject_location %}"
-            alt=""
-          ).img-desktop.img-responsive
-        time.new_date {{ article.publishing_date }}
-        h2.new_title
-          a(
-            href="{{article.get_absolute_url}}"
-          ).text-dark.visited
-            | {{ article.title}}
+    if not skip_first or not forloop.first
+      .col-12.col-lg-6
+        article.new.new--has-thumbnail-sm
+          figure.new_figure
+            img(
+              src="{% thumbnail article.featured_image 495x270 crop subject_location=article.featured_image.subject_location %}"
+              alt=""
+            ).img-desktop.img-responsive
+          time.new_date {{ article.publishing_date }}
+          h2.new_title
+            a(
+              href="{{article.get_absolute_url}}"
+            ).text-dark.visited
+              | {{ article.title}}
