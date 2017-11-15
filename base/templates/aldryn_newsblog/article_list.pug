@@ -44,7 +44,9 @@ block content
         h2.heading-label {% trans 'Filter by Topic' %}:
         .tags
           .tags_content
-            .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light {% trans 'All' %}
+            .tags_item
+              a.ctag.ctag--light(href="{% namespace_url 'article-list' %}")
+                {% trans 'All' %}
             for category in categories
               .tags_item
                 a.ctag.ctag--light(

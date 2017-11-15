@@ -39,8 +39,8 @@ urlpatterns += i18n_patterns(
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
-    url(_(r'^news/'), include('cms.urls')),
     url(_(r'^search/'), include('searches.urls')),
+    url(_(r'^'), include('cms.urls')),
 )
 
 if settings.DEBUG:

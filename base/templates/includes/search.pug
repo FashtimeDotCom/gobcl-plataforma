@@ -1,4 +1,5 @@
 - load i18n
+- load apphooks_config_tags
 
 .site-search.bg-bluedark
   section
@@ -60,7 +61,7 @@
                 h2.new_title: a(href="{{ news.get_absolute_url }}").link.link--text-light
                   {{ news.title }}
             .clearfix
-              a(href="{% url 'pages-root' %}").more.more--right {% trans 'See more' %}
+              a(href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' %}").more.more--right {% trans 'See more' %}
 
         .col-md-12.col-lg-6.col-xl-6
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
