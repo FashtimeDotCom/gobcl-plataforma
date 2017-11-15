@@ -33,8 +33,8 @@ block content
                 a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
                   {% render_model article "title" %}
 
-              .resume.fixme
-                {% render_model article "lead_in" %}
+              p
+                {{ article.lead_in|striptags }}
               a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").text-red
                 {% trans 'See complete news' %}
         {% endwith %}
