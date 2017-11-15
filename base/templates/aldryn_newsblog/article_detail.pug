@@ -13,13 +13,14 @@ block content
               time.main-post_date {{ article.publishing_date|date }}
               h1.main-post_title {% render_model article "title" %}
 
+              {% render_model article "lead_in" %}
+
               ul.main-post_social
                 li: p {% trans 'Share this news through your social networks' %}
                 li: a(href="#"): i.ic-messenger
                 li: a(href="#"): i.ic-facebook
                 li: a(href="#"): i.ic-twitter
-
-              {% render_model article "lead_in" %}
+              {% render_placeholder article.content language placeholder_language %}
 
     if article.related.all
       section
