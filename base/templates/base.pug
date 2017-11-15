@@ -77,7 +77,6 @@ html(lang="es")
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
-    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -88,7 +87,9 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
+    {% placeholder "top_content" %}
     block content
+    {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
