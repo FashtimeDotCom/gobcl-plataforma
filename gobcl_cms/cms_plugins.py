@@ -4,7 +4,7 @@ from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
 
-from .models import ImagePLugin, HtmlPlugin
+from .models import ImagePlugin, HtmlPlugin
 
 
 class GalleryCMSPLugin(CMSPluginBase):
@@ -18,7 +18,7 @@ class GalleryCMSPLugin(CMSPluginBase):
 
 class ImageCMSPlugin(CMSPluginBase):
     name = _('Image')
-    model = ImagePLugin
+    model = ImagePlugin
     render_plugin = False
 
 
