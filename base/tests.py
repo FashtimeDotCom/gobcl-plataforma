@@ -62,6 +62,10 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
     def test_integrity_on_delete(self):
 
         for model in get_our_models():
+            # ignore gobcl_cms
+            if model._meta.app_label == 'gobcl_cms':
+                continue
+
             obj, related_nullable_objects = self.create_full_object(model)
 
             obj_count = model.objects.count()
