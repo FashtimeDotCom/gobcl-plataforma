@@ -32,20 +32,6 @@ block content
                         name="category_slug",
                         value="{{category.slug}}"
                       )
-            .filters
-              .row
-                .col-6
-                  div
-                    label.heading-label(for="") {% trans 'Topic' %}
-                    .select.select--dark
-                      select(name="")
-                        option {% trans 'All' %}
-                .col-6
-                  div
-                    label.heading-label(for="") {% trans 'Institution' %}
-                    .select.select--dark
-                      select(name="")
-                        option {% trans 'All' %}
 
     section.section
       .container
