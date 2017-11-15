@@ -31,7 +31,7 @@ block content
           for category in categories
             li
               a.link.link--clean.text-white(
-                href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' %}"
+                href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
               )
                 {{ category }}
 
@@ -86,7 +86,7 @@ block content
 
             .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
               a.button.button--block.button--light.button--clean.button--space(
-                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' %}"
+                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
               )
                 {% trans 'See more' %}
 
