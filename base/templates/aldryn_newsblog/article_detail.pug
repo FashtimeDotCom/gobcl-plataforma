@@ -13,14 +13,8 @@ block content
             article.main-post
               time.main-post_date {{ article.publishing_date|date }}
               h1.main-post_title {% render_model article "title" %}
-
-              {% render_model article "lead_in" %}
-
-              if article.featured_image_id
-                img.img-responsive(
-                  src="{% thumbnail article.featured_image 1600x1600 subject_location=article.featured_image.subject_location %}",
-                  alt="{{ article.featured_image.alt }}"
-                )
+              h2.main-post_subtitle
+                {{ article.lead_in|striptags }}
 
               ul.main-post_social
                 li: p {% trans 'Share this news through your social networks' %}
