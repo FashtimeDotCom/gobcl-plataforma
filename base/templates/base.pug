@@ -11,9 +11,17 @@ html(lang="es")
     meta(charset="utf-8")
     title Gob.cl{% block title %}: {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
-    meta(name="description", content="{% page_attribute 'meta_description' %}")
     meta(name="author", content="https://magnet.cl")
+
+    meta(name='twitter:site', content='@Gobiernodechile')
+    meta(name='twitter:creator', content='@Gobiernodechile')
+
+    meta(name='og:site_name', content='Gobierno de Chile')
+    meta(name='og:type', content='website')
+
+    block newsblog_meta_tags
+      meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
+      meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
