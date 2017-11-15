@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
 
 from cms.models.pluginmodel import CMSPlugin
 
@@ -10,4 +11,10 @@ class ImagePLugin(CMSPlugin):
         verbose_name=_('image'),
         blank=True,
         null=True,
+    )
+
+
+class HtmlPlugin(CMSPlugin):
+    html = models.TextField(
+        _('html'),
     )
