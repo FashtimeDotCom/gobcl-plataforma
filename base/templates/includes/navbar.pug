@@ -1,5 +1,6 @@
 - load i18n
 - load menu_tags
+- load apphooks_config_tags
 
 header.site-header
   .site-header_fixed
@@ -20,7 +21,7 @@ header.site-header
               {% language_chooser %}
 
         a(href="#").link.link--dib.d-none {% trans 'Procedures and benefits' %}
-        a(href="{% url 'pages-root' %}").link.link--dib {% trans 'News' %}
+        {% show_menu 0 1 100 100 "includes/menu.pug" %}
         a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Institutions' %}
         a(href="#").btn-search.toggle-search
           i.ic-search.btn-search_icon
@@ -33,7 +34,7 @@ header.site-header
             a(href="{% url 'logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
         else 
           .site-header_login.hidden
-            a(href="{% url 'login' %}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
+            a(href="{% url 'login' %}?next={{request.path}}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
@@ -60,7 +61,11 @@ header.site-header
           h6.heading-label {% trans 'Sections' %}
           ul
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
-            li: a(href="{% url 'pages-root' %}").link.link--medium.overflowed-xs {% trans 'News' %}
+            li
+              a.link.link--medium.overflowed-xs(
+                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}"
+              )
+                {% trans 'News' %}
             li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
             li: a(href="#").link.link--medium.overflowed-xs {% trans 'About Chile' %}
 

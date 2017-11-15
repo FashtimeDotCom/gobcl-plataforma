@@ -85,8 +85,6 @@ class PublicService(BaseModel):
     name = models.CharField(
         _('name'),
         max_length=100,
-        null=True,
-        unique=True,
     )
     url = models.URLField(
         _('url'),
@@ -104,3 +102,4 @@ class PublicService(BaseModel):
         ordering = ('name',)
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
+        unique_together = ('name', 'ministry')

@@ -3,6 +3,7 @@ extends base.pug
 - load i18n
 - load staticfiles
 - load thumbnail
+- load apphooks_config_tags
 
 block content
   main.site-main
@@ -30,7 +31,7 @@ block content
           for category in categories
             li
               a.link.link--clean.text-white(
-                href="{% url 'article_list' %}?category={{category.slug}}"
+                href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
               )
                 {{ category }}
 
@@ -80,14 +81,16 @@ block content
         if articles
           section.sub-section.d-none.d-md-block
             h2.heading-medium {% trans 'News' %}
-            .row
-              for article in articles
-                {%  include 'aldryn_newsblog/includes/article_miniature.pug' with article=article %}
 
-              .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-                a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
+            {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
-        if ministries_count or public_services_count or regions_and_communes_count
+            .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
+              a.button.button--block.button--light.button--clean.button--space(
+                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+              )
+                {% trans 'See more' %}
+
+        if ministries_count or public_services_count or regions_count
           section.sub-section.d-none.d-md-block
             .row
               .col-12.col-lg-7
@@ -112,7 +115,7 @@ block content
                   .col-md-6.col-lg-3
                     a(href="{% url 'institution_list' %}").card-data
                       h3.card-data_title
-                        span.card-data_number {{ regions_and_communes_count }}
+                        span.card-data_number {{ regions_count }}
                         span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
         if campaigns
