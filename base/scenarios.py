@@ -1,8 +1,11 @@
 import requests
+import json
 
 # django
 from django.contrib.sites.models import Site
 from django.db.models import F
+from django.conf import settings
+from django.utils.translation import activate
 
 # mockups
 from base.mockups import Mockup
@@ -13,6 +16,10 @@ from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Commune
 from regions.models import Region
+from aldryn_newsblog.models import Article
+from users.models import User
+from aldryn_people.models import Person
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
 
 def get_current_government_structure():
@@ -156,3 +163,35 @@ def load_base_data():
     load_data_from_digital_gob_api()
     PublicService.objects.filter(name_es=None).update(name_es=F('name'))
     PublicService.objects.filter(name_en=None).update(name_es=F('name'))
+
+
+def create_news_from_json(language='en'):
+    activate(language)
+
+    with open(settings.BASE_DIR + '/news.json') as news:
+        json_news = json.loads(news.read())
+
+    news_list = []
+    app_config = NewsBlogConfig.objects.first()
+    owner = User.objects.first()
+    author = Person.objects.get_or_create()[0]
+
+    for news in json_news:
+        title = news.get('titulo', '')[0]
+        image = news.get('thumb_img', '')[0]
+        publishing_date = news.get('fecha', '')[0]
+        lead = news.get('bajada', '')[0]
+        content = news.get('contenido', '')[0]
+        news_list.append(
+            Article(
+                app_config=app_config,
+                title=title,
+                lead_in=lead,
+                # content=content,
+                publishing_date=publishing_date,
+                owner=owner,
+                author=author,
+                is_published=True,
+            )
+        )
+    Article.objects.bulk_create(news_list)
