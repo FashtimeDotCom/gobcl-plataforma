@@ -34,7 +34,7 @@ header.site-header
             a(href="{% url 'logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
         else 
           .site-header_login.hidden
-            a(href="{% url 'login' %}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
+            a(href="{% url 'login' %}?next={{request.path}}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
 
       input(type="checkbox" id="menu-trigger").menu-trigger-input
       
