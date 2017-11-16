@@ -20,6 +20,8 @@ from aldryn_newsblog.models import Article
 from users.models import User
 from aldryn_people.models import Person
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
+from djangocms_text_ckeditor.models import Text
+from cmsplugin_filer_image.models import FilerImage
 
 
 def get_current_government_structure():
@@ -165,33 +167,75 @@ def load_base_data():
     PublicService.objects.filter(name_en=None).update(name_es=F('name'))
 
 
-def create_news_from_json(language='en'):
+def create_filer_plugin(filer_image, target_placeholder, language):
+    image_plugin = FilerImage(image=filer_image)
+    image_plugin.position = 0
+    image_plugin.tree_id = 0
+    image_plugin.lft = 0
+    image_plugin.rght = 0
+    image_plugin.level = 0
+    image_plugin.plugin_type = 'FilerImagePlugin'
+    image_plugin.language = language
+    image_plugin.placeholder = target_placeholder
+    image_plugin.save()
+
+    return image_plugin
+
+
+def create_text_plugin(content_list, target_placeholder, language):
+
+    content_string = ''
+    for content in content_list[2:-1]:
+        content_string += content
+
+    text = Text(body=content_string)
+    text.position = 0
+    text.tree_id = None
+    text.lft = None
+    text.rght = None
+    text.level = None
+    text.language = language
+    text.plugin_type = 'TextPlugin'
+    text.placeholder = target_placeholder
+    text.save()
+
+
+def create_news_from_json(language='es'):
     activate(language)
 
-    with open(settings.BASE_DIR + '/news.json') as news:
+    with open(settings.BASE_DIR + '/gobcl-posts.json') as news:
         json_news = json.loads(news.read())
 
-    news_list = []
     app_config = NewsBlogConfig.objects.first()
     owner = User.objects.first()
     author = Person.objects.get_or_create()[0]
 
     for news in json_news:
+
         title = news.get('titulo', '')[0]
-        image = news.get('thumb_img', '')[0]
+        image = news.get('thumb_img', '')
+        if image:
+            image = image[0]
         publishing_date = news.get('fecha', '')[0]
-        lead = news.get('bajada', '')[0]
-        content = news.get('contenido', '')[0]
-        news_list.append(
-            Article(
-                app_config=app_config,
-                title=title,
-                lead_in=lead,
-                # content=content,
-                publishing_date=publishing_date,
-                owner=owner,
-                author=author,
-                is_published=True,
+        lead = news.get('bajada', '')
+        if lead:
+            lead = lead[0]
+        content = news.get('contenido', '')
+
+        data = {
+            'app_config': app_config,
+            'title': title,
+            'lead_in': lead,
+            'publishing_date': publishing_date,
+            'owner': owner,
+            'author': author,
+            'is_published': True,
+        }
+
+        article = Article.objects.create(**data)
+        if content:
+            create_text_plugin(
+                content,
+                article.content,
+                language
             )
-        )
-    Article.objects.bulk_create(news_list)
