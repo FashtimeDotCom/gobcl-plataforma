@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 08:48-0300\n"
+"POT-Creation-Date: 2017-11-16 16:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,6 +199,10 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Siguiente"
 
+#: templates/base.pug:19
+msgid "government of Chile"
+msgstr "gobierno de Chile"
+
 #: templates/djangocms_video/default/video_player.html:22
 msgid "Your browser doesn't support this video format."
 msgstr ""
@@ -363,6 +367,11 @@ msgstr "Actualizado %s"
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
+
+#, fuzzy
+#~| msgid "Learn Chile"
+#~ msgid "gobierno de Chile"
+#~ msgstr "Learn Chile"
 
 #~ msgid "Visit Chile Better"
 #~ msgstr "Visita Chile Mejor"

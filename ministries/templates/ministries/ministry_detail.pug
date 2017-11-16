@@ -3,6 +3,12 @@ extends base.pug
 - load i18n
 - load thumbnail
 
+block meta_tags
+  meta(name="description", content="{{ministry.description}}")
+  meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}")
+  meta(itemprop='description', content='{{ministry.description}}')
+  meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}')
+
 block content
   main.site-main
     section.bg-light

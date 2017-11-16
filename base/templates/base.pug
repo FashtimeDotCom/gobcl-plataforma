@@ -16,10 +16,16 @@ html(lang="es")
     meta(name='twitter:site', content='@Gobiernodechile')
     meta(name='twitter:creator', content='@Gobiernodechile')
 
-    meta(name='og:site_name', content='Gobierno de Chile')
+    meta(name='og:site_name', content="{% trans 'government of Chile'|capfirst %}")
     meta(name='og:type', content='website')
     meta(name='fb:admins', content='572738868')
     meta(name='fb:app_id', content='114405611929952')
+
+
+    block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      meta(itemprop='image', content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/ms-icon-310x310.png' %}")
+      meta(itemprop='name', content='Gob.cl: {{title}}')
 
     block newsblog_meta_tags
       meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
