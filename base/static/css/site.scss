@@ -112,3 +112,17 @@ html{
     height: 100%;
   }
 }
+
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .tags_content {
+    display: block;
+
+    .tags_item {
+      display: block;
+
+      > label {
+        display: block;
+      }
+    }
+  }
+}
