@@ -28,7 +28,6 @@ djangocms-text-ckeditor==3.5.1
 djangocms-video==2.0.4
 djangorestframework==3.7.1
 easy-thumbnails==2.4.2
-easy-thumbnails==2.4.2
 git+https://github.com/Angoreher/aldryn-apphooks-config.git@master
 git+https://github.com/aldryn/aldryn-newsblog.git@master
 gunicorn==19.7.1
