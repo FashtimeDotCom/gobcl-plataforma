@@ -4,6 +4,11 @@ extends base.pug
 - load staticfiles
 - load thumbnail
 
+block meta_tags
+  meta(name="description", content="{{region.description}}")
+  meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}")
+  meta(itemprop='description', content='{{region.description}}')
+  meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}')
 
 block javascripts
   script(src="{% static 'js/communes.js' %}")
