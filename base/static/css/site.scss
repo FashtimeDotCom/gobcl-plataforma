@@ -84,19 +84,6 @@ footer.site-footer {
   }
 }
 
-
-.fixme {
-  &.resume {
-    & > p {
-      display: none;
-
-      &:first-child {
-        display: block;
-      }
-    }
-  }
-}
-
 // django cms support
 html{
   &.cms-ready{
@@ -123,5 +110,19 @@ html{
     left: 0;
     width: 100%;
     height: 100%;
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, md)) {
+  .tags_content {
+    display: block;
+
+    .tags_item {
+      display: block;
+
+      > label {
+        display: block;
+      }
+    }
   }
 }
