@@ -9,10 +9,21 @@ doctype 5
 html(lang="es")
   head
     meta(charset="utf-8")
-    title gob.cl {% block title %} {{title}} {%endblock%}
+    title Gob.cl{% block title %}: {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="description", content="")
-    meta(name="author", content="http://magnet.cl")
+    meta(name="author", content="https://magnet.cl")
+
+    meta(name='twitter:site', content='@Gobiernodechile')
+    meta(name='twitter:creator', content='@Gobiernodechile')
+
+    meta(name='og:site_name', content='Gobierno de Chile')
+    meta(name='og:type', content='website')
+    meta(name='fb:admins', content='572738868')
+    meta(name='fb:app_id', content='114405611929952')
+
+    block newsblog_meta_tags
+      meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
+      meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
@@ -21,8 +32,27 @@ html(lang="es")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab")
 
+    link(rel='apple-touch-icon', sizes='57x57', href="{% static 'favicon/apple-icon-57x57.png' %}")
+    link(rel='apple-touch-icon', sizes='60x60', href="{% static 'favicon/apple-icon-60x60.png' %}")
+    link(rel='apple-touch-icon', sizes='72x72', href="{% static 'favicon/apple-icon-72x72.png' %}")
+    link(rel='apple-touch-icon', sizes='76x76', href="{% static 'favicon/apple-icon-76x76.png' %}")
+    link(rel='apple-touch-icon', sizes='114x114', href="{% static 'favicon/apple-icon-114x114.png' %}")
+    link(rel='apple-touch-icon', sizes='120x120', href="{% static 'favicon/apple-icon-120x120.png' %}")
+    link(rel='apple-touch-icon', sizes='144x144', href="{% static 'favicon/apple-icon-144x144.png' %}")
+    link(rel='apple-touch-icon', sizes='152x152', href="{% static 'favicon/apple-icon-152x152.png' %}")
+    link(rel='apple-touch-icon', sizes='180x180', href="{% static 'favicon/apple-icon-180x180.png' %}")
+    link(rel='icon', type='image/png', sizes='192x192', href="{% static 'favicon/android-icon-192x192.png' %}")
+    link(rel='icon', type='image/png', sizes='32x32', href="{% static 'favicon/favicon-32x32.png' %}")
+    link(rel='icon', type='image/png', sizes='96x96', href="{% static 'favicon/favicon-96x96.png' %}")
+    link(rel='icon', type='image/png', sizes='16x16', href="{% static 'favicon/favicon-16x16.png' %}")
+    link(rel='manifest', href="{% static 'favicon/manifest.json' %}")
+    meta(name='msapplication-TileColor', content='#ffffff')
+    meta(name='msapplication-TileImage', content="{% static 'favicon/ms-icon-144x144.png' %}")
+    meta(name='theme-color', content='#ffffff')
+
+
     //if lte IE 7
-      script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+      script(src="https://html5shim.googlecode.com/svn/trunk/html5.js")
 
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
@@ -57,7 +87,6 @@ html(lang="es")
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
-    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -68,7 +97,9 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
+    {% placeholder "top_content" %}
     block content
+    {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster

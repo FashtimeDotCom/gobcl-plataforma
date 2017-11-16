@@ -16,16 +16,17 @@ block content
             .col-sm-12.col-md-12.col-lg-6.col-xl-5
               p
                 // The image is only shown on the detail view by using the condition "and detail_view"
-                if article.featured_image_id
-                  img.article-hero_img.img-fluid.w-100(
-                    src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
-                    alt="{{ article.featured_image.alt }}"
-                  )
-                else
-                  img.article-hero_img.img-fluid.w-100(
-                    src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
-                    alt="{{ article.featured_image.alt }}"
-                  )
+                a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
+                  if article.featured_image_id
+                    img.article-hero_img.img-fluid.w-100(
+                      src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+                      alt="{{ article.featured_image.alt }}"
+                    )
+                  else
+                    img.article-hero_img.img-fluid.w-100(
+                      src="https://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
+                      alt="{{ article.featured_image.alt }}"
+                    )
             .col-sm-12.col-md-12.col-lg-6.col-xl-6
               time.article-hero_date
                 {{ article.publishing_date|date }}
@@ -33,8 +34,8 @@ block content
                 a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
                   {% render_model article "title" %}
 
-              .resume.fixme
-                {% render_model article "lead_in" %}
+              p
+                {{ article.lead_in|striptags }}
               a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").text-red
                 {% trans 'See complete news' %}
         {% endwith %}
@@ -44,7 +45,9 @@ block content
         h2.heading-label {% trans 'Filter by Topic' %}:
         .tags
           .tags_content
-            .tags_item: a(href="{% url 'pages-root' %}").ctag.ctag--light {% trans 'All' %}
+            .tags_item
+              a.ctag.ctag--light(href="{% namespace_url 'article-list' %}")
+                {% trans 'All' %}
             for category in categories
               .tags_item
                 a.ctag.ctag--light(
@@ -52,27 +55,7 @@ block content
                 )
                   {{ category }}
 
-        .row
-          each article in article_list
-            if not forloop.first
-              .col-sm-12.col-md-12.col-lg-6.col-xl-6
-                article.new.new--mobile
-                  time.new_date 
-                    {{ article.publishing_date|date }}
-                  figure.new_figure-mobile
-                    if article.featured_image_id
-                      img.img-responsive(
-                        src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
-                        alt="{{ article.featured_image.alt }}"
-                      )
-                    else
-                      img(
-                        src="http://e-gob.github.io/gob.cl/sitio/images/temp/new-3.jpg",
-                        alt="{{ article.featured_image.alt }}"
-                      ).img-responsive
-                  h2.new_title
-                    a(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}").link.link--text-dark.visited
-                      {% render_model article "title" %}
+          {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list skip_first=True%}
 
           .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.d-none.d-sm-block.text-center
             br

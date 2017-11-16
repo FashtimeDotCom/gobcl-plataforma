@@ -84,15 +84,31 @@ footer.site-footer {
   }
 }
 
-
-.fixme {
-  &.resume {
-    & > p {
-      display: none;
-
-      &:first-child {
-        display: block;
+// django cms support
+html{
+  &.cms-ready{
+    .site-header_fixed {
+      top: 5px;
+    }
+    &.cms-toolbar-expanded {
+      .site-header_fixed {
+        top: 49px;
       }
     }
+  }
+}
+
+.post-video_wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 }

@@ -58,3 +58,6 @@ class BaseGovernmentQuerySet(QuerySet):
     def by_government_structure(self, government_structure):
         qs = self
         return qs.filter(government_structure=government_structure)
+
+    def current_government(self):
+        return self.filter(government_structure__current_government=True)

@@ -1,16 +1,55 @@
-extends 'base.pug'
-- load i18n
+extends base.pug
+
+- load i18n cms_tags
 
 block content
-  h2 Search
+  main.site-main
+    section.section.bg-bluedark.text-light
+      .container
+        .row
+          .col-12.col-lg-5.order-lg-12
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-12.col-lg-7
+            .search-form.search-form.nomargin-top.search-form--large
+              form.search-form_content(action="", method="get")
+                input.search-form_input(
+                  type="search",
+                  placeholder="{% trans 'Write here what you want to search' %}",
+                  name="q"
+                )
+                button.search-form_button.search-form_button--submit(type="submit"): i.ic-search
+                button.search-form_button.search-form_button--cancel(type="button"): i.ic-delete
+            .tags
+              label.heading-label(for="") {% trans 'Filter by Topics' %}
+              .tags_content
+                for category in categories
+                  .tags_item
+                    label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
+                      input.d-none(
+                        type="radio",
+                        id="category-input-{{category.slug}}",
+                        name="category_slug",
+                        value="{{category.slug}}"
+                      )
 
-  form(action="", method="get").form
-    input(type="text", placeholder="{{ query }}", name="q")
-    input(type="submit", value="Search")
+    section.section
+      .container
+        h3.heading-medium {{ object_list|length }} {% trans 'Results' %}
+        .results
+          .row
+            .col-12.col-md-10.col-lg-7
+              for article in object_list
+                .result
+                  a.result_link(href="{{ article.get_absolute_url }}")
+                    {% render_model article "title" %}
+                  p.result_excerpt
+                    {{ article.lead_in|striptags|truncatechars:100 }}
+                  span.result_date {{ article.publishing_date|date }}
 
-  if query
-    h2 Results
-    for article in object_list
-      p
-        a(href="{{ article.get_absolute_url }}")
-          {{ article.title }}
+
+    section
+      .container
+        {% include 'includes/social.pug' %}
+
+

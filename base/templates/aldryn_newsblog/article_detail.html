@@ -4,6 +4,11 @@
     {{ article.title }} - {{ block.super }}
 {% endblock %}
 
+{% block newsblog_meta_tags %}
+  {% include 'aldryn_newsblog/includes/article_meta_tags.pug' with article=article %}
+{% endblock %}
+
+
 {% block newsblog_content %}
 {% include 'aldryn_newsblog/article_detail.pug' %}
 {% endblock %}
