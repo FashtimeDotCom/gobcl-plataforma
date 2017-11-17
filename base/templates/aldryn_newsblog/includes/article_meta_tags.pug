@@ -1,0 +1,21 @@
+
+// Search Engine
+meta(name='description', content='{{article.meta_description}}')
+meta(name='image', content='{{article.featured_image.url}}')
+meta(name='keywords', content='{{article.meta_keywords}}')
+// Schema.org for Google
+meta(itemprop='name', content='{{article.meta_title}}')
+meta(itemprop='description', content='article.meta_description')
+meta(itemprop='image', content='{{article.featured_image.url}}')
+// Twitter
+meta(name='twitter:card', content='{{article.summary}}')
+meta(name='twitter:title', content='{{article.meta_title}}')
+meta(name='twitter:description', content='{{article.meta_description}}')
+meta(name='twitter:image:src', content='{{ request.scheme }}://{{ request.get_host }}{{article.featured_image.url}}')
+
+// Open Graph general (Facebook, Pinterest & Google+)
+meta(name='og:title', content='{{article.meta_title}}')
+meta(name='og:description', content='{{article.meta_description}}')
+meta(name='og:image', content='{{ request.scheme }}://{{ request.get_host }}{{article.featured_image.url}}')
+meta(name='og:url', content='{{ request.scheme }}://{{ request.get_host }}{{article.get_absolute_url}}')
+meta(name='og:locale', content='{{request.LANGUAGE_CODE}}')

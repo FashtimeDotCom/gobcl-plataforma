@@ -11,9 +11,25 @@ html(lang="es")
     meta(charset="utf-8")
     title Gob.cl{% block title %}: {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
-    meta(name="description", content="{% page_attribute 'meta_description' %}")
     meta(name="author", content="https://magnet.cl")
+
+    meta(name='twitter:site', content='@Gobiernodechile')
+    meta(name='twitter:creator', content='@Gobiernodechile')
+
+    meta(name='og:site_name', content="{% trans 'government of Chile'|capfirst %}")
+    meta(name='og:type', content='website')
+    meta(name='fb:admins', content='572738868')
+    meta(name='fb:app_id', content='114405611929952')
+
+
+    block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      meta(itemprop='image', content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/ms-icon-310x310.png' %}")
+      meta(itemprop='name', content='Gob.cl: {{title}}')
+
+    block newsblog_meta_tags
+      meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
+      meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
@@ -77,7 +93,6 @@ html(lang="es")
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
-    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -88,7 +103,9 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
+    {% placeholder "top_content" %}
     block content
+    {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
@@ -131,9 +148,12 @@ html(lang="es")
     {% compress js %}
     script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
-    script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
+        /**
+        * Share django urls with javascript.
+        */
         $.extend(App, {
           paths: {
             fontSize: "{% url 'user_font_size_change' %}"
@@ -143,6 +163,8 @@ html(lang="es")
     script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
+    script(src="{% static 'js/social.js' %}")
+    script(src="{% static 'js/application.js' %}")
     block javascripts
     {% endcompress %}
 

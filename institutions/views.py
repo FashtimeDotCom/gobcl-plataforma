@@ -3,6 +3,7 @@
 # standard library
 
 # django
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 # models
@@ -25,4 +26,5 @@ class InstitutionListView(TemplateView):
         context['region_list'] = Region.objects.by_government_structure(
             self.request.government_structure
         )
+        context['title'] = _('Institutions')
         return context

@@ -154,7 +154,7 @@ if  $INSTALL_PIP ; then
 fi
 
 # create the local_settings file if it does not exist
-if [ ! -f ./project/settings/local_settings.py ] ; then
+if [ ! -f ./project/local_settings.py ] ; then
     cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then

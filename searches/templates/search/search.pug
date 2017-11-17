@@ -6,32 +6,7 @@ block content
   main.site-main
     section.section.bg-bluedark.text-light
       .container
-        .row
-          .col-12.col-lg-5.order-lg-12
-            .pull-md-right
-              {% include 'includes/toolbar.pug' %}
-          .col-12.col-lg-7
-            .search-form.search-form.nomargin-top.search-form--large
-              form.search-form_content(action="", method="get")
-                input.search-form_input(
-                  type="search",
-                  placeholder="{% trans 'Write here what you want to search' %}",
-                  name="q"
-                )
-                button.search-form_button.search-form_button--submit(type="submit"): i.ic-search
-                button.search-form_button.search-form_button--cancel(type="button"): i.ic-delete
-            .tags
-              label.heading-label(for="") {% trans 'Filter by Topics' %}
-              .tags_content
-                for category in categories
-                  .tags_item
-                    label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
-                      input.d-none(
-                        type="radio",
-                        id="category-input-{{category.slug}}",
-                        name="category_slug",
-                        value="{{category.slug}}"
-                      )
+        {% include 'includes/search_bar.pug' %}
 
     section.section
       .container

@@ -12,7 +12,7 @@ class ArticleListView(ListView):
     def get(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
 
-        self.category_slug = request.GET.get('q', '')
+        self.category_slug = request.GET.get('category_slug', '')
 
         return super(ArticleListView, self).get(request)
 
@@ -33,7 +33,7 @@ class ArticleListView(ListView):
 
         if self.category_slug:
             queryset = queryset.filter(
-                categories__slug=self.category_slug
+                categories__translations__slug__icontains=self.category_slug
             ).distinct()
 
         return queryset

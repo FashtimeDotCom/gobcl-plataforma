@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
+    'gobcl_cms',
 
     # django cms
     'cms',
@@ -116,6 +117,7 @@ INSTALLED_APPS = [
     'djangocms_text_ckeditor',
     'djangocms_link',
     'djangocms_video',
+    'djangocms_picture',
     'djangocms_googlemap',
     'djangocms_snippet',
     'djangocms_style',

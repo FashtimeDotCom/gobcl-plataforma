@@ -1,16 +1,8 @@
 /**
- * top-level namespace of the application
- * @type {*|{}}
+ * Main application script.
  */
 $(function () {
-  'use strict';
 
-  window.App = {};
+  App.utils.enableSocialShare();
 
-  /**
-   * set utils namespace.
-   */
-  $.extend(App, {
-    utils: {}
-  });
 });
