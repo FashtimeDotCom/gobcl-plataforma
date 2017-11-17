@@ -349,6 +349,10 @@ NPM_FILE_PATTERNS = {
         'slick/slick-theme.css',
         'slick/fonts/*',
         'slick/ajax-loader.gif'
+    ],
+    'magnific-popup': [
+        'dist/jquery.magnific-popup.js',
+        'dist/magnific-popup.css'
     ]
 }
 

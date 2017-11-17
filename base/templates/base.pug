@@ -70,6 +70,10 @@ html(lang="es")
       href="{% static 'slick-carousel/slick/slick-theme.css' %}",
       rel="stylesheet"
     )
+    link(
+      href="{% static 'magnific-popup/dist/magnific-popup.css' %}",
+      rel="stylesheet"
+    )
 
     {% compress css %}
     link(
@@ -152,6 +156,7 @@ html(lang="es")
       script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
       script(src="{% static 'slick-carousel/slick/slick.js' %}")
+      script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
     {% endcompress %}
 
     // templates

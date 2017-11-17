@@ -7,7 +7,7 @@ from cms.plugin_pool import plugin_pool
 from .models import ImagePlugin, HtmlPlugin
 
 
-class GalleryCMSPLugin(CMSPluginBase):
+class GalleryCMSPlugin(CMSPluginBase):
     model = CMSPlugin
     cache = False
     name = _('Gallery')
@@ -29,6 +29,6 @@ class HtmlCMSPlugin(CMSPluginBase):
     render_template = 'cms_plugins/html.pug'
 
 
-plugin_pool.register_plugin(GalleryCMSPLugin)
+plugin_pool.register_plugin(GalleryCMSPlugin)
 plugin_pool.register_plugin(ImageCMSPlugin)
 plugin_pool.register_plugin(HtmlCMSPlugin)

@@ -5,5 +5,13 @@ if instance.child_plugin_instances
   .gallery
     for a, b in instance.child_plugin_instances|group:2
       .gallery-slide
-        .img-thumbnail: .gallery-image(style="background-image: url({{ a.image.url }})")
-        .img-thumbnail: .gallery-image(style="background-image: url({{ b.image.url }})")
+        .img-thumbnail
+          .gallery-image(
+            style="background-image: url({{ a.image.url }})",
+            data-mfp-src="{{ a.image.url }}"
+          )
+        .img-thumbnail
+          .gallery-image(
+            style="background-image: url({{ b.image.url }})",
+            data-mfp-src="{{ b.image.url }}"
+          )
