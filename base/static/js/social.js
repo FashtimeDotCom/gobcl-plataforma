@@ -11,7 +11,7 @@ $(function () {
       settings: 'toolbar=0,status=0,width=626,height=436'
     },
     twitter: {
-      url: 'https://twitter.com/intent/tweet/?url={link}',
+      url: 'https://twitter.com/intent/tweet/?url={link}&text={text}',
       settings: 'toolbar=0,status=0,width=626,height=436'
     },
     messenger: {
@@ -31,7 +31,9 @@ $(function () {
 
             if (link) {
               window.open(
-                link.url.replace('{link}', $(this).prop('href')),
+                link.url
+                  .replace('{link}', $(this).prop('href'))
+                  .replace('{text}', $(this).data('text')),
                 social + 'share',
                 link.settings
               );
