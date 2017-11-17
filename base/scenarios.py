@@ -1,6 +1,8 @@
 import requests
 import json
 
+from bs4 import BeautifulSoup
+
 # django
 from django.contrib.sites.models import Site
 from django.db.models import F
@@ -22,6 +24,7 @@ from aldryn_people.models import Person
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from djangocms_text_ckeditor.models import Text
 from filer.models.imagemodels import Image
+from djangocms_picture.models import Picture
 
 
 def get_current_government_structure():
@@ -167,14 +170,10 @@ def load_base_data():
     PublicService.objects.filter(name_en=None).update(name_es=F('name'))
 
 
-def create_text_plugin(content_list, target_placeholder, language):
+def create_text_plugin(content, target_placeholder, language, position):
 
-    content_string = ''
-    for content in content_list[2:-1]:
-        content_string += content
-
-    text = Text(body=content_string)
-    text.position = 0
+    text = Text(body=content)
+    text.position = position
     text.tree_id = None
     text.lft = None
     text.rght = None
@@ -183,6 +182,60 @@ def create_text_plugin(content_list, target_placeholder, language):
     text.plugin_type = 'TextPlugin'
     text.placeholder = target_placeholder
     text.save()
+
+
+def create_picture_plugin(image, target_placeholder, language, position):
+
+    try:
+        image_html = BeautifulSoup(image, 'html.parser')
+        image_src = image_html.img.get('src')
+        data_image = image_src.split('/')[-3:]
+        img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
+
+        img_open = open(img_path, 'rb')
+        img_name = data_image[-1]
+
+        image = Image.objects.create()
+        image.name = img_name
+        image.file.save(img_name, img_open, save=True)
+        image.save()
+
+        picture = Picture.objects.create()
+        picture.picture = image
+        picture.position = position
+        picture.tree_id = None
+        picture.lft = None
+        picture.rght = None
+        picture.level = None
+        picture.language = language
+        picture.plugin_type = 'PicturePlugin'
+        picture.placeholder = target_placeholder
+        picture.save()
+    except OSError:
+        pass
+
+
+def create_content(content_list, target_placeholder, language):
+
+    position = 0
+    for content in content_list[2:-1]:
+        if content == '\n' or content == '\r\n':
+            pass
+        elif content.startswith('<p><img'):
+            create_picture_plugin(
+                content,
+                target_placeholder,
+                language,
+                position
+            )
+        else:
+            create_text_plugin(
+                content,
+                target_placeholder,
+                language,
+                position,
+            )
+        position += 1
 
 
 def create_news_from_json(language='es'):
@@ -195,6 +248,7 @@ def create_news_from_json(language='es'):
     owner = User.objects.first()
     author = Person.objects.get_or_create()[0]
 
+    img_error = 1
     for news in json_news:
 
         title = news.get('titulo', '')[0]
@@ -229,12 +283,16 @@ def create_news_from_json(language='es'):
                 image.save()
                 data['featured_image'] = image
             except OSError:
-                pass
+                print('*' * 10)
+                print(title)
+                print(img_error)
+                print('*' * 10)
+                img_error += 1
 
         article = Article.objects.create(**data)
 
         if content:
-            create_text_plugin(
+            create_content(
                 content,
                 article.content,
                 language
