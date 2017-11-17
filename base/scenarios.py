@@ -21,7 +21,7 @@ from users.models import User
 from aldryn_people.models import Person
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from djangocms_text_ckeditor.models import Text
-from cmsplugin_filer_image.models import FilerImage
+from filer.models.imagemodels import Image
 
 
 def get_current_government_structure():
@@ -167,21 +167,6 @@ def load_base_data():
     PublicService.objects.filter(name_en=None).update(name_es=F('name'))
 
 
-def create_filer_plugin(filer_image, target_placeholder, language):
-    image_plugin = FilerImage(image=filer_image)
-    image_plugin.position = 0
-    image_plugin.tree_id = 0
-    image_plugin.lft = 0
-    image_plugin.rght = 0
-    image_plugin.level = 0
-    image_plugin.plugin_type = 'FilerImagePlugin'
-    image_plugin.language = language
-    image_plugin.placeholder = target_placeholder
-    image_plugin.save()
-
-    return image_plugin
-
-
 def create_text_plugin(content_list, target_placeholder, language):
 
     content_string = ''
@@ -213,9 +198,7 @@ def create_news_from_json(language='es'):
     for news in json_news:
 
         title = news.get('titulo', '')[0]
-        image = news.get('thumb_img', '')
-        if image:
-            image = image[0]
+        image_url = news.get('thumb_img', '')
         publishing_date = news.get('fecha', '')[0]
         lead = news.get('bajada', '')
         if lead:
@@ -232,7 +215,24 @@ def create_news_from_json(language='es'):
             'is_published': True,
         }
 
+        if image_url:
+            data_image = image_url[0].split('/')[-3:]
+            img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
+
+            try:
+                img_open = open(img_path, 'rb')
+                img_name = data_image[-1]
+
+                image = Image.objects.create()
+                image.name = img_name
+                image.file.save(img_name, img_open, save=True)
+                image.save()
+                data['featured_image'] = image
+            except OSError:
+                pass
+
         article = Article.objects.create(**data)
+
         if content:
             create_text_plugin(
                 content,
