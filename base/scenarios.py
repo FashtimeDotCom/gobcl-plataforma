@@ -238,8 +238,7 @@ def create_content(content_list, target_placeholder, language):
         position += 1
 
 
-def create_news_from_json(language='es'):
-    activate(language)
+def create_news_from_json():
 
     with open(settings.BASE_DIR + '/gobcl-posts.json') as news:
         json_news = json.loads(news.read())
@@ -258,6 +257,14 @@ def create_news_from_json(language='es'):
         if lead:
             lead = lead[0]
         content = news.get('contenido', '')
+        language = news.get('lang', 'es')
+
+        if language == 'es-CL' or language == 'es':
+            activate('es')
+            language = 'es'
+        elif language == 'en-US':
+            activate('en')
+            language = 'en'
 
         data = {
             'app_config': app_config,
@@ -270,7 +277,7 @@ def create_news_from_json(language='es'):
         }
 
         if image_url:
-            data_image = image_url[0].split('/')[-3:]
+            data_image = image_url.split('/')[-3:]
             img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
 
             try:
