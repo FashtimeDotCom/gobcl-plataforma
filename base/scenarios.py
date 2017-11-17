@@ -92,6 +92,7 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
     url = 'https://apis.digital.gob.cl/misc/instituciones/_search?size=1000'
     ministries = requests.get(url, headers=headers)
     ministries = ministries.json()['hits']['hits']
+    PublicService.objects.filter(name=None).delete()
 
     for ministry in ministries:
         source = ministry['_source']
@@ -135,13 +136,19 @@ def load_data_from_digital_gob_api(ministry_with_minister=False):
                 if not url:
                     continue
 
-                PublicService.objects.get_or_create(
-                    name=name,
+                public_service = PublicService.objects.get_or_create(
+                    name=name.strip(),
+                    ministry=ministry_obj,
                     defaults={
+                        'name_es': name.strip(),
                         'url': url,
-                        'ministry': ministry_obj,
                     }
                 )[0]
+
+                if not public_service.name_en:
+                    public_service.name_en = name
+
+                public_service.save()
 
 
 def load_base_data():

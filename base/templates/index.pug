@@ -2,6 +2,8 @@ extends base.pug
 
 - load i18n
 - load staticfiles
+- load thumbnail
+- load apphooks_config_tags
 
 block content
   main.site-main
@@ -24,19 +26,14 @@ block content
 
     section.section.section--medium.bg-bluedark.d-none.d-sm-block
       .container
-        .row
-          .col-md-8
-            ul.list-ib
-              li {% trans 'Most searched' %}:
-              for category in categories
-                li
-                  a.link.link--clean.text-white(
-                    href="{% url 'article_list' %}?category={{category.slug}}"
-                  )
-                    {{ category }}
-          .col-md-2.offset-md-2
-            a(target="_blank" href="http://chilemejor.gob.cl/").text-white
-              {% trans 'Visit Chile Better' %}
+        ul.list-ib
+          li {% trans 'Most searched' %}:
+          for category in categories
+            li
+              a.link.link--clean.text-white(
+                href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
+              )
+                {{ category }}
 
     section
       .container
@@ -84,21 +81,16 @@ block content
         if articles
           section.sub-section.d-none.d-md-block
             h2.heading-medium {% trans 'News' %}
-            .row
-              for news in articles
-                .col-12.col-lg-6
-                  article.new.new--has-thumbnail-sm
-                    figure.new_figure
-                      img(src="{{ news.featured_image.url }}" alt="").img-desktop.img-responsive
-                    time.new_date {{ news.publishing_date }}
-                    h2.new_title
-                      a(href="/").text-dark.visited
-                        | {{ news.title }}
 
-              .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-                a(href="{% url 'pages-root' %}").button.button--block.button--light.button--clean.button--space Ver más
+            {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
-        if ministries_count or public_services_count or regions_and_communes_count
+            .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
+              a.button.button--block.button--light.button--clean.button--space(
+                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+              )
+                {% trans 'See more' %}
+
+        if ministries_count or public_services_count or regions_count
           section.sub-section.d-none.d-md-block
             .row
               .col-12.col-lg-7
@@ -123,7 +115,7 @@ block content
                   .col-md-6.col-lg-3
                     a(href="{% url 'institution_list' %}").card-data
                       h3.card-data_title
-                        span.card-data_number {{ regions_and_communes_count }}
+                        span.card-data_number {{ regions_count }}
                         span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
         if campaigns

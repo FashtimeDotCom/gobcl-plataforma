@@ -1,15 +1,30 @@
-extends 'base.pug'
-- load i18n
+extends base.pug
+
+- load i18n cms_tags
 
 block content
-  h2 Search
+  main.site-main
+    section.section.bg-bluedark.text-light
+      .container
+        {% include 'includes/search_bar.pug' %}
 
-  form(action="", method="get").form
-    input(type="text", placeholder="{{ query }}", name="q")
-    input(type="submit", value="Search")
+    section.section
+      .container
+        h3.heading-medium {{ object_list|length }} {% trans 'Results' %}
+        .results
+          .row
+            .col-12.col-md-10.col-lg-7
+              for article in object_list
+                .result
+                  a.result_link(href="{{ article.get_absolute_url }}")
+                    {% render_model article "title" %}
+                  p.result_excerpt
+                    {{ article.lead_in|striptags|truncatechars:100 }}
+                  span.result_date {{ article.publishing_date|date }}
 
-  h2 Results
-  for article in object_list
-    p
-      a(href="{{ article.get_absolute_url }}")
-        {{ article.title }}
+
+    section
+      .container
+        {% include 'includes/social.pug' %}
+
+

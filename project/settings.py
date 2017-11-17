@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
+    'gobcl_cms',
 
     # django cms
     'cms',
@@ -116,6 +117,7 @@ INSTALLED_APPS = [
     'djangocms_text_ckeditor',
     'djangocms_link',
     'djangocms_video',
+    'djangocms_picture',
     'djangocms_googlemap',
     'djangocms_snippet',
     'djangocms_style',
@@ -462,6 +464,8 @@ ALDRYN_NEWSBLOG_SEARCH = False
 
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 AWS_S3_CALLING_FORMAT_STATIC = os.getenv(
     'AWS_S3_CALLING_FORMAT_STATIC',
     'boto.s3.connection.SubdomainCallingFormat'
@@ -485,3 +489,7 @@ COMPRESS_STORAGE = os.getenv(
     'compressor.storage.CompressorFileStorage'
 )
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
+THUMBNAIL_DEFAULT_STORAGE = os.getenv(
+    'THUMBNAIL_DEFAULT_STORAGE',
+    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+)
