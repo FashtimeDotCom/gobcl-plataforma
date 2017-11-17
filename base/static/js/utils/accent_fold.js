@@ -10,7 +10,7 @@ $(function () {
   $.extend(App, {
     utils: {
       accentFold: function (s) {
-        const accentMap = getAccentMap();
+        var accentMap = getAccentMap();
         if (!s) { return ''; }
         var ret = '';
         for (var i=0; i<s.length; i++) {

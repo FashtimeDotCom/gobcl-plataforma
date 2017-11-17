@@ -39,6 +39,7 @@ block content
                 li
                   a.share(
                     href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
+                    data-text="{% render_model article 'title' %}"
                     data-social="twitter"
                   )
                     i.ic-twitter
