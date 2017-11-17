@@ -9,7 +9,8 @@
     "jquery": "^3.2.1",
     "popper.js": "^1.12.6",
     "pug-cli": "^1.0.0-alpha6",
-    "select2": "^4.0.3"
+    "select2": "^4.0.3",
+    "slick-carousel": "^1.8.1"
   },
   "description": "A base for a django project on python 3",
   "main": "index.js",

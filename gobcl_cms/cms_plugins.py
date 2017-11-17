@@ -11,7 +11,7 @@ class GalleryCMSPLugin(CMSPluginBase):
     model = CMSPlugin
     cache = False
     name = _('Gallery')
-    render_template = 'cms_plugins/gallery.pug'
+    render_template = 'cms_plugins/gallery/gallery.pug'
     child_classes = ('ImageCMSPlugin',)
     allow_children = True
 
