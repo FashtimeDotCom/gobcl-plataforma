@@ -1,5 +1,6 @@
 
 - load utils
+- load thumbnail
 
 if instance.child_plugin_instances
   .gallery
@@ -7,11 +8,11 @@ if instance.child_plugin_instances
       .gallery-slide
         .img-thumbnail
           .gallery-image(
-            style="background-image: url({{ a.image.url }})",
+            style="background-image: url({% thumbnail a.image 300x300  %})",
             data-mfp-src="{{ a.image.url }}"
           )
         .img-thumbnail
           .gallery-image(
-            style="background-image: url({{ b.image.url }})",
+            style="background-image: url({% thumbnail b.image 300x300  %})",
             data-mfp-src="{{ b.image.url }}"
           )
