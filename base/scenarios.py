@@ -171,6 +171,9 @@ def load_base_data():
 
 
 def create_text_plugin(content, target_placeholder, language, position):
+    '''
+    Create text plugin by article
+    '''
 
     text = Text(body=content)
     text.position = position
@@ -185,71 +188,92 @@ def create_text_plugin(content, target_placeholder, language, position):
 
 
 def create_picture_plugin(image, target_placeholder, language, position):
+    '''
+    Create picture image plugin by Article
+    '''
+
+    # separate name and path from url image
+    image_html = BeautifulSoup(image, 'html.parser')
+    image_src = image_html.img.get('src')
+    data_image = image_src.split('/')[-3:]
+    img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
 
     try:
-        image_html = BeautifulSoup(image, 'html.parser')
-        image_src = image_html.img.get('src')
-        data_image = image_src.split('/')[-3:]
-        img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
-
         img_open = open(img_path, 'rb')
-        img_name = data_image[-1]
-
-        image = Image.objects.create()
-        image.name = img_name
-        image.file.save(img_name, img_open, save=True)
-        image.save()
-
-        picture = Picture.objects.create()
-        picture.picture = image
-        picture.position = position
-        picture.tree_id = None
-        picture.lft = None
-        picture.rght = None
-        picture.level = None
-        picture.language = language
-        picture.plugin_type = 'PicturePlugin'
-        picture.placeholder = target_placeholder
-        picture.save()
     except OSError:
         pass
 
+    img_name = data_image[-1]
+
+    # Create Image element (django CMS)
+    image = Image.objects.create()
+    image.name = img_name
+    image.file.save(img_name, img_open, save=True)
+    image.save()
+
+    # Create Picture plugin
+    picture = Picture.objects.create()
+    picture.picture = image
+    picture.position = position
+    picture.tree_id = None
+    picture.lft = None
+    picture.rght = None
+    picture.level = None
+    picture.language = language
+    picture.plugin_type = 'PicturePlugin'
+    picture.placeholder = target_placeholder
+    picture.save()
+
 
 def create_content(content_list, target_placeholder, language):
+    '''
+    Create text or upload image depends content list
+    '''
 
     position = 0
     for content in content_list[2:-1]:
         if content == '\n' or content == '\r\n':
-            pass
+            continue
+
         elif content.startswith('<p><img'):
+
             create_picture_plugin(
                 content,
                 target_placeholder,
                 language,
                 position
             )
+
         else:
+
             create_text_plugin(
                 content,
                 target_placeholder,
                 language,
                 position,
             )
+
         position += 1
 
 
 def create_news_from_json():
+    '''
+    Open gobcl-posts.json and read
+    data to create news from old site gob.cl
+    '''
 
+    # open gobcl-posts.json
     with open(settings.BASE_DIR + '/gobcl-posts.json') as news:
         json_news = json.loads(news.read())
 
+    # get basic data required by model Article (aldryn newsblog)   
     app_config = NewsBlogConfig.objects.first()
     owner = User.objects.first()
     author = Person.objects.get_or_create()[0]
 
-    img_error = 1
     for news in json_news:
 
+        # Get principal data from json
         title = news.get('titulo', '')[0]
         image_url = news.get('thumb_img', '')
         publishing_date = news.get('fecha', '')[0]
@@ -277,8 +301,15 @@ def create_news_from_json():
         }
 
         if image_url:
-            data_image = image_url.split('/')[-3:]
-            img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
+
+            '''
+            if exists image_url get image from
+            gobcl-uploads folder and create add image to Article
+            '''
+
+            data_image = image_url[0].split('/')[-3:]
+            img_path = (
+                settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image))
 
             try:
                 img_open = open(img_path, 'rb')
@@ -290,11 +321,7 @@ def create_news_from_json():
                 image.save()
                 data['featured_image'] = image
             except OSError:
-                print('*' * 10)
-                print(title)
-                print(img_error)
-                print('*' * 10)
-                img_error += 1
+                pass
 
         article = Article.objects.create(**data)
 

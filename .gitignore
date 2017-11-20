@@ -107,3 +107,5 @@ project/static
 .idea/
 */*.dump
 */*.tar.gz
+gobcl-posts.json
+gobcl-uploads/*
