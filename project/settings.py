@@ -342,6 +342,17 @@ NPM_FILE_PATTERNS = {
     'select2': [
         'dist/js/select2.full.js',
         'dist/css/select2.min.css'
+    ],
+    'slick-carousel': [
+        'slick/slick.js',
+        'slick/slick.css',
+        'slick/slick-theme.css',
+        'slick/fonts/*',
+        'slick/ajax-loader.gif'
+    ],
+    'magnific-popup': [
+        'dist/jquery.magnific-popup.js',
+        'dist/magnific-popup.css'
     ]
 }
 

@@ -1,0 +1,22 @@
+
+.gallery {
+
+  .slick-arrow:before {
+    color: #A8B7C7;
+  }
+
+  .slick-slide {
+    .gallery-slide {
+      .img-thumbnail {
+         margin: 4px;
+        .gallery-image {
+          height: 200px;
+          background-position: center;
+          background-size: cover;
+        }
+      }
+
+    }
+  }
+
+}
