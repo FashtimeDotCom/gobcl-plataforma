@@ -52,7 +52,7 @@ block content
                 h3.heading-label.heading-label--small {% trans 'If you are Chilean' %}
                 p: a(href="#") {% trans 'Meet Chile' %}
               .col-12.col-md-6.d-none.d-sm-block
-                img(src="{% static 'images/about-of.jpg' %}", alt="").img-fluid.w-100
+                img.img-fluid.w-100.img-frame(src="{% static 'images/about-of.jpg' %}", alt="")
 
         section.sub-section
           article
@@ -69,7 +69,7 @@ block content
                 p: a(href="#") {% trans 'Invest Chile' %}
                 p: a(href="#") {% trans 'Pro Chile' %}
               .col-12.col-md-6.d-none.d-sm-block
-                img(src="{% static 'images/business.jpg' %}", alt="").img-fluid.w-100
+                img.img-fluid.w-100.img-frame(src="{% static 'images/business.jpg' %}", alt="")
         section.sub-section
           article
             h2.heading-medium {% trans 'Migration' %}
@@ -82,7 +82,7 @@ block content
                   | mollit anim id est laborum.
                 a(href="#") {% trans 'Immigration' %}
               .col-12.col-md-6.d-none.d-sm-block
-                img(src="{% static 'images/migration.jpg' %}", alt="").img-fluid.w-100
+                img.img-fluid.w-100.img-frame(src="{% static 'images/migration.jpg' %}", alt="")
         section.sub-section
           article
             h2.heading-medium {% trans 'Studies' %}
@@ -95,7 +95,7 @@ block content
                   | deserunt mollit anim id est laborum.
                 p: a(href="#") {% trans 'Learn Chile' %}
               .col-12.col-md-6.d-none.d-sm-block
-                img(src="{% static 'images/study.jpg' %}", alt="").img-fluid.w-100
+                img.img-fluid.w-100.img-frame(src="{% static 'images/study.jpg' %}", alt="")
     section
       .container
         {% include 'includes/social.pug' %}
