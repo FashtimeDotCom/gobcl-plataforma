@@ -196,19 +196,21 @@ def create_picture_plugin(image, target_placeholder, language, position):
     image_html = BeautifulSoup(image, 'html.parser')
     image_src = image_html.img.get('src')
     data_image = image_src.split('/')[-3:]
-    img_path = settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image)
 
-    try:
-        img_open = open(img_path, 'rb')
-    except OSError:
-        pass
+    s3_url = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
+    img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
+
+    img = download_file_from_url(img_url)
+
+    if not img:
+        return
 
     img_name = data_image[-1]
 
     # Create Image element (django CMS)
     image = Image.objects.create()
     image.name = img_name
-    image.file.save(img_name, img_open, save=True)
+    image.file.save(img_name, img, save=True)
     image.save()
 
     # Create Picture plugin
@@ -256,6 +258,38 @@ def create_content(content_list, target_placeholder, language):
         position += 1
 
 
+def download_file_from_url(url):
+    import requests
+    import tempfile
+    from django.core import files
+
+    # Stream the image from the url
+    try:
+        request = requests.get(url, stream=True)
+    except requests.exceptions.RequestException as e:
+        # TODO: log error here
+        return None
+
+    if request.status_code != requests.codes.ok:
+        # TODO: log error here
+        return None
+
+    # Create a temporary file
+    lf = tempfile.NamedTemporaryFile()
+
+    # Read the streamed image in sections
+    for block in request.iter_content(1024 * 8):
+
+        # If no more file then stop
+        if not block:
+            break
+
+        # Write image block to temporary file
+        lf.write(block)
+
+    return files.File(lf)
+
+
 def create_news_from_json():
     '''
     Open gobcl-posts.json and read
@@ -301,27 +335,27 @@ def create_news_from_json():
         }
 
         if image_url:
+            # import ipdb ; ipdb.set_trace()
 
             '''
             if exists image_url get image from
             gobcl-uploads folder and create add image to Article
             '''
 
-            data_image = image_url[0].split('/')[-3:]
-            img_path = (
-                settings.BASE_DIR + '/gobcl-uploads/' + '/'.join(data_image))
+            data_image = image_url.split('/')[-3:]
 
-            try:
-                img_open = open(img_path, 'rb')
+            s3_url = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
+            img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
+
+            img = download_file_from_url(img_url)
+            if img:
                 img_name = data_image[-1]
 
                 image = Image.objects.create()
                 image.name = img_name
-                image.file.save(img_name, img_open, save=True)
+                image.file.save(img_name, img, save=True)
                 image.save()
                 data['featured_image'] = image
-            except OSError:
-                pass
 
         article = Article.objects.create(**data)
 
