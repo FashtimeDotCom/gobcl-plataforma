@@ -26,6 +26,7 @@ if 'TRAVIS' in os.environ:
     from project.travis_settings import LOCALLY_INSTALLED_APPS
     from project.travis_settings import ENABLE_EMAILS
     from project.travis_settings import ADMINS
+    from project.travis_settings import LOCALLY_ALLOWED_HOSTS
 elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEBUG
     from project.production.local_settings import LOCALLY_INSTALLED_APPS
