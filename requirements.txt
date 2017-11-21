@@ -15,7 +15,6 @@ django-loginas==0.3.2
 django-modeltranslation==0.12.1
 django-npm==1.0.0
 django-phonenumber-field==1.3.0
-django-phonenumber-field==1.3.0
 django-recaptcha==1.3.0
 django-storages==1.6.5
 djangocms-admin-style==1.2.7
@@ -28,7 +27,6 @@ djangocms-style==2.0.2
 djangocms-text-ckeditor==3.5.1
 djangocms-video==2.0.4
 djangorestframework==3.7.1
-easy-thumbnails==2.4.2
 easy-thumbnails==2.4.2
 git+https://github.com/Angoreher/aldryn-apphooks-config.git@master
 git+https://github.com/aldryn/aldryn-newsblog.git@master
