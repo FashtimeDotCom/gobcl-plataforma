@@ -10,14 +10,17 @@ if instance.child_plugin_instances
           .gallery-image(
             style="background-image: url({% thumbnail a.image 300x300  %})",
             data-mfp-src="{{ a.image.url }}"
+            data-text="Hola"
           )
         .img-box
           .gallery-image(
             style="background-image: url({% thumbnail b.image 300x300  %})",
             data-mfp-src="{{ b.image.url }}"
+            data-text="Como"
           )
         .img-box
           .gallery-image(
             style="background-image: url({% thumbnail c.image 300x300  %})",
             data-mfp-src="{{ c.image.url }}"
+            data-text="Estas"
           )

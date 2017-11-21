@@ -1,4 +1,6 @@
 
+@import '../../../../../base/static/css/_variables';
+
 .gallery {
 
   .slick-arrow:before {
@@ -8,7 +10,7 @@
   .slick-slide {
     .gallery-slide {
       .img-box {
-        border: 2px solid #A8B7C7;
+        border: 2px solid map-get($colors, gray);
         margin: 8px 4px;
         .gallery-image {
           height: 200px;
@@ -53,7 +55,7 @@
         &:before {
           display: block;
           content: ' ';
-          border: 2px solid #A8B7C7;
+          border: 2px solid map-get($colors, gray);
           border-radius: 50%;
           -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
           filter: alpha(opacity=60);
@@ -71,11 +73,42 @@
       &.slick-active {
         vertical-align: top;
         > button:before {
-          background-color: #A8B7C7;
+          background-color: map-get($colors, gray);
           width: 12px;
           height: 12px;
         }
       }
     }
   }
+}
+
+.mfp-gallery {
+  .mfp-s-loading {
+    .mfp-content {
+      .mfp-title {
+        display: none;
+      }
+    }
+  }
+
+  .mfp-content {
+    .mfp-title {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.mfp-preloader {
+  width: 30px;
+  height: 30px;
+  background-color: map-get($colors, white);
+  opacity: 0.65;
+  margin: 0 auto;
+  animation: rotatePlane 1.2s infinite ease-in-out;
+}
+
+@keyframes rotatePlane {
+  0% { transform: perspective(120px) rotateX(0deg) rotateY(0deg) }
+  50% { transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) }
+  100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg) }
 }
