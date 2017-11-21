@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 DEBUG = False
 
 # Database
@@ -22,3 +24,7 @@ LOCALLY_INSTALLED_APPS = [
 ENABLE_EMAILS = True
 
 ADMINS = (())
+
+LOCALLY_ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', [])
+if LOCALLY_ALLOWED_HOSTS:
+    LOCALLY_ALLOWED_HOSTS = LOCALLY_ALLOWED_HOSTS.split(',')
