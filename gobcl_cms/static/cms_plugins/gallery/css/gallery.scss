@@ -7,8 +7,9 @@
 
   .slick-slide {
     .gallery-slide {
-      .img-thumbnail {
-         margin: 4px;
+      .img-box {
+        border: 2px solid #A8B7C7;
+        margin: 8px 4px;
         .gallery-image {
           height: 200px;
           background-position: center;
@@ -19,4 +20,62 @@
     }
   }
 
+  .slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    > li {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin: 0 5px;
+      padding: 0;
+      cursor: pointer;
+      > button {
+        font-size: 0;
+        line-height: 0;
+        display: block;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: transparent;
+        border: 0;
+        outline: none;
+        background: transparent;
+
+        &:before {
+          display: block;
+          content: ' ';
+          border: 2px solid #A8B7C7;
+          border-radius: 50%;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+          filter: alpha(opacity=60);
+          opacity: 0.6;
+
+          box-shadow: 0 0 1px 0 rgb( 255, 255, 255);
+          width: 8px;
+          height: 8px;
+          z-index: 86;
+
+          transition: background-color .5s ease-in-out;
+        }
+      }
+
+      &.slick-active {
+        vertical-align: top;
+        > button:before {
+          background-color: #A8B7C7;
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
 }
