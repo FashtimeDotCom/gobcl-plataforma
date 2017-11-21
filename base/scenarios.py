@@ -267,12 +267,10 @@ def download_file_from_url(url):
     try:
         request = requests.get(url, stream=True)
     except requests.exceptions.RequestException as e:
-        # TODO: log error here
-        return None
+        return
 
     if request.status_code != requests.codes.ok:
-        # TODO: log error here
-        return None
+        return
 
     # Create a temporary file
     lf = tempfile.NamedTemporaryFile()
