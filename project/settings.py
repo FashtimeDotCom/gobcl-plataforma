@@ -31,11 +31,13 @@ elif 'DOCKER' in os.environ:
     from project.production.local_settings import LOCALLY_INSTALLED_APPS
     from project.production.local_settings import ENABLE_EMAILS
     from project.production.local_settings import ADMINS
+    from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
 
 if DEBUG:
     env = 'development'
@@ -59,12 +61,7 @@ ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
 ]
 
-try:
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
-except:
-    pass
-else:
-    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
 
 SITE_ID = 1
 
