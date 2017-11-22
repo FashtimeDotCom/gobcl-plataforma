@@ -269,7 +269,7 @@ msgstr "Escribe aquí lo que deseas buscar"
 msgid "Filter by Topics"
 msgstr "Filtrar por temas"
 
-#: templates/includes/social-small.pug:5 templates/includes/social.pug:6
+#: templates/includes/social_small.pug:5 templates/includes/social.pug:6
 msgid "Follow us on our social media:"
 msgstr "Síguenos a través de redes sociales:"
 
