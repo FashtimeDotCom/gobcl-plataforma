@@ -19,7 +19,7 @@ block content
             span.profile_job {{ presidency.title }}
           .row
             .col-md-4
-              img(src="{{ presidency.photo.url }}", alt="").img-fluid.w-100
+              img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
             .col-md-8
               .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
               ul.profile_body

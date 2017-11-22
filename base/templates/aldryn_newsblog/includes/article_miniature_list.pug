@@ -10,7 +10,7 @@
           {{ article.publishing_date|date }}
         figure.new_figure-mobile
           if article.featured_image_id
-            img.img-responsive(
+            img.img-fluid.w-100.img-frame(
               src="{% thumbnail article.featured_image 495x270 crop subject_location=article.featured_image.subject_location %}",
               alt="{{ article.featured_image.alt }}"
             )
