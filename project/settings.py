@@ -332,7 +332,6 @@ NPM_FILE_PATTERNS = {
     ],
     'gob.cl': [
         'dist/js/gob.cl.js',
-        'dist/css/gob.cl.css',
         'dist/fonts/*',
         'dist/images/*'
     ],

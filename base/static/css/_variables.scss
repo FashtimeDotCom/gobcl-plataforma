@@ -3,55 +3,12 @@
   override bootstrap variables.
  -------------------------------------------------- */
 
-$line-height-base: 1.42858;
-
-$container-max-widths: (
-  lg: 960px,
-  xl: 1140px
-) !default;
-
-$navbar-padding-y: 0;
-$navbar-padding-x: 0;
-
 $django-cms-toolbar: 5px;
 $django-cms-toolbar-expanded: 49px;
 
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
+$imagesPath: "../gob.cl/dist/images/";
+$fontsPath: "../gob.cl/dist/fonts/";
+$iconsPath: "../gob.cl/dist/images/icons/";
 
-@function parseInt($n) {
-  @return $n / ($n * 0 + 1);
-}
-
-@function rem-to-px($size) {
-	$value: parseInt($size) * 16px;
-	@return round($value);
-}
-
-$original-navbar-xs-padding-y: 11px;
-$original-navbar-md-padding-y: 16px;
-
-$navbar-height: (
-  xs: rem-to-px($nav-link-height) + $original-navbar-xs-padding-y * 2,
-  md: rem-to-px($nav-link-height) + $original-navbar-md-padding-y * 2
-);
-
-$footer-base-height: (
-  xs: 185px,
-  md: 245px,
-  xl: 223px,
-);
-
-$footer-link-height: 44px;
-$footer-links-max: 20;
-$footer-links-container-offset: 100px;
-
-
-$border-radius: 0;
-$border-radius-lg: 0;
-$border-radius-sm: 0;
-
-$colors: (
-  white: #FFFFFF,
-	gray: #A8B7C7,
-);
+@import "../../../node_modules/gob.cl/src/scss/vairables";
+@import "../../../node_modules/gob.cl/src/scss/functions";
