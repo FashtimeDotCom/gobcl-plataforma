@@ -94,6 +94,16 @@ class Commune(BaseModel):
     has_own_municipality = models.BooleanField(
         default=True,
     )
+    municipality_latitude = models.FloatField(
+        _('latitude'),
+        blank=True,
+        null=True,
+    )
+    municipality_longitude = models.FloatField(
+        _('longitude'),
+        blank=True,
+        null=True,
+    )
 
     objects = CommuneQuerySet.as_manager()
 
