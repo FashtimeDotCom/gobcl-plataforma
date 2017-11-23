@@ -10,12 +10,30 @@ $container-max-widths: (
   xl: 1140px
 ) !default;
 
+$navbar-padding-y: 0;
+$navbar-padding-x: 0;
+
+$django-cms-toolbar: 5px;
+$django-cms-toolbar-expanded: 49px;
+
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
 
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+@function rem-to-px($size) {
+	$value: parseInt($size) * 16px;
+	@return round($value);
+}
+
+$original-navbar-xs-padding-y: 11px;
+$original-navbar-md-padding-y: 16px;
+
 $navbar-height: (
-  xs: 64px,
-  md: 71px
+  xs: rem-to-px($nav-link-height) + $original-navbar-xs-padding-y * 2,
+  md: rem-to-px($nav-link-height) + $original-navbar-md-padding-y * 2
 );
 
 $footer-base-height: (

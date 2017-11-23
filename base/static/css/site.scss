@@ -2,7 +2,6 @@
 @import "_variables";
 
 body {
-
   .page-loading-icon {
     display: none;
     left: 10px;
@@ -55,25 +54,81 @@ body {
   }
 }
 
-header.site-header {
-  .language-selector {
-    .dropdown-toggle {
-      & > i {
-        margin-right: 0.255rem;
+html {
+  @for $i from 0 through $footer-links-max {
+    &.cms-ready {
+
+      body.footer-links-#{$i} {
+        main.site-main {
+          min-height: calc(100vh - #{((map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)) + $django-cms-toolbar});
+
+          @media (min-width: map-get($grid-breakpoints, md)) {
+            min-height: calc(100vh - #{(map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)) + $django-cms-toolbar});
+          }
+
+          @media (min-width: map-get($grid-breakpoints, xl)) {
+            min-height: calc(100vh - #{(max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl)) + map-get($navbar-height, md)) + $django-cms-toolbar});
+          }
+        }
       }
-    }
 
-    .dropdown-menu {
-      padding: 0;
-      .lang {
-        margin: 10px 10px 0;
+      &.cms-toolbar-expanded {
+        body.footer-links-#{$i} {
+          main.site-main {
+            min-height: calc(100vh - #{((map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)) + $django-cms-toolbar-expanded});
 
-        &:last-child {
-          margin-bottom: 10px;
+            @media (min-width: map-get($grid-breakpoints, md)) {
+              min-height: calc(100vh - #{(map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)) + $django-cms-toolbar-expanded});
+            }
+
+            @media (min-width: map-get($grid-breakpoints, xl)) {
+              min-height: calc(100vh - #{(max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl)) + map-get($navbar-height, md)) + $django-cms-toolbar-expanded});
+            }
+          }
         }
       }
     }
   }
+}
+
+nav.navbar {
+  &.navbar-expand-md {
+    > .container {
+      padding: 0 15px;
+    }
+  }
+
+  > .container {
+    .navbar-brand {
+      padding: 0;
+    }
+
+    .navbar-toggler {
+      margin-top: $original-navbar-xs-padding-y;
+      margin-bottom: $original-navbar-xs-padding-y;
+
+      @media (min-width: map-get($grid-breakpoints, md)) {
+        margin-top: $original-navbar-md-padding-y;
+        margin-bottom: $original-navbar-md-padding-y;
+      }
+    }
+
+    .navbar-collapse {
+      @media (min-width: map-get($grid-breakpoints, md)) {
+        margin-top: $original-navbar-md-padding-y;
+        margin-bottom: $original-navbar-md-padding-y;
+      }
+    }
+  }
+}
+
+main {
+  margin-top: map-get($navbar-height, xs);
+
+   @media (min-width: map-get($grid-breakpoints, md)) {
+     margin-top: map-get($navbar-height, md);
+   }
+
 }
 
 footer.site-footer {
@@ -85,14 +140,14 @@ footer.site-footer {
 }
 
 // django cms support
-html{
-  &.cms-ready{
-    .site-header_fixed {
-      top: 5px;
+html {
+  &.cms-ready {
+    .navbar {
+      top: $django-cms-toolbar;
     }
     &.cms-toolbar-expanded {
-      .site-header_fixed {
-        top: 49px;
+      .navbar {
+        top: $django-cms-toolbar-expanded;
       }
     }
   }
