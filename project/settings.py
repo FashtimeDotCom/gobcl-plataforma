@@ -107,6 +107,7 @@ INSTALLED_APPS = [
     'public_enterprises',
     'searches',
     'gobcl_cms',
+    'campaigns',
 
     # django cms
     'cms',
@@ -502,3 +503,14 @@ THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'THUMBNAIL_DEFAULT_STORAGE',
     'easy_thumbnails.storage.ThumbnailFileSystemStorage'
 )
+
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'es'},
+        {'code': 'en'},
+    ),
+    'default': {
+        'fallback': 'es',
+        'hide_untranslated': False,
+    }
+}
