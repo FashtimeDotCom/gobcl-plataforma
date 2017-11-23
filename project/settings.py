@@ -107,7 +107,6 @@ INSTALLED_APPS = [
     'public_enterprises',
     'searches',
     'gobcl_cms',
-    'campaigns',
 
     # django cms
     'cms',
