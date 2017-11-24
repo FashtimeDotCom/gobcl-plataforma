@@ -16,6 +16,8 @@ from cms.models.titlemodels import Title
 
 
 from filer.fields.image import FilerImageField
+from gobcl_cms.utils import create_text_plugin
+from gobcl_cms.utils import create_picture_plugin
 
 
 class Campaign(BaseModel):
@@ -62,7 +64,7 @@ class Campaign(BaseModel):
             self.create_page()
         return super(Campaign, self).save(*args, **kwargs)
 
-    def create_page(self):
+    def create_page(self, language='es'):
 
         site = Site.objects.get_current()
         page = Page.objects.create(
@@ -75,6 +77,25 @@ class Campaign(BaseModel):
         Title.objects.create(
             title=self.title,
             page=page,
-            language='es',
-            slug=slugify(self.title)
+            language=language,
+            slug=slugify(self.title),
+            published=self.is_active,
+        )
+
+        placeholder = page.placeholders.filter(
+                        slot='newsblog_article_content'
+                    ).first()
+
+        create_picture_plugin(
+            self.image,
+            placeholder,
+            language,
+            0,
+        )
+
+        create_text_plugin(
+            self.description,
+            placeholder,
+            language,
+            1,
         )
