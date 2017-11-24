@@ -24,6 +24,8 @@ from ministries.models import Ministry
 from public_servants.models import PublicServant
 from regions.models import Region
 from presidencies.models import Presidency
+from campaigns.models import Campaign
+from filer.models.imagemodels import Image
 
 
 class Mockup(object):
@@ -84,6 +86,13 @@ class Mockup(object):
         self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return Region.objects.create(**kwargs)
+
+    def create_campaign(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'image')
+        return Campaign.objects.create(**kwargs)
+
+    def create_image(self, **kwargs):
+        return Image.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:

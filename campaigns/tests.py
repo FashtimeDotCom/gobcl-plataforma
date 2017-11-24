@@ -1,3 +1,42 @@
-from django.test import TestCase
+from base.tests import BaseTestCase
 
-# Create your tests here.
+from .models import Campaign
+from cms.models.pagemodel import Page
+from django.contrib.sites.models import Site
+from cms.models.titlemodels import Title
+
+
+class CampaignModelTest(BaseTestCase):
+
+    def setUp(self):
+        pass
+
+    def test_campaign_with_url(self):
+        self.assertEqual(Campaign.objects.count(), 0)
+        self.assertEqual(Page.objects.count(), 0)
+
+        self.create_campaign(
+            external_url='http://example.com'
+        )
+
+        self.assertEqual(Campaign.objects.count(), 1)
+        self.assertEqual(Page.objects.count(), 0)
+
+    def test_campaign_without_url(self):
+        self.assertEqual(Campaign.objects.count(), 0)
+        self.assertEqual(Page.objects.count(), 0)
+
+        campaign = self.create_campaign()
+
+        self.assertEqual(Campaign.objects.count(), 1)
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(Title.objects.count(), 1)
+
+        page = Page.objects.get()
+        title = Title.objects.get()
+
+        self.assertEqual(page.template, 'campaigns/campaign_detail.pug')
+        self.assertEqual(page.site, Site.objects.get_current())
+        self.assertEqual(title.published, campaign.is_active)
+        self.assertEqual(title.title, campaign.title)
+        self.assertFalse(page.in_navigation)
