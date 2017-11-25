@@ -64,13 +64,6 @@ html(lang="es")
     link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
     link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
 
-    {% compress css %}
-    link(
-      type="text/x-scss", rel="stylesheet",
-      href="{% static 'cms_plugins/gallery/css/gallery.scss' %}",
-    )
-    {% endcompress %}
-
     {% render_block "css" %}
 
     link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
