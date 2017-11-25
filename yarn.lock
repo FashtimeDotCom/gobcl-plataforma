@@ -178,10 +178,6 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@4.0.0-beta:
-  version "4.0.0-beta"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.tgz#dc5928175d2e71310bc668cf9e05a907211b72a6"
-
 bootstrap@^4.0.0-beta.2:
   version "4.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.2.tgz#4d67d2aa2219f062cd90bc1247e6747b9e8fd051"
@@ -636,13 +632,12 @@ globby@^6.1.0:
     pinkie-promise "^2.0.0"
 
 "gob.cl@github:jgab-net/gob.cl#feature/bootstrap-4":
-  version "1.0.42"
-  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/160e8b94ca2dbbeec5e27ed71ff0009acaa4158b"
+  version "1.0.44"
+  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/4ae4c5a0c467cf0d4a6dde78fead9d0a04a363b8"
   dependencies:
-    bootstrap "4.0.0-beta"
+    bootstrap "^4.0.0-beta.2"
     jquery "^3.2.1"
     jquery.easing "^1.4.1"
-    modularscale-sass "^3.0.3"
     popper.js "^1.11.0"
     sass-mq "^3.3.2"
     slick-carousel "^1.8.1"
@@ -1051,10 +1046,6 @@ minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-modularscale-sass@^3.0.3:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.4.tgz#f2fbf814b91546759478f113d3502b760fae6873"
 
 ms@2.0.0:
   version "2.0.0"
