@@ -2,7 +2,6 @@
 @import "_variables";
 
 body {
-
   .page-loading-icon {
     display: none;
     left: 10px;
@@ -14,86 +13,6 @@ body {
 
     .page-loading-icon {
       display: inline-block;
-    }
-  }
-
-  @for $i from 0 through $footer-links-max {
-    &.footer-links-#{$i} {
-
-      main.site-main {
-        min-height: calc(100vh - #{(map-get($footer-base-height, xs) + $i * $footer-link-height) + map-get($navbar-height, xs)});
-
-        @media (min-width: map-get($grid-breakpoints, md)) {
-          min-height: calc(100vh - #{map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height) + map-get($navbar-height, md)});
-        }
-
-        @media (min-width: map-get($grid-breakpoints, xl)) {
-          min-height: calc(100vh - #{max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl)) + map-get($navbar-height, md)});
-        }
-      }
-
-      footer.site-footer {
-        height: map-get($footer-base-height, xs) + $i * $footer-link-height;
-
-        @media (min-width: map-get($grid-breakpoints, md)) {
-          height: map-get($footer-base-height, md) + (round($i / 2) * $footer-link-height);
-        }
-
-        @media (min-width: map-get($grid-breakpoints, xl)) {
-          height: max((round($i / 2) * $footer-link-height) + $footer-links-container-offset, map-get($footer-base-height, xl));
-        }
-
-        .menu {
-          height: $i * $footer-link-height;
-
-          @media (min-width: map-get($grid-breakpoints, md)) {
-            height: round($i / 2) * $footer-link-height;
-          }
-        }
-      }
-    }
-  }
-}
-
-header.site-header {
-  .language-selector {
-    .dropdown-toggle {
-      & > i {
-        margin-right: 0.255rem;
-      }
-    }
-
-    .dropdown-menu {
-      padding: 0;
-      .lang {
-        margin: 10px 10px 0;
-
-        &:last-child {
-          margin-bottom: 10px;
-        }
-      }
-    }
-  }
-}
-
-footer.site-footer {
-  .menu {
-    a {
-      height: $footer-link-height;
-    }
-  }
-}
-
-// django cms support
-html{
-  &.cms-ready{
-    .site-header_fixed {
-      top: 5px;
-    }
-    &.cms-toolbar-expanded {
-      .site-header_fixed {
-        top: 49px;
-      }
     }
   }
 }
