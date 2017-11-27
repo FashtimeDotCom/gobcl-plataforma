@@ -81,7 +81,12 @@ class Campaign(BaseModel):
         return super(Campaign, self).save(*args, **kwargs)
 
     def _create_page(self, language='es'):
+        '''
+        Create CMS page when create
+        Campaign without external url
+        '''
 
+        # Create CMS page
         site = Site.objects.get_current()
         page = Page.objects.create(
             site=site,
@@ -90,6 +95,7 @@ class Campaign(BaseModel):
         page.in_navigation = False
         page.save()
 
+        # Create Title depends language
         Title.objects.create(
             title=self.title,
             page=page,
@@ -98,10 +104,12 @@ class Campaign(BaseModel):
             published=self.is_active,
         )
 
+        # get placeholder content
         placeholder = page.placeholders.filter(
                 slot='newsblog_article_content'
             ).first()
 
+        # Create picture plugin by CMS Page
         create_picture_plugin(
             self.image,
             placeholder,
@@ -109,6 +117,7 @@ class Campaign(BaseModel):
             0,
         )
 
+        # Create text plugin by CMS Page
         create_text_plugin(
             self.description,
             placeholder,
@@ -116,4 +125,5 @@ class Campaign(BaseModel):
             1,
         )
 
+        # associated page to campaign
         self.page = page
