@@ -30,7 +30,7 @@ $(function () {
     // enable popup with gallery for images
     .magnificPopup({
       delegate: '.slick-slide:not(.slick-cloned) .gallery-slide .gallery-image',
-      type:'image',
+      type: 'image',
       fixedContentPos: true,
       gallery: {
         enabled: true
