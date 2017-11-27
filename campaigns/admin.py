@@ -11,4 +11,19 @@ from .models import Campaign
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    pass
+    search_fields = (
+        'title',
+    )
+    list_display = (
+        'title',
+        'page',
+        'is_active',
+        'featured_since',
+        'featured_until',
+    )
+    readonly_fields = (
+        'page',
+    )
+    list_filter = (
+        'is_active',
+    )

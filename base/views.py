@@ -33,6 +33,7 @@ from inflection import underscore
 from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Region
+from campaigns.models import Campaign
 
 
 class IndexTemplateView(TemplateView):
@@ -48,7 +49,7 @@ class IndexTemplateView(TemplateView):
 
         context = {
             'procedures_and_benefits': None,
-            'campaigns': None,
+            'campaigns': Campaign.objects.active(),
             'articles': articles,
             'ministries_count': (
                 Ministry.objects.by_government_structure(gov_structure).count()

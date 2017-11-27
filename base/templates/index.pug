@@ -122,6 +122,11 @@ block content
           section.sub-section
             h2.heading-medium {% trans 'Campaigns' %}
             .row
+              for campaign in campaigns
+                {{ campaign.title }}
+                {{ campaign.description }}
+                {{ campaign.image.url }}
+                {{ campaign.get_absolute_url }}
               .col-md-3
                 a(href="#").featured-card.has-icon
                   .featured-card_figure.elem-bg

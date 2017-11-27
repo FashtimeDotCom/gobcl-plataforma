@@ -15,3 +15,6 @@ class CampaignQueryset(QuerySet):
         )
 
         return queryset
+
+    def active(self):
+        return self.filter(is_active=True)

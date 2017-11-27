@@ -55,7 +55,10 @@ class Campaign(BaseModel):
         Page,
         blank=True,
         null=True,
+        on_delete=models.SET_NULL,
     )
+
+    exclude_on_on_delete_test = ('page',)
 
     objects = CampaignQueryset.as_manager()
 
