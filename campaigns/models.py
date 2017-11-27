@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
@@ -18,6 +17,8 @@ from cms.models.titlemodels import Title
 from filer.fields.image import FilerImageField
 from gobcl_cms.utils import create_text_plugin
 from gobcl_cms.utils import create_picture_plugin
+
+from .managers import CampaignQueryset
 
 
 class Campaign(BaseModel):
@@ -40,10 +41,23 @@ class Campaign(BaseModel):
         _('is active'),
         default=True,
     )
-    is_featured = models.BooleanField(
-        _('is featured'),
-        default=False,
+    featured_since = models.DateTimeField(
+        _('featured since'),
+        blank=True,
+        null=True,
     )
+    featured_until = models.DateTimeField(
+        _('featured until'),
+        blank=True,
+        null=True,
+    )
+    page = models.ForeignKey(
+        Page,
+        blank=True,
+        null=True,
+    )
+
+    objects = CampaignQueryset.as_manager()
 
     class Meta:
         verbose_name = _('campaign')
@@ -56,15 +70,17 @@ class Campaign(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        """ Returns the canonical URL for the Campaign object """
-        return reverse('campaign_detail', args=(self.pk,))
+        if self.external_url:
+            return self.external_url
+        else:
+            return self.page.get_absolute_url()
 
     def save(self, *args, **kwargs):
-        if not self.external_url:
-            self.create_page()
+        if not self.external_url and not self.page:
+            self._create_page()
         return super(Campaign, self).save(*args, **kwargs)
 
-    def create_page(self, language='es'):
+    def _create_page(self, language='es'):
 
         site = Site.objects.get_current()
         page = Page.objects.create(
@@ -83,8 +99,8 @@ class Campaign(BaseModel):
         )
 
         placeholder = page.placeholders.filter(
-                        slot='newsblog_article_content'
-                    ).first()
+                slot='newsblog_article_content'
+            ).first()
 
         create_picture_plugin(
             self.image,
@@ -99,3 +115,5 @@ class Campaign(BaseModel):
             language,
             1,
         )
+
+        self.page = page

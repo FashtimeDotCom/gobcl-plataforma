@@ -15,12 +15,17 @@ class CampaignModelTest(BaseTestCase):
         self.assertEqual(Campaign.objects.count(), 0)
         self.assertEqual(Page.objects.count(), 0)
 
-        self.create_campaign(
-            external_url='http://example.com'
+        external_url = 'http://example.com'
+        self.campaign = self.create_campaign(
+            external_url=external_url
         )
 
         self.assertEqual(Campaign.objects.count(), 1)
         self.assertEqual(Page.objects.count(), 0)
+        self.assertEqual(
+            self.campaign.get_absolute_url(),
+            external_url
+        )
 
     def test_campaign_without_url(self):
         self.assertEqual(Campaign.objects.count(), 0)
@@ -37,6 +42,11 @@ class CampaignModelTest(BaseTestCase):
 
         self.assertEqual(page.template, 'campaigns/campaign_detail.pug')
         self.assertEqual(page.site, Site.objects.get_current())
+        self.assertEqual(campaign.page, page)
+        self.assertEqual(
+            campaign.get_absolute_url(),
+            page.get_absolute_url()
+        )
         self.assertEqual(title.published, campaign.is_active)
         self.assertEqual(title.title, campaign.title)
         self.assertFalse(page.in_navigation)
