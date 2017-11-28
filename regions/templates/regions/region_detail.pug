@@ -38,20 +38,23 @@ block content
           .col-sm-12.col-lg-8
             .profile.profile--half
               .profile_image
-                img(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="").img-fluid.w-100
+                img.img-fluid.w-100.img-frame(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="")
               .profile_header
                 h3.profile_title {{ region.governor.name }}
                 span.profile_job {{ region.governor.charge }}
 
               p {{ region.governor.description }}
-              p: a(href="https://twitter.com/{{ region.governor.twitter  }}", target="blank").profile_twitter {{ region.governor.twitter }}
+              p
+                a(href="https://twitter.com/{{ region.governor.twitter  }}", target="blank").profile_twitter
+                  | {{ region.governor.twitter }}
 
               ul.profile_info
                 li: span {% trans 'Phone' %}: {{ region.governor.phone }}
                 li: span {% trans 'E-Mail' %}: {{ region.governor.email }}
           .col-sm-12.col-lg-4.align-self-end
             .profile_buttons
-              a(href="{{ region.url }}", target="blank").button.button--block {% trans 'Go to the regional government site' %}
+              a(href="{{ region.url }}", target="blank").button.button--block
+                {% trans 'Go to the regional government site' %}
     section.section.bg-light
       .container
         .row
