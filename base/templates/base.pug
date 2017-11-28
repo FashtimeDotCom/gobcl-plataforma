@@ -11,9 +11,25 @@ html(lang="es")
     meta(charset="utf-8")
     title Gob.cl{% block title %}: {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
-    meta(name="description", content="{% page_attribute 'meta_description' %}")
     meta(name="author", content="https://magnet.cl")
+
+    meta(name='twitter:site', content='@Gobiernodechile')
+    meta(name='twitter:creator', content='@Gobiernodechile')
+
+    meta(name='og:site_name', content="{% trans 'government of Chile'|capfirst %}")
+    meta(name='og:type', content='website')
+    meta(name='fb:admins', content='572738868')
+    meta(name='fb:app_id', content='114405611929952')
+
+
+    block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      meta(itemprop='image', content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/ms-icon-310x310.png' %}")
+      meta(itemprop='name', content='Gob.cl: {{title}}')
+
+    block newsblog_meta_tags
+      meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
+      meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
@@ -40,29 +56,24 @@ html(lang="es")
     meta(name='msapplication-TileImage', content="{% static 'favicon/ms-icon-144x144.png' %}")
     meta(name='theme-color', content='#ffffff')
 
-
     //if lte IE 7
       script(src="https://html5shim.googlecode.com/svn/trunk/html5.js")
 
     //if lt IE 9
       script(src="{% static 'bower_components/respond/respond.min.js' %}")
+    link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
+    link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
+
     {% render_block "css" %}
 
-    link(
-      href="{% static 'select2/dist/css/select2.min.css' %}",
-      rel="stylesheet"
-    )
+    link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
+
     {% compress css %}
     link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
+      type="text/x-scss", rel="stylesheet", href="{% static 'css/gob.cl.scss' %}",
       charset="utf-8"
     )
     {% endcompress %}
-
-    link(
-      href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
-      rel="stylesheet"
-    )
 
     {% compress css %}
     link(
@@ -77,7 +88,6 @@ html(lang="es")
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
-    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -88,7 +98,9 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
+    {% placeholder "top_content" %}
     block content
+    {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
@@ -117,6 +129,8 @@ html(lang="es")
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
       script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
+      script(src="{% static 'slick-carousel/slick/slick.js' %}")
+      script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
     {% endcompress %}
 
     // templates
@@ -129,11 +143,15 @@ html(lang="es")
     block javascript_data
     {% render_block "js" %}
     {% compress js %}
+    script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
     script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
-    script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
+        /**
+        * Share django urls with javascript.
+        */
         $.extend(App, {
           paths: {
             fontSize: "{% url 'user_font_size_change' %}"
@@ -143,6 +161,8 @@ html(lang="es")
     script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
+    script(src="{% static 'js/social.js' %}")
+    script(src="{% static 'js/application.js' %}")
     block javascripts
     {% endcompress %}
 
