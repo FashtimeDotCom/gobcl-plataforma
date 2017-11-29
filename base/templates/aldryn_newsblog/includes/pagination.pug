@@ -3,10 +3,10 @@
 
 if is_paginated
   if page_obj.has_previous
-    a(href="?page={{ page_obj.previous_page_number  }}", aria-label="{% trans 'Previous' %}").button
+    a.button.button--clean(href="?page={{ page_obj.previous_page_number  }}", aria-label="{% trans 'Previous' %}")
       i.fa.fa-angle-left
       span {% trans 'Previous' %}
   if page_obj.has_next
-    a(href="?page={{ page_obj.next_page_number }}", aria-label="{% trans 'Next' %}").button
+    a.button.button--clean(href="?page={{ page_obj.next_page_number }}", aria-label="{% trans 'Next' %}")
       span {% trans 'Next' %}
       i.fa.fa-angle-right

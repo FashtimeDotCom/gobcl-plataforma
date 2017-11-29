@@ -1,10 +1,10 @@
 /*
-  Variables
-  override bootstrap variables.
+  gob.cl and bs.4 settings.
  -------------------------------------------------- */
 
 @import "_variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/gob.cl/src/scss/gob.cl";
 
 .pv-0-until-md,
 section.pv-0-until-md {

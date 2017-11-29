@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.campaigns.add_campaign
+        a.btn.btn-primary(href="{% url 'campaign_create' %}")
+          {% trans 'Add campaign' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.campaigns.change_campaign
+          th
+        if perms.campaigns.delete_campaign
+          th
+    tbody
+      for campaign in object_list
+        tr
+          td
+            a(href="{{ campaign.get_absolute_url }}")
+              | {{campaign.id}}
+          td
+            a(href="{{ campaign.get_absolute_url }}")
+              | {{campaign}}
+          if perms.campaigns.change_campaign
+            td
+              a.btn.btn-primary(href="{% url 'campaign_update' campaign.id %}")
+                {% trans 'Update campaign' %}
+                i.fa.fa-edit
+          if perms.campaigns.delete_campaign
+            td
+              a.btn.btn-danger(href="{% url 'campaign_delete' campaign.id %}")
+                {% trans 'Delete campaign' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

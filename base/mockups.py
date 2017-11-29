@@ -19,11 +19,17 @@ from inflection import underscore
 from model_mommy import mommy
 
 # models
+from aldryn_newsblog.models import Article
+from campaigns.models import Campaign
 from government_structures.models import GovernmentStructure
+from filer.models.imagemodels import Image
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from ministries.models import Ministry
-from public_servants.models import PublicServant
 from regions.models import Region
+from aldryn_people.models import Person
 from presidencies.models import Presidency
+from public_servants.models import PublicServant
+from users.models import User
 
 
 class Mockup(object):
@@ -49,6 +55,26 @@ class Mockup(object):
             page.publish(language)
 
         return page
+
+    def create_user(self, **kwargs):
+        self.set_required_email(kwargs, 'email')
+        self.set_required_string(kwargs, 'first_name')
+        self.set_required_string(kwargs, 'last_name')
+        return User.objects.create(**kwargs)
+
+    def create_article(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
+        self.set_required_foreign_key(kwargs, 'app_config')
+        self.set_required_foreign_key(kwargs, 'owner', 'user')
+        self.set_required_foreign_key(kwargs, 'author', 'person')
+        return Article.objects.create(**kwargs)
+
+    def create_person(self, **kwargs):
+        return Person.objects.create(**kwargs)
+
+    def create_app_config(self, **kwargs):
+        self.set_required_string(kwargs, 'namespace')
+        return NewsBlogConfig.objects.create(**kwargs)
 
     def create_public_servant(self, **kwargs):
         self.set_required_string(kwargs, 'name')
@@ -84,6 +110,13 @@ class Mockup(object):
         self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return Region.objects.create(**kwargs)
+
+    def create_campaign(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'image')
+        return Campaign.objects.create(**kwargs)
+
+    def create_image(self, **kwargs):
+        return Image.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:

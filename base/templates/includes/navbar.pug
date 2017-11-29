@@ -2,70 +2,60 @@
 - load menu_tags
 - load apphooks_config_tags
 
-header.site-header
-  .site-header_fixed
-    .container
-      a.logo(href="{% url 'home' %} ")
-        i.icon-gob
-      
-      .site-header_right
-
-        ul.link.link--dib
-          li.dropdown.language-selector
-            a.dropdown-toggle(data-toggle="dropdown")
-              i.fa.fa-language(aria-hidden="true")
-              - get_current_language as current_language
-              span= current_language | language_name_local | title
-              b.caret
-            ul.dropdown-menu.languages
-              {% language_chooser %}
-
-        a(href="#").link.link--dib.d-none {% trans 'Procedures and benefits' %}
-        {% show_menu 0 1 100 100 "includes/menu.pug" %}
-        a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Institutions' %}
-        a(href="#").btn-search.toggle-search
-          i.ic-search.btn-search_icon
-          i.ic-close.btn-search_icon 
-        if user.is_authenticated
-          .site-header_login
-          if request.session.loginas_from_user
-            a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
-          else
-            a(href="{% url 'logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
-        else 
-          .site-header_login.hidden
-            a(href="{% url 'login' %}?next={{request.path}}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
-
-      input(type="checkbox" id="menu-trigger").menu-trigger-input
-      
-      label(for="menu-trigger").menu-trigger
-        span
-
-      a(href="#").btn-search.btn-search--mobile.toggle-search
+nav.navbar.navbar-expand-md.navbar-light.fixed-top
+  .container
+    a.navbar-brand.align-self-start(href="{% url 'home' %} ")
+      i.icon-gob
+    .nav-content
+      .dropdown.lang
+        a#ropdownMenuLang.btn.btn-seconday.dropdown-toggle(
+          href="#",
+          data-toggle="dropdown",
+          role="button",
+          aira-haspopup="true",
+          aria-expanded="false"
+        )
+          i.fa.fa-language.mr-1(aria-hidden="true")
+          - get_current_language as current_language
+          {{ current_language }}
+        .dropdown-menu(aria-labelledby="ropdownMenuLang")
+          {% language_chooser "includes/menu_language.pug" %}
+      a.btn.btn-search.btn-search--mobile.toggle-search(href="#")
         i.ic-search.btn-search_icon
         i.ic-close.btn-search_icon
 
-      .menu-mobile
-        ul.link.link--dib
-          li.dropdown.language-selector
-            a.dropdown-toggle(data-toggle="dropdown")
-              i.fa.fa-language(aria-hidden="true")
-              - get_current_language as current_language
-              span= current_language
-              b.caret
-            ul.dropdown-menu.languages
-              {% language_chooser %}
+      button.navbar-toggler(
+        type="button",
+        data-toggle="collapse",
+        data-target="#navbarSupportedContent",
+        aria-controls="navbarSupportedContent",
+        aria-expanded="false"
+      )
+        span.navbar-toggler-icon
 
-      nav.navigation
-        .container
-          h6.heading-label {% trans 'Sections' %}
-          ul
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
-            li
-              a.link.link--medium.overflowed-xs(
-                href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}"
-              )
-                {% trans 'News' %}
-            li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
-            li: a(href="{% url 'about' %}").link.link--medium.overflowed-xs {% trans 'About Chile' %}
+    #navbarSupportedContent.navbar-collapse.collapse.justify-content-end
+      ul.navbar-nav
+        li.nav-item.dropdown.nav-item-desktop
+          a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
+            href="#",
+            data-toggle="dropdown",
+            aira-haspopup="true",
+            aria-expanded="false"
+          )
+            i.fa.fa-language.mr-1(aria-hidden="true")
+            - get_current_language as current_language
+            {{ current_language | language_name_local | title }}
+          .dropdown-menu(aria-labelledby="navbarDropdownMenuLang")
+            {% language_chooser "includes/menu_language.pug" %}
+
+        li.nav-item
+          a.nav-link(href="#") {% trans 'Procedures and benefits' %}
+        {% show_menu 0 1 100 100 "includes/menu.pug" %}
+        li.nav-item
+          a.nav-link(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li.nav-item.nav-item-action.nav-item-desktop
+          a.btn.btn-search.toggle-search(href="#")
+            i.ic-search.btn-search_icon
+            i.ic-close.btn-search_icon
+
 
