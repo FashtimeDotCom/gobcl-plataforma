@@ -60,7 +60,11 @@ html(lang="es")
       script(src="https://html5shim.googlecode.com/svn/trunk/html5.js")
 
     //if lt IE 9
-      script(src="{% static 'bower_components/respond/respond.min.js' %}")
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js",
+        integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=",
+        crossorigin="anonymous"
+      )
     link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
     link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
 
@@ -119,6 +123,16 @@ html(lang="es")
       script(
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js",
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js",
+        integrity="sha256-DHF4zGyjT7GOMPBwpeehwoey18z8uiz98G4PRu2lV0A=",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js",
+        integrity="sha256-P93G0oq6PBPWTP1IR8Mz/0jHHUpaWL0aBJTKauisG7Q=",
         crossorigin="anonymous"
       )
 
