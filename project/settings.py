@@ -26,16 +26,19 @@ if 'TRAVIS' in os.environ:
     from project.travis_settings import LOCALLY_INSTALLED_APPS
     from project.travis_settings import ENABLE_EMAILS
     from project.travis_settings import ADMINS
+    from project.travis_settings import LOCALLY_ALLOWED_HOSTS
 elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEBUG
     from project.production.local_settings import LOCALLY_INSTALLED_APPS
     from project.production.local_settings import ENABLE_EMAILS
     from project.production.local_settings import ADMINS
+    from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
 
 if DEBUG:
     env = 'development'
@@ -59,12 +62,7 @@ ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
 ]
 
-try:
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
-except:
-    pass
-else:
-    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
 
 SITE_ID = 1
 
@@ -342,6 +340,17 @@ NPM_FILE_PATTERNS = {
     'select2': [
         'dist/js/select2.full.js',
         'dist/css/select2.min.css'
+    ],
+    'slick-carousel': [
+        'slick/slick.js',
+        'slick/slick.css',
+        'slick/slick-theme.css',
+        'slick/fonts/*',
+        'slick/ajax-loader.gif'
+    ],
+    'magnific-popup': [
+        'dist/jquery.magnific-popup.js',
+        'dist/magnific-popup.css'
     ]
 }
 
@@ -493,3 +502,14 @@ THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'THUMBNAIL_DEFAULT_STORAGE',
     'easy_thumbnails.storage.ThumbnailFileSystemStorage'
 )
+
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'es'},
+        {'code': 'en'},
+    ),
+    'default': {
+        'fallback': 'es',
+        'hide_untranslated': False,
+    }
+}

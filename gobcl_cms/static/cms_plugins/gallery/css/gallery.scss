@@ -1,0 +1,114 @@
+
+@import '../../../../../base/static/css/_variables';
+
+.gallery {
+
+  .slick-arrow:before {
+    color: #A8B7C7;
+  }
+
+  .slick-slide {
+    .gallery-slide {
+      .img-box {
+        border: 2px solid map-get($colors, gray);
+        margin: 8px 4px;
+        .gallery-image {
+          height: 200px;
+          background-position: center;
+          background-size: cover;
+        }
+      }
+
+    }
+  }
+
+  .slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    > li {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin: 0 5px;
+      padding: 0;
+      cursor: pointer;
+      > button {
+        font-size: 0;
+        line-height: 0;
+        display: block;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: transparent;
+        border: 0;
+        outline: none;
+        background: transparent;
+
+        &:before {
+          display: block;
+          content: ' ';
+          border: 2px solid map-get($colors, gray);
+          border-radius: 50%;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+          filter: alpha(opacity=60);
+          opacity: 0.6;
+
+          box-shadow: 0 0 1px 0 rgb( 255, 255, 255);
+          width: 8px;
+          height: 8px;
+          z-index: 86;
+
+          transition: background-color .5s ease-in-out;
+        }
+      }
+
+      &.slick-active {
+        vertical-align: top;
+        > button:before {
+          background-color: map-get($colors, gray);
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+}
+
+.mfp-gallery {
+  .mfp-s-loading {
+    .mfp-content {
+      .mfp-title {
+        display: none;
+      }
+    }
+  }
+
+  .mfp-content {
+    .mfp-title {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.mfp-preloader {
+  width: 30px;
+  height: 30px;
+  background-color: map-get($colors, white);
+  opacity: 0.65;
+  margin: 0 auto;
+  animation: rotatePlane 1.2s infinite ease-in-out;
+}
+
+@keyframes rotatePlane {
+  0% { transform: perspective(120px) rotateX(0deg) rotateY(0deg) }
+  50% { transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) }
+  100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg) }
+}
