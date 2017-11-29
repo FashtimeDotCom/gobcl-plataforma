@@ -50,6 +50,7 @@ class PublicServant(BaseGovernmentStructureModel):
     class Meta:
         verbose_name = _('public servant')
         verbose_name_plural = _('public servants')
+        unique_together = ('name', 'government_structure')
         permissions = (
             ('view_public_servant', _('Can view public_servants')),
         )

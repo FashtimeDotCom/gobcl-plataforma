@@ -33,6 +33,14 @@ class Ministry(Institution):
         max_length=200,
         blank=True,
     )
+    twitter = models.CharField(
+        max_length=100,
+        null=True,
+    )
+    facebook = models.CharField(
+        max_length=100,
+        null=True,
+    )
     importance = models.PositiveIntegerField(
         _('importance'),
         default=0,
