@@ -7,11 +7,18 @@ from cms.models.titlemodels import Title
 
 
 class CampaignModelTest(BaseTestCase):
+    '''
+    Test for model campaign
+    '''
 
     def setUp(self):
         pass
 
     def test_campaign_with_url(self):
+        '''
+        Test create only campaign without CMS page
+        '''
+
         self.assertEqual(Campaign.objects.count(), 0)
         self.assertEqual(Page.objects.count(), 0)
 
@@ -28,6 +35,9 @@ class CampaignModelTest(BaseTestCase):
         )
 
     def test_campaign_without_url(self):
+        '''
+        Test create CMS page when create campaign without external url
+        '''
         self.assertEqual(Campaign.objects.count(), 0)
         self.assertEqual(Page.objects.count(), 0)
 

@@ -109,7 +109,7 @@ class Campaign(BaseModel):
 
         # get placeholder content
         placeholder = page.placeholders.filter(
-                slot='newsblog_article_content'
+                slot='campaign_content'
             ).first()
 
         # Create picture plugin by CMS Page

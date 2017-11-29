@@ -19,17 +19,17 @@ from inflection import underscore
 from model_mommy import mommy
 
 # models
-from government_structures.models import GovernmentStructure
-from ministries.models import Ministry
-from public_servants.models import PublicServant
-from regions.models import Region
-from presidencies.models import Presidency
-from campaigns.models import Campaign
-from filer.models.imagemodels import Image
 from aldryn_newsblog.models import Article
+from campaigns.models import Campaign
+from government_structures.models import GovernmentStructure
+from filer.models.imagemodels import Image
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
-from users.models import User
+from ministries.models import Ministry
+from regions.models import Region
 from aldryn_people.models import Person
+from presidencies.models import Presidency
+from public_servants.models import PublicServant
+from users.models import User
 
 
 class Mockup(object):
