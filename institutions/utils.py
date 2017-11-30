@@ -65,7 +65,7 @@ def create_public_enterprise(row, government_structure):
 
     for cell in row[:5]:
         value = cell.value
-        if value.startswith('Nombres de personas jurídicas'):
+        if value and value.startswith('Nombres de personas jurídicas'):
             return
         public_enterprise.append(value)
 
