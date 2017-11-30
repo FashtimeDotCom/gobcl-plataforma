@@ -3,5 +3,49 @@ extends base.pug
 - load i18n cms_tags apphooks_config_tags thumbnail
 
 block content
-  block newsblog_content
-    {% placeholder "campaign_content" %}
+  main.site-main
+    section.section
+      .container
+        .row
+          .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-5.offset-xl-7
+            .d-none.d-lg-block.pull-md-right
+              {% include 'includes/toolbar.pug' with dark=True %}
+          .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
+            campaign.main-post
+              time.main-post_date {{ campaign.publishing_date|date }}
+              h1.main-post_title {{campaign.title }}
+              h2.main-post_subtitle
+                {{ campaign.description|striptags }}
+
+              if campaign.image
+                h1 hola
+                img.img-fluid.w-100.img-frame(
+                  src="{% thumbnail campaign.image 1600x1600 %}",
+                  alt="{{ campaign.image.alt }}"
+                )
+
+              ul.main-post_social-share
+                li: p {% trans 'Share this campaign through your social networks' %}
+                li.d-sm-none
+                  a.share(
+                    href="{{ request.scheme }}://{{ request.get_host }}{% page_url request.current_page %}",
+                    data-social="messenger"
+                  )
+                    i.ic-messenger
+                li
+                  a.share(
+                    href="{{ request.scheme }}://{{ request.get_host }}{% page_url request.current_page %}",
+                    data-social="facebook",
+                  )
+                    i.ic-facebook
+                li
+                  a.share(
+                    href="{{ request.scheme }}://{{ request.get_host }}{% page_url request.current_page %}",
+                    data-text="{{campaign.title}}"
+                    data-social="twitter"
+                  )
+                    i.ic-twitter
+              {% placeholder "campaign_content" %}
+    section
+      .container
+        {% include 'includes/social.pug' %}
