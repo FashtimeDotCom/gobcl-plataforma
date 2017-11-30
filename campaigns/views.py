@@ -11,20 +11,20 @@ from .models import Campaign
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
-from base.views import BaseListView
 from base.views import BaseUpdateView
+from django.views.generic import ListView
 
 # forms
 from .forms import CampaignForm
 
 
-class CampaignListView(BaseListView):
+class CampaignListView(ListView):
     """
     View for displaying a list of campaigns.
     """
     model = Campaign
     template_name = 'campaigns/campaign_list.pug'
-    permission_required = 'campaigns.view_campaign'
+    paginate_by = 25
 
 
 class CampaignCreateView(BaseCreateView):
