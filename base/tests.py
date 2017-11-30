@@ -14,6 +14,7 @@ from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.test import TestCase
+from django.utils.translation import activate
 
 # urls
 from project.urls import urlpatterns
@@ -29,11 +30,15 @@ from base.scenarios import create_presidency
 from model_mommy import mommy
 from model_mommy import random_gen
 
+from campaigns.models import Campaign
+
 
 class BaseTestCase(TestCase, Mockup):
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
+
+        activate('es')
 
         self.password = random_gen.gen_text()
         self.user = mommy.prepare('users.User')
@@ -52,10 +57,14 @@ class BaseTestCase(TestCase, Mockup):
 
 class IntegrityOnDeleteTestCase(BaseTestCase):
     def create_full_object(self, model):
+
         kwargs = {}
         for f in model._meta.fields:
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                kwargs[f.name] = mommy.make(f.rel.to)
+                if f.rel.to.__name__ == 'Campaign':
+                    kwargs[f.name] = mommy.make(f.rel.to, title='foo')
+                else:
+                    kwargs[f.name] = mommy.make(f.rel.to)
 
         return mommy.make(model, **kwargs), kwargs
 
@@ -63,7 +72,8 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
         for model in get_our_models():
             # ignore gobcl_cms
-            if model._meta.app_label == 'gobcl_cms':
+            if (model._meta.app_label == 'gobcl_cms' or
+                    model.__name__ == 'CampaignTranslation'):
                 continue
 
             obj, related_nullable_objects = self.create_full_object(model)
@@ -130,7 +140,12 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
-            obj = mommy.make(model)
+            if model_name == 'campaign_translation':
+                continue
+            elif model_name == 'campaign':
+                obj = mommy.make(model, title='foo')
+            else:
+                obj = mommy.make(model)
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 
@@ -163,8 +178,8 @@ class UrlsTest(BaseTestCase):
         ignored_namespaces = []
 
         ignored_urls = [
-            "/es/noticias/",
-            "/es/news/",
+            "/noticias/",
+            "/news/",
             "/admin/filer/clipboard/operations/upload/no_folder/",
         ]
 

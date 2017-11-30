@@ -43,6 +43,7 @@ class CampaignModelTest(BaseTestCase):
 
         campaign = self.create_campaign(
             title='foo',
+            external_url='',
         )
 
         self.assertEqual(Campaign.objects.count(), 1)

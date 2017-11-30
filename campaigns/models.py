@@ -6,6 +6,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.utils.translation import activate
 
 # models
 from base.models import BaseModel
@@ -92,6 +93,8 @@ class Campaign(BaseModel, TranslatableModel):
         Create CMS page when create
         Campaign without external url
         '''
+
+        activate(language)
 
         # Create CMS page
         site = Site.objects.get_current()
