@@ -1,9 +1,10 @@
 from django.utils import timezone
 
 from base.managers import QuerySet
+from parler.managers import TranslatableQuerySet
 
 
-class CampaignQueryset(QuerySet):
+class CampaignQueryset(QuerySet, TranslatableQuerySet):
 
     def featured(self):
         queryset = self

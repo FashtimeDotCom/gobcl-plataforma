@@ -17,14 +17,21 @@ from cms.models.titlemodels import Title
 from filer.fields.image import FilerImageField
 from gobcl_cms.utils import create_text_plugin
 from gobcl_cms.utils import create_picture_plugin
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
 
 from .managers import CampaignQueryset
 
 
-class Campaign(BaseModel):
-    title = models.CharField(
-        _('title'),
-        max_length=100,
+class Campaign(BaseModel, TranslatableModel):
+    translations = TranslatedFields(
+        title=models.CharField(
+            _('title'),
+            max_length=100,
+        ),
+        description=models.TextField(
+            _('description'),
+        ),
     )
     image = FilerImageField(
         verbose_name=_('image'),
@@ -33,9 +40,6 @@ class Campaign(BaseModel):
         _('external url'),
         max_length=200,
         blank=True,
-    )
-    description = models.TextField(
-        _('description'),
     )
     is_active = models.BooleanField(
         _('is active'),
