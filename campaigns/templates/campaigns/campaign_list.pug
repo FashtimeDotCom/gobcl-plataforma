@@ -1,42 +1,37 @@
 extends base.pug
 
-- load i18n
+- load i18n staticfiles thumbnail cms_tags apphooks_config_tags
 
 block content
-  .text-right
-    .btn-group
-      if perms.campaigns.add_campaign
-        a.btn.btn-primary(href="{% url 'campaign_create' %}")
-          {% trans 'Add campaign' %}
-          i.fa.fa-plus
+  main.site-main
+    section.section.nopadding.bg-bluedark
+      .container
+        article.article-hero.article--dark.text-light
+          .row
+            .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
+              .pull-md-right
+                {% include 'includes/toolbar.pug' %}
+            .col-sm-12.col-md-12.col-lg-6.col-xl-7
+              h1.heading-large {% trans 'News' %}
+          {% static_placeholder "newsblog_feature" %}
 
-  table.table.table-bordered.table-hover
-    thead
-      tr
-        th Id
-        th {% trans 'name'|capfirst %}
-        if perms.campaigns.change_campaign
-          th
-        if perms.campaigns.delete_campaign
-          th
-    tbody
-      for campaign in object_list
-        tr
-          td
-            a(href="{{ campaign.get_absolute_url }}")
-              | {{campaign.id}}
-          td
-            a(href="{{ campaign.get_absolute_url }}")
-              | {{campaign}}
-          if perms.campaigns.change_campaign
-            td
-              a.btn.btn-primary(href="{% url 'campaign_update' campaign.id %}")
-                {% trans 'Update campaign' %}
-                i.fa.fa-edit
-          if perms.campaigns.delete_campaign
-            td
-              a.btn.btn-danger(href="{% url 'campaign_delete' campaign.id %}")
-                {% trans 'Delete campaign' %}
-                i.fa.fa-times
+    section.section
+      .container
+        h2.heading-label {% trans 'Filter by Topic' %}:
+        .tags
+          .tags_content
+            .tags_item
+              a.ctag.ctag--light(href="")
+                {% trans 'All' %}
 
-  {% include 'includes/pagination.pug' %}
+
+        {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=campaign_list %}
+        if not campaign_list
+          h3 {% trans 'There are no news in this category' %}
+
+        .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
+          br
+          {% include 'aldryn_newsblog/includes/pagination.pug' %}
+    section
+      .container
+        {% include 'includes/social.pug' %}

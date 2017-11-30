@@ -5,12 +5,14 @@
 # django
 from django.contrib import admin
 
+from parler.admin import TranslatableAdmin
+
 # models
 from .models import Campaign
 
 
 @admin.register(Campaign)
-class CampaignAdmin(admin.ModelAdmin):
+class CampaignAdmin(TranslatableAdmin):
     search_fields = (
         'title',
     )
