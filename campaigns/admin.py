@@ -20,8 +20,6 @@ class CampaignAdmin(TranslatableAdmin):
         'title',
         'page',
         'is_active',
-        'featured_since',
-        'featured_until',
     )
     readonly_fields = (
         'page',

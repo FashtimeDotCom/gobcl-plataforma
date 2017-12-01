@@ -46,15 +46,9 @@ class Campaign(BaseModel, TranslatableModel):
         _('is active'),
         default=True,
     )
-    featured_since = models.DateTimeField(
-        _('featured since'),
-        blank=True,
-        null=True,
-    )
-    featured_until = models.DateTimeField(
-        _('featured until'),
-        blank=True,
-        null=True,
+    is_featured = models.BooleanField(
+        _('is featured'),
+        default=False,
     )
     page = models.ForeignKey(
         Page,
@@ -70,6 +64,9 @@ class Campaign(BaseModel, TranslatableModel):
     class Meta:
         verbose_name = _('campaign')
         verbose_name_plural = _('campaigns')
+        ordering = (
+            'is_featured',
+        )
         permissions = (
             ('view_campaign', _('Can view campaign')),
         )
