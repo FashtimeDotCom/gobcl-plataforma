@@ -134,3 +134,4 @@ class Campaign(BaseModel, TranslatableModel):
 
         # associated page to campaign
         self.page = page
+        page.publish(language)
