@@ -47,7 +47,7 @@ class CampaignModelTest(BaseTestCase):
         )
 
         self.assertEqual(Campaign.objects.count(), 1)
-        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(Page.objects.count(), 2)
         self.assertEqual(Title.objects.count(), 1)
 
         page = Page.objects.get()
