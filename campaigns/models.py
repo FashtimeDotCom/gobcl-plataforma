@@ -20,6 +20,7 @@ from gobcl_cms.utils import create_text_plugin
 from gobcl_cms.utils import create_picture_plugin
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+from cms.utils.i18n import get_current_language
 
 from .managers import CampaignQueryset
 
@@ -36,6 +37,8 @@ class Campaign(BaseModel, TranslatableModel):
     )
     image = FilerImageField(
         verbose_name=_('image'),
+        blank=True,
+        null=True,
     )
     external_url = models.URLField(
         _('external url'),
@@ -81,8 +84,10 @@ class Campaign(BaseModel, TranslatableModel):
             return self.page.get_absolute_url()
 
     def save(self, *args, **kwargs):
+        language = get_current_language()
+        activate(language=language)
         if not self.external_url and not self.page:
-            self._create_page()
+            self._create_page(language=language)
         return super(Campaign, self).save(*args, **kwargs)
 
     def _create_page(self, language='es'):
@@ -116,13 +121,14 @@ class Campaign(BaseModel, TranslatableModel):
                 slot='campaign_content'
             ).first()
 
-        # Create picture plugin by CMS Page
-        create_picture_plugin(
-            self.image,
-            placeholder,
-            language,
-            0,
-        )
+        if self.image_id:
+            # Create picture plugin by CMS Page
+            create_picture_plugin(
+                self.image,
+                placeholder,
+                language,
+                0,
+            )
 
         # Create text plugin by CMS Page
         create_text_plugin(
@@ -134,4 +140,5 @@ class Campaign(BaseModel, TranslatableModel):
 
         # associated page to campaign
         self.page = page
-        page.publish(language)
+        if is_active:
+            page.publish(language)

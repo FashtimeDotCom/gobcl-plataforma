@@ -8,15 +8,21 @@ from django import forms
 # models
 from .models import Campaign
 
-# views
-from base.forms import BaseModelForm
+# parler
+from parler.forms import TranslatableModelForm
 
 
-class CampaignForm(BaseModelForm):
+class CampaignForm(TranslatableModelForm):
     """
     Form Campaign model.
     """
 
     class Meta:
         model = Campaign
-        exclude = ()
+        fields = (
+            'title',
+            'description',
+            'external_url',
+            'is_active',
+            'is_featured',
+        )
