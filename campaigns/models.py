@@ -140,5 +140,5 @@ class Campaign(BaseModel, TranslatableModel):
 
         # associated page to campaign
         self.page = page
-        if is_active:
+        if self.is_active:
             page.publish(language)
