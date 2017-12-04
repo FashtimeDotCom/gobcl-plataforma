@@ -39,6 +39,7 @@ class Campaign(BaseModel, TranslatableModel):
         verbose_name=_('image'),
         blank=True,
         null=True,
+        on_delete=models.SET_NULL,
     )
     external_url = models.URLField(
         _('external url'),
