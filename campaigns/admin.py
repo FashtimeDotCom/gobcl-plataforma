@@ -4,6 +4,7 @@
 
 # django
 from django.contrib import admin
+from aldryn_translation_tools.admin import AllTranslationsMixin
 
 from parler.admin import TranslatableAdmin
 
@@ -12,7 +13,7 @@ from .models import Campaign
 
 
 @admin.register(Campaign)
-class CampaignAdmin(TranslatableAdmin):
+class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
     search_fields = (
         'title',
     )
@@ -20,6 +21,8 @@ class CampaignAdmin(TranslatableAdmin):
         'title',
         'page',
         'is_active',
+        'is_featured',
+        'url',
     )
     readonly_fields = (
         'page',
@@ -27,3 +30,7 @@ class CampaignAdmin(TranslatableAdmin):
     list_filter = (
         'is_active',
     )
+
+    def url(self, obj):
+        return '<a href="%s">%s</a>' % (obj.get_absolute_url(), obj.title)
+    url.allow_tags = True
