@@ -18,7 +18,7 @@ if template
         p {{ campaign.description }}
         .row
           .col-lg-10
-            a(href="{% url 'about' %}").button.button--block.button--light.button--clean.button--space
+            a(href="{{campaign.get_absolute_url}}").button.button--block.button--light.button--clean.button--space
               {% trans 'See more' %}
 
   if template == 'small'
