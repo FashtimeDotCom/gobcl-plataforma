@@ -42,5 +42,5 @@ def clean_query_string(request):
 
 
 def get_home_campaigns(request):
-    campaigns = Campaign.objects.active()[:3]
+    campaigns = Campaign.objects.active()
     return campaigns

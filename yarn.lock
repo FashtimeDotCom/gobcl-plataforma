@@ -633,7 +633,7 @@ globby@^6.1.0:
 
 "gob.cl@github:jgab-net/gob.cl#feature/bootstrap-4":
   version "1.0.44"
-  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/e9228322c4f5353e7390f6a581b5e572a1569a8c"
+  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/bbdf3171d0e0b1d2d68fb072bed01a59d7fb888d"
   dependencies:
     bootstrap "^4.0.0-beta.2"
     jquery "^3.2.1"
