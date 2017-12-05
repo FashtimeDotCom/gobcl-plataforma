@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.test import TestCase
 from django.utils.translation import activate
+from django.utils import timezone
 
 # urls
 from project.urls import urlpatterns
@@ -29,8 +30,6 @@ from base.scenarios import create_presidency
 # Third-party app imports
 from model_mommy import mommy
 from model_mommy import random_gen
-
-from campaigns.models import Campaign
 
 
 class BaseTestCase(TestCase, Mockup):
@@ -63,6 +62,9 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
                 if f.rel.to.__name__ == 'Campaign':
                     kwargs[f.name] = mommy.make(f.rel.to, title='foo')
+                elif f.rel.to.__name__ == 'Image':
+                    kwargs[f.name] = mommy.make(
+                        f.rel.to, uploaded_at=timezone.now())
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
 
