@@ -1,3 +1,5 @@
+from django.utils.translation import activate
+
 from openpyxl import load_workbook
 
 from ministries.models import Ministry
@@ -15,14 +17,26 @@ def _create_minister(ministry, government_structure):
     data = {
         'name': ministry[4],
         'charge': ministry[6],
-        'charge_en': ministry[5],
         'twitter': twitter,
         'government_structure': government_structure,
     }
-    return PublicServant.objects.create(**data)
+
+    activate('es')
+
+    public_servant = PublicServant.objects.create(**data)
+
+    activate('en')
+
+    public_servant = PublicServant.objects.get(pk=public_servant.pk)
+
+    public_servant.charge = ministry[5]
+    public_servant.save()
+
+    return public_servant
 
 
 def create_ministry(row, government_structure):
+
     ministry = []
 
     for cell in row[:11]:
@@ -46,8 +60,6 @@ def create_ministry(row, government_structure):
 
     data = {
         'name': ministry[0],
-        'name_en': ministry[1],
-        'name_es': ministry[2],
         'description': ministry[3],
         'url': ministry[8],
         'twitter': twitter,
@@ -56,7 +68,16 @@ def create_ministry(row, government_structure):
         'government_structure': government_structure,
     }
 
-    Ministry.objects.create(**data)
+    activate('es')
+
+    ministry_object = Ministry.objects.create(**data)
+
+    activate('en')
+
+    ministry_object = Ministry.objects.get(pk=ministry_object.pk)
+
+    ministry_object.name = ministry[1]
+    ministry_object.save()
 
 
 def create_public_enterprise(row, government_structure):
@@ -78,7 +99,24 @@ def create_public_enterprise(row, government_structure):
         'government_structure': government_structure,
     }
 
-    PublicEnterprise.objects.create(**data)
+    activate('es')
+
+    public_enterprise_obj = PublicEnterprise.objects.create(**data)
+
+    ministry = Ministry.objects.translated(
+            name__icontains=public_enterprise[3]
+        ).first()
+
+    if ministry:
+        public_enterprise_obj.ministries.add(ministry)
+
+    activate('en')
+
+    public_enterprise_obj = PublicEnterprise.objects.get(
+        pk=public_enterprise_obj.pk)
+
+    public_enterprise_obj.name = public_enterprise[0]
+    public_enterprise_obj.save()
 
 
 def load_data_from_xlsx():

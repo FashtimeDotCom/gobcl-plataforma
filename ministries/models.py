@@ -6,14 +6,19 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
 # models
 from base.models import BaseModel
 from institutions.models import Institution
 from ministries.managers import PublicServiceQuerySet
 
+from institutions.models import institution_translations
+
 
 class Ministry(Institution):
+    translations = institution_translations
+
     # foreign keys
     minister = models.ForeignKey(
         'public_servants.PublicServant',
@@ -50,7 +55,6 @@ class Ministry(Institution):
         ordering = ('importance',)
         verbose_name = _('ministry')
         verbose_name_plural = _('ministries')
-        unique_together = ('name', 'government_structure')
 
     def __str__(self):
         return self.name
@@ -62,6 +66,19 @@ class Ministry(Institution):
         '''
         ministries = Ministry.objects.count()
         self.importance = ministries + 1
+
+    # def clean(self):
+    #     from ministries.models import MinistryTranslation
+    #     ministry = MinistryTranslation.objects.filter(
+    #         master=self.pk,
+    #         translations__name=self.name,
+    #         government_structure=self.government_structure,
+    #     ).first()
+    #     if ministry:
+    #         message = _("ministries's name and government structure, are not unique.")
+    #         ValidationError(
+    #             {'government_structure': message}
+    #         )
 
     @classmethod
     def reorder_importance(cls):

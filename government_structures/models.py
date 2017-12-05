@@ -6,6 +6,7 @@ import copy
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 # models
 from base.models import BaseModel

@@ -10,12 +10,17 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseGovernmentStructureModel
 
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
 
-class PublicEnterprise(BaseGovernmentStructureModel):
-    name = models.CharField(
-        _('name'),
-        max_length=100,
-        null=True,
+
+class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
+    translations = TranslatedFields(
+        name=models.CharField(
+            _('name'),
+            max_length=100,
+            null=True,
+        )
     )
     url = models.URLField(
         _('url'),

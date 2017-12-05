@@ -5,12 +5,14 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.db.models import Count
 from django.core.exceptions import MultipleObjectsReturned
+from parler.managers import TranslatableQuerySet
 
 # standard library
 import json
 
 
-class QuerySet(models.query.QuerySet):
+class QuerySet(TranslatableQuerySet):
+
     def to_json(self):
         return json.dumps(list(self.values()), cls=DjangoJSONEncoder)
 
