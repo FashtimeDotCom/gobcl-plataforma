@@ -121,18 +121,18 @@ block content
         if campaigns
           section.sub-section
             h2.heading-medium {% trans 'Campaigns' %}
-            .row
-              for campaign in campaigns
-                .col-md-4
-                  a(href="{{ campaign.get_absolute_url }}").featured-card.has-icon
-                    .featured-card_figure.elem-bg
-                      img(src="{% thumbnail campaign.image 700x240 crop %}", alt="").card_image.img-to-bg
-                    .featured-card_body
-                      h2.featured-card_title {{ campaign.title }}
-                      p {{campaign.description|truncatechars:110}}
+            if campaigns.count == 1
+              {% include 'includes/campaign.pug' with campaign=campaigns.first template='big' %}
+            else
+              .row
+                for campaign in campaigns
+                  if forloop.counter0 < 3
+                    {% include 'includes/campaign.pug' with campaign=campaign %}
+                  else
+                    {% include 'includes/campaign.pug' with campaign=campaign template='small' %}
 
-        section.sub-section.d-md-none.d-lg-block
-          .card-small.d-md-none
+        section.sub-section
+          .card-small.d-lg-none
             h5.card-small_title
               a(href="{% url 'about' %}").card-small_link
                 | {% trans 'About Chile' %}
