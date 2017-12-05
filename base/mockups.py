@@ -112,7 +112,9 @@ class Mockup(object):
         return Region.objects.create(**kwargs)
 
     def create_campaign(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
         self.set_required_foreign_key(kwargs, 'image')
+        self.set_required_url(kwargs, 'external_url')
         return Campaign.objects.create(**kwargs)
 
     def create_image(self, **kwargs):

@@ -6,6 +6,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.utils.translation import activate
 
 # models
 from base.models import BaseModel
@@ -45,15 +46,9 @@ class Campaign(BaseModel, TranslatableModel):
         _('is active'),
         default=True,
     )
-    featured_since = models.DateTimeField(
-        _('featured since'),
-        blank=True,
-        null=True,
-    )
-    featured_until = models.DateTimeField(
-        _('featured until'),
-        blank=True,
-        null=True,
+    is_featured = models.BooleanField(
+        _('is featured'),
+        default=False,
     )
     page = models.ForeignKey(
         Page,
@@ -69,6 +64,9 @@ class Campaign(BaseModel, TranslatableModel):
     class Meta:
         verbose_name = _('campaign')
         verbose_name_plural = _('campaigns')
+        ordering = (
+            'is_featured',
+        )
         permissions = (
             ('view_campaign', _('Can view campaign')),
         )
@@ -92,6 +90,8 @@ class Campaign(BaseModel, TranslatableModel):
         Create CMS page when create
         Campaign without external url
         '''
+
+        activate(language)
 
         # Create CMS page
         site = Site.objects.get_current()
@@ -134,3 +134,4 @@ class Campaign(BaseModel, TranslatableModel):
 
         # associated page to campaign
         self.page = page
+        page.publish(language)
