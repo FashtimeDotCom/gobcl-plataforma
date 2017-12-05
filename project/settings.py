@@ -39,6 +39,11 @@ else:
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
     from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    from project.local_settings import EMAIL_HOST
+    from project.local_settings import EMAIL_HOST_USER
+    from project.local_settings import EMAIL_HOST_PASSWORD
+    from project.local_settings import EMAIL_PORT
+    from project.local_settings import EMAIL_USE_TLS
 
 if DEBUG:
     env = 'development'
