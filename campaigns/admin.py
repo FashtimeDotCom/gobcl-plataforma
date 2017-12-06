@@ -20,7 +20,8 @@ class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = (
         'title',
         'page',
-        'is_active',
+        'activation_datetime',
+        'deactivation_datetime',
         'is_featured',
         'url',
     )
@@ -28,7 +29,7 @@ class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
         'page',
     )
     list_filter = (
-        'is_active',
+        'is_featured',
     )
 
     def url(self, obj):

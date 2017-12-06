@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 16:59-0300\n"
+"POT-Creation-Date: 2017-12-06 11:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,13 +163,13 @@ msgstr "Himno nacional de Chile"
 msgid "Share this news through your social networks"
 msgstr "Comparte esta noticia a través de tus redes sociales"
 
-#: templates/aldryn_newsblog/article_detail.pug:50
+#: templates/aldryn_newsblog/article_detail.pug:51
 msgid "Related news"
 msgstr "Noticias relacionadas"
 
 #: templates/aldryn_newsblog/article_list.pug:13
-#: templates/includes/navbar.pug:68 templates/includes/search.pug:27
-#: templates/index.pug:52 templates/index.pug:83
+#: templates/includes/search.pug:27 templates/index.pug:52
+#: templates/index.pug:83
 msgid "News"
 msgstr "Noticias"
 
@@ -199,7 +199,7 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Siguiente"
 
-#: templates/base.pug:19
+#: templates/base.pug:19 templates/empty.pug:19
 msgid "government of Chile"
 msgstr "gobierno de Chile"
 
@@ -215,32 +215,18 @@ msgstr "opcional"
 msgid "Visits to the La Moneda palace"
 msgstr "Visitas a La Moneda"
 
-#: templates/includes/navbar.pug:23 templates/includes/navbar.pug:63
-#: templates/index.pug:46
+#: templates/includes/menu_language.pug:6
+msgid "Change to language:"
+msgstr ""
+
+#: templates/includes/navbar.pug:52 templates/index.pug:46
 msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: templates/includes/navbar.pug:25 templates/includes/navbar.pug:69
-#: templates/includes/search.pug:39 templates/index.pug:58
+#: templates/includes/navbar.pug:55 templates/includes/search.pug:39
+#: templates/index.pug:58
 msgid "Institutions"
 msgstr "Instituciones"
-
-#: templates/includes/navbar.pug:32 templates/includes/navbar.pug:34
-msgid "Logout"
-msgstr "Salir"
-
-#: templates/includes/navbar.pug:37
-msgid "Sign in"
-msgstr "Iniciar sesion"
-
-#: templates/includes/navbar.pug:61
-msgid "Sections"
-msgstr "Secciones"
-
-#: templates/includes/navbar.pug:70 templates/index.pug:151
-#: templates/index.pug:157
-msgid "About Chile"
-msgstr "Acerca de Chile"
 
 #: templates/includes/search.pug:10
 msgid "Back"
@@ -253,7 +239,7 @@ msgstr "Trámites"
 #: templates/includes/search.pug:24 templates/includes/search.pug:36
 #: templates/includes/search.pug:44 templates/index.pug:50
 #: templates/index.pug:56 templates/index.pug:62 templates/index.pug:79
-#: templates/index.pug:91 templates/index.pug:162
+#: templates/index.pug:91 templates/index.pug:137
 msgid "See more"
 msgstr "Ver más"
 
@@ -269,7 +255,7 @@ msgstr "Escribe aquí lo que deseas buscar"
 msgid "Filter by Topics"
 msgstr "Filtrar por temas"
 
-#: templates/includes/social_small.pug:5 templates/includes/social.pug:6
+#: templates/includes/social.pug:6 templates/includes/social_small.pug:21
 msgid "Follow us on our social media:"
 msgstr "Síguenos a través de redes sociales:"
 
@@ -336,11 +322,11 @@ msgstr "Servicios Públicos"
 msgid "Regions and their Municipalities."
 msgstr "Regiones y sus Municipios"
 
-#: templates/index.pug:123
-msgid "Campaigns"
-msgstr "Campañas"
+#: templates/index.pug:126 templates/index.pug:132
+msgid "About Chile"
+msgstr "Acerca de Chile"
 
-#: templates/index.pug:154 templates/index.pug:158
+#: templates/index.pug:129 templates/index.pug:133
 msgid ""
 "Information for tourists, migrants and those who want to study or do "
 "business in Chile."
@@ -348,25 +334,37 @@ msgstr ""
 "Información para turistas, migrantes y quienes quieran estudiar o hacer "
 "negocios en Chile."
 
-#: views.py:123
+#: views.py:124
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-#: views.py:144 views.py:193
+#: views.py:145 views.py:194
 #, python-format
 msgid "Create %s"
 msgstr "Creado %s"
 
-#: views.py:256
+#: views.py:257
 #, python-format
 msgid "Update %s"
 msgstr "Actualizado %s"
 
-#: views.py:271
+#: views.py:272
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
+
+#~ msgid "Logout"
+#~ msgstr "Salir"
+
+#~ msgid "Sign in"
+#~ msgstr "Iniciar sesion"
+
+#~ msgid "Sections"
+#~ msgstr "Secciones"
+
+#~ msgid "Campaigns"
+#~ msgstr "Campañas"
 
 #, fuzzy
 #~| msgid "Learn Chile"

@@ -65,6 +65,9 @@ html(lang="es")
         integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=",
         crossorigin="anonymous"
       )
+
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous")
+
     link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
     link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
 
@@ -73,40 +76,16 @@ html(lang="es")
     link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
 
     {% compress css %}
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/gob.cl.scss' %}",
-      charset="utf-8"
-    )
-    {% endcompress %}
-
-    {% compress css %}
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/site.scss' %}",
-      charset="utf-8"
-    )
-    {% endcompress %}
-
-    {% compress css %}
     block stylesheets
     {% endcompress %}
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
-    {% include 'includes/navbar.pug' %}
-    div
-      div.container
-        div.row
-          {% if messages %}
-          {% for message in messages %}
-          div(class="alert alert-{{ message.tags }}") {{ message }}
-          {% endfor %}
-          {% endif %}
 
     {% placeholder "top_content" %}
     block content
     {% placeholder "bottom_content" %}
-    {% include 'includes/search.pug' %}
-    {% include 'includes/footer.pug' %}
+
     // Javascript Placed at the end of the document so the pages load faster
     // uncompressible javascripts
     if not debug

@@ -4,9 +4,10 @@
 
 # django
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import activate
+from django.utils.translation import ugettext_lazy as _
 
 # models
 from base.models import BaseModel
@@ -25,11 +26,16 @@ from cms.utils.i18n import get_current_language
 from .managers import CampaignQueryset
 
 
+def default_end_datetime():
+    return timezone.now() + timezone.timedelta(30)
+
+
 class Campaign(BaseModel, TranslatableModel):
     translations = TranslatedFields(
         title=models.CharField(
             _('title'),
             max_length=100,
+            unique=True,
         ),
         description=models.TextField(
             _('description'),
@@ -46,9 +52,15 @@ class Campaign(BaseModel, TranslatableModel):
         max_length=200,
         blank=True,
     )
-    is_active = models.BooleanField(
-        _('is active'),
-        default=True,
+    activation_datetime = models.DateTimeField(
+        _('activation datetime`'),
+        default=timezone.now,
+        help_text=_("The date this campaign will be activated"),
+    )
+    deactivation_datetime = models.DateTimeField(
+        _('deactivation datetime`'),
+        default=default_end_datetime,
+        help_text=_("The date this campaign will be deactivated"),
     )
     is_featured = models.BooleanField(
         _('is featured'),
@@ -69,7 +81,7 @@ class Campaign(BaseModel, TranslatableModel):
         verbose_name = _('campaign')
         verbose_name_plural = _('campaigns')
         ordering = (
-            'is_featured',
+            '-is_featured',
         )
         permissions = (
             ('view_campaign', _('Can view campaign')),
@@ -90,6 +102,11 @@ class Campaign(BaseModel, TranslatableModel):
         if not self.external_url and not self.page:
             self._create_page(language=language)
         return super(Campaign, self).save(*args, **kwargs)
+
+    def is_active(self):
+        now = timezone.now()
+        return (self.activation_datetime <= now and
+                self.deactivation_datetime >= now)
 
     def _create_page(self, language='es'):
         '''
@@ -114,7 +131,7 @@ class Campaign(BaseModel, TranslatableModel):
             page=page,
             language=language,
             slug=slugify(self.title),
-            published=self.is_active,
+            published=self.is_active(),
         )
 
         # get placeholder content
@@ -141,5 +158,5 @@ class Campaign(BaseModel, TranslatableModel):
 
         # associated page to campaign
         self.page = page
-        if self.is_active:
+        if self.is_active():
             page.publish(language)
