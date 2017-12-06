@@ -24,7 +24,7 @@ from institutions.managers import InstitutionQuerySet
 institution_translations = TranslatedFields(
         name=models.CharField(
             _('name'),
-            max_length=100,
+            max_length=255,
         ),
         description=models.TextField(
             _('description'),

@@ -29,7 +29,7 @@ class Campaign(BaseModel, TranslatableModel):
     translations = TranslatedFields(
         title=models.CharField(
             _('title'),
-            max_length=100,
+            max_length=255,
         ),
         description=models.TextField(
             _('description'),
