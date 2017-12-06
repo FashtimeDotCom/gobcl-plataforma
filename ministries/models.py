@@ -7,6 +7,9 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.utils.translation import activate
+
+from cms.utils.i18n import get_current_language
 
 # models
 from base.models import BaseModel
@@ -67,18 +70,19 @@ class Ministry(Institution):
         ministries = Ministry.objects.count()
         self.importance = ministries + 1
 
-    # def clean(self):
-    #     from ministries.models import MinistryTranslation
-    #     ministry = MinistryTranslation.objects.filter(
-    #         master=self.pk,
-    #         translations__name=self.name,
-    #         government_structure=self.government_structure,
-    #     ).first()
-    #     if ministry:
-    #         message = _("ministries's name and government structure, are not unique.")
-    #         ValidationError(
-    #             {'government_structure': message}
-    #         )
+    def clean(self):
+        language = get_current_language()
+        activate(language)
+        ministry = Ministry.objects.active_translations(
+            name=self.name
+        ).filter(
+            government_structure=self.government_structure,
+        ).first()
+        if ministry:
+            message = _("ministries's name and government structure, are not unique.")
+            ValidationError(
+                {'government_structure': message}
+            )
 
     @classmethod
     def reorder_importance(cls):

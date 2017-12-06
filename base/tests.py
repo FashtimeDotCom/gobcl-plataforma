@@ -60,11 +60,16 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
         kwargs = {}
         for f in model._meta.fields:
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                if f.rel.to.__name__ == 'Campaign':
+                name = f.rel.to.__name__
+                print('*' * 10)
+                print(name)
+                if name == 'Campaign':
                     kwargs[f.name] = mommy.make(f.rel.to, title='foo')
-                elif f.rel.to.__name__ == 'Image':
+                elif name == 'Image':
                     kwargs[f.name] = mommy.make(
                         f.rel.to, uploaded_at=timezone.now())
+                elif name == 'Ministry' or name == 'Region':
+                    kwargs[f.name] = mommy.make(f.rel.to, name='foo')
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
 
@@ -90,6 +95,9 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
                         continue
                 except AttributeError:
                     pass
+
+                if model.__name__.endswith('Translation'):
+                    continue
 
                 rel_obj.delete()
 

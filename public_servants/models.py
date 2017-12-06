@@ -52,6 +52,8 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         blank=True,
     )
 
+    exclude_on_on_delete_test = ('translations')
+
     class Meta:
         verbose_name = _('public servant')
         verbose_name_plural = _('public servants')
