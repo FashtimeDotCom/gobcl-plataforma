@@ -35,6 +35,7 @@ class Campaign(BaseModel, TranslatableModel):
         title=models.CharField(
             _('title'),
             max_length=100,
+            unique=True,
         ),
         description=models.TextField(
             _('description'),
