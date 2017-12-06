@@ -26,7 +26,7 @@ if template
       article.new.new--mobile
         figure.new_figure-mobile
           img.img-fluid.w-100.img-frame(
-            src="{% thumbnail campaign.image 164x164 %}",
+            src="{% thumbnail campaign.image 164x90 crop %}",
             alt="{{ campaign.image.alt }}"
           )
         .new_title
@@ -40,7 +40,7 @@ else
     article.new.new--mobile.d-block.d-lg-none
       figure.new_figure-mobile
         img.img-fluid.w-100.img-frame(
-        src="{% thumbnail campaign.image 164x164 %}",
+        src="{% thumbnail campaign.image 164x90 crop %}",
         alt="{{ campaign.image.alt }}"
         )
       .new_title
