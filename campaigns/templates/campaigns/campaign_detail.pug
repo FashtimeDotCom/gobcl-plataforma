@@ -3,6 +3,8 @@ extends base.pug
 - load i18n cms_tags apphooks_config_tags thumbnail
 
 block content
+  {% with campaign=request.current_page.campaign_set.first %}
+
   main.site-main
     section.section
       .container
@@ -12,17 +14,10 @@ block content
               {% include 'includes/toolbar.pug' with dark=True %}
           .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
             campaign.main-post
-              time.main-post_date {{ campaign.publishing_date|date }}
+              time.main-post_date {{ campaign.activation_datetime|date }}
               h1.main-post_title {{campaign.title }}
               h2.main-post_subtitle
                 {{ campaign.description|striptags }}
-
-              if campaign.image
-                h1 hola
-                img.img-fluid.w-100.img-frame(
-                  src="{% thumbnail campaign.image 1600x1600 %}",
-                  alt="{{ campaign.image.alt }}"
-                )
 
               ul.main-post_social-share
                 li: p {% trans 'Share this campaign through your social networks' %}
@@ -49,3 +44,4 @@ block content
     section
       .container
         {% include 'includes/social.pug' %}
+  {% endwith %}

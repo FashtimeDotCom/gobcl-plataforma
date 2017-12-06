@@ -439,7 +439,8 @@ THUMBNAIL_HIGH_RESOLUTION = True
 # django cms
 CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
-    ('campaigns/campaign_detail.pug', 'Article template'),
+    ('campaigns/campaign_detail.pug', _('Campaign template')),
+    ('empty.pug', _('Empty template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [

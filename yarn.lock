@@ -632,8 +632,8 @@ globby@^6.1.0:
     pinkie-promise "^2.0.0"
 
 "gob.cl@github:jgab-net/gob.cl#feature/bootstrap-4":
-  version "1.0.44"
-  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/bbdf3171d0e0b1d2d68fb072bed01a59d7fb888d"
+  version "1.0.46"
+  resolved "https://codeload.github.com/jgab-net/gob.cl/tar.gz/55af557e5a3660e5bee957dac171c98384494da5"
   dependencies:
     bootstrap "^4.0.0-beta.2"
     jquery "^3.2.1"
