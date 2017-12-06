@@ -118,19 +118,7 @@ block content
                         span.card-data_number {{ regions_count }}
                         span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
-        if campaigns
-          section.sub-section
-            h2.heading-medium {% trans 'Campaigns' %}
-            if campaigns.count == 1
-              {% include 'includes/campaign.pug' with campaign=campaigns.first template='big' %}
-            else
-              .row
-                for campaign in campaigns
-                  if forloop.counter0 < 3
-                    {% include 'includes/campaign.pug' with campaign=campaign %}
-                  else
-                    {% include 'includes/campaign.pug' with campaign=campaign template='small' %}
-
+        {% include 'campaigns/includes/campaign_list.pug' with campaign=campaigns %}
         section.sub-section
           .card-small.d-lg-none
             h5.card-small_title
