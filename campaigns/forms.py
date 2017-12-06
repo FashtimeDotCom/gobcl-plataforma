@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django import forms
 
 # models
 from .models import Campaign
@@ -23,6 +22,7 @@ class CampaignForm(TranslatableModelForm):
             'title',
             'description',
             'external_url',
-            'is_active',
+            'activation_datetime',
+            'deactivation_datetime',
             'is_featured',
         )
