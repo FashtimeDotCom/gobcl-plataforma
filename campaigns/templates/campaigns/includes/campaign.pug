@@ -36,7 +36,7 @@ if template
             {{ campaign.description|truncatechars:110 }}
 
 else
-  div(class="col-lg-{% if campaings.count == 2 %}6{% else %}4{% endif %}")
+  div(class="col-lg-{% widthratio 12 col 1 %}")
     article.new.new--mobile.d-block.d-lg-none
       figure.new_figure-mobile
         img.img-fluid.w-100.img-frame(

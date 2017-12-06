@@ -9,6 +9,9 @@ if campaigns
       .row
         for campaign in campaigns
           if forloop.counter0 < 3
-            {% include 'campaigns/includes/campaign.pug' with campaign=campaign %}
+            if campaigns.count == 2
+              {% include 'campaigns/includes/campaign.pug' with campaign=campaign col=2 %}
+            else
+              {% include 'campaigns/includes/campaign.pug' with campaign=campaign col=3 %}
           else
             {% include 'campaigns/includes/campaign.pug' with campaign=campaign template='small' %}
