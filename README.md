@@ -14,6 +14,7 @@ This project works with:
 * Node >= 8.5
 * Node libraries defined in package.json 
 * Postgress >= 9.6 
+* yarn >= 1.3.2
 
 ## Quickstart
 If you are using Ubuntu 16.04 or OSX, the script quickstart.sh installs all 

@@ -40,8 +40,9 @@ urlpatterns += i18n_patterns(
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
-    url(r'^callback/', include('clave_unica.urls')),
+    url(_(r'^campaigns/'), include('campaigns.urls')),
     url(_(r'^'), include('cms.urls')),
+    prefix_default_language=False,
 )
 
 if settings.DEBUG:

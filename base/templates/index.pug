@@ -118,34 +118,9 @@ block content
                         span.card-data_number {{ regions_count }}
                         span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
 
-        if campaigns
-          section.sub-section
-            h2.heading-medium {% trans 'Campaigns' %}
-            .row
-              .col-md-3
-                a(href="#").featured-card.has-icon
-                  .featured-card_figure.elem-bg
-                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/chilemejor.jpg", alt="").card_image.img-to-bg
-                  .featured-card_body
-                    h2.featured-card_title Visita Chile mejor
-                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              .col-md-4
-                a(href="#").featured-card.has-icon
-                  .featured-card_figure.elem-bg
-                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/banner.jpg", alt="").card_image.img-to-bg
-                  .featured-card_body
-                    h2.featured-card_title Medidas que mejoran el acceso a la energía en Chile
-                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              .col-md-5
-                a(href="#").featured-card.has-icon
-                  .featured-card_figure.elem-bg
-                    img(src="https://e-gob.github.io/gob.cl/sitio/images/temp/banner2.jpg", alt="").card_image.img-to-bg
-                  .featured-card_body
-                    h2.featured-card_title Ley de Unión Civil
-                    p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus inventore aperiam dolor vitae culpa.
-
-        section.sub-section.d-md-none.d-lg-block
-          .card-small.d-md-none
+        {% include 'campaigns/includes/campaign_list.pug' with campaign=campaigns %}
+        section.sub-section
+          .card-small.d-lg-none
             h5.card-small_title
               a(href="{% url 'about' %}").card-small_link
                 | {% trans 'About Chile' %}

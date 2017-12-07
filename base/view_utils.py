@@ -1,7 +1,8 @@
 # django
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# standard library
+# models
+from campaigns.models import Campaign
 
 
 def paginate(request, objects, page_size=25):
@@ -38,3 +39,8 @@ def clean_query_string(request):
         mstring.extend(['%s=%s' % (key, val) for val in valuelist])
 
     return '&'.join(mstring)
+
+
+def get_home_campaigns(request):
+    campaigns = Campaign.objects.active()
+    return campaigns

@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'searches',
     'gobcl_cms',
     'services',
+    'campaigns',
 
     # django cms
     'cms',
@@ -333,7 +334,6 @@ NPM_FILE_PATTERNS = {
     ],
     'gob.cl': [
         'dist/js/gob.cl.js',
-        'dist/css/gob.cl.css',
         'dist/fonts/*',
         'dist/images/*'
     ],
@@ -440,6 +440,8 @@ THUMBNAIL_HIGH_RESOLUTION = True
 # django cms
 CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
+    ('campaigns/campaign_detail.pug', _('Campaign template')),
+    ('empty.pug', _('Empty template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [
