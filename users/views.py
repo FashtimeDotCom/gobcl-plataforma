@@ -39,6 +39,11 @@ class LoginView(auth_views.LoginView):
     form_class = AuthenticationForm
     title = _('Login')
 
+    def dispatch(self, request, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
         context['title'] = self.title
