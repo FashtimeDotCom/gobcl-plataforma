@@ -73,6 +73,7 @@ class Ministry(Institution):
     def clean(self):
         language = get_current_language()
         activate(language)
+
         ministry = Ministry.objects.active_translations(
             name=self.name
         ).filter(
@@ -80,7 +81,7 @@ class Ministry(Institution):
         ).first()
         if ministry:
             message = _("ministries's name and government structure, are not unique.")
-            ValidationError(
+            raise ValidationError(
                 {'government_structure': message}
             )
 
