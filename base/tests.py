@@ -6,6 +6,7 @@ Replace this with more appropriate tests for your application.
 """
 
 # standard library
+import uuid
 
 # django
 from django.contrib import admin
@@ -60,16 +61,17 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
         kwargs = {}
         for f in model._meta.fields:
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                name = f.rel.to.__name__
-                if name == 'Campaign':
+                model_name = f.rel.to.__name__
+                if model_name == 'Campaign':
                     kwargs[f.name] = mommy.make(
                         f.rel.to, title='foo', description='')
-                elif name == 'Image':
+                elif model_name == 'Image':
                     kwargs[f.name] = mommy.make(
                         f.rel.to, uploaded_at=timezone.now())
-                elif name == 'Ministry' or name == 'Region':
+                elif model_name == 'Ministry' or model_name == 'Region':
+                    name = str(uuid.uuid4())
                     kwargs[f.name] = mommy.make(
-                        f.rel.to, name='foo', description='')
+                        f.rel.to, name=name, description='')
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
 
@@ -155,8 +157,9 @@ class UrlsTest(BaseTestCase):
             elif model_name == 'campaign':
                 obj = mommy.make(model, title='foo')
             elif model_name == 'ministry' or model_name == 'region':
+                name = str(uuid.uuid4())
                 obj = mommy.make(
-                    model, name='foo', description='')
+                    model, name=name, description='')
             else:
                 obj = mommy.make(model)
 
