@@ -70,7 +70,6 @@ class Campaign(BaseModel, TranslatableModel):
         Page,
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
     )
 
     exclude_on_on_delete_test = ('page',)
