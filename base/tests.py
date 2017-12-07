@@ -61,15 +61,15 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
         for f in model._meta.fields:
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
                 name = f.rel.to.__name__
-                print('*' * 10)
-                print(name)
                 if name == 'Campaign':
-                    kwargs[f.name] = mommy.make(f.rel.to, title='foo')
+                    kwargs[f.name] = mommy.make(
+                        f.rel.to, title='foo', description='')
                 elif name == 'Image':
                     kwargs[f.name] = mommy.make(
                         f.rel.to, uploaded_at=timezone.now())
                 elif name == 'Ministry' or name == 'Region':
-                    kwargs[f.name] = mommy.make(f.rel.to, name='foo')
+                    kwargs[f.name] = mommy.make(
+                        f.rel.to, name='foo', description='')
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
 
@@ -150,10 +150,13 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
-            if model_name == 'campaign_translation':
+            if model_name.endswith('_translation'):
                 continue
             elif model_name == 'campaign':
                 obj = mommy.make(model, title='foo')
+            elif model_name == 'ministry' or model_name == 'region':
+                obj = mommy.make(
+                    model, name='foo', description='')
             else:
                 obj = mommy.make(model)
 
