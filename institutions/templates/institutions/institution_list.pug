@@ -1,10 +1,6 @@
 extends base.pug
 
 - load i18n
-- load staticfiles
-
-block javascripts
-  script(src="{% static 'js/search.js' %}")
 
 block content
   main.site-main
@@ -59,15 +55,20 @@ block content
       .container
         .row
           .col-sm-12.col-lg-8.col-xl-7
-            .search-form#search.search-form--large.nomargin-top
-              input(type="search" placeholder="{% trans 'Write here what you want search.' %}").search-form_input
-              button(type="submit").search-form_button.search-form_button--submit: i.ic-search
-              button(type="button").search-form_button.search-form_button--cancel.d-none: i.ic-delete
+            .search-form#search.search-form--large.nomargin-top(data-view-filter=true)
+              input.search-form_input(
+                type="search",
+                placeholder="{% trans 'Write here what you want search.' %}"
+              )
+              button.search-form_button.search-form_button--submit(type="submit")
+                i.ic-search
+              button.search-form_button.search-form_button--cancel.d-none(type="button")
+                i.ic-delete
         h2#ministries.heading-medium {% trans 'Ministries' %}
         - if ministry_list
           .row
             for ministry in ministry_list
-              .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
+              .searchable(data-search-value="{{ ministry.name }}").col-sm-12.col-md-4
                 p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
 
         - if public_service_list
@@ -75,7 +76,7 @@ block content
           h2#services.heading-medium {% trans 'public services'|capfirst %}
           .row
             for public_service in public_service_list
-              .filterable(data-value="{{ public_service.name }}").col-sm-12.col-md-4
+              .searchable(data-search-value="{{ public_service.name }}").col-sm-12.col-md-4
                 p
                   a(href="{{ public_service.url }}")
                     {{ public_service }}
@@ -85,5 +86,5 @@ block content
           h2#regions.heading-medium {% trans 'Regions' %}
           .row
             for region in region_list
-              .filterable(data-value="{{ region.name }}").col-sm-12.col-md-4
+              .searchable(data-search-value="{{ region.name }}").col-sm-12.col-md-4
                 p: a(href="{{ region.get_absolute_url }}") {{ region }}
