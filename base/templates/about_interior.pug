@@ -1,4 +1,212 @@
 extends base.pug
 
+- load i18n
+- load staticfiles
+
 block content
-  h1 About interior
+  main.site-main
+    section.bg-light
+      .container
+        ol.breadcrumb
+          li
+            a(href="{% url 'home' %}") {% trans 'Home' %}
+          li 
+            a(href="{% url 'about' %}") 
+              {% trans 'About of Chile' %}
+          li
+            a(href="{% url 'about_interior' %}")
+              {% trans 'Our country' %}
+    section.section--medium.bg-bluedark
+      .container
+        .row
+          .col-12.col-lg-5.order-lg-12
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-12.col-lg-7
+            article.text-light
+              h1.heading-large {% trans 'Our country' %}
+              p Chile está situado a lo largo de la costa occidental del cono sur de Sudamérica, entre el segmento
+                | más alto de la Cordillera de los Andes y el Océano Pacífico. Su forma es única: es uno de los países
+                | más largos del mundo, con 4.300 km de longitud, pero simultáneamente uno de los más angostos, con
+                | una anchura promedio de sólo 180 km. Posee toda la clase de climas existentes en el planeta
+                | exceptuando solo al clima tropical.
+              p La lengua oficial de Chile es el español, y su moneda el peso chileno. La población es mestiza, mezcla
+                | de europeos e indígenas, cuyas tradiciones aún se perciben en algunas partes del país. La tasa de
+                | alfabetismo es de 94%, sobresaliendo como una de las más altas de Latinoamérica.
+    section
+      .container
+        .sub-section
+          article
+            h2.heading-medium {% trans 'Surface' %}
+            .row
+              .col-12.col-md-6.col-lg-7
+                p
+                  | Chile se describe constituido por tres zonas geográficas. La primera de ellas, Chile continental,
+                  | comprende una franja en la costa occidental del Cono Sur que se extiende entre los paralelos
+                  span.type 17°29'57
+                  |  S y
+                  span.type 56°32'12
+                  |  S, mayormente desde la ribera sudoriental del océano Pacífico hasta las cumbres más altas de la
+                  | cordillera de los Andes. Alcanza un largo de 4270 km,​ un ancho máximo de 445 km en los 52°21' S y
+                  | un ancho mínimo de 90 km en los 31°37' S. Limita con Perú al norte, Bolivia al nordeste y Argentina
+                  | al este, totalizando 7801 km de fronteras terrestres, y el paso Drake al sur. La segunda, Chile
+                  | insular, corresponde a un conjunto de islas de origen volcánico en el océano Pacífico Sur: el
+                  | archipiélago de Juan Fernández y las islas Desventuradas, pertenecientes a Sudamérica, la isla Salas
+                  | y Gómez y la isla de Pascua, ubicadas en Oceanía. La tercera, el Territorio Chileno Antártico,​
+                  | es una zona de la Antártica​ de 1 250 257,6 km² entre los meridianos 53° O y 90° O sobre la cual
+                  | Chile reclama soberanía, prolongando su límite meridional hasta el Polo Sur. Esta reclamación está
+                  | suspendida según lo estipulado por el Tratado Antártico​ del que Chile es signatario. Debido a lo
+                  | anterior, Chile se define como un país tricontinental.​
+                p Chile tiene una costa de 6435 km de longitud​ y ejerce derechos exclusivos, reclamaciones de diverso
+                  | grado y soberanía sobre su espacio marítimo, llamado Mar chileno.​ Este comprende cuatro zonas el
+                  | mar territorial (120 827 km²) la zona contigua (131 669 km²),la zona económica exclusiva
+                  | (3 681 989 km²)​ y la correspondiente plataforma continental (161 338 km²)​
+                p Es considerado un país de ingreso alto y en vías de desarrollo Sus más de 18 millones de habitantes​
+                  | promedian índices de alfabetización​ calidad de vida​ crecimiento económico desarrollo humano
+                  | esperanza de vida globalización y PIB per cápita que se encuentran entre los más altos
+                  | de América Latina.
+
+                a(href="#").text-dark
+                  | {% trans 'Download original file' %}
+                  i.ic-download
+
+              .col-12.col-md-6.col-lg-5
+                .card-info
+                  span.card-info_number 3
+                  span.card-info_title {% trans 'Geographical areas' %}
+                  ul.card-info_list
+                    li: p Chile continental
+                    li: p Chile insular
+                    li: p Territorio Chileno Antártico
+                .card-info
+                  span.card-info_number 15
+                  span.card-info_title {% trans 'Regions and their Municipalities' %}
+
+                  ul.card-info_list
+                    li: p XV Región de Arica y Parinacota
+                    li: p I Región de Tarapacá
+                    li: p II Región de Antofagasta
+                    li: p III Región de Atacama
+                    li: p IV Región de Coquimbo
+                    li: p V Región de Valparaíso
+                    li: p Región Metropolitana de Santiago
+                    li: p VI Región del Libertador General VII Región del Maule
+                    li: p VIII Región del Biobío
+                    li: p IX Región de la Araucanía
+                    li: p XIV Región de Los Ríos
+                    li: p X Región de Los Lagos
+                    li: p XI Región Aisén del General Carlos Ibáñez del Campo
+                    li: p XII Región de Magallanes y de la Antártica Chilena
+
+        .sub-section
+          article
+            .row
+              .col-12.col-md-6.col-lg-7
+                h2.heading-medium {% trans 'Population' %}
+                p Según el censo realizado el añ 2002, Chile tiene una población de #[span.type 16.000.000] de
+                  | habitantes aproximadamente.
+
+        .sub-section
+          article
+            h2.heading-medium {% trans 'Weather' %}
+            .row
+              .col-12.col-md-6.col-lg-7
+                p La inusitada extensión norte-sur de Chile, equivalente a cruzar Europa desde el extremo norte de
+                  | Noruega hasta más allá del extremo sur de España, da origen a una gran variedad de climas,
+                  | donde sólo están ausentes los tropicales húmedos. En el Norte, regiones I, II y III, hay
+                  | lugares donde jamás se han registrado lluvias, como en el Desierto de Atacama, y otros donde las
+                  | esporádicas lluvias que caen en el invierno dan origen a una explosión de flores en primavera,
+                  | fenómeno conocido como "Desierto Florido". En toda esta vasta porción del país, la costa tiene
+                  | clima moderado, con la nubosidad matinal y tardes soleadas. A medida que aumenta la altura, la
+                  | temperatura diurna sube y la nocturna disminuye. En el altiplano, la temperatura cae por debajo
+                  | de los 0ºC de noche incluso en verano. En esa época, además, ocurre un fenómeno denominado
+                  | "Invierno Boliviano", con ocasionales tormentas de lluvia y granizo.
+                p Más al sur, entre las IV y VIII regiones, encontramos paisajes mediterráneos, con valles y costas
+                  | favorecidos por un clima templado, estaciones bien diferenciadas, veranos secos e inviernos
+                  | relativamente lluviosos.
+                p Entre las regiones VIII y X predomina un clima templado lluvioso que sustenta vastos bosques nativos
+                  | y una floreciente industria agropecuaria. En las regiones XI y XII el clima es lluvioso y
+                  | moderadamente frio, con mucho viento en costa y en la pampa patagónica. Hacia el extremo del
+                  | continente disminuyen la temperatura y las precipitaciones.
+                p Isla de Pascua y el Archipiélago Juan Fernández poseen un clima subtropical de agradables
+                  | temperaturas, humedad moderada y relativamente poca variación durante el año.
+
+                a(href="#")
+                  | {% trans 'Download original file' %}
+                  i.ic-download
+
+                br
+                br
+              .col-12.col-md-6.col-lg-5
+                img.img-fluid.w-100.img-frame(src="{% static 'images/weather.jpg' %}", alt="")
+        div
+          br
+          br
+          h2.heading-medium {% trans 'Patriotic symbols' %}
+
+          article
+            h3.heading-sub {% trans 'National flag' %}
+            .row
+              .col-12.col-md-6.col-lg-7
+                .sub-section.first
+                  p La bandera nacional de la República de Chile, conocida como la Estrella Solitaria,1​ fue oficialmente
+                    | adoptada hace 199 años, el 18 de octubre de 1817.2​ Está dividida en dos franjas horizontales:
+                    | la superior es azul y blanca mientras que la inferior es roja; en el cantón azul se ubica una
+                    | estrella de cinco puntas en color blanco.3​
+                  p Las principales interpretaciones del uso de los colores de la bandera atribuirían al azul la
+                    | representación de los cielos y el océano Pacífico, al blanco las cumbres nevadas de la cordillera
+                    | de los Andes, y al rojo la sangre vertida por los héroes nacionales en la lucha por la
+                    | independencia.4​ A su vez, la estrella simbolizaría los tres poderes del Estado chileno
+                    | (Ejecutivo, Legislativo y Judicial) que velan por la integridad de la nación —otras
+                    | interpretaciones indicarían que la estrella única es una referencia al Estado unitario, a
+                    | diferencia de, por ejemplo, las múltiples estrellas de la bandera de los Estados Unidos que
+                    | representan el Estado federal—. Sin embargo, considerando los versos del Canto XXI del poema
+                    | épico La Araucana (1569),5​ los colores de la actual bandera chilena se remontarían a las bandas
+                    | tricolores utilizadas por los toquis mapuches durante la Guerra de Arauco contra la Conquista
+                    | española,4​ mientras que la estrella representaría la «estrella de Arauco»
+                    | según Bernardo O'Higgins.6​
+                  a(href="#")
+                    | {% trans 'Download original file' %}
+                    i.ic-download
+              .col-12.col-md-6.col-lg-5
+                img.img-fluid.w-100.img-frame(src="{% static 'images/flag.jpg' %}", alt="")
+          article.sub-article
+            h3.heading-sub {% trans 'Shield' %}
+            .row
+              .col-12.col-md-6.col-lg-7
+                .sub-section.nopadding-top
+                  p El Escudo de Armas presenta una estrella de plata de cinco picos al centro de un campo cortado,
+                    | azul turquí el superior y rojo el inferior y su forma es la fijada por el modelo oficial aprobado
+                    | por decreto de Guerra N° 2.271 de 4 de septiembre de 1920, conforme a la ley, y el cual, además,
+                    | tiene por timbre un plumaje tricolor de azul turquí, blanco y rojo; por soportes un huemul
+                    | rampante a su derecha y un cóndor a su izquierda en la posición que fija ese modelo, coronado
+                    | cada uno de estos animales con una corona naval de oro; y por base un encaracolado cruzado por
+                    | una cinta con el lema "Por la razón o la fuerza", todo en conformidad al referido modelo.
+                  a(href="#")
+                    | {% trans 'Download original file' %}
+                    i.ic-download
+              .col-12.col-md-6.col-lg-5.col-xl-3.offset-xl-1
+                img.img-fluid.w-100.img-frame(src="{% static 'images/shield.jpg' %}", alt="")
+          article.sub-article
+            h3.heading-sub {% trans 'National anthem' %}
+            .row
+              .col-12.col-md-6.col-lg-7
+                .sub-section.nopadding-top.no-line
+                  p El himno nacional de la República de Chile, también conocido como Canción Nacional de Chile,
+                    | es la composición musical patriótica que representa oficialmente a dicho país.
+                    | Fue escrito por el poeta chileno Eusebio Lillo Robles (1847), con estribillo del
+                    | poeta argentino-chileno Bernardo de Vera y Pintado (1819), vestigio del primer himno; y
+                    | compuesto por el maestro español Ramón Carnicer i Batlle (1828). Fue adoptado hace 170
+                    | años, el 17 de septiembre de 1847.
+                  a(href="#")
+                    | {% trans 'Download original file' %}
+                    i.ic-download
+              .col-12.col-md-6.col-lg-5
+                .post-audio
+                  a(href="#").post-audio_button: i.ic-volume.post-audio_icon
+                  p.post-audio_title {% trans 'National anthem of Chile' %}
+                  .post-audio_time 02:11
+
+    section
+      .container
+        {% include 'includes/social.pug' %}

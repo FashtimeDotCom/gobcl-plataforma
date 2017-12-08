@@ -88,5 +88,6 @@ else
     translate "project"
     translate "public_servants"
     translate "regions"
+    translate "searches"
     translate "users"
 fi

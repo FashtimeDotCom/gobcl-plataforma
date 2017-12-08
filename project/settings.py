@@ -26,16 +26,19 @@ if 'TRAVIS' in os.environ:
     from project.travis_settings import LOCALLY_INSTALLED_APPS
     from project.travis_settings import ENABLE_EMAILS
     from project.travis_settings import ADMINS
+    from project.travis_settings import LOCALLY_ALLOWED_HOSTS
 elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEBUG
     from project.production.local_settings import LOCALLY_INSTALLED_APPS
     from project.production.local_settings import ENABLE_EMAILS
     from project.production.local_settings import ADMINS
+    from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
+    from project.local_settings import LOCALLY_ALLOWED_HOSTS
 
 if DEBUG:
     env = 'development'
@@ -59,12 +62,7 @@ ALLOWED_HOSTS = [
     'gobcl.magnet.cl', 'localhost',
 ]
 
-try:
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
-except:
-    pass
-else:
-    ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
+ALLOWED_HOSTS += LOCALLY_ALLOWED_HOSTS
 
 SITE_ID = 1
 
@@ -108,6 +106,8 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
+    'gobcl_cms',
+    'campaigns',
 
     # django cms
     'cms',
@@ -116,6 +116,7 @@ INSTALLED_APPS = [
     'djangocms_text_ckeditor',
     'djangocms_link',
     'djangocms_video',
+    'djangocms_picture',
     'djangocms_googlemap',
     'djangocms_snippet',
     'djangocms_style',
@@ -199,6 +200,7 @@ TEMPLATES = [
                 'institutions.context_processors.most_visited_urls',
                 'links.context_processors.footer_links',
                 'base.context_processors.categories',
+                'searches.context_processors.get_feature_news',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -217,8 +219,8 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'plataforma-gocl'),
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', 'plataforma-gobcl'),
         'USER': os.getenv('DB_USER', ''),
         'PASSWORD': os.getenv('DB_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', ''),
@@ -331,7 +333,6 @@ NPM_FILE_PATTERNS = {
     ],
     'gob.cl': [
         'dist/js/gob.cl.js',
-        'dist/css/gob.cl.css',
         'dist/fonts/*',
         'dist/images/*'
     ],
@@ -339,6 +340,17 @@ NPM_FILE_PATTERNS = {
     'select2': [
         'dist/js/select2.full.js',
         'dist/css/select2.min.css'
+    ],
+    'slick-carousel': [
+        'slick/slick.js',
+        'slick/slick.css',
+        'slick/slick-theme.css',
+        'slick/fonts/*',
+        'slick/ajax-loader.gif'
+    ],
+    'magnific-popup': [
+        'dist/jquery.magnific-popup.js',
+        'dist/magnific-popup.css'
     ]
 }
 
@@ -427,6 +439,8 @@ THUMBNAIL_HIGH_RESOLUTION = True
 # django cms
 CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
+    ('campaigns/campaign_detail.pug', _('Campaign template')),
+    ('empty.pug', _('Empty template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [
@@ -439,6 +453,9 @@ CMS_TOOLBARS = [
     'cms.cms_toolbars.PlaceholderToolbar',
     'cms.cms_toolbars.BasicToolbar',
     'cms.cms_toolbars.PageToolbar',
+
+    # Aldryn newsblog toolbar
+    'aldryn_newsblog.cms_toolbars.NewsBlogToolbar',
 ]
 
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
@@ -456,8 +473,14 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 ALDRYN_NEWSBLOG_SEARCH = False
 
-AWS_STORAGE_BUCKET_NAME = 'gob.cl'
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+AWS_S3_CALLING_FORMAT_STATIC = os.getenv(
+    'AWS_S3_CALLING_FORMAT_STATIC',
+    'boto.s3.connection.SubdomainCallingFormat'
+)
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
@@ -471,3 +494,24 @@ STATICFILES_STORAGE = os.getenv(
     'STATICFILES_STORAGE',
     'django.contrib.staticfiles.storage.StaticFilesStorage'
 )
+COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
+COMPRESS_STORAGE = os.getenv(
+    'COMPRESS_STORAGE',
+    'compressor.storage.CompressorFileStorage'
+)
+COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
+THUMBNAIL_DEFAULT_STORAGE = os.getenv(
+    'THUMBNAIL_DEFAULT_STORAGE',
+    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+)
+
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'es'},
+        {'code': 'en'},
+    ),
+    'default': {
+        'fallback': 'es',
+        'hide_untranslated': False,
+    }
+}

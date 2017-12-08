@@ -1,4 +1,5 @@
 - load i18n
+- load apphooks_config_tags
 
 .site-search.bg-bluedark
   section
@@ -7,29 +8,10 @@
         a(href="#").text-white.toggle-search.d-none.d-sm-inline
           i.ic-arrow-left.icon--left
           | {% trans 'Back' %}
-      .row
-        .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
-          .site-search_toolbar.pull-md-right
-            {% include 'includes/toolbar.pug' %}
-        .col-md-12.col-lg-7.col-xl-7
-          .search-form.site-search_form.nomargin-bottom#search
-            .search-form_content
-              form(action="resultados.html")
-                input(type="search" placeholder="{% trans 'Write here what you want to search' %}")#input-search.search-form_input
-                button(type="submit").search-form_button.search-form_button--submit: i.ic-search
-                button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+      {% include 'includes/search_bar.pug' %}
 
       .row
-        .col-sm-12.col-lg-5
-          h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
-          .tags.p-0
-            .select.select--dark
-              select(name="")
-                for category in categories
-                  option(value="{{category.slug}}") {{category}}
-
-      .row
-        .col-md-12.col-lg-4.col-xl-4
+        .col-md-12.col-lg-4.col-xl-4.d-none
           h2.heading-label.heading-label--light {% trans 'Procedures' %}
           div.search_section.overflowed-xs
             a(href="#").link.link--text-light.link--has-dot Bono trabajo mujer
@@ -41,28 +23,25 @@
             .clearfix
               a(href="#").more.more--right {% trans 'See more' %}
 
-        .col-md-12.col-lg-4.col-xl-4
+        .col-md-12.col-lg-6.col-xl-6
           h2.heading-label.heading-label--light {% trans 'News' %}
           div.search_section.overflowed-xs
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Mandataria celebró el noveno aniversario de la Reforma Previsional
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Presidenta promulgó la Ley de Tenencia Responsable de Mascotas y Animales de Compañía
-            article.new.new--search
-              span.new_category.new_category--light Economia y empleo
-              h2.new_title: a(href="#").link.link--text-light Yo Apoyo Tres Causales: El sitio con lo que necesitas saber del histórico proyecto de ley
+            for news in feature_news
+              article.new.new--search
+                span.new_category.new_category--light
+                  {{ news.categories.all|join:", " }}
+                h2.new_title: a(href="{{ news.get_absolute_url }}").link.link--text-light
+                  {{ news.title }}
             .clearfix
-              a(href="#").more.more--right {% trans 'See more' %}
+              a(href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}").more.more--right {% trans 'See more' %}
 
-        .col-md-12.col-lg-4.col-xl-4
+        .col-md-12.col-lg-6.col-xl-6
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
           div.search_section.overflowed-xs
             for page in most_visited_urls
               a(href="{{ page.content_object.get_absolute_url }}").link.link--text-light {{ page.content_object }}
             .clearfix
-              a(href="#").more.more--right {% trans 'See more' %}
+              a(href="{% url 'institution_list' %}").more.more--right {% trans 'See more' %}
         .col-sm-12.col-md-12.text-xs-center.text-sm-center
           .site-search_button-results
-            a(href="resultados.html").button.button--clean.button--more {% trans 'See all results' %}
+            a(href="{% url 'article_list' %}").button.button--clean.button--more {% trans 'See all results' %}

@@ -1,0 +1,33 @@
+- load i18n
+
+form(action="{% url 'article_list' %}")
+  .row
+    .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
+      .site-search_toolbar.pull-md-right
+        {% include 'includes/toolbar.pug' %}
+    .col-md-12.col-lg-7.col-xl-7
+      .search-form.site-search_form.nomargin-bottom#search
+        .search-form_content
+          input(
+            type="search",
+            placeholder="{% trans 'Write here what you want to search' %}",
+            name="q",
+            value="{{request.GET.q}}",
+          )#input-search.search-form_input
+          button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+          button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+  .row
+    .col-12
+      h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
+      .tags
+        .tags_content
+          for category in categories
+            .tags_item
+              label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
+                input.d-none(
+                  type="radio",
+                  id="category-input-{{category.slug}}",
+                  name="category_slug",
+                  value="{{category.slug}}",
+                  checked=category.slug==request.GET.get('category_slug'),
+                )

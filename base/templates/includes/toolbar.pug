@@ -3,7 +3,7 @@
 if dark
   .toolbar.dark(data-value="{{ request.user.font_size }}")
     .toolbar_content
-      a(href="#").toolbar-button.toolbar-button--contrast
+      a(href="#").toolbar-button.toolbar-button--contrast.d-none
         span.toolbar-button_content
           i.ic-contrast.toolbar-button_icon
       a(href="#").toolbar-button.toolbar-button--less
@@ -12,7 +12,7 @@ if dark
       a(href="#").toolbar-button.toolbar-button--plus
         span.toolbar-button_content
           i.ic-font-size-plus.toolbar-button_icon
-      .toolbar_player
+      .toolbar_player.d-none
         a(href="#track")#listen.toolbar-button.toolbar-button--listen
           span.toolbar-button_content
             i.toolbar-button_icon.ic-volume
@@ -34,7 +34,7 @@ if dark
 else
   .toolbar(data-value="{{ request.user.font_size }}")
     .toolbar_content
-      a(href="#").toolbar-button.toolbar-button--contrast
+      a(href="#").toolbar-button.toolbar-button--contrast.d-none
         span.toolbar-button_content
           i.ic-contrast.toolbar-button_icon
       a(href="#").toolbar-button.toolbar-button--less
@@ -43,7 +43,7 @@ else
       a(href="#").toolbar-button.toolbar-button--plus
         span.toolbar-button_content
           i.ic-font-size-plus.toolbar-button_icon
-      .toolbar_player
+      .toolbar_player.d-none
         a(href="#track")#listen.toolbar-button.toolbar-button--listen
           span.toolbar-button_content
             i.toolbar-button_icon.ic-volume

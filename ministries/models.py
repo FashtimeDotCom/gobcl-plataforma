@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 from institutions.models import Institution
+from ministries.managers import PublicServiceQuerySet
 
 
 class Ministry(Institution):
@@ -84,8 +85,6 @@ class PublicService(BaseModel):
     name = models.CharField(
         _('name'),
         max_length=100,
-        null=True,
-        unique=True,
     )
     url = models.URLField(
         _('url'),
@@ -94,6 +93,8 @@ class PublicService(BaseModel):
         null=True,
     )
 
+    objects = PublicServiceQuerySet.as_manager()
+
     def __str__(self):
         return self.name
 
@@ -101,3 +102,4 @@ class PublicService(BaseModel):
         ordering = ('name',)
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
+        unique_together = ('name', 'ministry')

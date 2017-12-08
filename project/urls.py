@@ -33,14 +33,16 @@ urlpatterns += i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
     url(r'^api/1.0/', include('api.urls')),
-    url(r'^$', base_views.index, name='home'),
+    url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
     url(_(r'^about/$'), base_views.AboutTemplateView.as_view(), name='about'),
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
-    url(_(r'^news/'), include('cms.urls')),
     url(_(r'^search/'), include('searches.urls')),
+    url(_(r'^campaigns/'), include('campaigns.urls')),
+    url(_(r'^'), include('cms.urls')),
+    prefix_default_language=False,
 )
 
 if settings.DEBUG:

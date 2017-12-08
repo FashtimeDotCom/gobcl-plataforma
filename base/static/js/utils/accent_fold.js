@@ -7,17 +7,15 @@
 $(function () {
   'use strict';
 
-  $.extend(App, {
-    utils: {
-      accentFold: function (s) {
-        const accentMap = getAccentMap();
-        if (!s) { return ''; }
-        var ret = '';
-        for (var i=0; i<s.length; i++) {
-          ret += accentMap[s.charAt(i)] || s.charAt(i);
-        }
-        return ret;
+  $.extend(App.utils, {
+    accentFold: function (s) {
+      var accentMap = getAccentMap();
+      if (!s) { return ''; }
+      var ret = '';
+      for (var i=0; i<s.length; i++) {
+        ret += accentMap[s.charAt(i)] || s.charAt(i);
       }
+      return ret;
     }
   });
 

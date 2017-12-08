@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-13 14:56-0300\n"
+"POT-Creation-Date: 2017-12-06 11:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: settings.py:269
+#: settings.py:270
 msgid "Spanish"
 msgstr "Español"
 
-#: settings.py:270
+#: settings.py:271
 msgid "English"
 msgstr "Inglés"
 
-#: urls.py:37
-msgid "^news/"
-msgstr "^noticias/"
+#: settings.py:442
+msgid "Campaign template"
+msgstr "Plantilla campaña"
 
-#: urls.py:38
+#: settings.py:443
+msgid "Empty template"
+msgstr "Plantilla vacía"
+
+#: urls.py:37
 msgid "^about/$"
 msgstr "^acerca-de/$"
 
-#: urls.py:39
+#: urls.py:38
 msgid "^about-interior/$"
 msgstr "^acerca-de-interior/$"
 
-#: urls.py:41
+#: urls.py:40
 msgid "^institutions/"
 msgstr "^instituciones/"
 
-#: urls.py:42
+#: urls.py:41
 msgid "^ministries/"
 msgstr "^ministerios/"
+
+#: urls.py:42
+msgid "^search/"
+msgstr "^buscar/"
+
+#: urls.py:43
+msgid "^campaigns/"
+msgstr ""
+
+#: urls.py:44
+msgid "^"
+msgstr ""
+
+#~ msgid "^news/"
+#~ msgstr "^noticias/"
