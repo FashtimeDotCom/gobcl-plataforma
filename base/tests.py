@@ -77,6 +77,7 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
         try:
             return mommy.make(model, **kwargs), kwargs
+
         except:
             kwargs['name'] = str(uuid.uuid4())
 
