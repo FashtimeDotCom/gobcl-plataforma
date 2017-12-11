@@ -60,6 +60,7 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
         kwargs = {}
         for f in model._meta.fields:
+
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
                 model_name = f.rel.to.__name__
                 if model_name == 'Campaign':
@@ -74,6 +75,8 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
                         f.rel.to, name=name, description='')
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
+
+        kwargs.get('name', str(uuid.uuid4()))
 
         return mommy.make(model, **kwargs), kwargs
 
