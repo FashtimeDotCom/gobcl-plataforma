@@ -57,7 +57,6 @@ class BaseTestCase(TestCase, Mockup):
 
 class IntegrityOnDeleteTestCase(BaseTestCase):
     def create_full_object(self, model):
-
         kwargs = {}
         for f in model._meta.fields:
 
@@ -76,9 +75,14 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
                 else:
                     kwargs[f.name] = mommy.make(f.rel.to)
 
-        kwargs.get('name', str(uuid.uuid4()))
+        try:
+            return mommy.make(model, **kwargs), kwargs
+        except:
+            kwargs['name'] = str(uuid.uuid4())
 
-        return mommy.make(model, **kwargs), kwargs
+            kwargs_complete = kwargs
+            del kwargs['name']
+            return mommy.make(model, **kwargs_complete), kwargs
 
     def test_integrity_on_delete(self):
 
