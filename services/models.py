@@ -9,36 +9,79 @@ from django.utils.translation import ugettext_lazy as _
 
 # models
 from base.models import BaseModel
-from users.models import User
 
 
 class Service(BaseModel):
-    # foreign keys
-    user = models.ForeignKey(
-        User,
-        verbose_name=_('user'),
+    code = models.CharField(
+        _('code'),
+        max_length=255,
+        unique=True,
     )
-    # required fields
+    initial = models.CharField(
+        _('initial'),
+        max_length=255,
+        blank=True,
+        null=True,
+    )
     name = models.CharField(
         _('name'),
-        max_length=30,
-        blank=True,
+        max_length=255,
     )
-    # optional fields
-
-    class Meta:
-        verbose_name = _('service')
-        verbose_name_plural = _('services')
-        permissions = (
-            ('view_service', _('Can view service')),
-        )
-        abstract = True
+    url = models.URLField(
+        _('url'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+    mision = models.TextField(
+        _('mision'),
+    )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
-    def get_absolute_url(self):
-        """ Returns the canonical URL for the Service object """
-        # TODO this is an example, change it
-        return reverse('service_detail', args=(self.pk,))
+
+class File(BaseModel):
+    service = models.ForeignKey(
+        Service,
+        verbose_name=_('service'),
+        related_name='files',
+        null=True,
+        blank=True,
+    )
+    service_name = models.CharField(
+        _('service name'),
+        max_length=255,
+    )
+    title = models.CharField(
+        _('title'),
+        max_length=255,
+    )
+    code = models.CharField(
+        _('code'),
+        max_length=255,
+        unique=True,
+    )
+    date = models.DateTimeField(
+        _('date'),
+        blank=True,
+        null=True,
+    )
+    objective = models.TextField(
+        _('objective'),
+    )
+    beneficiaries = models.TextField(
+        _('beneficiaries'),
+    )
+    cost = models.TextField(
+        _('cost'),
+    )
+    period = models.TextField(
+        _('period'),
+    )
+    duration = models.TextField(
+        _('duration'),
+    )
+
+    def __str__(self):
+        return self.title

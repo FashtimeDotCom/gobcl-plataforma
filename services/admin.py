@@ -7,8 +7,24 @@ from django.contrib import admin
 
 # models
 from .models import Service
+from .models import File
 
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(File)
+class FileAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'service',
+        'code',
+    )
+    list_filter = (
+        'service',
+    )
+    search_fields = (
+        'title',
+    )

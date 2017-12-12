@@ -518,3 +518,5 @@ PARLER_LANGUAGES = {
         'hide_untranslated': False,
     }
 }
+
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
