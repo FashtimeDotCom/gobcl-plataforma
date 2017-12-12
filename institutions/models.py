@@ -13,25 +13,34 @@ from base.models import BaseGovernmentStructureModel
 # hitcount
 from hitcount.models import HitCountMixin
 
+# parler
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
+
 #
 from institutions.managers import InstitutionQuerySet
 
 
-class Institution(BaseGovernmentStructureModel, HitCountMixin):
-    # foreign keys
-    name = models.CharField(
-        _('name'),
-        max_length=100,
+institution_translations = TranslatedFields(
+        name=models.CharField(
+            _('name'),
+            max_length=255,
+        ),
+        description=models.TextField(
+            _('description'),
+        ),
+        slug=models.SlugField(
+            _('slug'),
+            blank=True,
+            max_length=255,
+            editable=False,
+        ),
     )
-    description = models.TextField(
-        _('description'),
-    )
-    slug = models.SlugField(
-        _('slug'),
-        blank=True,
-        max_length=255,
-        editable=False,
-    )
+
+
+class Institution(
+        TranslatableModel, BaseGovernmentStructureModel, HitCountMixin):
+
     url = models.URLField(
         _('url'),
         max_length=200,
@@ -44,14 +53,7 @@ class Institution(BaseGovernmentStructureModel, HitCountMixin):
 
     def clean(self):
         self.name = self.name.strip()
-
-    def save(self, **kwargs):
         self.slug = slugify(self.name)
 
-        if hasattr(self, 'slug_es'):
-            self.slug_es = slugify(self.name_es)
-
-        if hasattr(self, 'slug_en'):
-            self.slug_en = slugify(self.name_en)
-
+    def save(self, **kwargs):
         super(Institution, self).save(**kwargs)

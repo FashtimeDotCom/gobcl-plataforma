@@ -16,11 +16,3 @@ class RegionTranslationTests(BaseTestCase):
         region = self.create_region()
         region.slug_en = 'region-of-mockup'
         region.save()
-
-        activate('es')
-        self.assertIn(region.slug_es, region.get_absolute_url())
-
-        activate('en')
-        self.assertIn(region.slug_en, region.get_absolute_url())
-
-        deactivate()
