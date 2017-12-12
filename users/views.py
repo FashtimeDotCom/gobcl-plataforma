@@ -3,6 +3,7 @@
 
 # standard
 import json
+import requests
 
 # django
 from django.contrib import messages
@@ -31,6 +32,9 @@ from users.models import User
 
 # views
 from base.views import BaseListView
+
+# utils
+from users.login_settings import ClaveUnicaSettings
 
 
 class LoginView(auth_views.LoginView):
@@ -218,3 +222,43 @@ def user_font_size_change(request):
         return JsonResponse({'font_size': request.user.font_size})
 
     return JsonResponse({'method error': 'must post'})
+
+
+def clave_unica_login(request):
+    clave_unica = ClaveUnicaSettings()
+    state = clave_unica.generate_token()
+    request.session['state'] = state
+    clave_unica_url = clave_unica.get_csrf_redirect_url(state)
+    print(clave_unica_url)
+    return redirect(clave_unica_url)
+
+
+def clave_unica_callback(request):
+    received_state = request.GET.get('state')
+    if received_state != request.session['state']:
+        return
+
+    received_code = request.GET.get('code')
+
+    clave_unica = ClaveUnicaSettings()
+    token_response = requests.post(
+        clave_unica.get_redirect_url(),
+        data=clave_unica.get_token_url_data(received_state, received_code),
+    )
+
+    access_token = token_response.json['access_token']
+    # expires_in = token_response.json['expires_in']
+    # id_token = token_response.json['id_token']
+    bearer = "Bearer {}".format(access_token)
+    headers = {"Authorization": bearer}
+
+    access_response = requests.post(
+        ClaveUnicaSettings.USER_INFO_URI,
+        headers=headers,
+    )
+
+    user = User.clave_unica_get_or_create(access_response)
+
+    print(user)
+
+    return redirect()
