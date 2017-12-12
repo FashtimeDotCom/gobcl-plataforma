@@ -22,6 +22,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import ugettext_lazy as _
 
 from base import views as base_views
+from users.urls import callback_pattern
+
 
 urlpatterns = [
     url(r'^api/1.0/', include('api.urls')),
@@ -34,6 +36,7 @@ urlpatterns += i18n_patterns(
     url(r'^accounts/', include('users.urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
+    url(r'^callback/', include(callback_pattern)),
     url(_(r'^about/$'), base_views.AboutTemplateView.as_view(), name='about'),
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
