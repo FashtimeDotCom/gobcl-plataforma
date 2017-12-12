@@ -14,14 +14,14 @@ class ChileAtiendeClient(BaseTestCase):
         self.file_id = self.get_file_id()
 
     def get_service_id(self):
-        service = Service(self.access_token)
+        service = Service()
         response = service.list()
         service_object = response.json()
         service_id = service_object['servicios']['items']['servicio'][0]['id']
         return service_id
 
     def get_file_id(self):
-        file_object = File(self.access_token)
+        file_object = File()
         response = file_object.list()
         service_object = response.json()
         file_id = service_object['fichas']['items']['ficha'][0]['id']
@@ -29,7 +29,7 @@ class ChileAtiendeClient(BaseTestCase):
 
     def test_service_list_ok(self):
 
-        service = Service(self.access_token)
+        service = Service()
         response = service.list()
 
         self.assertEqual(response.status_code, 200)
@@ -47,32 +47,8 @@ class ChileAtiendeClient(BaseTestCase):
             )
         )
 
-    def test_service_list_no_access_token(self):
-
-        service = Service('')
-        response = service.list()
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
-    def test_service_list_bad_access_token(self):
-
-        service = Service('foo')
-        response = service.list()
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
     def test_service_get_ok(self):
-        service = Service(self.access_token)
+        service = Service()
 
         response = service.get(self.service_id)
 
@@ -92,33 +68,9 @@ class ChileAtiendeClient(BaseTestCase):
             )
         )
 
-    def test_service_get_no_access_token(self):
-
-        service = Service('')
-        response = service.get(self.service_id)
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
-    def test_service_get_bad_access_token(self):
-
-        service = Service('foo')
-        response = service.get(self.service_id)
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
     def test_file_list_ok(self):
 
-        file_object = File(self.access_token)
+        file_object = File()
         response = file_object.list()
 
         self.assertEqual(response.status_code, 200)
@@ -136,32 +88,8 @@ class ChileAtiendeClient(BaseTestCase):
             )
         )
 
-    def test_file_list_no_access_token(self):
-
-        file_object = File('')
-        response = file_object.list()
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
-    def test_file_list_bad_access_token(self):
-
-        file_object = File('foo')
-        response = file_object.list()
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
     def test_file_get_ok(self):
-        file_object = File(self.access_token)
+        file_object = File()
 
         response = file_object.get(self.file_id)
 
@@ -181,33 +109,9 @@ class ChileAtiendeClient(BaseTestCase):
             )
         )
 
-    def test_file_get_no_access_token(self):
-
-        file_object = File('')
-        response = file_object.get(self.file_id)
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
-    def test_file_get_bad_access_token(self):
-
-        file_object = File('foo')
-        response = file_object.get(self.file_id)
-
-        self.assertEqual(response.status_code, 401)
-
-        self.assertEqual(
-            response.headers.get('content-type'),
-            'text/html'
-        )
-
     def test_file_list_by_service(self):
 
-        file_object = File(self.access_token)
+        file_object = File()
 
         response = file_object.by_service(self.service_id)
 

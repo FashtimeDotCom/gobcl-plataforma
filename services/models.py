@@ -50,6 +50,7 @@ class File(BaseModel):
         related_name='files',
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
     )
     service_name = models.CharField(
         _('service name'),

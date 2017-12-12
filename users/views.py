@@ -40,7 +40,6 @@ class LoginView(auth_views.LoginView):
     title = _('Login')
 
     def dispatch(self, request, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
 
