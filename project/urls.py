@@ -41,6 +41,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^campaigns/'), include('campaigns.urls')),
+    url(_(r'^procedures/'), include('services.urls')),
     url(_(r'^'), include('cms.urls')),
     prefix_default_language=False,
 )

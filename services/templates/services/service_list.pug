@@ -3,40 +3,16 @@ extends base.pug
 - load i18n
 
 block content
-  .text-right
-    .btn-group
-      if perms.services.add_service
-        a.btn.btn-primary(href="{% url 'service_create' %}")
-          {% trans 'Add service' %}
-          i.fa.fa-plus
-
-  table.table.table-bordered.table-hover
-    thead
-      tr
-        th Id
-        th {% trans 'name'|capfirst %}
-        if perms.services.change_service
-          th
-        if perms.services.delete_service
-          th
-    tbody
-      for service in object_list
-        tr
-          td
-            a(href="{{ service.get_absolute_url }}")
-              | {{service.id}}
-          td
-            a(href="{{ service.get_absolute_url }}")
-              | {{service}}
-          if perms.services.change_service
-            td
-              a.btn.btn-primary(href="{% url 'service_update' service.id %}")
-                {% trans 'Update service' %}
-                i.fa.fa-edit
-          if perms.services.delete_service
-            td
-              a.btn.btn-danger(href="{% url 'service_delete' service.id %}")
-                {% trans 'Delete service' %}
-                i.fa.fa-times
+  section.section.section-header
+    for service in object_list
+      a(href="{{ service.get_absolute_url }}")
+        {{ service.name }}
+      br
+      br
+      for file in service.files.all
+        a(href="{{ file.get_absolute_url }}")
+          {{ file.title }}
+        br
+      hr
 
   {% include 'includes/pagination.pug' %}

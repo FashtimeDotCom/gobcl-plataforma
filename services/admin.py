@@ -12,7 +12,14 @@ from .models import File
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'name',
+        'initial',
+        'code',
+    )
+    search_fields = (
+        'name',
+    )
 
 
 @admin.register(File)

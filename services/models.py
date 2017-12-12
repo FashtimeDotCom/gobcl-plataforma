@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -39,6 +38,9 @@ class Service(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return self.url or ''
 
 
 class File(BaseModel):
@@ -85,3 +87,10 @@ class File(BaseModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        url = '{}{}'.format(
+                'https://www.chileatiende.gob.cl/fichas/ver/',
+                self.code,
+            )
+        return url

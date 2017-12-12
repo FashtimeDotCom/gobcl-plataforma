@@ -11,20 +11,27 @@ from .models import Service
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
-from base.views import BaseListView
 from base.views import BaseUpdateView
+from django.views.generic import ListView
 
 # forms
 from .forms import ServiceForm
 
 
-class ServiceListView(BaseListView):
+class ServiceListView(ListView):
     """
     View for displaying a list of services.
     """
     model = Service
     template_name = 'services/service_list.pug'
-    permission_required = 'services.view_service'
+    paginate_by = 9
+
+    def get_queryset(self):
+        queryset = super(ServiceListView, self).get_queryset()
+
+        queryset = queryset.prefetch_related('files')
+
+        return queryset
 
 
 class ServiceCreateView(BaseCreateView):
