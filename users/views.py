@@ -239,7 +239,7 @@ def clave_unica_login(request):
 def clave_unica_callback(request):
     received_state = request.GET.get('state')
     if received_state != request.session['state']:
-        return
+        return redirect('home')
 
     received_code = request.GET.get('code')
 
@@ -264,4 +264,4 @@ def clave_unica_callback(request):
 
     print(user)
 
-    return redirect()
+    return redirect('home')
