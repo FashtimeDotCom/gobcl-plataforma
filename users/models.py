@@ -102,25 +102,22 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         """
         # TODO: parse json
 
-        # email = token_response.email.lower().strip()
-        # user, created = cls.objects.get_or_create(email=email)
-        # user.token = token
+        email = token_response.email.lower().strip()
+        user, created = cls.objects.get_or_create(email=email)
+        user.token = token
 
-        # if created:
-        #     user.set_password(token_response.id)
-        #     user.first_name = unicode(
-        #         token_response.firstName.split(' ')[0].capitalize()
-        #     )
-        #     user.last_name = unicode(
-        #         token_response.lastNames.split(' ')[0].capitalize()
-        #     )
-        #     user.rut = token_response.identifier
+        if created:
+            user.set_password(token_response.id)
+            user.first_name = unicode(
+                token_response.firstName.split(' ')[0].capitalize()
+            )
+            user.last_name = unicode(
+                token_response.lastNames.split(' ')[0].capitalize()
+            )
+            user.rut = token_response.identifier
 
-        # user.save()
-
-        # return cls.objects.get(pk=user.pk)
-
-        return response
+        user.save()
+        return user
 
     # public methods
     def get_full_name(self):
