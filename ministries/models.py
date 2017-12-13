@@ -71,6 +71,8 @@ class Ministry(Institution):
         self.importance = ministries + 1
 
     def clean(self):
+        super(Ministry, self).clean()
+
         language = get_current_language()
         activate(language)
 
