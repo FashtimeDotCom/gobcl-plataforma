@@ -51,9 +51,7 @@ class Institution(
     class Meta:
         abstract = True
 
-    def clean(self):
+    def save(self, **kwargs):
         self.name = self.name.strip()
         self.slug = slugify(self.name)
-
-    def save(self, **kwargs):
         super(Institution, self).save(**kwargs)
