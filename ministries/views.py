@@ -43,13 +43,14 @@ class MinistryCreateView(BaseCreateView):
     permission_required = 'ministries.add_ministry'
 
 
-class MinistryDetailView(BaseSlugDetailView, HitCountDetailView):
+class MinistryDetailView(HitCountDetailView):
     """
     A view for displaying a single ministry
     """
     model = Ministry
     template_name = 'ministries/ministry_detail.pug'
     count_hit = True
+    slug_url_kwarg = 'slug'
 
     def get_queryset(self):
         queryset = super(MinistryDetailView, self).get_queryset()
