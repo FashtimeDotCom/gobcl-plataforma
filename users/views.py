@@ -265,6 +265,8 @@ def clave_unica_callback(request):
         data=data,
     )
 
+    logger.debug("token response: {}".format(token_response))
+
     if token_response.headers['Content-Type'] == 'text/html':
         pass
 
@@ -279,6 +281,8 @@ def clave_unica_callback(request):
             ClaveUnicaSettings.USER_INFO_URI,
             headers=headers,
         )
+
+        logger.debug("access response: {}".format(access_response))
 
         user = User.clave_unica_get_or_create(access_response)
 
