@@ -5,12 +5,18 @@
 # django
 from django.contrib import admin
 
+# parler
+from parler.admin import TranslatableAdmin
+
+# Aldryn
+from aldryn_translation_tools.admin import AllTranslationsMixin
+
 # models
 from .models import PublicEnterprise
 
 
 @admin.register(PublicEnterprise)
-class PublicEnterpriseAdmin(admin.ModelAdmin):
+class PublicEnterpriseAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = (
         'name',
         'url',
