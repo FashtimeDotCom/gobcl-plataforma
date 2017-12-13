@@ -76,4 +76,18 @@ urlpatterns = [
         users_views.user_font_size_change,
         name='user_font_size_change'
     ),
+    url(
+        r'^clave-unica/login/$',
+        users_views.clave_unica_login,
+        name='clave_unica_login'
+    ),
+]
+
+
+callback_pattern = [
+    url(
+        r'^$',
+        users_views.clave_unica_callback,
+        name='clave_unica_callback',
+    ),
 ]
