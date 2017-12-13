@@ -56,4 +56,5 @@ class Institution(
         self.slug = slugify(self.name)
 
     def save(self, **kwargs):
+        self.slug = slugify(self.name)
         super(Institution, self).save(**kwargs)
