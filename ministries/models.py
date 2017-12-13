@@ -78,8 +78,12 @@ class Ministry(Institution):
             name=self.name
         ).filter(
             government_structure=self.government_structure,
-        ).first()
-        if ministry:
+        )
+
+        if self.pk:
+            ministry = ministry.exclude(pk=self.pk)
+
+        if ministry.first():
             message = _("ministries's name and government structure, are not unique.")
             raise ValidationError(
                 {'government_structure': message}
