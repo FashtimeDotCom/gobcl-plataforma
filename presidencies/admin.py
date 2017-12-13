@@ -5,12 +5,18 @@
 # django
 from django.contrib import admin
 
+# parler
+from parler.admin import TranslatableAdmin
+
+# Aldryn
+from aldryn_translation_tools.admin import AllTranslationsMixin
+
 # models
 from .models import Presidency, PresidencyURL
 
 
 @admin.register(Presidency)
-class PresidencyAdmin(admin.ModelAdmin):
+class PresidencyAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = (
         'name',
         'title',
@@ -21,5 +27,5 @@ class PresidencyAdmin(admin.ModelAdmin):
 
 
 @admin.register(PresidencyURL)
-class PresidencyURLAdmin(admin.ModelAdmin):
+class PresidencyURLAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = ('url',)
