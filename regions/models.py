@@ -13,11 +13,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 from base.models import BaseModel
 from institutions.models import Institution
 
+from institutions.models import institution_translations
+
 # managers
 from .managers import CommuneQuerySet
 
 
 class Region(Institution):
+    translations = institution_translations
+
     # foreign keys
     governor = models.ForeignKey(
         'public_servants.PublicServant',

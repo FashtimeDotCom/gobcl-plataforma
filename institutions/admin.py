@@ -2,11 +2,14 @@
 """ Administration classes for the institutions application. """
 # standard library
 
-# django
-from django.contrib import admin
+# parler
+from parler.admin import TranslatableAdmin
+
+# Aldryn
+from aldryn_translation_tools.admin import AllTranslationsMixin
 
 
-class InstitutionAdmin(admin.ModelAdmin):
+class InstitutionAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = (
         'name',
         'government_structure',

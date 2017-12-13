@@ -1,9 +1,8 @@
-from parler.managers import TranslatableQuerySet
 from base.managers import QuerySet
 from django.utils import timezone
 
 
-class CampaignQueryset(QuerySet, TranslatableQuerySet):
+class CampaignQueryset(QuerySet):
 
     def active(self):
         return self.filter(

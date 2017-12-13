@@ -5,12 +5,18 @@
 # django
 from django.contrib import admin
 
+# parler
+from parler.admin import TranslatableAdmin
+
+# Aldryn
+from aldryn_translation_tools.admin import AllTranslationsMixin
+
 # models
 from .models import PublicServant
 
 
 @admin.register(PublicServant)
-class PublicServantAdmin(admin.ModelAdmin):
+class PublicServantAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_filter = ('government_structure',)
     list_display = (
         'name',

@@ -60,6 +60,5 @@ class CampaignModelTest(BaseTestCase):
             campaign.get_absolute_url(),
             page.get_absolute_url()
         )
-        self.assertEqual(title.published, campaign.is_active)
         self.assertEqual(title.title, campaign.title)
         self.assertFalse(page.in_navigation)

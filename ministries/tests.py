@@ -16,11 +16,3 @@ class MinisteryTranslationTests(BaseTestCase):
         ministry = self.create_ministry()
         ministry.slug_en = 'ministry-of-mockup'
         ministry.save()
-
-        activate('es')
-        self.assertIn(ministry.slug_es, ministry.get_absolute_url())
-
-        activate('en')
-        self.assertIn(ministry.slug_en, ministry.get_absolute_url())
-
-        deactivate()

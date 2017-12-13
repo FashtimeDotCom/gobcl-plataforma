@@ -94,6 +94,34 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         super(User, self).clean()
         self.email = self.__class__.objects.normalize_email(self.email)
 
+    # classmethods
+    @classmethod
+    def clave_unica_get_or_create(cls, response):
+        """
+        Creates or returns a user given ClaveUnica json data.
+        """
+        # TODO: parse json
+
+        # email = token_response.email.lower().strip()
+        # user, created = cls.objects.get_or_create(email=email)
+        # user.token = token
+
+        # if created:
+        #     user.set_password(token_response.id)
+        #     user.first_name = unicode(
+        #         token_response.firstName.split(' ')[0].capitalize()
+        #     )
+        #     user.last_name = unicode(
+        #         token_response.lastNames.split(' ')[0].capitalize()
+        #     )
+        #     user.rut = token_response.identifier
+
+        # user.save()
+
+        # return cls.objects.get(pk=user.pk)
+
+        return response
+
     # public methods
     def get_full_name(self):
         """
