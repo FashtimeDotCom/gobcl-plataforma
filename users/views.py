@@ -269,6 +269,11 @@ def clave_unica_callback(request):
     )
 
     logger.debug("-----")
+    logger.debug("request session state: {}".format(request.session['state']))
+    logger.debug("received state: {}".format(received_state))
+    logger.debug("received code: {}".format(received_code))
+    logger.debug("token url data: {}".format(data))
+    logger.debug("clave unica token uri: {}".format(clave_unica.TOKEN_URI))
     logger.debug("token response: {}".format(token_response))
     logger.debug("token response text: {}".format(token_response.text))
     logger.debug("token response headers: {}".format(token_response.headers))
