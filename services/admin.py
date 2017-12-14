@@ -28,6 +28,7 @@ class FileAdmin(admin.ModelAdmin):
         'title',
         'service',
         'code',
+        'analytic_visits',
     )
     list_filter = (
         'service',

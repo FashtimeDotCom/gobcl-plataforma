@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 
+from .analytic_client import get_analytic_data
+
 
 class Service(BaseModel):
     code = models.CharField(
@@ -85,6 +87,13 @@ class File(BaseModel):
     duration = models.TextField(
         _('duration'),
     )
+    analytic_visits = models.PositiveIntegerField(
+        _('analytic visits'),
+        default=0
+    )
+
+    class Meta:
+        ordering = ('-analytic_visits',)
 
     def __str__(self):
         return self.title
@@ -95,3 +104,25 @@ class File(BaseModel):
                 self.code,
             )
         return url
+
+    @classmethod
+    def update_visits(cls):
+        cls.objects.all().update(analytic_visits=0)
+
+        response = get_analytic_data()
+
+        for report in response.get('reports', []):
+            rows = report.get('data', {}).get('rows', [])
+
+            for row in rows:
+                dimensions = row.get('dimensions', [])
+                values = row.get('metrics', [])
+
+                code = dimensions[0].split('/')[2].split('-')[0]
+                visits = values[0]['values'][0]
+
+                cls.objects.filter(
+                    code=code
+                ).update(
+                    analytic_visits=visits
+                )

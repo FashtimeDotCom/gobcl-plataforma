@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'hitcount',
     'haystack',
     'modeltranslation',
+    'django_cron',
 
     # internal
     'base',
@@ -530,3 +531,12 @@ PARLER_LANGUAGES = {
 }
 
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+
+CRON_CLASSES = (
+    'services.cron.GetAnalyticData',
+)
+
+# Google Analytics API
+KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
+SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
+VIEW_ID = os.getenv('VIEW_ID', '')
