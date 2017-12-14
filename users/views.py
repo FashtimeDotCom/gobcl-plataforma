@@ -268,7 +268,10 @@ def clave_unica_callback(request):
         data=data,
     )
 
+    logger.debug("-----")
     logger.debug("token response: {}".format(token_response))
+    logger.debug("token response text: {}".format(token_response.text))
+    logger.debug("token response headers: {}".format(token_response.headers))
 
     if token_response.headers['Content-Type'] == 'text/html':
         pass
