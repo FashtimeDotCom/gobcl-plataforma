@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 16:41-0300\n"
+"POT-Creation-Date: 2017-11-09 10:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:20
+#: models.py:24
 msgid "governor"
 msgstr "Gobernador"
 
-#: models.py:23 models.py:62
+#: models.py:31 models.py:81
 msgid "email"
 msgstr "Correo"
 
-#: models.py:27 models.py:66
+#: models.py:36 models.py:85
 msgid "phone"
 msgstr "Teléfono"
 
-#: models.py:34 models.py:52
+#: models.py:45
+msgid "order"
+msgstr ""
+
+#: models.py:51 models.py:70
 msgid "region"
 msgstr "Región"
 
-#: models.py:35
+#: models.py:52
 msgid "regions"
 msgstr "Regiones"
 
-#: models.py:37
+#: models.py:54
 msgid "Can view regions"
 msgstr "Puedo ver regiones"
 
-#: models.py:55 templates/regions/region_list.pug:17
+#: models.py:74 templates/regions/region_list.pug:17
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:59
+#: models.py:78
 msgid "description"
 msgstr "Descripción"
 
-#: models.py:72
+#: models.py:91
 msgid "url"
 msgstr "url"
 
-#: models.py:77
+#: models.py:104
 msgid "commune"
 msgstr "Comuna"
 
-#: models.py:78
+#: models.py:105
 msgid "communes"
 msgstr "Comunas"
 
-#: models.py:80
+#: models.py:107
 msgid "Can view communes"
 msgstr "Puedo ver comunas"
 
@@ -79,14 +83,44 @@ msgstr "Confirmar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/regions/region_detail.pug:15 templates/regions/region_list.pug:34
-msgid "Update region"
-msgstr "Actualizar región"
+#: templates/regions/region_detail.pug:18
+msgid "Institutions"
+msgstr "Instituciones"
 
-#: templates/regions/region_detail.pug:19 templates/regions/region_list.pug:39
-msgid "Delete region"
-msgstr "Borrar región"
+#: templates/regions/region_detail.pug:45
+#: templates/regions/region_detail.pug:68
+#, fuzzy
+#| msgid "phone"
+msgid "Phone"
+msgstr "Teléfono"
+
+#: templates/regions/region_detail.pug:46
+#: templates/regions/region_detail.pug:69
+msgid "E-Mail"
+msgstr "Correo Electronico"
+
+#: templates/regions/region_detail.pug:49
+#, fuzzy
+#| msgid "Go to the ministry site"
+msgid "Go to the regional government site"
+msgstr "Ir al sitio del Ministerio"
+
+#: templates/regions/region_detail.pug:55
+msgid "Municipalities"
+msgstr "Municipios"
+
+#: templates/regions/region_detail.pug:56
+msgid "Select a Comune"
+msgstr "Selecciona una comuna"
 
 #: templates/regions/region_list.pug:10
 msgid "Add region"
 msgstr "Agregar región"
+
+#: templates/regions/region_list.pug:34
+msgid "Update region"
+msgstr "Actualizar región"
+
+#: templates/regions/region_list.pug:39
+msgid "Delete region"
+msgstr "Borrar región"

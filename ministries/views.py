@@ -10,9 +10,10 @@ from .models import Ministry
 # views
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
-from django.views.generic import DetailView
 from base.views import BaseListView
 from base.views import BaseUpdateView
+from hitcount.views import HitCountDetailView
+from parler.views import TranslatableSlugMixin
 
 # forms
 from .forms import MinistryForm
@@ -42,12 +43,14 @@ class MinistryCreateView(BaseCreateView):
     permission_required = 'ministries.add_ministry'
 
 
-class MinistryDetailView(DetailView):
+class MinistryDetailView(TranslatableSlugMixin, HitCountDetailView):
     """
     A view for displaying a single ministry
     """
     model = Ministry
     template_name = 'ministries/ministry_detail.pug'
+    count_hit = True
+    slug_url_kwarg = 'slug'
 
     def get_queryset(self):
         queryset = super(MinistryDetailView, self).get_queryset()

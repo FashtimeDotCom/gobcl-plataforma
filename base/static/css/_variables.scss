@@ -1,0 +1,14 @@
+/*
+  Variables
+  override bootstrap variables.
+ -------------------------------------------------- */
+
+$django-cms-toolbar: 5px;
+$django-cms-toolbar-expanded: 49px;
+
+$imagesPath: "../gob.cl/dist/images/";
+$fontsPath: "../gob.cl/dist/fonts/";
+$iconsPath: "../gob.cl/dist/images/icons/";
+
+@import "../../../node_modules/gob.cl/src/scss/vairables";
+@import "../../../node_modules/gob.cl/src/scss/functions";

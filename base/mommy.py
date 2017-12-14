@@ -6,6 +6,8 @@ import string
 from model_mommy import mommy
 
 from phonenumber_field.modelfields import PhoneNumberField
+from filer.fields.image import FilerImageField
+from filer.models.imagemodels import Image
 
 # base
 from base.utils import random_string
@@ -24,5 +26,7 @@ class CustomMommy(mommy.Mommy):
             )
         elif isinstance(field, PhoneNumberField):
             return '+569' + str(random.randint(1, 9)) * 8
+        elif isinstance(field, FilerImageField):
+            return Image.objects.create()
 
         return super(CustomMommy, self).generate_value(field, commit)

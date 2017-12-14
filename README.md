@@ -1,4 +1,9 @@
 # plataforma-gobcl
+[![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=master)](https://travis-ci.org/e-gob/plataforma-gobcl)
+[![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=staging)](https://travis-ci.org/e-gob/plataforma-gobcl)
+[![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=testing)](https://travis-ci.org/e-gob/plataforma-gobcl)
+[![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=development)](https://travis-ci.org/e-gob/plataforma-gobcl)
+
 A web application hosted on gob.cl, written in Django 1.11 in Python 3
 
 ## Dependencies
@@ -9,6 +14,7 @@ This project works with:
 * Node >= 8.5
 * Node libraries defined in package.json 
 * Postgress >= 9.6 
+* yarn >= 1.3.2
 
 ## Quickstart
 If you are using Ubuntu 16.04 or OSX, the script quickstart.sh installs all 

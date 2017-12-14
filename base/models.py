@@ -126,7 +126,7 @@ class BaseModel(models.Model):
     def get_full_url(self):
         absolute_url = self.get_absolute_url()
         site = Site.objects.get_current().domain
-        return 'http://{site}{path}'.format(site=site, path=absolute_url)
+        return 'https://{site}{path}'.format(site=site, path=absolute_url)
 
 
 class BaseGovernmentStructureModel(BaseModel):

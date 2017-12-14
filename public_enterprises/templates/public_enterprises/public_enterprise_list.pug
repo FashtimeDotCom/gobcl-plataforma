@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.public_enterprises.add_publicenterprise
+        a.btn.btn-primary(href="{% url 'public_enterprise_create' %}")
+          {% trans 'Add public enterprise' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.public_enterprises.change_publicenterprise
+          th
+        if perms.public_enterprises.delete_publicenterprise
+          th
+    tbody
+      for public_enterprise in object_list
+        tr
+          td
+            a(href="{{ public_enterprise.get_absolute_url }}")
+              | {{public_enterprise.id}}
+          td
+            a(href="{{ public_enterprise.get_absolute_url }}")
+              | {{public_enterprise}}
+          if perms.public_enterprises.change_publicenterprise
+            td
+              a.btn.btn-primary(href="{% url 'public_enterprise_update' public_enterprise.id %}")
+                {% trans 'Update public enterprise' %}
+                i.fa.fa-edit
+          if perms.public_enterprises.delete_publicenterprise
+            td
+              a.btn.btn-danger(href="{% url 'public_enterprise_delete' public_enterprise.id %}")
+                {% trans 'Delete public enterprise' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

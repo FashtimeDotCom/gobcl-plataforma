@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-06 11:44-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: settings.py:270
+msgid "Spanish"
+msgstr "Español"
+
+#: settings.py:271
+msgid "English"
+msgstr "Inglés"
+
+#: settings.py:442
+msgid "Campaign template"
+msgstr "Plantilla campaña"
+
+#: settings.py:443
+msgid "Empty template"
+msgstr "Plantilla vacía"
+
+#: urls.py:37
+msgid "^about/$"
+msgstr "^acerca-de/$"
+
+#: urls.py:38
+msgid "^about-interior/$"
+msgstr "^acerca-de-interior/$"
+
+#: urls.py:40
+msgid "^institutions/"
+msgstr "^instituciones/"
+
+#: urls.py:41
+msgid "^ministries/"
+msgstr "^ministerios/"
+
+#: urls.py:42
+msgid "^search/"
+msgstr "^buscar/"
+
+#: urls.py:43
+msgid "^campaigns/"
+msgstr ""
+
+#: urls.py:44
+msgid "^"
+msgstr ""
+
+#~ msgid "^news/"
+#~ msgstr "^noticias/"

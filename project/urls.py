@@ -18,21 +18,41 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import ugettext_lazy as _
 
 from base import views as base_views
+from users.urls import callback_pattern
+
 
 urlpatterns = [
+    url(r'^api/1.0/', include('api.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+]
+
+urlpatterns += i18n_patterns(
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
-    url(r'^institutions/', include('institutions.urls')),
-    url(r'^ministries/', include('ministries.urls')),
     url(r'^api/1.0/', include('api.urls')),
-    url(r'^$', base_views.index, name='home'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
+    url(r'^callback/', include(callback_pattern)),
+    url(_(r'^about/$'), base_views.AboutTemplateView.as_view(), name='about'),
+    url(_(r'^about-interior/$'),
+        base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
+    url(_(r'^institutions/'), include('institutions.urls')),
+    url(_(r'^ministries/'), include('ministries.urls')),
+    url(_(r'^search/'), include('searches.urls')),
+    url(_(r'^campaigns/'), include('campaigns.urls')),
+    url(_(r'^'), include('cms.urls')),
+    prefix_default_language=False,
+)
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    ] + urlpatterns + static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )

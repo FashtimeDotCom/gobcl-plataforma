@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """ The users app views"""
 
+# standard
+import json
+import requests
+import logging
+
 # django
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
@@ -10,8 +15,10 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
+from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.edit import CreateView
 
@@ -27,12 +34,21 @@ from users.models import User
 # views
 from base.views import BaseListView
 
+# utils
+from users.login_settings import ClaveUnicaSettings
+
+
+logger = logging.getLogger('debug_messages')
+
 
 class LoginView(auth_views.LoginView):
     """ view that renders the login """
     template_name = "registration/login.pug"
     form_class = AuthenticationForm
     title = _('Login')
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
@@ -69,7 +85,7 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 class PasswordResetView(auth_views.PasswordResetView):
     """ view that handles the recover password process """
     template_name = "registration/password_reset_form.pug"
-    email_template_name = "emails/password_reset.html"
+    email_template_name = "emails/password_reset.txt"
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
@@ -194,3 +210,98 @@ class UserListView(BaseListView):
             obj.group_names = ' '.join([g.name for g in obj.groups.all()])
 
         return context
+
+
+@csrf_exempt
+def user_font_size_change(request):
+    """
+    Json view that that handles user font size changes
+    """
+
+    if request.method == 'POST':
+        content = json.loads(request.body.decode('utf-8'))
+        request.user.font_size = content['font_size']
+        if request.user.is_authenticated:
+            request.user.save()
+        else:
+            request.session['font_size'] = content['font_size']
+
+        return JsonResponse({'font_size': request.user.font_size})
+
+    return JsonResponse({'method error': 'must post'})
+
+
+def clave_unica_login(request):
+    """
+    View that redirects to ClaveUnica login site
+    with this project's parameters
+    """
+    clave_unica = ClaveUnicaSettings()
+    state = clave_unica.generate_token()
+    request.session['state'] = state
+    clave_unica_url = clave_unica.get_csrf_redirect_url(state)
+    return redirect(clave_unica_url)
+
+
+def clave_unica_callback(request):
+    """
+    View that gets or creates a user and logs it in by using
+    ClaveUnica's data and athorization
+    """
+
+    logger.debug('stifgnig')
+
+    received_state = request.GET.get('state')
+    if 'state' not in request.session:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    if received_state != request.session['state']:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    received_code = request.GET.get('code')
+    clave_unica = ClaveUnicaSettings()
+    data = clave_unica.get_token_url_data(received_state, received_code)
+    token_response = requests.post(
+        clave_unica.TOKEN_URI,
+        data=data,
+    )
+
+    logger.debug("-----")
+    logger.debug("request session state: {}".format(request.session['state']))
+    logger.debug("received state: {}".format(received_state))
+    logger.debug("received code: {}".format(received_code))
+    logger.debug("token url data: {}".format(data))
+    logger.debug("clave unica token uri: {}".format(clave_unica.TOKEN_URI))
+    logger.debug("token response: {}".format(token_response))
+    logger.debug("token response text: {}".format(token_response.text))
+    logger.debug("token response headers: {}".format(token_response.headers))
+
+    if token_response.headers['Content-Type'] == 'text/html':
+        pass
+
+    try:
+        access_token = token_response.json()['access_token']
+        # expires_in = token_response.json['expires_in']
+        # id_token = token_response.json['id_token']
+        bearer = "Bearer {}".format(access_token)
+        headers = {"Authorization": bearer}
+
+        access_response = requests.post(
+            ClaveUnicaSettings.USER_INFO_URI,
+            headers=headers,
+        )
+
+        logger.debug("access response: {}".format(access_response))
+
+        user = User.clave_unica_get_or_create(access_response)
+
+        logger.debug(user)
+
+        return redirect('home')
+    except ValueError:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    return redirect('home')

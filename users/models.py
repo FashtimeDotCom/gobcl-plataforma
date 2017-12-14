@@ -69,6 +69,13 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         _('date joined'), default=timezone.now,
         help_text=_("The date this user was created in the database"),
     )
+    font_size = models.CharField(
+        _('font size'),
+        max_length=100,
+        blank=True,
+        default="16px",
+    )
+
     # Use UserManager to get the create_user method, etc.
     objects = UserManager()
 
@@ -86,6 +93,31 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     def clean(self):
         super(User, self).clean()
         self.email = self.__class__.objects.normalize_email(self.email)
+
+    # classmethods
+    @classmethod
+    def clave_unica_get_or_create(cls, response):
+        """
+        Creates or returns a user given ClaveUnica json data.
+        """
+        # TODO: parse json
+
+        email = token_response.email.lower().strip()
+        user, created = cls.objects.get_or_create(email=email)
+        user.token = token
+
+        if created:
+            user.set_password(token_response.id)
+            user.first_name = unicode(
+                token_response.firstName.split(' ')[0].capitalize()
+            )
+            user.last_name = unicode(
+                token_response.lastNames.split(' ')[0].capitalize()
+            )
+            user.rut = token_response.identifier
+
+        user.save()
+        return user
 
     # public methods
     def get_full_name(self):

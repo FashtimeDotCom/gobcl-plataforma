@@ -5,14 +5,19 @@
   "author": "Magnet S.P.A.",
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
-    "gob.cl": "github:jgab-net/gob.cl#feature/bootstrap-4",
+    "gob.cl": "github:e-gob/gob.cl#v1.1.0",
     "jquery": "^3.2.1",
+    "magnific-popup": "^1.1.0",
     "popper.js": "^1.12.6",
     "pug-cli": "^1.0.0-alpha6",
-    "select2": "^4.0.3"
+    "select2": "^4.0.3",
+    "slick-carousel": "^1.8.1"
   },
   "description": "A base for a django project on python 3",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^7.1.6",
+    "postcss-cli": "^4.1.1"
+  }
 }

@@ -1,14 +1,10 @@
 extends base.pug
 
 - load i18n
-- load staticfiles
-
-block javascripts
-  script(src="{% static 'js/search.js' %}")
 
 block content
   main.site-main
-    section.section.bg-bluedark
+    section.section.section-header.bg-bluedark
       .container
         .row
           .col-sm-12.col-md-12.col-lg-5.order-lg-12.col-xl-5
@@ -18,13 +14,13 @@ block content
             article.text-light
               h2.heading-large {% trans 'Institutions' %}
               p {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
-    section.section
+    section.section.pv-0-until-md
       .container
         .row
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-lightgray.top
             .card-data-small
               h1.card-data-small_title
-                span &nbsp;
+                span.d-none.d-md-block &nbsp;
                 small {% trans 'Presidency' %}
               p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               .clearfix
@@ -36,38 +32,59 @@ block content
                 small {% trans 'Ministries' %}
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              .clearfix.d-md-none
+                a.pull-right(href="#ministries") {% trans 'See more.' %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
-                span 244
+                span {{ public_service_list|length }}
                 small {% trans 'Public Services.' %}
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              .clearfix.d-md-none
+                a.pull-right(href="#services") {% trans 'See more.' %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
                 span {{ region_list|length }}
                 small {% trans 'Regions and their Municipalities.' %}
               p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              .clearfix.d-md-none
+                a.pull-right(href="#regions") {% trans 'See more.' %}
     section.section--medium.nopadding-top
       .container
         .row
           .col-sm-12.col-lg-8.col-xl-7
-            .search-form#search.search-form--large.nomargin-top
-              input(type="search" placeholder="{% trans 'Write here what you want search.' %}").search-form_input
-              button(type="submit").search-form_button.search-form_button--submit: i.ic-search
-              button(type="button").search-form_button.search-form_button--cancel.d-none: i.ic-delete
-        h2.heading-medium {% trans 'Ministries' %}
+            .search-form#search.search-form--large.nomargin-top(data-view-filter=true)
+              input.search-form_input(
+                type="search",
+                placeholder="{% trans 'Write here what you want search.' %}"
+              )
+              button.search-form_button.search-form_button--submit(type="submit")
+                i.ic-search
+              button.search-form_button.search-form_button--cancel.d-none(type="button")
+                i.ic-delete
+        h2#ministries.heading-medium {% trans 'Ministries' %}
         - if ministry_list
           .row
             for ministry in ministry_list
-              .filterable(data-value="{{ ministry.name }}").col-sm-12.col-md-4
+              .searchable(data-search-value="{{ ministry.name }}").col-sm-12.col-md-4
                 p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+
+        - if public_service_list
+          br
+          h2#services.heading-medium {% trans 'public services'|capfirst %}
+          .row
+            for public_service in public_service_list
+              .searchable(data-search-value="{{ public_service.name }}").col-sm-12.col-md-4
+                p
+                  a(href="{{ public_service.url }}")
+                    {{ public_service }}
 
         - if region_list
           br
-          h2.heading-medium {% trans 'Regions' %}
+          h2#regions.heading-medium {% trans 'Regions' %}
           .row
             for region in region_list
-              .filterable(data-value="{{ region.name }}").col-sm-12.col-md-4
+              .searchable(data-search-value="{{ region.name }}").col-sm-12.col-md-4
                 p: a(href="{{ region.get_absolute_url }}") {{ region }}
