@@ -24,7 +24,7 @@ class ClaveUnicaSettings(object):
         'scope': 'openid run name',
     }
 
-    SECRET_KEY = '  ¯\_(ツ)_/¯  '
+    SECRET_KEY = '890e86cb19f94bca9e2787df5c6b1aaf'
 
     TOKEN_PARAMS_DICT = {
         'client_id': CLIENT_ID,
