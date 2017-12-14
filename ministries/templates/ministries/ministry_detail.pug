@@ -39,8 +39,6 @@ block content
               .profile_image
                 if ministry.minister.photo
                   img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
-                else
-                  img.img-fluid.w-100.img-frame(src="", alt="")
               .profile_header
                 h3.profile_title {{ ministry.minister.name }}
                 if ministry.minister.charge 
@@ -68,8 +66,6 @@ block content
                 div.profile_image.profile_image--small
                   if servant.photo
                     img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="")
-                  else
-                    img.img-fluid.w-100.img-frame(src="", alt="")
                 .profile_header
                   h3.profile_title {{ servant.name }}
                   span.profile_job {{ servant.charge|default_if_none:"" }}
