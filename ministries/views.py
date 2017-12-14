@@ -10,10 +10,10 @@ from .models import Ministry
 # views
 from base.views import BaseCreateView
 from base.views import BaseDeleteView
-from base.views import BaseSlugDetailView
 from base.views import BaseListView
 from base.views import BaseUpdateView
 from hitcount.views import HitCountDetailView
+from parler.views import TranslatableSlugMixin
 
 # forms
 from .forms import MinistryForm
@@ -43,7 +43,7 @@ class MinistryCreateView(BaseCreateView):
     permission_required = 'ministries.add_ministry'
 
 
-class MinistryDetailView(HitCountDetailView):
+class MinistryDetailView(TranslatableSlugMixin, HitCountDetailView):
     """
     A view for displaying a single ministry
     """
