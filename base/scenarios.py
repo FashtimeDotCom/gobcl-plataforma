@@ -352,7 +352,7 @@ def create_news_from_json():
             gobcl-uploads folder and create add image to Article
             '''
 
-            data_image = image_url.split('/')[-3:]
+            data_image = image_url[0].split('/')[-3:]
 
             s3_url = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
             img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
