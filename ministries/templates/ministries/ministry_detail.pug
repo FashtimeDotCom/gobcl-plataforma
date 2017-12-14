@@ -5,9 +5,10 @@ extends base.pug
 
 block meta_tags
   meta(name="description", content="{{ministry.description}}")
-  meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}")
+  if ministry.minister.photo
+    meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}")
+    meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}')
   meta(itemprop='description', content='{{ministry.description}}')
-  meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{ministry.minister.photo.url}}')
 
 block content
   main.site-main
@@ -36,7 +37,10 @@ block content
           .col-sm-12.col-lg-8
             .profile.profile--half
               .profile_image
-                img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
+                if ministry.minister.photo
+                  img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
+                else
+                  img.img-fluid.w-100.img-frame(src="", alt="")
               .profile_header
                 h3.profile_title {{ ministry.minister.name }}
                 if ministry.minister.charge 
@@ -62,7 +66,10 @@ block content
             .col-sm-12.col-lg-6
               .profile.profile--half-small
                 div.profile_image.profile_image--small
-                  img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="")
+                  if servant.photo
+                    img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="")
+                  else
+                    img.img-fluid.w-100.img-frame(src="", alt="")
                 .profile_header
                   h3.profile_title {{ servant.name }}
                   span.profile_job {{ servant.charge|default_if_none:"" }}
