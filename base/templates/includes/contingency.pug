@@ -1,0 +1,93 @@
+- load i18n
+
+section.contingency(data-active="false")
+  a.contingency-continue.button.button--block.button--yellow(href="#")
+    | Ultimo minuto: terremoto en Arica
+  a.contingency-navigate.button.button--block(href="#")
+    | {% trans 'Continue browsing on Gob.cl' %}
+  .container
+    .row
+      .col-12.col-md-7.col-xl-6.top.bg-yellow.expand-yellow-left
+        article.article-contingency
+          .row
+            .col-12.col-lg-10
+              {% include 'includes/toolbar.pug' with dark=True %}
+              h2.heading-large Terremoto en Arica
+              h3.heading-sub
+                | Ministro del Interior y Seguridad Pública informa que Alarma de Tsunami se mantiene durante las
+                | próximas 6 horas.
+              p
+                | l pasado 1 de abril, a las 20:46 horas, se percibió un sismo de mayor intensidad (VIII Mercalli)
+                | entre las regiones de Arica y Parinacota, Tarapacá y Antofagasta. De acuerdo a la información
+                | proporcionada por el Centro Sismológico Nacional, el sismo alcanzó una magnitud de 8,2 Richter,
+                | solicitándose evacuación preventiva por parte de ONEMI, y estableciéndose Alerta de Tsunami  para
+                | todo el borde costero nacional, según indicación del SHOA.
+      .col-12.col-md-5.col-xl-6.top.bg-bluedark.article--dark.expand-bluedark-right
+        .article-schedule
+          .row
+            .col-12.col-lg-10.col-xl-10
+              .schedule
+                .schedule_left
+                  time.schedule_time.schedule_time--has-dot 12:50
+                .schedule_right
+                  a(href="#").schedule_link
+                    | Ministro del Interior y Seguridad Pública informa que Alarma de Tsunami se mantiene durante
+                    | las próximas 6 horas
+              .schedule
+                .schedule_left
+                  time.schedule_time 11:35
+                .schedule_right
+                  a(href="#").schedule_link
+                    | Autoridades entregan información actualizada por sismo de mayor intensidad
+              .schedule
+                .schedule_left
+                  time.schedule_time 12:50
+                .schedule_right
+                  a(href="#").schedule_link
+                    | Monitoreo actualizado por sismo de mayor intensidad en las regiones de Arica y Parinacota,
+                    | Tarapacá y Antofagasta
+              .schedule
+                .schedule_left
+                  time.schedule_time 12:50
+                .schedule_right
+                  a.schedule_link(href="#")
+                    | Más de 900 mil personas se movilizaron a zonas de seguridad ante alarma de tsunami
+              .schedule
+                .schedule_left
+                  time.schedule_time 12:50
+                .schedule_right
+                  a.schedule_link(href="#")
+                    | Actualización Alarma de Tsunami en territorio nacional
+              .schedule
+                .schedule_left
+                  time.schedule_time 12:50
+                .schedule_right
+                  a.schedule_link(href="#")
+                    | Director Nacional entrega reporte actualizado por sismo de mayor intensidad
+    h3.heading-medium.pt-2 {% trans 'Find more information on:' %}
+    .row
+      .col-lg-6
+        .card-small
+          h5.card-small_title
+            a.card-small_link(href="#")
+              | Onemi
+              i.ic-arrow-right.icon--right
+          .card-small_body
+            .row
+              .col-12.col-lg-7
+                p.card-small_text
+                  | Bajada ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                  | labore et dolore magna aliqua.
+      .col-lg-6
+        .card-small
+          h5.card-small_title
+            a.card-small_link(href="#")
+              | Shoa
+              i.ic-arrow-right.icon--right
+          .card-small_body
+            .row
+              .col-12.col-lg-7
+                p.card-small_text
+                  | Bajada ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                  | ut labore et dolore magna aliqua.
+    {% include 'includes/social.pug' %}
