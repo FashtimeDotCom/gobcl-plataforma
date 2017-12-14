@@ -1,8 +1,12 @@
 import requests
+import json
+
+from bs4 import BeautifulSoup
 
 # django
 from django.contrib.sites.models import Site
 from django.db.models import F
+from django.conf import settings
 from django.utils.translation import activate
 
 # mockups
@@ -14,6 +18,13 @@ from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Commune
 from regions.models import Region
+from aldryn_newsblog.models import Article
+from users.models import User
+from aldryn_people.models import Person
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
+from djangocms_text_ckeditor.models import Text
+from filer.models.imagemodels import Image
+from djangocms_picture.models import Picture
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
 
@@ -169,3 +180,198 @@ def load_base_data():
     load_data_from_digital_gob_api()
     PublicService.objects.filter(name_es=None).update(name_es=F('name'))
     PublicService.objects.filter(name_en=None).update(name_es=F('name'))
+
+
+def create_text_plugin(content, target_placeholder, language, position):
+    '''
+    Create text plugin by article
+    '''
+
+    text = Text(body=content)
+    text.position = position
+    text.tree_id = None
+    text.lft = None
+    text.rght = None
+    text.level = None
+    text.language = language
+    text.plugin_type = 'TextPlugin'
+    text.placeholder = target_placeholder
+    text.save()
+
+
+def create_picture_plugin(image, target_placeholder, language, position):
+    '''
+    Create picture image plugin by Article
+    '''
+
+    # separate name and path from url image
+    image_html = BeautifulSoup(image, 'html.parser')
+    image_src = image_html.img.get('src')
+    data_image = image_src.split('/')[-3:]
+
+    s3_url = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
+    img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
+
+    img = download_file_from_url(img_url)
+
+    if not img:
+        return
+
+    img_name = data_image[-1]
+
+    # Create Image element (django CMS)
+    image = Image.objects.create()
+    image.name = img_name
+    image.file.save(img_name, img, save=True)
+    image.save()
+
+    # Create Picture plugin
+    picture = Picture.objects.create()
+    picture.picture = image
+    picture.position = position
+    picture.tree_id = None
+    picture.lft = None
+    picture.rght = None
+    picture.level = None
+    picture.language = language
+    picture.plugin_type = 'PicturePlugin'
+    picture.placeholder = target_placeholder
+    picture.save()
+
+
+def create_content(content_list, target_placeholder, language):
+    '''
+    Create text or upload image depends content list
+    '''
+
+    position = 0
+    for content in content_list[2:-1]:
+        if content == '\n' or content == '\r\n':
+            continue
+
+        elif content.startswith('<p><img'):
+
+            create_picture_plugin(
+                content,
+                target_placeholder,
+                language,
+                position
+            )
+
+        else:
+
+            create_text_plugin(
+                content,
+                target_placeholder,
+                language,
+                position,
+            )
+
+        position += 1
+
+
+def download_file_from_url(url):
+    import requests
+    import tempfile
+    from django.core import files
+
+    # Stream the image from the url
+    try:
+        request = requests.get(url, stream=True)
+    except requests.exceptions.RequestException as e:
+        return
+
+    if request.status_code != requests.codes.ok:
+        return
+
+    # Create a temporary file
+    lf = tempfile.NamedTemporaryFile()
+
+    # Read the streamed image in sections
+    for block in request.iter_content(1024 * 8):
+
+        # If no more file then stop
+        if not block:
+            break
+
+        # Write image block to temporary file
+        lf.write(block)
+
+    return files.File(lf)
+
+
+def create_news_from_json():
+    '''
+    Open gobcl-posts.json and read
+    data to create news from old site gob.cl
+    '''
+
+    # open gobcl-posts.json
+    with open(settings.BASE_DIR + '/gobcl-posts.json') as news:
+        json_news = json.loads(news.read())
+
+    # get basic data required by model Article (aldryn newsblog)   
+    app_config = NewsBlogConfig.objects.first()
+    owner = User.objects.first()
+    author = Person.objects.get_or_create()[0]
+
+    for news in json_news:
+
+        # Get principal data from json
+        title = news.get('titulo', '')[0]
+        image_url = news.get('thumb_img', '')
+        publishing_date = news.get('fecha', '')[0]
+        lead = news.get('bajada', '')
+        if lead:
+            lead = lead[0]
+        content = news.get('contenido', '')
+        language = news.get('lang', 'es')
+
+        if language == 'es-CL' or language == 'es':
+            activate('es')
+            language = 'es'
+        elif language == 'en-US':
+            activate('en')
+            language = 'en'
+
+        data = {
+            'app_config': app_config,
+            'title': title,
+            'lead_in': lead,
+            'publishing_date': publishing_date,
+            'owner': owner,
+            'author': author,
+            'is_published': True,
+        }
+
+        if image_url:
+            # import ipdb ; ipdb.set_trace()
+
+            '''
+            if exists image_url get image from
+            gobcl-uploads folder and create add image to Article
+            '''
+
+            data_image = image_url.split('/')[-3:]
+
+            s3_url = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
+            img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
+
+            img = download_file_from_url(img_url)
+            if img:
+                img_name = data_image[-1]
+
+                image = Image.objects.create()
+                image.name = img_name
+                image.file.save(img_name, img, save=True)
+                image.save()
+                data['featured_image'] = image
+
+        article = Article.objects.create(**data)
+
+        if content:
+            create_content(
+                content,
+                article.content,
+                language
+            )
