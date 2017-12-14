@@ -55,7 +55,10 @@ block content
       .container
         .row
           .col-sm-12.col-lg-8.col-xl-7
-            .search-form#search.search-form--large.nomargin-top(data-view-filter=true)
+            .search-form#search.search-form--large.nomargin-top(
+              data-view-filter=true,
+              data-groups="[\".ministry-item\", \".service-item\", \".region-item\"]"
+            )
               input.search-form_input(
                 type="search",
                 placeholder="{% trans 'Write here what you want search.' %}"
@@ -68,23 +71,33 @@ block content
         - if ministry_list
           .row
             for ministry in ministry_list
-              .searchable(data-search-value="{{ ministry.name }}").col-sm-12.col-md-4
+              .searchable.col-sm-12.col-md-4.ministry-item(data-search-value="{{ ministry.name }}")
                 p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+          .row.search-not-found.not-found-ministry-item
+            .col-12
+              i.disable {% trans 'No results found.' %}
 
         - if public_service_list
           br
           h2#services.heading-medium {% trans 'public services'|capfirst %}
           .row
             for public_service in public_service_list
-              .searchable(data-search-value="{{ public_service.name }}").col-sm-12.col-md-4
+              .searchable.col-sm-12.col-md-4.service-item(data-search-value="{{ public_service.name }}")
                 p
                   a(href="{{ public_service.url }}")
                     {{ public_service }}
+          .row.search-not-found.not-found-service-item
+            .col-12
+              i.disable {% trans 'No results found.' %}
 
         - if region_list
           br
           h2#regions.heading-medium {% trans 'Regions' %}
           .row
             for region in region_list
-              .searchable(data-search-value="{{ region.name }}").col-sm-12.col-md-4
+              .searchable.col-sm-12.col-md-4.region-item(data-search-value="{{ region.name }}")
                 p: a(href="{{ region.get_absolute_url }}") {{ region }}
+          .row.search-not-found.not-found-region-item
+            .col-12
+              i.disable {% trans 'No results found.' %}
+
