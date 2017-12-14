@@ -391,11 +391,21 @@ LOGGING = {
             'formatter': 'standard',
             'level': 'ERROR',
         },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}/logs/{}/clave_unica.log'.format(BASE_DIR, env),
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'debug_messages': {
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }

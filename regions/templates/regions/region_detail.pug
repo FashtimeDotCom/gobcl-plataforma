@@ -6,9 +6,10 @@ extends base.pug
 
 block meta_tags
   meta(name="description", content="{{region.description}}")
-  meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}")
+  if region.governor.photo
+    meta(name="image", content="{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}")
+    meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}')
   meta(itemprop='description', content='{{region.description}}')
-  meta(itemprop='image', content='{{ request.scheme }}://{{ request.get_host }}{{region.governor.photo.url}}')
 
 block javascripts
   script(src="{% static 'js/communes.js' %}")
@@ -38,7 +39,8 @@ block content
           .col-sm-12.col-lg-8
             .profile.profile--half
               .profile_image
-                img.img-fluid.w-100.img-frame(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="")
+                if region.governor.photo
+                  img.img-fluid.w-100.img-frame(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="")
               .profile_header
                 h3.profile_title {{ region.governor.name }}
                 span.profile_job {{ region.governor.charge }}
