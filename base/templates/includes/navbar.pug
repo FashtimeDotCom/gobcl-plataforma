@@ -35,18 +35,6 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
 
     #navbarSupportedContent.navbar-collapse.collapse.justify-content-end
       ul.navbar-nav
-        li.nav-item.dropdown.nav-item-desktop
-          a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
-            href="#",
-            data-toggle="dropdown",
-            aira-haspopup="true",
-            aria-expanded="false"
-          )
-            i.fa.fa-language.mr-1(aria-hidden="true")
-            - get_current_language as current_language
-            {{ current_language | language_name_local | title }}
-          .dropdown-menu(aria-labelledby="navbarDropdownMenuLang")
-            {% language_chooser "includes/menu_language.pug" %}
 
         li.nav-item
           a.nav-link(href="#") {% trans 'Procedures and benefits' %}
@@ -59,3 +47,14 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
             i.ic-close.btn-search_icon
 
 
+        li.nav-item.dropdown.nav-item-desktop
+          a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
+            href="#",
+            data-toggle="dropdown",
+            aira-haspopup="true",
+            aria-expanded="false"
+          )
+            - get_current_language as current_language
+            {{ current_language|upper }}
+          .dropdown-menu(aria-labelledby="navbarDropdownMenuLang")
+            {% language_chooser "includes/menu_language.pug" %}
