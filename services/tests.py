@@ -7,6 +7,10 @@ from .chile_atiende import File
 
 class ChileAtiendeClient(BaseTestCase):
 
+    '''
+    Test Chile Atiende API Client
+    '''
+
     def setUp(self):
         self.base_url = 'https://www.chileatiende.gob.cl/api'
         self.access_token = settings.CHILEATIENDE_ACCESS_TOKEN

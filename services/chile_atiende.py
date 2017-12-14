@@ -6,6 +6,11 @@ from .chile_atiende_client import File
 
 
 def create_services():
+
+    '''
+    Call API Chile Atiende and create Service in database
+    '''
+
     service = Service()
 
     json_service = service.list().json()
@@ -31,6 +36,11 @@ def create_services():
 
 
 def create_files():
+
+    '''
+    Call API Chile Atiende and create File in database
+    '''
+
     file_obj = File()
 
     json_file = file_obj.list().json()
@@ -67,6 +77,11 @@ def create_files():
 
 
 def create_files_by_services():
+
+    '''
+    Call "Ficha" from Chile Atiende API by services in DB
+    '''
+
     file_obj = File()
 
     services = ServiceModel.objects.all()
