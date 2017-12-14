@@ -3,6 +3,8 @@
 
 # standard
 import json
+import requests
+import logging
 
 # django
 from django.contrib import messages
@@ -32,12 +34,21 @@ from users.models import User
 # views
 from base.views import BaseListView
 
+# utils
+from users.login_settings import ClaveUnicaSettings
+
+
+logger = logging.getLogger('debug_messages')
+
 
 class LoginView(auth_views.LoginView):
     """ view that renders the login """
     template_name = "registration/login.pug"
     form_class = AuthenticationForm
     title = _('Login')
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
@@ -218,3 +229,71 @@ def user_font_size_change(request):
         return JsonResponse({'font_size': request.user.font_size})
 
     return JsonResponse({'method error': 'must post'})
+
+
+def clave_unica_login(request):
+    """
+    View that redirects to ClaveUnica login site
+    with this project's parameters
+    """
+    clave_unica = ClaveUnicaSettings()
+    state = clave_unica.generate_token()
+    request.session['state'] = state
+    clave_unica_url = clave_unica.get_csrf_redirect_url(state)
+    return redirect(clave_unica_url)
+
+
+def clave_unica_callback(request):
+    """
+    View that gets or creates a user and logs it in by using
+    ClaveUnica's data and athorization
+    """
+
+    logger.debug('stifgnig')
+
+    received_state = request.GET.get('state')
+    if 'state' not in request.session:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    if received_state != request.session['state']:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    received_code = request.GET.get('code')
+    clave_unica = ClaveUnicaSettings()
+    data = clave_unica.get_token_url_data(received_state, received_code)
+    token_response = requests.post(
+        clave_unica.TOKEN_URI,
+        data=data,
+    )
+
+    logger.debug("token response: {}".format(token_response))
+
+    if token_response.headers['Content-Type'] == 'text/html':
+        pass
+
+    try:
+        access_token = token_response.json()['access_token']
+        # expires_in = token_response.json['expires_in']
+        # id_token = token_response.json['id_token']
+        bearer = "Bearer {}".format(access_token)
+        headers = {"Authorization": bearer}
+
+        access_response = requests.post(
+            ClaveUnicaSettings.USER_INFO_URI,
+            headers=headers,
+        )
+
+        logger.debug("access response: {}".format(access_response))
+
+        user = User.clave_unica_get_or_create(access_response)
+
+        logger.debug(user)
+
+        return redirect('home')
+    except ValueError:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    return redirect('home')

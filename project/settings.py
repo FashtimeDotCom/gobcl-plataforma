@@ -107,6 +107,7 @@ INSTALLED_APPS = [
     'public_enterprises',
     'searches',
     'gobcl_cms',
+    'campaigns',
 
     # django cms
     'cms',
@@ -389,11 +390,21 @@ LOGGING = {
             'formatter': 'standard',
             'level': 'ERROR',
         },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}/logs/{}/clave_unica.log'.format(BASE_DIR, env),
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'debug_messages': {
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
@@ -438,6 +449,8 @@ THUMBNAIL_HIGH_RESOLUTION = True
 # django cms
 CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
+    ('campaigns/campaign_detail.pug', _('Campaign template')),
+    ('empty.pug', _('Empty template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [

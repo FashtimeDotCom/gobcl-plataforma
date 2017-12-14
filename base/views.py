@@ -27,6 +27,7 @@ from django.views.generic.list import ListView
 
 # utils
 from base.view_utils import clean_query_string
+from base.view_utils import get_home_campaigns
 from inflection import underscore
 
 # models
@@ -48,7 +49,7 @@ class IndexTemplateView(TemplateView):
 
         context = {
             'procedures_and_benefits': None,
-            'campaigns': None,
+            'campaigns': get_home_campaigns(self.request),
             'articles': articles,
             'ministries_count': (
                 Ministry.objects.by_government_structure(gov_structure).count()

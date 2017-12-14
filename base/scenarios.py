@@ -25,6 +25,18 @@ from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from djangocms_text_ckeditor.models import Text
 from filer.models.imagemodels import Image
 from djangocms_picture.models import Picture
+from aldryn_newsblog.cms_appconfig import NewsBlogConfig
+
+
+def create_articles(quantity=20, language='en'):
+    activate(language)
+    app_config = NewsBlogConfig.objects.first()
+    m = Mockup()
+    for x in range(quantity):
+        m.create_article(
+            is_published=True,
+            app_config=app_config,
+        )
 
 
 def get_current_government_structure():

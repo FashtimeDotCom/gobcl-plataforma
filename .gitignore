@@ -109,3 +109,4 @@ project/static
 */*.tar.gz
 gobcl-posts.json
 gobcl-uploads/*
+gobcl.xlsx
