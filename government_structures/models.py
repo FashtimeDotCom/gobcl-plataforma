@@ -48,7 +48,7 @@ class GovernmentStructure(BaseModel):
             return cls.objects.get_or_none(current_government=True)
         now = timezone.datetime.now()
 
-    def duplicate(self, date):
+    def duplicate(self, date, with_public_servant=True):
         government_structures = GovernmentStructure.objects.filter(
             publication_date=date)
         if government_structures.exists():
@@ -60,6 +60,11 @@ class GovernmentStructure(BaseModel):
         government_structure.save()
 
         for field in government_structure._meta.fields_map.values():
+
+            if not with_public_servant:
+                if field.name == 'publicservant':
+                    continue
+
             model = field.related_model
             objects = model.objects.filter(government_structure=self)
             for obj in objects:

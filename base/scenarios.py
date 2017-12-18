@@ -1,5 +1,6 @@
 import requests
 import json
+import uuid
 
 from bs4 import BeautifulSoup
 
@@ -25,7 +26,6 @@ from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from djangocms_text_ckeditor.models import Text
 from filer.models.imagemodels import Image
 from djangocms_picture.models import Picture
-from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
 
 def create_articles(quantity=20, language='en'):
@@ -360,6 +360,13 @@ def create_news_from_json():
             img = download_file_from_url(img_url)
             if img:
                 img_name = data_image[-1]
+
+                if len(img_name) > 250:
+                    img_name_split = img_name.split('.')
+                    img_name = '{}.{}'.format(
+                        str(uuid.uuid4()),
+                        img_name_split[-1]
+                    )
 
                 image = Image.objects.create()
                 image.name = img_name
