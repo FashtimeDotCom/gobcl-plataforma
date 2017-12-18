@@ -331,10 +331,10 @@ NPM_FILE_PATTERNS = {
         'build/js/bootstrap-datetimepicker.min.js',
         'build/css/bootstrap-datetimepicker.min.css'
     ],
-    'gob.cl': [
-        'dist/js/gob.cl.js',
-        'dist/fonts/*',
-        'dist/images/*'
+    '@gobdigital-cl': [
+        'gob.cl/dist/js/gob.cl.js',
+        'gob.cl/dist/fonts/*',
+        'gob.cl/dist/images/*'
     ],
     'popper.js': ['dist/umd/popper.js'],
     'select2': [
