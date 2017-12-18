@@ -7,23 +7,21 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
     a.navbar-brand.align-self-start(href="{% url 'home' %}")
       i.icon-gob
     .nav-content
+      a.btn.btn-search.btn-search--mobile.toggle-search(href="#")
+        i.ic-search.btn-search_icon
+        i.ic-close.btn-search_icon
       .dropdown.lang
-        a#ropdownMenuLang.btn.btn-seconday.dropdown-toggle(
+        a#dropdownMenuLang.btn.btn-seconday.dropdown-toggle(
           href="#",
           data-toggle="dropdown",
           role="button",
           aira-haspopup="true",
           aria-expanded="false"
         )
-          i.fa.fa-language.mr-1(aria-hidden="true")
           - get_current_language as current_language
           {{ current_language }}
-        .dropdown-menu(aria-labelledby="ropdownMenuLang")
+        .dropdown-menu(aria-labelledby="dropdownMenuLang")
           {% language_chooser "includes/menu_language.pug" %}
-      a.btn.btn-search.btn-search--mobile.toggle-search(href="#")
-        i.ic-search.btn-search_icon
-        i.ic-close.btn-search_icon
-
       button.navbar-toggler(
         type="button",
         data-toggle="collapse",
@@ -47,7 +45,7 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
             i.ic-close.btn-search_icon
 
 
-        li.nav-item.dropdown.nav-item-desktop
+        li.nav-item.dropdown.nav-item-desktop.lang
           a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
             href="#",
             data-toggle="dropdown",
