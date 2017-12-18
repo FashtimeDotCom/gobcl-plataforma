@@ -266,9 +266,15 @@ def clave_unica_callback(request):
 
     data = clave_unica.get_token_url_data(received_state, received_code)
 
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'host': 'https://www.claveunica.gob.cl',
+    }
+
     prepped = requests.Request(
-        'POST',
-        clave_unica.TOKEN_URI,
+        method='POST',
+        url=clave_unica.TOKEN_URI,
+        headers=headers,
         data=data,
     ).prepare()
 
@@ -280,6 +286,7 @@ def clave_unica_callback(request):
 
     token_response = requests.post(
         clave_unica.TOKEN_URI,
+        headers=headers,
         data=data,
     )
 
