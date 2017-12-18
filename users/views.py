@@ -280,7 +280,8 @@ def clave_unica_callback(request):
 
     logger.debug("-----")
     logger.debug("method: {}".format(prepped.method))
-    logger.debug("headers: {}".format(prepped.method))
+    logger.debug("url: {}".format(prepped.url))
+    logger.debug("headers: {}".format(prepped.headers))
     logger.debug("body: {}".format(prepped.body))
     logger.debug("-----")
 
