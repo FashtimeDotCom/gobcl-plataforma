@@ -274,19 +274,18 @@ def clave_unica_callback(request):
     prepped = requests.Request(
         method='POST',
         url=clave_unica.TOKEN_URI,
-        headers=headers,
         data=data,
     ).prepare()
 
     logger.debug("-----")
     logger.debug("method: {}".format(prepped.method))
-    logger.debug("headers: {}".format(prepped.method))
+    logger.debug("url: {}".format(prepped.url))
+    logger.debug("headers: {}".format(prepped.headers))
     logger.debug("body: {}".format(prepped.body))
     logger.debug("-----")
 
     token_response = requests.post(
         clave_unica.TOKEN_URI,
-        headers=headers,
         data=data,
     )
 
