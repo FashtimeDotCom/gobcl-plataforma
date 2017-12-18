@@ -15,7 +15,7 @@ def create_services():
 
     json_service = service.list().json()
 
-    services = json_service['servicios']['items']['servicio']
+    services = json_service['servicios']['items']
 
     service_list = []
     for service in services:
@@ -86,13 +86,13 @@ def create_files_by_services():
 
     services = ServiceModel.objects.all()
 
+    file_list = []
     for service in services:
 
         json_file = file_obj.by_service(service.code).json()
 
         files = json_file['fichas']['items']
 
-        file_list = []
         for file in files:
 
             data = {
@@ -104,15 +104,15 @@ def create_files_by_services():
                 'objective': file.get('objetivo'),
                 'beneficiaries': file.get('beneficiarios'),
                 'cost': file.get('costo'),
-                'period': file.get('vigencia'),
-                'duration': file.get('plazo'),
+                'period': file.get('vigencia', ''),
+                'duration': file.get('plazo', ''),
             }
 
             file_list.append(
                 FileModel(**data)
             )
 
-        FileModel.objects.bulk_create(file_list)
+    FileModel.objects.bulk_create(file_list)
 
 
 def charge_data():
