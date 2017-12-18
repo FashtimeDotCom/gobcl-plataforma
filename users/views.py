@@ -274,7 +274,6 @@ def clave_unica_callback(request):
     prepped = requests.Request(
         method='POST',
         url=clave_unica.TOKEN_URI,
-        headers=headers,
         data=data,
     ).prepare()
 
@@ -287,7 +286,6 @@ def clave_unica_callback(request):
 
     token_response = requests.post(
         clave_unica.TOKEN_URI,
-        headers=headers,
         data=data,
     )
 
