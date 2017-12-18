@@ -5,7 +5,7 @@
   "author": "Magnet S.P.A.",
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
-    "gob.cl": "github:e-gob/gob.cl#v1.1.0",
+    "@gobdigital-cl/gob.cl": "^1.1.2",
     "jquery": "^3.2.1",
     "magnific-popup": "^1.1.0",
     "popper.js": "^1.12.6",

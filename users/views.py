@@ -261,8 +261,29 @@ def clave_unica_callback(request):
         return redirect('home')
 
     received_code = request.GET.get('code')
+
     clave_unica = ClaveUnicaSettings()
+
     data = clave_unica.get_token_url_data(received_state, received_code)
+
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'host': 'https://www.claveunica.gob.cl',
+    }
+
+    prepped = requests.Request(
+        method='POST',
+        url=clave_unica.TOKEN_URI,
+        data=data,
+    ).prepare()
+
+    logger.debug("-----")
+    logger.debug("method: {}".format(prepped.method))
+    logger.debug("url: {}".format(prepped.url))
+    logger.debug("headers: {}".format(prepped.headers))
+    logger.debug("body: {}".format(prepped.body))
+    logger.debug("-----")
+
     token_response = requests.post(
         clave_unica.TOKEN_URI,
         data=data,
@@ -277,6 +298,7 @@ def clave_unica_callback(request):
     logger.debug("token response: {}".format(token_response))
     logger.debug("token response text: {}".format(token_response.text))
     logger.debug("token response headers: {}".format(token_response.headers))
+    logger.debug("-----")
 
     if token_response.headers['Content-Type'] == 'text/html':
         pass
