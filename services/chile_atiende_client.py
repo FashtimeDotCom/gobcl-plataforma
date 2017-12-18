@@ -6,7 +6,7 @@ from django.conf import settings
 class ChileAtiende(object):
 
     def __init__(self):
-        self._url = 'http://www.chileatiende.cl/api'
+        self._url = 'https://www.chileatiende.gob.cl/api'
         self._access_token = settings.CHILEATIENDE_ACCESS_TOKEN
 
     def _connect(self, url):
@@ -42,7 +42,7 @@ class ChileAtiende(object):
                 url,
                 self._access_token,
             )
-
+        print(url)
         return url
 
 

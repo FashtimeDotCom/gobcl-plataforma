@@ -108,12 +108,8 @@ INSTALLED_APPS = [
     'public_enterprises',
     'searches',
     'gobcl_cms',
-<<<<<<< Updated upstream
     'services',
     'campaigns',
-=======
-    'clave_unica',
->>>>>>> Stashed changes
 
     # django cms
     'cms',
