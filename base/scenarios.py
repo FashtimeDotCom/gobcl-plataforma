@@ -1,6 +1,7 @@
 import requests
 import json
 import uuid
+import tempfile
 
 from bs4 import BeautifulSoup
 
@@ -9,6 +10,7 @@ from django.contrib.sites.models import Site
 from django.db.models import F
 from django.conf import settings
 from django.utils.translation import activate
+from django.core import files
 
 # mockups
 from base.mockups import Mockup
@@ -271,9 +273,6 @@ def create_content(content_list, target_placeholder, language):
 
 
 def download_file_from_url(url):
-    import requests
-    import tempfile
-    from django.core import files
 
     # Stream the image from the url
     try:
@@ -334,6 +333,13 @@ def create_news_from_json():
             activate('en')
             language = 'en'
 
+        article = Article.objects.translated(
+            title=title
+        )
+
+        if article.exists():
+            continue
+
         data = {
             'app_config': app_config,
             'title': title,
@@ -370,7 +376,11 @@ def create_news_from_json():
 
                 image = Image.objects.create()
                 image.name = img_name
-                image.file.save(img_name, img, save=True)
+                image.file.save(
+                    img_name,
+                    img,
+                    save=True
+                )
                 image.save()
                 data['featured_image'] = image
 
