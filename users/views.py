@@ -268,62 +268,68 @@ def clave_unica_callback(request):
 
     headers = {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'host': 'https://www.claveunica.gob.cl',
     }
+
+    s = requests.Session()
 
     prepped = requests.Request(
         method='POST',
         url=clave_unica.TOKEN_URI,
+        headers=headers,
         data=data,
     ).prepare()
 
-    logger.debug("-----")
-    logger.debug("method: {}".format(prepped.method))
-    logger.debug("url: {}".format(prepped.url))
-    logger.debug("headers: {}".format(prepped.headers))
-    logger.debug("body: {}".format(prepped.body))
-    logger.debug("-----")
+    token_response = s.send(prepped)
 
-    token_response = requests.post(
-        clave_unica.TOKEN_URI,
-        data=data,
-    )
-
-    logger.debug("-----")
-    logger.debug("request session state: {}".format(request.session['state']))
-    logger.debug("received state: {}".format(received_state))
-    logger.debug("received code: {}".format(received_code))
-    logger.debug("token url data: {}".format(data))
-    logger.debug("clave unica token uri: {}".format(clave_unica.TOKEN_URI))
+    logger.debug("----- TOKEN RESPONSE")
     logger.debug("token response: {}".format(token_response))
-    logger.debug("token response text: {}".format(token_response.text))
+    logger.debug(
+        "token response status: {}".format(token_response.status_code)
+    )
     logger.debug("token response headers: {}".format(token_response.headers))
+    logger.debug("token response text: {}".format(token_response.text))
+    logger.debug(
+        "token response text type: {}".format(type(token_response.text))
+    )
     logger.debug("-----")
 
-    if token_response.headers['Content-Type'] == 'text/html':
-        pass
-
-    try:
+    if token_response.status_code == 200:
         access_token = token_response.json()['access_token']
         # expires_in = token_response.json['expires_in']
         # id_token = token_response.json['id_token']
         bearer = "Bearer {}".format(access_token)
         headers = {"Authorization": bearer}
 
-        access_response = requests.post(
-            ClaveUnicaSettings.USER_INFO_URI,
+        s = requests.Session()
+
+        prepped = requests.Request(
+            method='POST',
+            url=clave_unica.USER_INFO_URI,
             headers=headers,
         )
+        logger.debug("----- USER INFO REQUEST")
+        logger.debug("method: {}".format(prepped.method))
+        logger.debug("url: {}".format(prepped.url))
+        logger.debug("headers: {}".format(prepped.headers))
+        logger.debug("body: {}".format(prepped.body))
+        logger.debug("data: {}".format(prepped.data))
+        logger.debug("-----")
 
+        access_response = s.send(prepped)
+
+        logger.debug("----- USER INFO RESPONSE")
         logger.debug("access response: {}".format(access_response))
+        logger.debug(
+            "access response headers: {}".format(access_response.headers)
+        )
+        logger.debug("access response text: {}".format(access_response.text))
 
         user = User.clave_unica_get_or_create(access_response)
 
         logger.debug(user)
+        logger.debug("-----")
 
         return redirect('home')
-    except ValueError:
-        # TODO: redirect somewhere else or throw a message?
-        return redirect('home')
 
+    logger.debug("--Response status not 200--")
     return redirect('home')
