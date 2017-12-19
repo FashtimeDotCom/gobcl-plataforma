@@ -221,10 +221,22 @@ def create_picture_plugin(image, target_placeholder, language, position):
 
     img_name = data_image[-1]
 
+    if len(img_name) > 150:
+        print('entro al if de 150 content')
+        img_name_split = img_name.split('.')
+        img_name = '{}.{}'.format(
+            str(uuid.uuid4()),
+            img_name_split[-1]
+        )
+
     # Create Image element (django CMS)
     image = Image.objects.create()
     image.name = img_name
-    image.file.save(img_name, img, save=True)
+    image.file.save(
+        img_name,
+        img,
+        save=True
+    )
     image.save()
 
     # Create Picture plugin
@@ -367,8 +379,8 @@ def create_news_from_json():
             if img:
                 img_name = data_image[-1]
 
-                if len(img_name) > 250:
-                    print('entro al if de 250')
+                if len(img_name) > 150:
+                    print('entro al if de 150 json')
                     img_name_split = img_name.split('.')
                     img_name = '{}.{}'.format(
                         str(uuid.uuid4()),
