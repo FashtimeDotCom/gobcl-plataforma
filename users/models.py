@@ -46,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         unique=True,
         db_index=True,
         max_length=13,
+        null=True,
     )
     # optional fields
     email = models.EmailField(

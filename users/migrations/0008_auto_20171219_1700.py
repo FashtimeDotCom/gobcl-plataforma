@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='rut',
-            field=models.CharField(db_index=True, default=1, max_length=13, unique=True, verbose_name='rut'),
+            field=models.CharField(db_index=True, null=True, max_length=13, unique=True, verbose_name='rut'),
             preserve_default=False,
         ),
         migrations.AlterField(
