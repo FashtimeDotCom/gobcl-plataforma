@@ -8,14 +8,15 @@ import logging
 
 # django
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
-from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -248,9 +249,6 @@ def clave_unica_callback(request):
     View that gets or creates a user and logs it in by using
     ClaveUnica's data and athorization
     """
-
-    logger.debug('stifgnig')
-
     received_state = request.GET.get('state')
     if 'state' not in request.session:
         # TODO: redirect somewhere else or throw a message?
@@ -277,6 +275,7 @@ def clave_unica_callback(request):
     ).prepare()
 
     token_response = s.send(prepped)
+    logger.debug('token response: {}'.format(token_response))
 
     if token_response.status_code == 200:
         access_token = token_response.json()['access_token']
@@ -293,11 +292,16 @@ def clave_unica_callback(request):
         ).prepare()
 
         access_response = s.send(prepped)
+        logger.debug("access response: {}".format(access_response))
         access_response_dict = access_response.json()
         user = User.clave_unica_get_or_create(access_response_dict)
 
-        logger.debug(user)
-        logger.debug("-----")
+        auth_user = authenticate(
+            rut=user.rut,
+            password=None,
+        )
+        if user is not None:
+            login(request, auth_user)
 
         return redirect('home')
 
