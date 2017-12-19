@@ -2,56 +2,55 @@
 - load thumbnail
 
 block content
-  main.site-main
-    section.section
-      .container
-        .row
-          .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-5.offset-xl-7
-            .d-none.d-lg-block.pull-md-right
-              {% include 'includes/toolbar.pug' with dark=True %}
-          .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
-            article.main-post
-              time.main-post_date {{ article.publishing_date|date }}
-              h1.main-post_title {% render_model article "title" %}
-              h2.main-post_subtitle
-                {{ article.lead_in|striptags }}
+  section.section
+    .container
+      .row
+        .col-sm-12.col-md-12.col-lg-6.offset-lg-6.col-xl-5.offset-xl-7
+          .d-none.d-lg-block.pull-md-right
+            {% include 'includes/toolbar.pug' with dark=True %}
+        .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
+          article.main-post
+            time.main-post_date {{ article.publishing_date|date }}
+            h1.main-post_title {% render_model article "title" %}
+            h2.main-post_subtitle
+              {{ article.lead_in|striptags }}
 
-              if article.featured_image_id
-                img.img-fluid.w-100.img-frame(
-                  src="{% thumbnail article.featured_image 1600x1600 subject_location=article.featured_image.subject_location %}",
-                  alt="{{ article.featured_image.alt }}"
+            if article.featured_image_id
+              img.img-fluid.w-100.img-frame(
+                src="{% thumbnail article.featured_image 1600x1600 subject_location=article.featured_image.subject_location %}",
+                alt="{{ article.featured_image.alt }}"
+              )
+
+            ul.main-post_social-share
+              li: p {% trans 'Share this news through your social networks' %}
+              li.d-sm-none
+                a.share(
+                  href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
+                  data-social="messenger"
                 )
+                  i.ic-messenger
+              li
+                a.share(
+                  href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
+                  data-social="facebook",
+                )
+                  i.ic-facebook
+              li
+                a.share(
+                  href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
+                  data-text="{% render_model article 'title' %}"
+                  data-social="twitter"
+                )
+                  i.ic-twitter
+            {% render_placeholder article.content language placeholder_language %}
 
-              ul.main-post_social-share
-                li: p {% trans 'Share this news through your social networks' %}
-                li.d-sm-none
-                  a.share(
-                    href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
-                    data-social="messenger"
-                  )
-                    i.ic-messenger
-                li
-                  a.share(
-                    href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
-                    data-social="facebook",
-                  )
-                    i.ic-facebook
-                li
-                  a.share(
-                    href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
-                    data-text="{% render_model article 'title' %}"
-                    data-social="twitter"
-                  )
-                    i.ic-twitter
-              {% render_placeholder article.content language placeholder_language %}
-
-    if article.related.all
-      section
-        .container
-          h3.heading-medium {% trans 'Related news' %}
-
-          {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article.related.all %}
-
+  if article.related.all
     section
       .container
-        {% include 'includes/social.pug' %}
+        h3.heading-medium {% trans 'Related news' %}
+
+        {%  include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article.related.all %}
+
+  section
+    .container
+      {% include 'includes/social.pug' %}

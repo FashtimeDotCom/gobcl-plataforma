@@ -15,7 +15,7 @@ urlpatterns = [
         name='campaign_create'
     ),
     url(
-        r'^(?P<pk>[\d]+)/$',
+        r'^(?P<slug>[\w-]+)/$',
         views.CampaignDetailView.as_view(),
         name='campaign_detail'
     ),

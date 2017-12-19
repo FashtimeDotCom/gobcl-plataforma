@@ -3,6 +3,7 @@
 # standard library
 
 # django
+from django.views.generic import ListView
 
 # models
 from .models import Campaign
@@ -12,7 +13,7 @@ from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
 from base.views import BaseUpdateView
-from django.views.generic import ListView
+from parler.views import TranslatableSlugMixin
 
 # forms
 from .forms import CampaignForm
@@ -37,7 +38,7 @@ class CampaignCreateView(BaseCreateView):
     permission_required = 'campaigns.add_campaign'
 
 
-class CampaignDetailView(BaseDetailView):
+class CampaignDetailView(TranslatableSlugMixin, BaseDetailView):
     """
     A view for displaying a single campaign
     """
