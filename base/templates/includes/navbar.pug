@@ -44,7 +44,6 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
             i.ic-search.btn-search_icon
             i.ic-close.btn-search_icon
 
-
         li.nav-item.dropdown.nav-item-desktop.lang
           a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
             href="#",
@@ -56,3 +55,6 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
             {{ current_language|upper }}
           .dropdown-menu(aria-labelledby="navbarDropdownMenuLang")
             {% language_chooser "includes/menu_language.pug" %}
+
+        li.nav-item.nav-item-access
+          a.nav-link(href="#") {% trans 'Log in' %}
