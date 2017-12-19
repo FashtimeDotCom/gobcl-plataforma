@@ -109,23 +109,10 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         """
         Creates or returns a user given ClaveUnica json data.
         """
-        # TODO: parse json
-        # access dict: {
-        # 'sub': '1268082',
-        # 'name': {
-        #    'apellidos': ['Guerra', 'Piñeiro'],
-        #    'nombres': ['Jorge', 'Félix']},
-        #    'RolUnico': {
-        #        'DV': '6',
-        #        'tipo': 'RUN',
-        #        'numero': 16605532
-        #    }
-        # }
-
         first_name = " ".join(response_dict['name']['nombres'])
         last_name = " ".join(response_dict['name']['apellidos'])
         rut = format_rut(
-            response_dict['RolUnico']['numero']
+            str(response_dict['RolUnico']['numero'])
             + response_dict['RolUnico']['DV']
         )
         email = response_dict['email']
