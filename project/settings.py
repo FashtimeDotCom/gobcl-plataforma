@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'searches',
     'gobcl_cms',
     'campaigns',
+    'contingencies',
 
     # django cms
     'cms',
@@ -201,6 +202,7 @@ TEMPLATES = [
                 'links.context_processors.footer_links',
                 'base.context_processors.categories',
                 'searches.context_processors.get_feature_news',
+                'contingencies.context_processors.get_contingencies',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (

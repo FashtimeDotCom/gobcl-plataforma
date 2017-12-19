@@ -3,42 +3,39 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
 
 # models
 from base.models import BaseModel
 
-
-def default_end_datetime():
-    return timezone.now() + timezone.timedelta(7)
+from .managers import ContingencyQueryset
 
 
-class Contingency(BaseModel):
-    name = models.CharField(
-        _('name'),
-        max_length=255,
-        blank=True,
+class Contingency(BaseModel, TranslatableModel):
+    translations = TranslatedFields(
+        name=models.CharField(
+            _('name'),
+            max_length=255,
+        ),
+        lead=models.TextField(
+            _('lead'),
+            blank=True,
+        ),
+        description=models.TextField(
+            _('description'),
+            blank=True,
+        )
     )
-    lead = models.TextField(
-        _('lead'),
-        blank=True,
+    is_active = models.BooleanField(
+        _('is active'),
+        default=False,
     )
-    description = models.TextField(
-        _('description'),
-        blank=True,
-    )
-    activation_datetime = models.DateTimeField(
-        _('activation datetime`'),
-        default=timezone.now,
-        help_text=_('The date this contingency will be activated'),
-    )
-    deactivation_datetime = models.DateTimeField(
-        _('deactivation datetime`'),
-        default=default_end_datetime,
-        help_text=_('The date this contingency will be deactivated'),
-    )
+
+    objects = ContingencyQueryset.as_manager()
 
     class Meta:
         verbose_name = _('contingency')
@@ -48,29 +45,37 @@ class Contingency(BaseModel):
         )
 
     def __str__(self):
-        # TODO this is an example str return, change it
         return self.name
 
-    def get_absolute_url(self):
-        """ Returns the canonical URL for the Contingency object """
-        # TODO this is an example, change it
-        return reverse('contingency_detail', args=(self.pk,))
+    def save(self, *args, **kwargs):
+        return super(Contingency, self).save(*args, **kwargs)
 
 
-class ContingencyValue(BaseModel):
-    title = models.CharField(
-        _('title'),
-        max_length=255,
+class ContingencyEvent(BaseModel, TranslatableModel):
+    contingency = models.ForeignKey(
+        Contingency,
+        verbose_name=_('contingency'),
+        related_name='events',
+    )
+    translations = TranslatedFields(
+        title=models.CharField(
+            _('title'),
+            max_length=255,
+        ),
     )
     url = models.URLField(
         _('url'),
         max_length=200,
         blank=True,
+        null=True,
     )
     date_time = models.DateTimeField(
-        _(''),
-        auto_now_add=True,
+        _('date time'),
+        default=timezone.now,
     )
+
+    class Meta:
+        ordering = ('-date_time',)
 
     def __str__(self):
         return self.title
