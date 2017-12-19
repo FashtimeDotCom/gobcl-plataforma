@@ -261,9 +261,7 @@ def clave_unica_callback(request):
         return redirect('home')
 
     received_code = request.GET.get('code')
-
     clave_unica = ClaveUnicaSettings()
-
     data = clave_unica.get_token_url_data(received_state, received_code)
 
     headers = {
@@ -271,7 +269,6 @@ def clave_unica_callback(request):
     }
 
     s = requests.Session()
-
     prepped = requests.Request(
         method='POST',
         url=clave_unica.TOKEN_URI,
@@ -281,18 +278,6 @@ def clave_unica_callback(request):
 
     token_response = s.send(prepped)
 
-    logger.debug("----- TOKEN RESPONSE")
-    logger.debug("token response: {}".format(token_response))
-    logger.debug(
-        "token response status: {}".format(token_response.status_code)
-    )
-    logger.debug("token response headers: {}".format(token_response.headers))
-    logger.debug("token response text: {}".format(token_response.text))
-    logger.debug(
-        "token response text type: {}".format(type(token_response.text))
-    )
-    logger.debug("-----")
-
     if token_response.status_code == 200:
         access_token = token_response.json()['access_token']
         # expires_in = token_response.json['expires_in']
@@ -301,30 +286,15 @@ def clave_unica_callback(request):
         headers = {"Authorization": bearer}
 
         s = requests.Session()
-
         prepped = requests.Request(
             method='POST',
             url=clave_unica.USER_INFO_URI,
             headers=headers,
-        )
-        logger.debug("----- USER INFO REQUEST")
-        logger.debug("method: {}".format(prepped.method))
-        logger.debug("url: {}".format(prepped.url))
-        logger.debug("headers: {}".format(prepped.headers))
-        logger.debug("body: {}".format(prepped.body))
-        logger.debug("data: {}".format(prepped.data))
-        logger.debug("-----")
+        ).prepare()
 
         access_response = s.send(prepped)
-
-        logger.debug("----- USER INFO RESPONSE")
-        logger.debug("access response: {}".format(access_response))
-        logger.debug(
-            "access response headers: {}".format(access_response.headers)
-        )
-        logger.debug("access response text: {}".format(access_response.text))
-
-        user = User.clave_unica_get_or_create(access_response)
+        access_response_dict = access_response.json()
+        user = User.clave_unica_get_or_create(access_response_dict)
 
         logger.debug(user)
         logger.debug("-----")

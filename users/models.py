@@ -26,6 +26,9 @@ from base.models import BaseModel
 # messaging
 from messaging import email_manager
 
+# utils
+from base.utils import format_rut
+
 # mark for translation the app name
 ugettext_noop("Users")
 
@@ -38,12 +41,18 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     """
 
     # required fields
-    email = models.EmailField(
-        _('email address'),
+    rut = models.CharField(
+        _('rut'),
         unique=True,
         db_index=True,
+        max_length=13,
     )
     # optional fields
+    email = models.EmailField(
+        _('email address'),
+        null=True,
+        blank=True,
+    )
     first_name = models.CharField(
         _('first name'),
         max_length=30,
@@ -80,7 +89,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'rut'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
@@ -96,27 +105,24 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     # classmethods
     @classmethod
-    def clave_unica_get_or_create(cls, response):
+    def clave_unica_get_or_create(cls, response_dict):
         """
         Creates or returns a user given ClaveUnica json data.
         """
-        # TODO: parse json
+        first_name = " ".join(response_dict['name']['nombres'])
+        last_name = " ".join(response_dict['name']['apellidos'])
+        rut = format_rut(
+            str(response_dict['RolUnico']['numero'])
+            + response_dict['RolUnico']['DV']
+        )
+        email = response_dict['email']
+        user, created = cls.objects.get_or_create(
+            first_name=first_name,
+            last_name=last_name,
+            rut=rut,
+            email=email,
+        )
 
-        email = token_response.email.lower().strip()
-        user, created = cls.objects.get_or_create(email=email)
-        user.token = token
-
-        if created:
-            user.set_password(token_response.id)
-            user.first_name = unicode(
-                token_response.firstName.split(' ')[0].capitalize()
-            )
-            user.last_name = unicode(
-                token_response.lastNames.split(' ')[0].capitalize()
-            )
-            user.rut = token_response.identifier
-
-        user.save()
         return user
 
     # public methods
