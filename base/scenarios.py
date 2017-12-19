@@ -368,11 +368,17 @@ def create_news_from_json():
                 img_name = data_image[-1]
 
                 if len(img_name) > 250:
+                    print('entro al if de 250')
                     img_name_split = img_name.split('.')
                     img_name = '{}.{}'.format(
                         str(uuid.uuid4()),
                         img_name_split[-1]
                     )
+
+                print('*' * 10)
+                print('titulo noticia ' + title)
+                print('titulo imagen ' + img_name)
+                print('*' * 10)
 
                 image = Image.objects.create()
                 image.name = img_name
