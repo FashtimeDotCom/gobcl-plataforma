@@ -3,19 +3,20 @@
 # standard library
 
 # django
+from django.http import JsonResponse
 
 # models
 from .models import Service
 
 # views
-from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
-from base.views import BaseUpdateView
 from django.views.generic import ListView
+from django.views.generic import TemplateView
+from django.views.generic import View
 
 # forms
-from .forms import ServiceForm
+from .chile_atiende_client import File
 
 
 class ServiceListView(ListView):
@@ -34,14 +35,19 @@ class ServiceListView(ListView):
         return queryset
 
 
-class ServiceCreateView(BaseCreateView):
-    """
-    A view for creating a single service
-    """
-    model = Service
-    form_class = ServiceForm
-    template_name = 'services/service_create.pug'
-    permission_required = 'services.add_service'
+class FileSearchJson(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.query = self.request.GET.get('query', '')
+        return super(
+            FileSearchJson, self).dispatch(request, *args, **kwargs)
+
+    def get_file_list(self):
+        file_data = File()
+        return file_data.list(query=self.query).json()
+
+    def get(self, request, *args, **kwargs):
+        return JsonResponse(self.get_file_list())
 
 
 class ServiceDetailView(BaseDetailView):
@@ -51,16 +57,6 @@ class ServiceDetailView(BaseDetailView):
     model = Service
     template_name = 'services/service_detail.pug'
     permission_required = 'services.view_service'
-
-
-class ServiceUpdateView(BaseUpdateView):
-    """
-    A view for editing a single service
-    """
-    model = Service
-    form_class = ServiceForm
-    template_name = 'services/service_update.pug'
-    permission_required = 'services.change_service'
 
 
 class ServiceDeleteView(BaseDeleteView):

@@ -20,7 +20,7 @@ class ChileAtiende(object):
 
         return request
 
-    def _get_url(self, path, id=None, is_file=False):
+    def _get_url(self, path, id=None, is_file=False, query=None):
 
         url = '{}{}'.format(
             self._url,
@@ -42,7 +42,13 @@ class ChileAtiende(object):
                 url,
                 self._access_token,
             )
-        print(url)
+
+        if query:
+            url = '{}?query={}'.format(
+                url,
+                query,
+            )
+
         return url
 
 
@@ -63,10 +69,10 @@ class Service(ChileAtiende):
 
 class File(ChileAtiende):
 
-    def list(self):
+    def list(self, query=None):
 
         return self._connect(
-            self._get_url('/fichas')
+            self._get_url('/fichas', query=query)
         )
 
     def get(self, file_id):
