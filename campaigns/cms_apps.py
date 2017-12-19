@@ -13,7 +13,7 @@ class CampaignApp(CMSConfigApp):
 
     def get_urls(self, page=None, language=None, **kwargs):
         # replace this with the path to your application's URLs module
-        return ['campaings.urls']
+        return ['campaigns.urls']
 
 
 apphook_pool.register(CampaignApp)
