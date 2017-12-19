@@ -28,6 +28,7 @@ class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
     )
     list_display = (
         'title',
+        'external_url',
         'activation_datetime',
         'deactivation_datetime',
         'is_featured',
