@@ -14,19 +14,27 @@ from .models import Campaign
 
 @admin.register(Campaign)
 class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
+
+    def get_prepopulated_fields(self, request, obj=None):
+        # can't use `prepopulated_fields = ..` because it breaks the admin
+        # validation for translated fields. This is the official django-parler
+        # workaround.
+        return {
+            'slug': ('title',)
+        }
+
     search_fields = (
         'title',
     )
     list_display = (
         'title',
-        'page',
+        'external_url',
         'activation_datetime',
         'deactivation_datetime',
         'is_featured',
         'url',
     )
     readonly_fields = (
-        'page',
     )
     list_filter = (
         'is_featured',

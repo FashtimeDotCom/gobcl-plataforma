@@ -8,14 +8,15 @@ import logging
 
 # django
 from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
-from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
@@ -248,9 +249,6 @@ def clave_unica_callback(request):
     View that gets or creates a user and logs it in by using
     ClaveUnica's data and athorization
     """
-
-    logger.debug('stifgnig')
-
     received_state = request.GET.get('state')
     if 'state' not in request.session:
         # TODO: redirect somewhere else or throw a message?
@@ -261,69 +259,45 @@ def clave_unica_callback(request):
         return redirect('home')
 
     received_code = request.GET.get('code')
-
     clave_unica = ClaveUnicaSettings()
-
     data = clave_unica.get_token_url_data(received_state, received_code)
 
     headers = {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'host': 'https://www.claveunica.gob.cl',
     }
 
+    s = requests.Session()
     prepped = requests.Request(
         method='POST',
         url=clave_unica.TOKEN_URI,
+        headers=headers,
         data=data,
     ).prepare()
 
-    logger.debug("-----")
-    logger.debug("method: {}".format(prepped.method))
-    logger.debug("url: {}".format(prepped.url))
-    logger.debug("headers: {}".format(prepped.headers))
-    logger.debug("body: {}".format(prepped.body))
-    logger.debug("-----")
+    token_response = s.send(prepped)
+    logger.debug('token response: {}'.format(token_response))
 
-    token_response = requests.post(
-        clave_unica.TOKEN_URI,
-        data=data,
-    )
-
-    logger.debug("-----")
-    logger.debug("request session state: {}".format(request.session['state']))
-    logger.debug("received state: {}".format(received_state))
-    logger.debug("received code: {}".format(received_code))
-    logger.debug("token url data: {}".format(data))
-    logger.debug("clave unica token uri: {}".format(clave_unica.TOKEN_URI))
-    logger.debug("token response: {}".format(token_response))
-    logger.debug("token response text: {}".format(token_response.text))
-    logger.debug("token response headers: {}".format(token_response.headers))
-    logger.debug("-----")
-
-    if token_response.headers['Content-Type'] == 'text/html':
-        pass
-
-    try:
+    if token_response.status_code == 200:
         access_token = token_response.json()['access_token']
         # expires_in = token_response.json['expires_in']
         # id_token = token_response.json['id_token']
         bearer = "Bearer {}".format(access_token)
         headers = {"Authorization": bearer}
 
-        access_response = requests.post(
-            ClaveUnicaSettings.USER_INFO_URI,
+        s = requests.Session()
+        prepped = requests.Request(
+            method='POST',
+            url=clave_unica.USER_INFO_URI,
             headers=headers,
-        )
+        ).prepare()
 
+        access_response = s.send(prepped)
         logger.debug("access response: {}".format(access_response))
-
-        user = User.clave_unica_get_or_create(access_response)
-
-        logger.debug(user)
+        access_response_dict = access_response.json()
+        user = User.clave_unica_get_or_create(access_response_dict)
+        login(request, user)
 
         return redirect('home')
-    except ValueError:
-        # TODO: redirect somewhere else or throw a message?
-        return redirect('home')
 
+    logger.debug("--Response status not 200--")
     return redirect('home')
