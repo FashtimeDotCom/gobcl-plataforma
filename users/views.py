@@ -8,7 +8,7 @@ import logging
 
 # django
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
@@ -295,13 +295,7 @@ def clave_unica_callback(request):
         logger.debug("access response: {}".format(access_response))
         access_response_dict = access_response.json()
         user = User.clave_unica_get_or_create(access_response_dict)
-
-        auth_user = authenticate(
-            rut=user.rut,
-            password=None,
-        )
-        if user is not None:
-            login(request, auth_user)
+        login(request, user)
 
         return redirect('home')
 
