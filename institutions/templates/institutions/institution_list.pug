@@ -33,7 +33,7 @@ block content
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               .clearfix.d-md-none
-                a.pull-right(href="#ministries") {% trans 'See more.' %}
+                a.pull-right(href="#ministries", data-reference=".site-main") {% trans 'See more.' %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
@@ -42,7 +42,7 @@ block content
               p.card-data-small_text
                 | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               .clearfix.d-md-none
-                a.pull-right(href="#services") {% trans 'See more.' %}
+                a.pull-right(href="#services", data-reference=".site-main") {% trans 'See more.' %}
           .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
             .card-data-small
               h1.card-data-small_title
@@ -50,7 +50,7 @@ block content
                 small {% trans 'Regions and their Municipalities.' %}
               p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               .clearfix.d-md-none
-                a.pull-right(href="#regions") {% trans 'See more.' %}
+                a.pull-right(href="#regions", data-reference=".site-main") {% trans 'See more.' %}
     section.section--medium.nopadding-top
       .container
         .row
