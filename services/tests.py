@@ -92,26 +92,26 @@ class ChileAtiendeClient(BaseTestCase):
             )
         )
 
-    # def test_file_get_ok(self):
-    #     file_object = File()
+    def test_file_get_ok(self):
+        file_object = File()
 
-    #     response = file_object.get(self.file_id)
+        response = file_object.get(self.file_id)
 
-    #     self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
-    #     self.assertEqual(
-    #         response.headers.get('content-type'),
-    #         'application/json'
-    #     )
+        self.assertEqual(
+            response.headers.get('content-type'),
+            'application/json'
+        )
 
-    #     self.assertEqual(
-    #         response.url,
-    #         '{}/fichas/{}/?access_token={}&type=json'.format(
-    #             self.base_url,
-    #             self.file_id,
-    #             self.access_token,
-    #         )
-    #     )
+        self.assertEqual(
+            response.url,
+            '{}/fichas/{}?access_token={}&type=json'.format(
+                self.base_url,
+                self.file_id,
+                self.access_token,
+            )
+        )
 
     def test_file_list_by_service(self):
 

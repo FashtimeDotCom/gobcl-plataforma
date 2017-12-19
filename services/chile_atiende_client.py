@@ -44,7 +44,7 @@ class ChileAtiende(object):
             )
 
         if query:
-            url = '{}?query={}'.format(
+            url = '{}&query={}'.format(
                 url,
                 query,
             )
