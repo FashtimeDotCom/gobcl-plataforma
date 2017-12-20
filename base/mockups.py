@@ -151,6 +151,14 @@ class Mockup(object):
     def random_float(self, minimum=-100000, maximum=100000):
         return random.uniform(minimum, maximum)
 
+    def random_rut(self):
+        return '{}.{}.{}-{}'.format(
+            self.random_int(minimum=1, maximum=99),
+            self.random_int(minimum=100, maximum=990),
+            self.random_int(minimum=100, maximum=990),
+            self.random_string(length=1, chars='k' + string.digits),
+        )
+
     def random_string(self, length=6, chars=None):
         return random_string(length=length, chars=chars)
 
@@ -203,15 +211,9 @@ class Mockup(object):
             )
             data[field] = ip
 
-    def set_required_rut(self, data, field, length=6):
+    def set_required_rut(self, data, field):
         if field not in data:
-            rut = '{}.{}.{}-{}'.format(
-                self.random_int(minimum=1, maximum=99),
-                self.random_int(minimum=100, maximum=990),
-                self.random_int(minimum=100, maximum=990),
-                self.random_string(length=1, chars='k' + string.digits),
-            )
-            data[field] = rut
+            data[field] = self.random_rut()
 
     def set_required_string(self, data, field, length=6):
         if field not in data:

@@ -3,6 +3,8 @@
 # standard library
 
 # django
+from django.urls import reverse
+from django.views.generic import ListView
 
 # models
 from .models import Campaign
@@ -12,7 +14,7 @@ from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
 from base.views import BaseUpdateView
-from django.views.generic import ListView
+from parler.views import TranslatableSlugMixin
 
 # forms
 from .forms import CampaignForm
@@ -36,8 +38,11 @@ class CampaignCreateView(BaseCreateView):
     template_name = 'campaigns/campaign_create.pug'
     permission_required = 'campaigns.add_campaign'
 
+    def get_cancel_url(self):
+        return reverse('campaigns:campaign_list')
 
-class CampaignDetailView(BaseDetailView):
+
+class CampaignDetailView(TranslatableSlugMixin, BaseDetailView):
     """
     A view for displaying a single campaign
     """
@@ -63,3 +68,6 @@ class CampaignDeleteView(BaseDeleteView):
     model = Campaign
     permission_required = 'campaigns.delete_campaign'
     template_name = 'campaigns/campaign_delete.pug'
+
+    def get_success_url(self):
+        return reverse('campaigns:campaign_list')

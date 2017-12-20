@@ -1,43 +1,41 @@
 - load i18n staticfiles thumbnail cms_tags apphooks_config_tags
 
 block content
-  main.site-main
-    section.section.nopadding.bg-bluedark
-      .container
-        article.article-hero.article--dark.text-light
-          .row
-            .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
-              .pull-md-right
-                {% include 'includes/toolbar.pug' %}
-            .col-sm-12.col-md-12.col-lg-6.col-xl-7
-              h1.heading-large {% trans 'News' %}
-          {% static_placeholder "newsblog_feature" %}
+  section.section.nopadding.bg-bluedark
+    .container
+      article.article-hero.article--dark.text-light
+        .row
+          .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-6.col-xl-7
+            h1.heading-large {% trans 'News' %}
+        {% static_placeholder "newsblog_feature" %}
 
-    section.section
-      .container
-        h2.heading-label {% trans 'Filter by Topic' %}:
-        .tags
-          .tags_content
+  section.section
+    .container
+      h2.heading-label {% trans 'Filter by Topic' %}:
+      .tags(
+        data-cancel-link="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+      )
+        .tags_content
+          for category in categories
             .tags_item
-              a.ctag.ctag--light(href="{% namespace_url 'article-list' %}")
-                {% trans 'All' %}
-            for category in categories
-              .tags_item
-                a.ctag.ctag--light(
-                  href="{% namespace_url 'article-list-by-category' category.slug namespace=namespace default='' %}",
-                  class="{% if newsblog_category.id == category.id %}active{% endif %}"
-                )
-                  {{ category }}
+              a.ctag.ctag--light(
+                href="{% namespace_url 'article-list-by-category' category.slug namespace=namespace default='' %}",
+                class="{% if newsblog_category.id == category.id %}active{% endif %}"
+              )
+                {{ category }}
 
-        {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
-        if not article_list
-          h3 {% trans 'There are no news in this category' %}
+      {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
+      if not article_list
+        h3 {% trans 'There are no news in this category' %}
 
-        .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
-          br
-          {% include 'aldryn_newsblog/includes/pagination.pug' %}
-    section
-      .container
-        {% include 'includes/social.pug' %}
+      .col-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
+        br
+        {% include 'aldryn_newsblog/includes/pagination.pug' %}
+  section
+    .container
+      {% include 'includes/social.pug' %}
 
 

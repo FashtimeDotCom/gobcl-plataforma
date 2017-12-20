@@ -33,16 +33,16 @@ class UserAdmin(DjangoUserAdmin):
     change_form_template = 'loginas/change_form.html'
 
     add_form = UserCreationForm
-    list_display = ('email', 'first_name', 'last_name', 'is_staff',
+    list_display = ('rut', 'first_name', 'last_name', 'email', 'is_staff',
                     'change_password_link')
     form = UserChangeForm
 
-    search_fields = ('first_name', 'last_name', 'email')
+    search_fields = ('first_name', 'last_name', 'rut', 'email')
 
     list_filter = ('last_login',)
 
     fieldsets = (
-        (None, {'fields': ('email',)}),
+        (None, {'fields': ('rut', 'email',)}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
@@ -51,12 +51,11 @@ class UserAdmin(DjangoUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1',
+            'fields': ('rut', 'email', 'first_name', 'last_name', 'password1',
                        'password2')}
          ),
     )
-    search_fields = ('first_name', 'last_name', 'email')
-    ordering = ('email',)
+    ordering = ('rut',)
 
     def change_password_link(self, obj):
         return u"<a href=\"%d/password/\">%s</a>" % (obj.id,

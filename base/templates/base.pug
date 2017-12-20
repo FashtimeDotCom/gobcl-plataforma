@@ -90,7 +90,10 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
+  body(
+    class='{{body_class|default:""}} footer-links-{{ footer_links|length }}',
+    data-main=".site-main"
+  )
     {% cms_toolbar %}
     {% include 'includes/navbar.pug' %}
     div
@@ -102,10 +105,16 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
-    {% placeholder "top_content" %}
     {% include 'includes/contingency.pug' %}
-    block content
-    {% placeholder "bottom_content" %}
+    main.site-main
+      block header
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "top_content" %}
+      block content
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster

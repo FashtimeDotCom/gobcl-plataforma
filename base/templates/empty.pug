@@ -65,15 +65,7 @@ html(lang="es")
         integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=",
         crossorigin="anonymous"
       )
-
-    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous")
-
-    link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
-    link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
-
     {% render_block "css" %}
-
-    link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
 
     {% compress css %}
     block stylesheets
@@ -81,11 +73,18 @@ html(lang="es")
 
   body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
     {% cms_toolbar %}
+    div
+      div.container
+        div.row
+          {% if messages %}
+          {% for message in messages %}
+          div(class="alert alert-{{ message.tags }}") {{ message }}
+          {% endfor %}
+          {% endif %}
 
     {% placeholder "top_content" %}
     block content
     {% placeholder "bottom_content" %}
-
     // Javascript Placed at the end of the document so the pages load faster
     // uncompressible javascripts
     if not debug
@@ -136,9 +135,6 @@ html(lang="es")
     block javascript_data
     {% render_block "js" %}
     {% compress js %}
-    script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
-    script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
-    script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
@@ -151,11 +147,7 @@ html(lang="es")
           }
         });
       });
-    script(src="{% static 'js/utils/accent_fold.js' %}")
-    script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
-    script(src="{% static 'js/social.js' %}")
-    script(src="{% static 'js/application.js' %}")
     block javascripts
     {% endcompress %}
 

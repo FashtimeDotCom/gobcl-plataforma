@@ -4,43 +4,42 @@ extends base.pug
 - load thumbnail
 
 block content
-  main.site-main
-    section.bg-light
-      .container
-        ol.breadcrumb
-          li: a(href="/") {% trans 'Home' %}
-          li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+  section.bg-light
+    .container
+      ol.breadcrumb
+        li: a(href="/") {% trans 'Home' %}
+        li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
 
-    section.bg-bluedark
-      .container
-        .profile.profile--bluedark.text-light
-          .profile_header
-            h2.heading-large {{ presidency.name }}
-            span.profile_job {{ presidency.title }}
-          .row
-            .col-md-4
-              img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
-            .col-md-8
-              .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
-              ul.profile_body
-                li: a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter {{ presidency.twitter }}
-              .row.d-sm-none.d-lg-flex
-                .col-lg-6.mt-3
-                  .overflowed-xs
-                    a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
-          .row.d-sm-none.d-none.d-sm-flex.d-lg-none
-            .col-md-12.mt-3
-              .overflowed-xs
-                a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
-
-    section.section
-      .container
+  section.bg-bluedark
+    .container
+      .profile.profile--bluedark.text-light
+        .profile_header
+          h2.heading-large {{ presidency.name }}
+          span.profile_job {{ presidency.title }}
         .row
-          for url in presidency.urls.all
-            .col-sm-12.col-lg-4
-              .card-small
-                h5.card-small_title
-                  a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
-                    i.icon-arrow-right-black.icon--right
-                .card-small_body
-                  p.card-small_text {{ url.description }}
+          .col-md-4
+            img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
+          .col-md-8
+            .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
+            ul.profile_body
+              li: a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter {{ presidency.twitter }}
+            .row.d-sm-none.d-lg-flex
+              .col-lg-6.mt-3
+                .overflowed-xs
+                  a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
+        .row.d-sm-none.d-none.d-sm-flex.d-lg-none
+          .col-md-12.mt-3
+            .overflowed-xs
+              a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
+
+  section.section
+    .container
+      .row
+        for url in presidency.urls.all
+          .col-sm-12.col-lg-4
+            .card-small
+              h5.card-small_title
+                a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
+                  i.icon-arrow-right-black.icon--right
+              .card-small_body
+                p.card-small_text {{ url.description }}
