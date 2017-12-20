@@ -2,6 +2,9 @@
 """ Views for the regions application. """
 # standard library
 
+# django
+from django.urls import reverse
+
 # models
 from .models import Region
 
@@ -35,6 +38,12 @@ class RegionCreateView(BaseCreateView):
     form_class = RegionForm
     template_name = 'regions/region_create.pug'
     permission_required = 'regions.add_region'
+
+    def get_cancel_url(self):
+        return reverse('institution_list')
+
+    def get_success_url(self):
+        return reverse('institution_list')
 
 
 class RegionDetailView(TranslatableSlugMixin, HitCountDetailView):

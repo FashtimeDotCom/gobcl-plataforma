@@ -3,16 +3,15 @@
 # standard library
 
 # django
-from django import forms
 
 # models
 from .models import Region
 
 # views
-from base.forms import BaseModelForm
+from parler.forms import TranslatableModelForm
 
 
-class RegionForm(BaseModelForm):
+class RegionForm(TranslatableModelForm):
     """
     Form Region model.
     """

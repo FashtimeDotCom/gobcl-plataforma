@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -86,7 +85,9 @@ class Ministry(Institution):
             ministry = ministry.exclude(pk=self.pk)
 
         if ministry.first():
-            message = _("ministries's name and government structure, are not unique.")
+            message = _(
+                "ministries's name and government structure, are not unique."
+            )
             raise ValidationError(
                 {'government_structure': message}
             )
@@ -102,10 +103,6 @@ class Ministry(Institution):
             ministry.importance = importance
             ministry.save()
             importance += 1
-
-    def get_absolute_url(self):
-        """ Returns the canonical URL for the public_servant object """
-        return reverse('ministry_detail', args=(self.slug,))
 
     def save(self, *args, **kwargs):
         if not self.pk:
