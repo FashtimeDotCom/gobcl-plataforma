@@ -54,12 +54,3 @@ class UserManager(BaseUserManager):
 
     def get_queryset(self):
         return UserQuerySet(self.model, using=self._db)
-
-    def to_json(self):
-        return self.get_queryset().to_json()
-
-    def find_duplicates(self, *fields):
-        return self.get_queryset().find_duplicates(*fields)
-
-    def get_or_none(self, **fields):
-        return self.get_queryset().get_or_none(**fields)

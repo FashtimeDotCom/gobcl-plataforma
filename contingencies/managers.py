@@ -1,7 +1,7 @@
-from base.managers import QuerySet
+from base.managers import TranslatableQuerySet
 
 
-class ContingencyQueryset(QuerySet):
+class ContingencyQueryset(TranslatableQuerySet):
 
     def active(self):
         return self.filter(
