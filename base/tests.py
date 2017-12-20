@@ -42,6 +42,7 @@ class BaseTestCase(TestCase, Mockup):
         self.password = random_gen.gen_text()
         self.user = mommy.prepare('users.User')
         self.user.set_password(self.password)
+        self.user.rut = self.random_rut()
         self.user.save()
 
         self.login()
@@ -51,7 +52,7 @@ class BaseTestCase(TestCase, Mockup):
             user = self.user
             password = self.password
 
-        return self.client.login(email=user.email, password=password)
+        return self.client.login(rut=user.rut, password=password)
 
 
 class IntegrityOnDeleteTestCase(BaseTestCase):
