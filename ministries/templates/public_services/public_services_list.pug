@@ -6,7 +6,7 @@ block content
   .text-right
     .btn-group
       if perms.public_services.add_public_service
-        a.btn.btn-primary(href="{% url 'public_service_create' %}")
+        a.btn.btn-primary(href="{% url 'publicservice_create' %}")
           {% trans 'Add public_service' %}
           i.fa.fa-plus
 
