@@ -41,6 +41,8 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
         {% show_menu 0 1 100 100 "includes/menu.pug" %}
         li.nav-item
           a.nav-link(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li.nav-item
+          a.nav-link(href="{% url 'clave_unica_login' %}") {% trans 'login' %}
         li.nav-item.nav-item-action.nav-item-desktop
           a.btn.btn-search.toggle-search(href="#")
             i.ic-search.btn-search_icon
