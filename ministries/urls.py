@@ -5,6 +5,26 @@ from . import views
 
 urlpatterns = [
     url(
+        r'^public-services/$',
+        views.PublicServiceListView.as_view(),
+        name='publicservice_list'
+    ),
+    url(
+        r'^public-services/create/$',
+        views.PublicServiceCreateView.as_view(),
+        name='publicservice_create'
+    ),
+    url(
+        r'^public-services/(?P<pk>[\d]+)/update/$',
+        views.PublicServiceUpdateView.as_view(),
+        name='publicservice_update'
+    ),
+    url(
+        r'^public-services/(?P<pk>[\d]+)/delete/$',
+        views.PublicServiceDeleteView.as_view(),
+        name='publicservice_delete',
+    ),
+    url(
         r'^$',
         views.MinistryListView.as_view(),
         name='ministry_list'
@@ -28,25 +48,5 @@ urlpatterns = [
         r'^(?P<pk>[\d]+)/delete/$',
         views.MinistryDeleteView.as_view(),
         name='ministry_delete',
-    ),
-    url(
-        r'^public-service$',
-        views.PublicServiceListView.as_view(),
-        name='publicservice_list'
-    ),
-    url(
-        r'^public-service/create/$',
-        views.PublicServiceCreateView.as_view(),
-        name='publicservice_create'
-    ),
-    url(
-        r'^public-service/(?P<pk>[\d]+)/update/$',
-        views.PublicServiceUpdateView.as_view(),
-        name='publicservice_update'
-    ),
-    url(
-        r'^public-service/(?P<pk>[\d]+)/delete/$',
-        views.PublicServiceDeleteView.as_view(),
-        name='publicservice_delete',
     ),
 ]

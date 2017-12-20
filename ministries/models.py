@@ -136,10 +136,6 @@ class PublicService(BaseModel):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        """ Returns the canonical URL for the public_servant object """
-        return reverse('publicservice_detail', args=(self.slug,))
-
     class Meta:
         ordering = ('name',)
         verbose_name = _('public service')

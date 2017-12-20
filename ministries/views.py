@@ -95,7 +95,7 @@ class PublicServiceListView(BaseListView):
     View for displaying a list of ministries.
     """
     model = PublicService
-    template_name = 'ministries/ministry_list.pug'
+    template_name = 'public_services/public_services_list.pug'
 
     def get_queryset(self):
         queryset = super(PublicServiceListView, self).get_queryset()

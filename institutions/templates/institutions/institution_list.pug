@@ -69,7 +69,7 @@ block content
       - if ministry_list or perms.ministries.add_ministry
         h2#ministries.heading-medium {% trans 'Ministries' %}
         - if perms.ministries.add_ministry
-          a(href="{% url 'ministry_create' %}") {% trans 'create ministry'|capfirst %}
+          p: a(href="{% url 'ministry_create' %}") {% trans 'create ministry'|capfirst %}
         .row
           for ministry in ministry_list
             .searchable.col-sm-12.col-md-4.ministry-item(data-search-value="{{ ministry.name }}")
@@ -81,7 +81,8 @@ block content
         br
         h2#services.heading-medium {% trans 'public services'|capfirst %}
         -if perms.ministries.add_publicservice
-          a(href="{% url 'publicservice_create' %}") {% trans 'create public service'|capfirst %}
+          p: a(href="{% url 'publicservice_create' %}") {% trans 'create public service'|capfirst %}
+          p: a(href="{% url 'publicservice_list' %}") {% trans 'public service list'|capfirst %}
         .row
           for public_service in public_service_list
             .searchable.col-sm-12.col-md-4.service-item(data-search-value="{{ public_service.name }}")
@@ -96,7 +97,7 @@ block content
         br
         h2#regions.heading-medium {% trans 'Regions' %}
         -if perms.regions.add_region
-          a(href="{% url 'region_create' %}") {% trans 'create region'|capfirst %}
+          p: a(href="{% url 'region_create' %}") {% trans 'create region'|capfirst %}
         .row
           for region in region_list
             .searchable.col-sm-12.col-md-4.region-item(data-search-value="{{ region.name }}")
