@@ -38,7 +38,7 @@ class CampaignModelTest(BaseTestCase):
         '''
         self.assertEqual(Campaign.objects.count(), 0)
 
-        campaign = self.create_campaign(
+        self.campaign = self.create_campaign(
             title='foo',
             external_url='',
         )
@@ -47,5 +47,5 @@ class CampaignModelTest(BaseTestCase):
 
         self.assertEqual(
             self.campaign.get_absolute_url(),
-            reverse('campaigns:campaign_detail', args=(campaign.slug,))
+            reverse('campaigns:campaign_detail', args=(self.campaign.slug,))
         )
