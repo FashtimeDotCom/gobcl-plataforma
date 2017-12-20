@@ -6,12 +6,12 @@
 from django.contrib import admin
 
 # models
-from .models import Service
-from .models import File
+from .models import ChileAtiendeService
+from .models import ChileAtiendeFile
 
 
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
+@admin.register(ChileAtiendeService)
+class ChileAtiendeServiceAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'initial',
@@ -22,8 +22,8 @@ class ServiceAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(File)
-class FileAdmin(admin.ModelAdmin):
+@admin.register(ChileAtiendeFile)
+class ChileAtiendeFileAdmin(admin.ModelAdmin):
     list_display = (
         'title',
         'service',

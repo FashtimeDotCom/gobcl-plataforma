@@ -1,5 +1,5 @@
-from .models import Service as ServiceModel
-from .models import File as FileModel
+from .models import ChileAtiendeService
+from .models import ChileAtiendeFile
 
 from .chile_atiende_client import Service
 from .chile_atiende_client import File
@@ -29,10 +29,10 @@ def create_services():
         }
 
         service_list.append(
-            ServiceModel(**data)
+            ChileAtiendeService(**data)
         )
 
-    ServiceModel.objects.bulk_create(service_list)
+    ChileAtiendeService.objects.bulk_create(service_list)
 
 
 def create_files():
@@ -52,7 +52,7 @@ def create_files():
 
         service_name = file.get('servicio')
 
-        service = ServiceModel.objects.get_or_none(
+        service = ChileAtiendeService.objects.get_or_none(
             name=service_name
         )
 
@@ -70,10 +70,10 @@ def create_files():
         }
 
         file_list.append(
-            FileModel(**data)
+            ChileAtiendeFile(**data)
         )
 
-    FileModel.objects.bulk_create(file_list)
+    ChileAtiendeFile.objects.bulk_create(file_list)
 
 
 def create_files_by_services():
@@ -84,7 +84,7 @@ def create_files_by_services():
 
     file_obj = File()
 
-    services = ServiceModel.objects.all()
+    services = ChileAtiendeService.objects.all()
 
     file_list = []
     for service in services:
@@ -109,10 +109,10 @@ def create_files_by_services():
             }
 
             file_list.append(
-                FileModel(**data)
+                ChileAtiendeFile(**data)
             )
 
-    FileModel.objects.bulk_create(file_list)
+    ChileAtiendeFile.objects.bulk_create(file_list)
 
 
 def charge_data():

@@ -12,7 +12,7 @@ from base.models import BaseModel
 from .analytic_client import get_analytic_data
 
 
-class Service(BaseModel):
+class ChileAtiendeService(BaseModel):
     code = models.CharField(
         _('code'),
         max_length=255,
@@ -45,9 +45,9 @@ class Service(BaseModel):
         return self.url or ''
 
 
-class File(BaseModel):
+class ChileAtiendeFile(BaseModel):
     service = models.ForeignKey(
-        Service,
+        ChileAtiendeService,
         verbose_name=_('service'),
         related_name='files',
         null=True,

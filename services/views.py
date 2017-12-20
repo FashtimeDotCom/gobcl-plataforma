@@ -6,29 +6,28 @@
 from django.http import JsonResponse
 
 # models
-from .models import Service
+from .models import ChileAtiendeService
 
 # views
 from base.views import BaseDeleteView
 from base.views import BaseDetailView
 from django.views.generic import ListView
-from django.views.generic import TemplateView
 from django.views.generic import View
 
-# forms
+# chile atiende client
 from .chile_atiende_client import File
 
 
-class ServiceListView(ListView):
+class ChileAtiendeServiceListView(ListView):
     """
-    View for displaying a list of services.
+    View for displaying a list of Chile Atiende Services.
     """
-    model = Service
+    model = ChileAtiendeService
     template_name = 'services/service_list.pug'
     paginate_by = 9
 
     def get_queryset(self):
-        queryset = super(ServiceListView, self).get_queryset()
+        queryset = super(ChileAtiendeServiceListView, self).get_queryset()
 
         queryset = queryset.prefetch_related('files')
 
@@ -54,7 +53,7 @@ class ServiceDetailView(BaseDetailView):
     """
     A view for displaying a single service
     """
-    model = Service
+    model = ChileAtiendeService
     template_name = 'services/service_detail.pug'
     permission_required = 'services.view_service'
 
@@ -63,6 +62,6 @@ class ServiceDeleteView(BaseDeleteView):
     """
     A view for deleting a single service
     """
-    model = Service
+    model = ChileAtiendeService
     permission_required = 'services.delete_service'
     template_name = 'services/service_delete.pug'

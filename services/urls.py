@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     url(
         r'^$',
-        views.ServiceListView.as_view(),
+        views.ChileAtiendeServiceListView.as_view(),
         name='service_list'
     ),
     url(
