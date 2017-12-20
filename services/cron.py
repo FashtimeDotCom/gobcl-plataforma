@@ -1,6 +1,6 @@
 from django_cron import CronJobBase, Schedule
 
-from .models import File
+from .models import ChileAtiendeFile
 
 
 class GetAnalyticData(CronJobBase):
@@ -12,4 +12,4 @@ class GetAnalyticData(CronJobBase):
     code = 'services.cron.GetAnalyticData'
 
     def do(self):
-        File.update_visits()
+        ChileAtiendeFile.update_visits()

@@ -205,6 +205,7 @@ TEMPLATES = [
                 'base.context_processors.categories',
                 'searches.context_processors.get_feature_news',
                 'contingencies.context_processors.get_contingencies',
+                'services.context_processors.get_chile_atiende_files',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
