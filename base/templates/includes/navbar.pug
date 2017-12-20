@@ -65,9 +65,9 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
             ul.dropdown-menu
               li
                 if request.session.loginas_from_user
-                  a(href="{% url 'loginas-logout' %}") Logout
+                  a.nav-link(href="{% url 'loginas-logout' %}") Logout
                 else
-                  a(href="{% url 'logout' %}") Logout
+                  a.nav-link(href="{% url 'logout' %}") Logout
         else
           li.nav-item.nav-item-access
             a.nav-link(href="{% url 'clave_unica_login' %}") {% trans 'Log in' %}
