@@ -85,7 +85,9 @@ class MinistryDeleteView(BaseDeleteView):
     model = Ministry
     permission_required = 'ministries.delete_ministry'
     template_name = 'ministries/ministry_delete.pug'
-    # success url de institutions list
+
+    def get_success_url(self):
+        return reverse('institution_list')
 
 
 class PublicServiceListView(BaseListView):
