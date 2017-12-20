@@ -23,16 +23,21 @@ block content
                 button(type="submit").search-form_button.search-form_button--submit: i.ic-search
                 button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
 
-  section.section.section--medium.bg-bluedark.d-none.d-sm-block
+  section.section.section--small.bg-bluedark.d-none.d-md-block
     .container
-      ul.list-ib
-        li {% trans 'Most searched' %}:
-        for category in categories
-          li
-            a.link.link--clean.text-white(
-              href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
-            )
-              {{ category }}
+      .row
+        .col-md-9.col-xl-10
+          ul.list-ib
+            li {% trans 'Most searched' %}:
+            for category in categories
+              li
+                a.link.link--clean.text-white(
+                  href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
+                )
+                  {{ category }}
+        .col-md-3.col-xl-2.text-right
+          a.button.button-small(href="{% url 'about' %}")
+            {% trans 'About Chile' %}
 
   {% include 'includes/social_small.pug' %}
   section

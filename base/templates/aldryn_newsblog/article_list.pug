@@ -15,11 +15,10 @@ block content
   section.section
     .container
       h2.heading-label {% trans 'Filter by Topic' %}:
-      .tags
+      .tags(
+        data-cancel-link="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+      )
         .tags_content
-          .tags_item
-            a.ctag.ctag--light(href="{% namespace_url 'article-list' %}")
-              {% trans 'All' %}
           for category in categories
             .tags_item
               a.ctag.ctag--light(
@@ -32,7 +31,7 @@ block content
       if not article_list
         h3 {% trans 'There are no news in this category' %}
 
-      .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
+      .col-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
         br
         {% include 'aldryn_newsblog/includes/pagination.pug' %}
   section

@@ -90,7 +90,10 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
+  body(
+    class='{{body_class|default:""}} footer-links-{{ footer_links|length }}',
+    data-main=".site-main"
+  )
     {% cms_toolbar %}
     {% include 'includes/navbar.pug' %}
     div
