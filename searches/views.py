@@ -1,6 +1,10 @@
-from django.views.generic import ListView
-from django.db.models import Q
+# standard library
 import json
+
+# django
+from django.conf import settings
+from django.db.models import Q
+from django.views.generic import ListView
 
 from aldryn_newsblog.models import Article
 
@@ -26,16 +30,17 @@ class ArticleListView(ListView):
         # obinta chile atiende files
         chile_atiende_file_client = File()
         if self.request.GET.get('q'):
-            context['chile_atiende_files'] = json.loads(
-                chile_atiende_file_client.list(query=self.query).text
-            )
+            if settings.CHILEATIENDE_ACCESS_TOKEN:
+                context['chile_atiende_files'] = json.loads(
+                    chile_atiende_file_client.list(query=self.query).text
+                )['fichas']['items']
         else:
             context['chile_atiende_files'] = []
 
         # Count the total list of objects
         context['count'] = (
             context['object_list'].count() +
-            len(context['chile_atiende_files']['fichas']['items'])
+            len(context['chile_atiende_files'])
         )
 
         context['query'] = self.query
