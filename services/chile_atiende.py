@@ -91,7 +91,7 @@ def create_files_by_services():
 
         json_file = file_obj.by_service(service.code).json()
 
-        files = json_file['fichas']['items']
+        files = json_file['fichas'].get('items')
 
         for file in files:
 
