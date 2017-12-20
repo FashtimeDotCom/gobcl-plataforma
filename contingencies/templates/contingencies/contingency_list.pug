@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.contingencies.add_contingency
+        a.btn.btn-primary(href="{% url 'contingency_create' %}")
+          {% trans 'Add contingency' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.contingencies.change_contingency
+          th
+        if perms.contingencies.delete_contingency
+          th
+    tbody
+      for contingency in object_list
+        tr
+          td
+            a(href="{{ contingency.get_absolute_url }}")
+              | {{contingency.id}}
+          td
+            a(href="{{ contingency.get_absolute_url }}")
+              | {{contingency}}
+          if perms.contingencies.change_contingency
+            td
+              a.btn.btn-primary(href="{% url 'contingency_update' contingency.id %}")
+                {% trans 'Update contingency' %}
+                i.fa.fa-edit
+          if perms.contingencies.delete_contingency
+            td
+              a.btn.btn-danger(href="{% url 'contingency_delete' contingency.id %}")
+                {% trans 'Delete contingency' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}
