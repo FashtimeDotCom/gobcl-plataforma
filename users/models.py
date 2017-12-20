@@ -140,7 +140,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     # overwritten methods
     def save(self, *args, **kwargs):
         """ store all emails in lowercase """
-        self.email = self.email.lower()
+        if self.email:
+            self.email = self.email.lower()
 
         super(User, self).save(*args, **kwargs)
 
