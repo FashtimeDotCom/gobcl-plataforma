@@ -3,10 +3,11 @@
 # standard library
 
 # django
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
+from django.db import models
 from django.utils.translation import activate
+from django.utils.translation import ugettext_lazy as _
 
 from cms.utils.i18n import get_current_language
 
@@ -109,6 +110,10 @@ class Ministry(Institution):
             self._sum_importance()
         return super(Ministry, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        """ Returns the canonical URL for the public_servant object """
+        return reverse('ministry_detail', args=(self.slug,))
+
 
 class PublicService(BaseModel):
     ministry = models.ForeignKey(
@@ -130,6 +135,10 @@ class PublicService(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        """ Returns the canonical URL for the public_servant object """
+        return reverse('publicservice_detail', args=(self.slug,))
 
     class Meta:
         ordering = ('name',)
