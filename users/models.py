@@ -117,10 +117,12 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         )
         email = response_dict['email']
         user, created = cls.objects.get_or_create(
-            first_name=first_name,
-            last_name=last_name,
             rut=rut,
-            email=email,
+            defaults={
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+            }
         )
 
         return user
