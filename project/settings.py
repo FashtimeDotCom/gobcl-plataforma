@@ -536,7 +536,7 @@ PARLER_LANGUAGES = {
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
 
 CRON_CLASSES = (
-    'services.cron.GetAnalyticData',
+    'services.cron.ChargeChileAtiendeServiceFile',
 )
 
 # Google Analytics API
