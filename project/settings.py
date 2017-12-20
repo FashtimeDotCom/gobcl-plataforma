@@ -543,3 +543,11 @@ CRON_CLASSES = (
 KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
 SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
 VIEW_ID = os.getenv('VIEW_ID', '')
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/django_cache',
+    }
+}
