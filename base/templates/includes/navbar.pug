@@ -58,7 +58,7 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
 
         if user.is_authenticated 
           li.nav-item.nav-item-access.dropdown
-            a.dropdown-toggle(href="#", data-toggle="dropdown")
+            a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown")
               | {{user.first_name}}
               b.caret
 
