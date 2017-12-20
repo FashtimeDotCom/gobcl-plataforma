@@ -1,10 +1,11 @@
 extends form.pug
 
 - load i18n
+- load apphooks_config_tags
 
 block breadcrumbs
   li
-    a(href="{% url 'campaign_list' %}")
+    a(href="{% namespace_url 'campaign_list' namespace='campaigns' default='' %}")
       | {{opts.verbose_name_plural|capfirst}}
   li
     a(href="{{object.get_absolute_url}}")

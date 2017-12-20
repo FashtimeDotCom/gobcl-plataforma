@@ -3,6 +3,7 @@
 # standard library
 
 # django
+from django.urls import reverse
 from django.views.generic import ListView
 
 # models
@@ -37,6 +38,9 @@ class CampaignCreateView(BaseCreateView):
     template_name = 'campaigns/campaign_create.pug'
     permission_required = 'campaigns.add_campaign'
 
+    def get_cancel_url(self):
+        return reverse('campaigns:campaign_list')
+
 
 class CampaignDetailView(TranslatableSlugMixin, BaseDetailView):
     """
@@ -64,3 +68,6 @@ class CampaignDeleteView(BaseDeleteView):
     model = Campaign
     permission_required = 'campaigns.delete_campaign'
     template_name = 'campaigns/campaign_delete.pug'
+
+    def get_success_url(self):
+        return reverse('campaigns:campaign_list')

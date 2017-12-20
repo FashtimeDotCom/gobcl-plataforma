@@ -106,7 +106,6 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
-    'gobcl_cms',
     'campaigns',
 
     # django cms
@@ -134,6 +133,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'taggit',
     'reversion',
+    'gobcl_cms',
 
 ]
 
