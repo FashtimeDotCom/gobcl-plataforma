@@ -1,0 +1,18 @@
+extends base.pug
+
+- load i18n
+
+block content
+  section.section.section-header
+    for service in object_list
+      a(href="{{ service.get_absolute_url }}")
+        {{ service.name }}
+      br
+      br
+      for file in service.files.all
+        a(href="{{ file.get_absolute_url }}")
+          {{ file.title }}
+        br
+      hr
+
+  {% include 'includes/pagination.pug' %}
