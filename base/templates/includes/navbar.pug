@@ -35,7 +35,7 @@ nav.navbar.navbar-expand-md.navbar-light.fixed-top
       ul.navbar-nav
 
         li.nav-item
-          a.nav-link(href="#") {% trans 'Procedures and benefits' %}
+          a.nav-link(href="{% url 'service_list' %}") {% trans 'Procedures and benefits' %}
         {% show_menu 0 1 100 100 "includes/menu.pug" %}
         li.nav-item
           a.nav-link(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
