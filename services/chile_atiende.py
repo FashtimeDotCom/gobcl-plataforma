@@ -17,22 +17,21 @@ def create_services():
 
     services = json_service['servicios']['items']
 
-    service_list = []
     for service in services:
 
+        code = service.get('id')
+
         data = {
-            'code': service.get('id'),
             'initial': service.get('sigla'),
             'name': service.get('nombre'),
             'url': service.get('url'),
             'mision': service.get('mision'),
         }
 
-        service_list.append(
-            ChileAtiendeService(**data)
+        ChileAtiendeService.objects.update_or_create(
+            code=code,
+            defaults=data,
         )
-
-    ChileAtiendeService.objects.bulk_create(service_list)
 
 
 def create_files():
@@ -47,7 +46,6 @@ def create_files():
 
     files = json_file['fichas']['items']['ficha']
 
-    file_list = []
     for file in files:
 
         service_name = file.get('servicio')
@@ -56,11 +54,12 @@ def create_files():
             name=service_name
         )
 
+        code = file.get('id')
+
         data = {
             'service': service,
             'service_name': service_name,
             'title': file.get('titulo'),
-            'code': file.get('id'),
             'date': file.get('fecha'),
             'objective': file.get('objetivo'),
             'beneficiaries': file.get('beneficiarios'),
@@ -69,11 +68,10 @@ def create_files():
             'duration': file.get('plazo'),
         }
 
-        file_list.append(
-            ChileAtiendeFile(**data)
+        ChileAtiendeFile.objects.update_or_create(
+            code=code,
+            defaults=data,
         )
-
-    ChileAtiendeFile.objects.bulk_create(file_list)
 
 
 def create_files_by_services():
@@ -86,7 +84,6 @@ def create_files_by_services():
 
     services = ChileAtiendeService.objects.all()
 
-    file_list = []
     for service in services:
 
         json_file = file_obj.by_service(service.code).json()
@@ -95,11 +92,12 @@ def create_files_by_services():
 
         for file in files:
 
+            code = file.get('id'),
+
             data = {
                 'service': service,
                 'service_name': file.get('servicio'),
                 'title': file.get('titulo'),
-                'code': file.get('id'),
                 'date': file.get('fecha'),
                 'objective': file.get('objetivo'),
                 'beneficiaries': file.get('beneficiarios'),
@@ -108,11 +106,10 @@ def create_files_by_services():
                 'duration': file.get('plazo', ''),
             }
 
-            file_list.append(
-                ChileAtiendeFile(**data)
+            ChileAtiendeFile.objects.update_or_create(
+                code=code,
+                defaults=data,
             )
-
-    ChileAtiendeFile.objects.bulk_create(file_list)
 
 
 def charge_data():
