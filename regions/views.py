@@ -67,7 +67,7 @@ class RegionUpdateView(BaseUpdateView):
     """
     model = Region
     form_class = RegionForm
-    template_name = 'regions/update.pug'
+    template_name = 'regions/region_update.pug'
     permission_required = 'regions.change_region'
 
 
@@ -77,4 +77,7 @@ class RegionDeleteView(BaseDeleteView):
     """
     model = Region
     permission_required = 'regions.delete_region'
-    template_name = 'regions/delete.pug'
+    template_name = 'regions/region_delete.pug'
+
+    def get_success_url(self):
+        return reverse('institution_list')
