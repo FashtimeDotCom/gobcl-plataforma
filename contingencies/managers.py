@@ -7,3 +7,7 @@ class ContingencyQueryset(TranslatableQuerySet):
         return self.filter(
             is_active=True,
         )
+
+
+class ContingencyEventQueryset(TranslatableQuerySet):
+    pass
