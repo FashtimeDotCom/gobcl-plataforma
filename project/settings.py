@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'hitcount',
     'haystack',
     'modeltranslation',
+    'django_cron',
 
     # internal
     'base',
@@ -106,6 +107,7 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
+    'services',
     'campaigns',
     'contingencies',
 
@@ -203,6 +205,7 @@ TEMPLATES = [
                 'base.context_processors.categories',
                 'searches.context_processors.get_feature_news',
                 'contingencies.context_processors.get_contingencies',
+                'services.context_processors.get_chile_atiende_files',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -517,6 +520,8 @@ THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'easy_thumbnails.storage.ThumbnailFileSystemStorage'
 )
 
+CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
+
 PARLER_LANGUAGES = {
     1: (
         {'code': 'es'},
@@ -527,3 +532,14 @@ PARLER_LANGUAGES = {
         'hide_untranslated': False,
     }
 }
+
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+
+CRON_CLASSES = (
+    'services.cron.GetAnalyticData',
+)
+
+# Google Analytics API
+KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
+SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
+VIEW_ID = os.getenv('VIEW_ID', '')
