@@ -1,7 +1,11 @@
 from django.views.generic import ListView
 from django.db.models import Q
+import json
 
 from aldryn_newsblog.models import Article
+
+# chile atiende
+from services.chile_atiende_client import File
 
 
 class ArticleListView(ListView):
@@ -18,7 +22,24 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
+
+        # obinta chile atiende files
+        chile_atiende_file_client = File()
+        if self.request.GET.get('q'):
+            context['chile_atiende_files'] = json.loads(
+                chile_atiende_file_client.list(query=self.query).text
+            )
+        else:
+            context['chile_atiende_files'] = []
+
+        # Count the total list of objects
+        context['count'] = (
+            context['object_list'].count() +
+            len(context['chile_atiende_files']['fichas']['items'])
+        )
+
         context['query'] = self.query
+
         return context
 
     def get_queryset(self):
