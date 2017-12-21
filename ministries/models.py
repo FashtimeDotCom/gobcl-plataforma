@@ -9,13 +9,17 @@ from django.db import models
 from django.utils.translation import activate
 from django.utils.translation import ugettext_lazy as _
 
+# cms
 from cms.utils.i18n import get_current_language
+
+# parler
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
 
 # models
 from base.models import BaseModel
 from institutions.models import Institution
 from ministries.managers import PublicServiceQuerySet
-
 from institutions.models import institution_translations
 
 
@@ -115,14 +119,17 @@ class Ministry(Institution):
         return reverse('ministry_detail', args=(self.slug,))
 
 
-class PublicService(BaseModel):
+class PublicService(TranslatableModel, BaseModel):
+    institution_translations = TranslatedFields(
+        name=models.CharField(
+            _('name'),
+            max_length=255,
+        ),
+    )
+
     ministry = models.ForeignKey(
         Ministry,
         verbose_name=_('ministry'),
-    )
-    name = models.CharField(
-        _('name'),
-        max_length=100,
     )
     url = models.URLField(
         _('url'),
@@ -131,13 +138,17 @@ class PublicService(BaseModel):
         null=True,
     )
 
+    importance = models.PositiveIntegerField(
+        _('importance'),
+        default=0,
+    )
+
     objects = PublicServiceQuerySet.as_manager()
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('importance',)
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
-        unique_together = ('name', 'ministry')
