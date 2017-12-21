@@ -29,6 +29,7 @@ class MinistryForm(TranslatableModelForm):
         public_servants = public_servants.filter(
             government_structure=self.instance.government_structure
         )
+        self.fields['minister'].queryset = public_servants
         self.fields['public_servants'].queryset = public_servants
 
 
@@ -40,3 +41,17 @@ class PublicServiceForm(TranslatableModelForm):
     class Meta:
         model = PublicService
         exclude = ()
+
+    def __init__(self, *args, **kwargs):
+        government_structure = kwargs.pop('government_structure', None)
+        super().__init__(*args, **kwargs)
+        ministries = self.fields['ministry'].queryset
+        if not government_structure:
+            if self.instance.id:
+                government_structure = (
+                    self.instance.ministry.government_structure
+                )
+        ministries = ministries.filter(
+            government_structure=government_structure
+        )
+        self.fields['ministry'].queryset = ministries
