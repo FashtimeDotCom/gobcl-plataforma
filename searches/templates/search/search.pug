@@ -1,6 +1,9 @@
 extends base.pug
 
-- load i18n cms_tags
+- load i18n cms_tags staticfiles
+
+block javascripts
+  script(src="{% static 'js/search.js' %}")
 
 block content
   section.section.bg-bluedark.text-light
