@@ -82,3 +82,31 @@ class ContingencyEvent(BaseModel, TranslatableModel):
 
     def get_absolute_url(self):
         return self.url
+
+
+class ContingencyInformation(BaseModel, TranslatableModel):
+    contingency = models.ForeignKey(
+        Contingency,
+        verbose_name=_('contingency'),
+        related_name='informations',
+    )
+    translations = TranslatedFields(
+        title=models.CharField(
+            _('title'),
+            max_length=255,
+        ),
+        description=models.TextField(
+            _('description'),
+        )
+    )
+    url = models.URLField(
+        _('url'),
+        max_length=200,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return self.url
