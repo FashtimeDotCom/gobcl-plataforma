@@ -12,6 +12,7 @@ from parler.admin import TranslatableAdmin
 # models
 from .models import Contingency
 from .models import ContingencyEvent
+from .models import ContingencyInformation
 
 
 @admin.register(Contingency)
@@ -37,6 +38,21 @@ class ContingencyEventAdmin(AllTranslationsMixin, TranslatableAdmin):
         'title',
         'contingency',
         'date_time',
+    )
+    search_fields = (
+        'title',
+    )
+    list_filter = (
+        'contingency',
+    )
+
+
+@admin.register(ContingencyInformation)
+class ContingencyInformationAdmin(AllTranslationsMixin, TranslatableAdmin):
+    list_display = (
+        'title',
+        'contingency',
+        'url',
     )
     search_fields = (
         'title',
