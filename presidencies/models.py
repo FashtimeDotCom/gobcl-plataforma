@@ -15,6 +15,9 @@ from parler.models import TranslatedFields
 from base.models import BaseModel
 from base.models import file_path
 
+from .managers import PresidencyQueryset
+from .managers import PresidencyURLQueryset
+
 
 class PresidencyURL(BaseModel, TranslatableModel):
     translations = TranslatedFields(
@@ -31,6 +34,8 @@ class PresidencyURL(BaseModel, TranslatableModel):
         _('url'),
         max_length=200,
     )
+
+    objects = PresidencyURLQueryset.as_manager()
 
     def __str__(self):
         return self.url
@@ -70,6 +75,8 @@ class Presidency(BaseModel, TranslatableModel):
         'PresidencyURL',
         verbose_name=_('urls'),
     )
+
+    objects = PresidencyQueryset.as_manager()
 
     class Meta:
         verbose_name = _('presidency')

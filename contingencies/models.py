@@ -14,6 +14,7 @@ from base.models import BaseModel
 
 from .managers import ContingencyQueryset
 from .managers import ContingencyEventQueryset
+from .managers import ContingencyInformationQueryset
 
 
 class Contingency(BaseModel, TranslatableModel):
@@ -107,6 +108,8 @@ class ContingencyInformation(BaseModel, TranslatableModel):
         max_length=200,
         null=True,
     )
+
+    objects = ContingencyInformationQueryset.as_manager()
 
     def __str__(self):
         return self.title
