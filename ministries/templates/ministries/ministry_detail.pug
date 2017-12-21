@@ -56,6 +56,9 @@ block content
           .profile_buttons
             a(href="{{ ministry.url }}", target="blank").button.button--block {% trans 'Go to the ministry site' %}
 
+            a(href="{% url 'ministry_update' ministry.id %}", target="blank").button.button--block {% trans 'edit ministry'|capfirst %}
+            a(href="{% url 'ministry_delete' ministry.id %}", target="blank").button.button--block {% trans 'delete ministry'|capfirst %}
+
   section.bg-light
     .container
       .row
