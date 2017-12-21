@@ -9,7 +9,6 @@ from .models import Ministry
 from .models import PublicService
 
 # forms
-from base.forms import BaseModelForm
 from base.forms import TranslatableModelForm
 
 
@@ -33,7 +32,7 @@ class MinistryForm(TranslatableModelForm):
         self.fields['public_servants'].queryset = public_servants
 
 
-class PublicServiceForm(BaseModelForm):
+class PublicServiceForm(TranslatableModelForm):
     """
     Form PublicService model.
     """

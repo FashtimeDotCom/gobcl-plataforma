@@ -8,7 +8,7 @@
 from .models import Region
 
 # views
-from parler.forms import TranslatableModelForm
+from base.forms import TranslatableModelForm
 
 
 class RegionForm(TranslatableModelForm):
@@ -18,4 +18,16 @@ class RegionForm(TranslatableModelForm):
 
     class Meta:
         model = Region
-        exclude = ()
+        exclude = (
+            'government_structure',
+        )
+
+
+class RegionCreateForm(RegionForm):
+    """
+    Form Region model.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = kwargs.pop('government_structure')
