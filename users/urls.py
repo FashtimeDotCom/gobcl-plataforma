@@ -31,11 +31,6 @@ urlpatterns = [
         name='logout'
     ),
     url(
-        r'^register/$',
-        users_views.UserCreateView.as_view(),
-        name='register',
-    ),
-    url(
         r'^password-reset/$',
         users_views.PasswordResetView.as_view(),
         name='password_reset'

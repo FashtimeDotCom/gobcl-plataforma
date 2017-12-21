@@ -14,15 +14,16 @@ from django.utils.translation import ugettext_lazy as _
 from users.models import User
 
 # forms
-from captcha.fields import ReCaptchaField
 from base.forms import BaseModelForm
+from captcha.fields import ReCaptchaField
+from localflavor.cl.forms import CLRutField
 
 
 class AuthenticationForm(forms.Form):
     """ Custom class for authenticating users. Takes the basic
-    AuthenticationForm and adds email as an alternative for login
+    AuthenticationForm and adds rut as an alternative for login
     """
-    email = forms.EmailField(label=_("Email"), required=True)
+    rut = CLRutField(label=_("RUT"), required=True)
     password = forms.CharField(
         label=_("Password"),
         strip=False,
@@ -30,7 +31,7 @@ class AuthenticationForm(forms.Form):
     )
 
     error_messages = {
-        'invalid_login': _("Please enter a correct email and password. "
+        'invalid_login': _("Please enter a correct rut and password. "
                            "Note that both fields may be case-sensitive."),
         'no_cookies': _("Your Web browser doesn't appear to have cookies "
                         "enabled. Cookies are required for logging in."),
@@ -47,24 +48,24 @@ class AuthenticationForm(forms.Form):
         self.request = request
         self.user_cache = None
         UserModel = get_user_model()
-        self.email_field = UserModel._meta.get_field(UserModel.USERNAME_FIELD)
+        self.rut_field = UserModel._meta.get_field(UserModel.USERNAME_FIELD)
         super(AuthenticationForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         """
-        validates the email and password.
+        validates the rut and password.
         """
-        email = self.cleaned_data.get('email')
+        rut = self.cleaned_data.get('rut')
         password = self.cleaned_data.get('password')
 
-        if email and password:
-            self.user_cache = authenticate(email=email,
+        if rut and password:
+            self.user_cache = authenticate(rut=rut,
                                            password=password)
             if self.user_cache is None:
                 raise forms.ValidationError(
                     self.error_messages['invalid_login'],
                     code='invalid_login',
-                    params={'email': self.email_field.verbose_name},
+                    params={'rut': self.rut_field.verbose_name},
                 )
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(
@@ -101,13 +102,13 @@ class AdminAuthenticationForm(AuthenticationForm):
         widget=forms.HiddenInput, initial=1, error_messages=error_messages)
 
     def clean(self):
-        email = self.cleaned_data.get('email')
+        rut = self.cleaned_data.get('rut')
         password = self.cleaned_data.get('password')
-        message = _("Please enter the correct email and password for a staff "
+        message = _("Please enter the correct rut and password for a staff "
                     "account. Note that both fields may be case-sensitive.")
 
-        if email and password:
-            self.user_cache = authenticate(email=email, password=password)
+        if rut and password:
+            self.user_cache = authenticate(rut=rut, password=password)
             if self.user_cache is None:
                 raise forms.ValidationError(message)
             elif not self.user_cache.is_active or not self.user_cache.is_staff:
@@ -118,11 +119,11 @@ class AdminAuthenticationForm(AuthenticationForm):
 
 class UserCreationForm(BaseModelForm):
     """
-    A form that creates a user, with no privileges, from the given email and
+    A form that creates a user, with no privileges, from the given rut and
     password.
     """
     error_messages = {
-        'duplicate_email': _("A user with that email already exists."),
+        'duplicate_rut': _("A user with that rut already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
 
@@ -147,16 +148,16 @@ class UserCreationForm(BaseModelForm):
 
     class Meta:
         model = User
-        fields = ("email",)
+        fields = ("rut",)
 
-    def clean_email(self):
-        """ checks that the email is unique """
-        email = self.cleaned_data["email"]
+    def clean_rut(self):
+        """ checks that the rut is unique """
+        rut = self.cleaned_data["rut"]
         try:
-            User.objects.get(email=email)
+            User.objects.get(rut=rut)
         except User.DoesNotExist:
-            return email
-        raise forms.ValidationError(self.error_messages['duplicate_email'])
+            return rut
+        raise forms.ValidationError(self.error_messages['duplicate_rut'])
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

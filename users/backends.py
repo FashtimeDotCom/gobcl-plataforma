@@ -12,14 +12,14 @@ class CustomBackend(ModelBackend):
     """
     supports_inactive_user = True
 
-    def authenticate(self, email, password, token=None):
+    def authenticate(self, rut, password, token=None):
         """ login using  the username validating with the password  or the
         token. If the token is used, then it's deleted
 
         """
         UserModel = get_user_model()
         try:
-            user = UserModel._default_manager.get_by_natural_key(email)
+            user = UserModel._default_manager.get_by_natural_key(rut)
         except UserModel.DoesNotExist:
             return None
         if password is not None:

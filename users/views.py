@@ -21,12 +21,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.edit import CreateView
 
 # forms
 from users.forms import AuthenticationForm
 from users.forms import CaptchaAuthenticationForm
-from users.forms import CaptchaUserCreationForm
 from users.forms import UserForm
 
 # models
@@ -102,29 +100,6 @@ class PasswordResetDoneView(auth_views.PasswordResetDoneView):
 class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     """ View that shows a success message to the user"""
     template_name = "registration/password_reset_complete.pug"
-
-
-class UserCreateView(CreateView):
-    template_name = 'users/create.pug'
-    form_class = CaptchaUserCreationForm
-    title = _('Registration')
-
-    def get_context_data(self, **kwargs):
-        context = super(UserCreateView, self).get_context_data(**kwargs)
-        context['title'] = self.title
-
-        return context
-
-    def form_valid(self, form):
-        form.save(verify_email_address=True, request=self.request)
-        messages.add_message(
-            self.request,
-            messages.INFO,
-            _("An email has been sent to you. Please "
-              "check it to verify your email.")
-        )
-
-        return redirect('home')
 
 
 @login_required
