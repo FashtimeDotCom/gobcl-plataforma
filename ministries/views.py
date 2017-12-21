@@ -33,6 +33,7 @@ class MinistryListView(BaseListView):
         queryset = super(MinistryListView, self).get_queryset()
         queryset = queryset.by_government_structure(
             self.request.government_structure)
+        queryset = queryset.prefetch_related('translations')
         return queryset
 
 

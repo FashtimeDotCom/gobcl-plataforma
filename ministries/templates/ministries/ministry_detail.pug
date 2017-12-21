@@ -67,7 +67,7 @@ block content
             .profile.profile--half-small
               div.profile_image.profile_image--small
                 if servant.photo
-                  img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar' }}", alt="")
+                  img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar_small' }}", alt="")
               .profile_header
                 h3.profile_title {{ servant.name }}
                 span.profile_job {{ servant.charge|default_if_none:"" }}
