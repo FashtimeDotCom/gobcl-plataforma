@@ -54,10 +54,16 @@ block content
                 li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
         .col-sm-12.col-lg-4.align-self-end
           .profile_buttons
-            a(href="{{ ministry.url }}", target="blank").button.button--block {% trans 'Go to the ministry site' %}
+            a.button.button--block(href="{{ ministry.url }}", target="blank")
+              {% trans 'Go to the ministry site' %}
+  
+            if perms.ministries.change_ministry
+              a.button.button--block(href="{% url 'ministry_update' ministry.id %}", target="blank")
+                | {% trans 'edit ministry'|capfirst %}
 
-            a(href="{% url 'ministry_update' ministry.id %}", target="blank").button.button--block {% trans 'edit ministry'|capfirst %}
-            a(href="{% url 'ministry_delete' ministry.id %}", target="blank").button.button--block {% trans 'delete ministry'|capfirst %}
+            if perms.ministries.delete_ministry
+              a.button.button--block(href="{% url 'ministry_delete' ministry.id %}", target="blank")
+                | {% trans 'delete ministry'|capfirst %}
 
   section.bg-light
     .container

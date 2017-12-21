@@ -8,9 +8,9 @@
 from .models import Ministry
 from .models import PublicService
 
-# views
+# forms
 from base.forms import BaseModelForm
-from parler.forms import TranslatableModelForm
+from base.forms import TranslatableModelForm
 
 
 class MinistryForm(TranslatableModelForm):
@@ -20,7 +20,17 @@ class MinistryForm(TranslatableModelForm):
 
     class Meta:
         model = Ministry
-        exclude = ()
+        exclude = (
+            'government_structure',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        public_servants = self.fields['public_servants'].queryset
+        public_servants = public_servants.filter(
+            government_structure=self.instance.government_structure
+        )
+        self.fields['public_servants'].queryset = public_servants
 
 
 class PublicServiceForm(BaseModelForm):
