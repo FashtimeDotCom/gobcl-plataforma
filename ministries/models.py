@@ -120,7 +120,7 @@ class Ministry(Institution):
 
 
 class PublicService(TranslatableModel, BaseModel):
-    institution_translations = TranslatedFields(
+    translations = TranslatedFields(
         name=models.CharField(
             _('name'),
             max_length=255,
