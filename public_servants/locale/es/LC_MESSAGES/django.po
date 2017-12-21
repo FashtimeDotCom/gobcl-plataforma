@@ -44,15 +44,15 @@ msgstr ""
 
 #: models.py:51
 msgid "public servant"
-msgstr ""
+msgstr "funcionario público"
 
 #: models.py:52
 msgid "public servants"
-msgstr ""
+msgstr "funcionarios públicos"
 
 #: models.py:54
-msgid "Can view public_servants"
-msgstr ""
+msgid "Can view public servants"
+msgstr "Puede ver funcionarios públicos"
 
 #: templates/public_servants/public_servant_delete.pug:18
 #, python-format
@@ -70,13 +70,13 @@ msgstr ""
 #: templates/public_servants/public_servant_detail.pug:15
 #: templates/public_servants/public_servant_list.pug:34
 msgid "Update public servant"
-msgstr ""
+msgstr "Actualizar funcionario público"
 
 #: templates/public_servants/public_servant_detail.pug:19
 #: templates/public_servants/public_servant_list.pug:39
 msgid "Delete public servant"
-msgstr ""
+msgstr "Borrar funcionario público"
 
 #: templates/public_servants/public_servant_list.pug:10
 msgid "Add public servant"
-msgstr ""
+msgstr "Agregar funcionario público"

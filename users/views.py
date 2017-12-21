@@ -21,19 +21,16 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.edit import CreateView
 
 # forms
 from users.forms import AuthenticationForm
 from users.forms import CaptchaAuthenticationForm
-from users.forms import CaptchaUserCreationForm
 from users.forms import UserForm
 
 # models
 from users.models import User
 
 # views
-from base.views import BaseListView
 
 # utils
 from users.login_settings import ClaveUnicaSettings
@@ -104,29 +101,6 @@ class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     template_name = "registration/password_reset_complete.pug"
 
 
-class UserCreateView(CreateView):
-    template_name = 'users/create.pug'
-    form_class = CaptchaUserCreationForm
-    title = _('Registration')
-
-    def get_context_data(self, **kwargs):
-        context = super(UserCreateView, self).get_context_data(**kwargs)
-        context['title'] = self.title
-
-        return context
-
-    def form_valid(self, form):
-        form.save(verify_email_address=True, request=self.request)
-        messages.add_message(
-            self.request,
-            messages.INFO,
-            _("An email has been sent to you. Please "
-              "check it to verify your email.")
-        )
-
-        return redirect('home')
-
-
 @login_required
 def user_edit(request):
     if request.method == 'POST':
@@ -183,34 +157,6 @@ def user_new_confirm(request, uidb36=None, token=None,
                              _("Invalid verification link"))
 
     return redirect('login')
-
-
-class UserListView(BaseListView):
-    model = User
-    template_name = 'users/list.pug'
-    ordering = ('first_name', 'last_name')
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        # search users
-        q = self.request.GET.get('q')
-        if q:
-            queryset = queryset.search(q)
-
-        queryset = queryset.prefetch_related('groups')
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # we want to show a list of groups in each user, so we
-        # iterate through each user, and create a string with the groups
-        for obj in context['object_list']:
-            obj.group_names = ' '.join([g.name for g in obj.groups.all()])
-
-        return context
 
 
 @csrf_exempt

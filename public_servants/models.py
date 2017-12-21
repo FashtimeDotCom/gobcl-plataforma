@@ -59,7 +59,7 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         verbose_name_plural = _('public servants')
         unique_together = ('name', 'government_structure')
         permissions = (
-            ('view_public_servant', _('Can view public_servants')),
+            ('view_public_servant', _('Can view public servants')),
         )
 
     def __str__(self):

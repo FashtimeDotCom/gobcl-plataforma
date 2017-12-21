@@ -3,6 +3,7 @@
 # standard library
 
 # django
+from django.conf import settings
 from django.http import JsonResponse
 
 # models
@@ -43,7 +44,13 @@ class FileSearchJson(View):
 
     def get_file_list(self):
         file_data = File()
-        return file_data.list(query=self.query).json()
+
+        if self.request.GET.get('q'):
+            if settings.CHILEATIENDE_ACCESS_TOKEN:
+                return file_data.list(query=self.query).json()
+
+        # return empty json object
+        return '{}'
 
     def get(self, request, *args, **kwargs):
         return JsonResponse(self.get_file_list())

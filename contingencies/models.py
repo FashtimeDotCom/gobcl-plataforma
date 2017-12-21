@@ -13,6 +13,7 @@ from parler.models import TranslatedFields
 from base.models import BaseModel
 
 from .managers import ContingencyQueryset
+from .managers import ContingencyEventQueryset
 
 
 class Contingency(BaseModel, TranslatableModel):
@@ -73,6 +74,8 @@ class ContingencyEvent(BaseModel, TranslatableModel):
         _('date time'),
         default=timezone.now,
     )
+
+    objects = ContingencyEventQueryset.as_manager()
 
     class Meta:
         ordering = ('-date_time',)
