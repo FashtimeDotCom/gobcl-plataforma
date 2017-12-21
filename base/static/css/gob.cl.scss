@@ -1,0 +1,15 @@
+/*
+  gob.cl and bs.4 settings.
+ -------------------------------------------------- */
+
+@import "_variables";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/gob.cl";
+
+.pv-0-until-md,
+section.pv-0-until-md {
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    padding-top: 0;
+    padding-right: 0;
+  }
+}

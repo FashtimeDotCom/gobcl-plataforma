@@ -1,0 +1,31 @@
+extends base.pug
+
+- load i18n staticfiles thumbnail cms_tags apphooks_config_tags
+
+block header
+  section.section.nopadding.bg-bluedark
+    .container
+      article.article-hero.article--dark.text-light
+        .row
+          .col-sm-12.col-md-12.col-lg-6.col-xl-5.order-md-12
+            .pull-md-right
+              {% include 'includes/toolbar.pug' %}
+          .col-sm-12.col-md-12.col-lg-6.col-xl-7
+            h1.heading-large {% trans 'campaigns'|capfirst %}
+
+block content
+
+  section.section
+    .container
+
+      {% include 'campaigns/includes/campaign_list.pug' with campaigns=campaign_list %}
+
+      if not campaign_list
+        h3 {% trans 'There are no campaigns to display' %}
+
+      .col-sm-12.col-md-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
+        br
+        {% include 'aldryn_newsblog/includes/pagination.pug' %}
+  section
+    .container
+      {% include 'includes/social.pug' %}

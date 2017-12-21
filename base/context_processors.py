@@ -8,7 +8,7 @@ def categories(request):
     """
 
     context = {
-        'categories': Category.objects.all()
+        'categories': Category.objects.all().prefetch_related('translations')
     }
 
     return context

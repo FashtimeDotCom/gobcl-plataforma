@@ -1,3 +1,8 @@
-from django.contrib import admin
+from django.contrib.auth.models import Permission
 
-# Register your models here.
+
+def permission__str__(self):
+        return self.name
+
+
+Permission.__str__ = permission__str__

@@ -1,66 +1,73 @@
 - load i18n
 - load menu_tags
+- load apphooks_config_tags
 
-header.site-header
-  .site-header_fixed
-    .container
-      a.logo(href="{% url 'home' %} ")
-        i.icon-gob
-      
-      .site-header_right
-
-        ul.link.link--dib
-          li.dropdown.language-selector
-            a.dropdown-toggle(data-toggle="dropdown")
-              i.fa.fa-language(aria-hidden="true")
-              - get_current_language as current_language
-              span= current_language | language_name_local | title
-              b.caret
-            ul.dropdown-menu.languages
-              {% language_chooser %}
-
-        a(href="#").link.link--dib.d-none {% trans 'Procedures and benefits' %}
-        a(href="{% url 'pages-root' %}").link.link--dib {% trans 'News' %}
-        a(href="{% url 'institution_list' %}").link.link--dib {% trans 'Institutions' %}
-        a(href="#").btn-search.toggle-search
-          i.ic-search.btn-search_icon
-          i.ic-close.btn-search_icon 
-        if user.is_authenticated
-          .site-header_login
-          if request.session.loginas_from_user
-            a(href="{% url 'loginas-logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
-          else
-            a(href="{% url 'logout' %}").link.link--dib.text-dark.d-none {% trans 'Logout' %}
-        else 
-          .site-header_login.hidden
-            a(href="{% url 'login' %}")#loginBtn.link.link--dib.text-dark.d-none {% trans 'Sign in' %}
-
-      input(type="checkbox" id="menu-trigger").menu-trigger-input
-      
-      label(for="menu-trigger").menu-trigger
-        span
-
-      a(href="#").btn-search.btn-search--mobile.toggle-search
+nav.navbar.navbar-expand-md.navbar-light.fixed-top
+  .container
+    a.navbar-brand.align-self-start(href="{% url 'home' %}")
+      i.icon-gob
+    .nav-content
+      a.btn.btn-search.btn-search--mobile.toggle-search(href="#")
         i.ic-search.btn-search_icon
         i.ic-close.btn-search_icon
+      .dropdown.lang
+        a#dropdownMenuLang.btn.btn-seconday.dropdown-toggle(
+          href="#",
+          data-toggle="dropdown",
+          role="button",
+          aira-haspopup="true",
+          aria-expanded="false"
+        )
+          - get_current_language as current_language
+          {{ current_language }}
+        .dropdown-menu(aria-labelledby="dropdownMenuLang")
+          {% language_chooser "includes/menu_language.pug" %}
+      button.navbar-toggler(
+        type="button",
+        data-toggle="collapse",
+        data-target="#navbarSupportedContent",
+        aria-controls="navbarSupportedContent",
+        aria-expanded="false"
+      )
+        span.navbar-toggler-icon
 
-      .menu-mobile
-        ul.link.link--dib
-          li.dropdown.language-selector
-            a.dropdown-toggle(data-toggle="dropdown")
-              i.fa.fa-language(aria-hidden="true")
-              - get_current_language as current_language
-              span= current_language
+    #navbarSupportedContent.navbar-collapse.collapse.justify-content-end
+      ul.navbar-nav
+
+        li.nav-item
+          a.nav-link(href="https://chileatiende.digital.gob.cl/") {% trans 'Procedures and benefits' %}
+        {% show_menu 0 1 100 100 "includes/menu.pug" %}
+        li.nav-item
+          a.nav-link(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li.nav-item.nav-item-action.nav-item-desktop
+          a.btn.btn-search.toggle-search(href="#")
+            i.ic-search.btn-search_icon
+            i.ic-close.btn-search_icon
+
+        li.nav-item.dropdown.nav-item-desktop.lang
+          a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
+            href="#",
+            data-toggle="dropdown",
+            aira-haspopup="true",
+            aria-expanded="false"
+          )
+            - get_current_language as current_language
+            {{ current_language|upper }}
+          .dropdown-menu(aria-labelledby="navbarDropdownMenuLang")
+            {% language_chooser "includes/menu_language.pug" %}
+
+        if user.is_authenticated 
+          li.nav-item.nav-item-access.dropdown
+            a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown")
+              | {{user.first_name}}
               b.caret
-            ul.dropdown-menu.languages
-              {% language_chooser %}
 
-      nav.navigation
-        .container
-          h6.heading-label {% trans 'Sections' %}
-          ul
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'Procedures and benefits' %}
-            li: a(href="{% url 'pages-root' %}").link.link--medium.overflowed-xs {% trans 'News' %}
-            li: a(href="{% url 'institution_list' %}").link.link--medium.overflowed-xs {% trans 'Institutions' %}
-            li: a(href="#").link.link--medium.overflowed-xs {% trans 'About Chile' %}
-
+            ul.dropdown-menu
+              li
+                if request.session.loginas_from_user
+                  a.nav-link(href="{% url 'loginas-logout' %}") Logout
+                else
+                  a.nav-link(href="{% url 'logout' %}") Logout
+        else
+          li.nav-item.nav-item-access
+            a.nav-link(href="{% url 'clave_unica_login' %}") {% trans 'Log in' %}

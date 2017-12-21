@@ -9,10 +9,27 @@ doctype 5
 html(lang="es")
   head
     meta(charset="utf-8")
-    title gob.cl {% block title %} {{title}} {%endblock%}
+    title Gob.cl{% block title %}{% if title%}:{% endif %} {{title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(name="description", content="")
     meta(name="author", content="https://magnet.cl")
+
+    meta(name='twitter:site', content='@Gobiernodechile')
+    meta(name='twitter:creator', content='@Gobiernodechile')
+
+    meta(name='og:site_name', content="{% trans 'government of Chile'|capfirst %}")
+    meta(name='og:type', content='website')
+    meta(name='fb:admins', content='572738868')
+    meta(name='fb:app_id', content='114405611929952')
+
+
+    block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      meta(itemprop='image', content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/ms-icon-310x310.png' %}")
+      meta(itemprop='name', content='Gob.cl: {{title}}')
+
+    block newsblog_meta_tags
+      meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")
+      meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
@@ -39,29 +56,28 @@ html(lang="es")
     meta(name='msapplication-TileImage', content="{% static 'favicon/ms-icon-144x144.png' %}")
     meta(name='theme-color', content='#ffffff')
 
-
     //if lte IE 7
       script(src="https://html5shim.googlecode.com/svn/trunk/html5.js")
 
     //if lt IE 9
-      script(src="{% static 'bower_components/respond/respond.min.js' %}")
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js",
+        integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=",
+        crossorigin="anonymous"
+      )
+    link(href="{% static 'slick-carousel/slick/slick.css' %}", rel="stylesheet")
+    link(href="{% static 'magnific-popup/dist/magnific-popup.css' %}", rel="stylesheet")
+
     {% render_block "css" %}
 
-    link(
-      href="{% static 'select2/dist/css/select2.min.css' %}",
-      rel="stylesheet"
-    )
+    link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
+
     {% compress css %}
     link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/bootstrap.scss' %}",
+      type="text/x-scss", rel="stylesheet", href="{% static 'css/gob.cl.scss' %}",
       charset="utf-8"
     )
     {% endcompress %}
-
-    link(
-      href="{% static 'gob.cl/dist/css/gob.cl.css' %}",
-      rel="stylesheet"
-    )
 
     {% compress css %}
     link(
@@ -74,9 +90,11 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
+  body(
+    class='{{body_class|default:""}} footer-links-{{ footer_links|length }}',
+    data-main=".site-main"
+  )
     {% cms_toolbar %}
-    {% placeholder "content" %}
     {% include 'includes/navbar.pug' %}
     div
       div.container
@@ -87,7 +105,16 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
-    block content
+    {% include 'includes/contingency.pug' %}
+    main.site-main
+      block header
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "top_content" %}
+      block content
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
@@ -108,6 +135,16 @@ html(lang="es")
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ",
         crossorigin="anonymous"
       )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js",
+        integrity="sha256-DHF4zGyjT7GOMPBwpeehwoey18z8uiz98G4PRu2lV0A=",
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js",
+        integrity="sha256-P93G0oq6PBPWTP1IR8Mz/0jHHUpaWL0aBJTKauisG7Q=",
+        crossorigin="anonymous"
+      )
 
     block uncompressible_javascripts
 
@@ -116,6 +153,8 @@ html(lang="es")
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
       script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
+      script(src="{% static 'slick-carousel/slick/slick.js' %}")
+      script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
     {% endcompress %}
 
     // templates
@@ -128,20 +167,25 @@ html(lang="es")
     block javascript_data
     {% render_block "js" %}
     {% compress js %}
-    script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
+    script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
+    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
-    script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
+        /**
+        * Share django urls with javascript.
+        */
         $.extend(App, {
           paths: {
             fontSize: "{% url 'user_font_size_change' %}"
           }
         });
       });
-    script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
+    script(src="{% static 'js/social.js' %}")
+    script(src="{% static 'js/application.js' %}")
     block javascripts
     {% endcompress %}
 

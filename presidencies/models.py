@@ -8,31 +8,40 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from easy_thumbnails.fields import ThumbnailerImageField
+from parler.models import TranslatableModel
+from parler.models import TranslatedFields
 
 # models
 from base.models import BaseModel
 from base.models import file_path
 
+from .managers import PresidencyQueryset
+from .managers import PresidencyURLQueryset
 
-class PresidencyURL(BaseModel):
-    name = models.CharField(
-        _('name'),
-        max_length=100,
-        null=True,
+
+class PresidencyURL(BaseModel, TranslatableModel):
+    translations = TranslatedFields(
+        name=models.CharField(
+            _('name'),
+            max_length=100,
+            null=True,
+        ),
+        description=models.TextField(
+            _('description'),
+        ),
     )
     url = models.URLField(
         _('url'),
         max_length=200,
     )
-    description = models.TextField(
-        _('description'),
-    )
+
+    objects = PresidencyURLQueryset.as_manager()
 
     def __str__(self):
         return self.url
 
 
-class Presidency(BaseModel):
+class Presidency(BaseModel, TranslatableModel):
     government_structure = models.OneToOneField(
         'government_structures.GovernmentStructure',
         verbose_name=_('government structure'),
@@ -41,17 +50,19 @@ class Presidency(BaseModel):
         _('name'),
         max_length=100,
     )
-    title = models.CharField(
-        _('title'),
-        max_length=50,
+    translations = TranslatedFields(
+        title=models.CharField(
+            _('title'),
+            max_length=50,
+        ),
+        description=models.TextField(
+            _('description'),
+        ),
     )
     photo = ThumbnailerImageField(
         _('photo'),
         upload_to=file_path,
         null=True,
-    )
-    description = models.TextField(
-        _('description'),
     )
     twitter = models.CharField(
         max_length=50,
@@ -64,6 +75,8 @@ class Presidency(BaseModel):
         'PresidencyURL',
         verbose_name=_('urls'),
     )
+
+    objects = PresidencyQueryset.as_manager()
 
     class Meta:
         verbose_name = _('presidency')

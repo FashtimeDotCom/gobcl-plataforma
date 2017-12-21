@@ -7,6 +7,12 @@ from django.contrib import admin
 
 from institutions.admin import InstitutionAdmin
 
+# parler
+from parler.admin import TranslatableAdmin
+
+# Aldryn
+from aldryn_translation_tools.admin import AllTranslationsMixin
+
 # models
 from .models import Ministry, PublicService
 
@@ -19,7 +25,7 @@ class MinistryAdmin(InstitutionAdmin):
 
 
 @admin.register(PublicService)
-class PublicServiceAdmin(admin.ModelAdmin):
+class PublicServiceAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_display = (
         'name',
         'ministry',

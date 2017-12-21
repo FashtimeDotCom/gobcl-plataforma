@@ -2,6 +2,9 @@
 """ Views for the regions application. """
 # standard library
 
+# django
+from django.urls import reverse
+
 # models
 from .models import Region
 
@@ -10,7 +13,7 @@ from base.views import BaseCreateView
 from base.views import BaseDeleteView
 from base.views import BaseListView
 from base.views import BaseUpdateView
-from base.views import BaseSlugDetailView
+from parler.views import TranslatableSlugMixin
 
 from hitcount.views import HitCountDetailView
 
@@ -36,17 +39,20 @@ class RegionCreateView(BaseCreateView):
     template_name = 'regions/region_create.pug'
     permission_required = 'regions.add_region'
 
+    def get_cancel_url(self):
+        return reverse('institution_list')
 
-class RegionDetailView(BaseSlugDetailView, HitCountDetailView):
+    def get_success_url(self):
+        return reverse('institution_list')
+
+
+class RegionDetailView(TranslatableSlugMixin, HitCountDetailView):
     """
     A view for displaying a single region
     """
     model = Region
     template_name = 'regions/region_detail.pug'
     count_hit = True
-
-    def get_slug_field(self):
-        return "slug_{}".format(self.request.LANGUAGE_CODE)
 
     def get_queryset(self):
         queryset = super(RegionDetailView, self).get_queryset()
@@ -61,7 +67,7 @@ class RegionUpdateView(BaseUpdateView):
     """
     model = Region
     form_class = RegionForm
-    template_name = 'regions/update.pug'
+    template_name = 'regions/region_update.pug'
     permission_required = 'regions.change_region'
 
 
@@ -71,4 +77,7 @@ class RegionDeleteView(BaseDeleteView):
     """
     model = Region
     permission_required = 'regions.delete_region'
-    template_name = 'regions/delete.pug'
+    template_name = 'regions/region_delete.pug'
+
+    def get_success_url(self):
+        return reverse('institution_list')

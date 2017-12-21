@@ -13,11 +13,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 from base.models import BaseModel
 from institutions.models import Institution
 
+from institutions.models import institution_translations
+
 # managers
 from .managers import CommuneQuerySet
 
 
 class Region(Institution):
+    translations = institution_translations
+
     # foreign keys
     governor = models.ForeignKey(
         'public_servants.PublicServant',
@@ -93,6 +97,16 @@ class Commune(BaseModel):
     )
     has_own_municipality = models.BooleanField(
         default=True,
+    )
+    municipality_latitude = models.FloatField(
+        _('latitude'),
+        blank=True,
+        null=True,
+    )
+    municipality_longitude = models.FloatField(
+        _('longitude'),
+        blank=True,
+        null=True,
     )
 
     objects = CommuneQuerySet.as_manager()

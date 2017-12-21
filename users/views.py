@@ -3,34 +3,40 @@
 
 # standard
 import json
+import requests
+import logging
 
 # django
 from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.http import base36_to_int
-from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.edit import CreateView
 
 # forms
 from users.forms import AuthenticationForm
 from users.forms import CaptchaAuthenticationForm
-from users.forms import CaptchaUserCreationForm
 from users.forms import UserForm
 
 # models
 from users.models import User
 
 # views
-from base.views import BaseListView
+
+# utils
+from users.login_settings import ClaveUnicaSettings
+
+
+logger = logging.getLogger('debug_messages')
 
 
 class LoginView(auth_views.LoginView):
@@ -38,6 +44,9 @@ class LoginView(auth_views.LoginView):
     template_name = "registration/login.pug"
     form_class = AuthenticationForm
     title = _('Login')
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
@@ -90,29 +99,6 @@ class PasswordResetDoneView(auth_views.PasswordResetDoneView):
 class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     """ View that shows a success message to the user"""
     template_name = "registration/password_reset_complete.pug"
-
-
-class UserCreateView(CreateView):
-    template_name = 'users/create.pug'
-    form_class = CaptchaUserCreationForm
-    title = _('Registration')
-
-    def get_context_data(self, **kwargs):
-        context = super(UserCreateView, self).get_context_data(**kwargs)
-        context['title'] = self.title
-
-        return context
-
-    def form_valid(self, form):
-        form.save(verify_email_address=True, request=self.request)
-        messages.add_message(
-            self.request,
-            messages.INFO,
-            _("An email has been sent to you. Please "
-              "check it to verify your email.")
-        )
-
-        return redirect('home')
 
 
 @login_required
@@ -173,34 +159,6 @@ def user_new_confirm(request, uidb36=None, token=None,
     return redirect('login')
 
 
-class UserListView(BaseListView):
-    model = User
-    template_name = 'users/list.pug'
-    ordering = ('first_name', 'last_name')
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        # search users
-        q = self.request.GET.get('q')
-        if q:
-            queryset = queryset.search(q)
-
-        queryset = queryset.prefetch_related('groups')
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # we want to show a list of groups in each user, so we
-        # iterate through each user, and create a string with the groups
-        for obj in context['object_list']:
-            obj.group_names = ' '.join([g.name for g in obj.groups.all()])
-
-        return context
-
-
 @csrf_exempt
 def user_font_size_change(request):
     """
@@ -218,3 +176,74 @@ def user_font_size_change(request):
         return JsonResponse({'font_size': request.user.font_size})
 
     return JsonResponse({'method error': 'must post'})
+
+
+def clave_unica_login(request):
+    """
+    View that redirects to ClaveUnica login site
+    with this project's parameters
+    """
+    clave_unica = ClaveUnicaSettings()
+    state = clave_unica.generate_token()
+    request.session['state'] = state
+    clave_unica_url = clave_unica.get_csrf_redirect_url(state)
+    return redirect(clave_unica_url)
+
+
+def clave_unica_callback(request):
+    """
+    View that gets or creates a user and logs it in by using
+    ClaveUnica's data and athorization
+    """
+    received_state = request.GET.get('state')
+    if 'state' not in request.session:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    if received_state != request.session['state']:
+        # TODO: redirect somewhere else or throw a message?
+        return redirect('home')
+
+    received_code = request.GET.get('code')
+    clave_unica = ClaveUnicaSettings()
+    data = clave_unica.get_token_url_data(received_state, received_code)
+
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    }
+
+    s = requests.Session()
+    prepped = requests.Request(
+        method='POST',
+        url=clave_unica.TOKEN_URI,
+        headers=headers,
+        data=data,
+    ).prepare()
+
+    token_response = s.send(prepped)
+    logger.debug('token response: {}'.format(token_response))
+
+    if token_response.status_code == 200:
+        access_token = token_response.json()['access_token']
+        # expires_in = token_response.json['expires_in']
+        # id_token = token_response.json['id_token']
+        bearer = "Bearer {}".format(access_token)
+        headers = {"Authorization": bearer}
+
+        s = requests.Session()
+        prepped = requests.Request(
+            method='POST',
+            url=clave_unica.USER_INFO_URI,
+            headers=headers,
+        ).prepare()
+
+        access_response = s.send(prepped)
+        logger.debug("access response: {}".format(access_response))
+        access_response_dict = access_response.json()
+        user = User.clave_unica_get_or_create(access_response_dict)
+        login(request, user)
+
+        return redirect('home')
+
+    logger.debug("--Response status not 200--")
+    return redirect('home')

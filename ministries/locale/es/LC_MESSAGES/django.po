@@ -24,7 +24,7 @@ msgstr "Ministro"
 
 #: models.py:26
 msgid "public servants"
-msgstr "Servidores públicos"
+msgstr "funcionarios públicos"
 
 #: models.py:32
 msgid "procedures and benefits"

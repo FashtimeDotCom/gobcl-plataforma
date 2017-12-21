@@ -6,11 +6,6 @@ from users import views as users_views
 
 urlpatterns = [
     url(
-        r'^$',
-        users_views.UserListView.as_view(),
-        name='user_list',
-    ),
-    url(
         r'^login/$',
         users_views.LoginView.as_view(),
         name='login'
@@ -29,11 +24,6 @@ urlpatterns = [
         r'^logout/$',
         auth_views.LogoutView.as_view(),
         name='logout'
-    ),
-    url(
-        r'^register/$',
-        users_views.UserCreateView.as_view(),
-        name='register',
     ),
     url(
         r'^password-reset/$',
@@ -75,5 +65,19 @@ urlpatterns = [
         r'^font-size-change/$',
         users_views.user_font_size_change,
         name='user_font_size_change'
+    ),
+    url(
+        r'^clave-unica/login/$',
+        users_views.clave_unica_login,
+        name='clave_unica_login'
+    ),
+]
+
+
+callback_pattern = [
+    url(
+        r'^$',
+        users_views.clave_unica_callback,
+        name='clave_unica_callback',
     ),
 ]

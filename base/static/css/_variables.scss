@@ -3,32 +3,12 @@
   override bootstrap variables.
  -------------------------------------------------- */
 
-$line-height-base: 1.42858;
+$django-cms-toolbar: 5px;
+$django-cms-toolbar-expanded: 49px;
 
-$container-max-widths: (
-  lg: 960px,
-  xl: 1140px
-) !default;
+$imagesPath: "../@gobdigital-cl/gob.cl/dist/images/";
+$fontsPath: "../@gobdigital-cl/gob.cl/dist/fonts/";
+$iconsPath: "../@gobdigital-cl/gob.cl/dist/images/icons/";
 
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
-
-$navbar-height: (
-  xs: 64px,
-  md: 71px
-);
-
-$footer-base-height: (
-  xs: 185px,
-  md: 245px,
-  xl: 223px,
-);
-
-$footer-link-height: 44px;
-$footer-links-max: 20;
-$footer-links-container-offset: 100px;
-
-
-$border-radius: 0;
-$border-radius-lg: 0;
-$border-radius-sm: 0;
+@import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/vairables";
+@import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/functions";

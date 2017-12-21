@@ -16,7 +16,7 @@ function replace(){
 INSTALL_SYSTEM_DEPENDENCIES=true
 INSTALL_PIP=true
 INSTALL_BOWER=true
-INSTALL_NPM=true
+INSTALL_YARN=true
 TRANSLATE=true
 BUILD_JAVASCRIPT=true
 
@@ -47,7 +47,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=true
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -56,7 +56,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=true
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -65,7 +65,7 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=true
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
@@ -74,16 +74,16 @@ do
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=true
+             INSTALL_YARN=true
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
         j)
-             print_green "only npm run build"
+             print_green "only yarn run build"
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=false
-             INSTALL_NPM=false
+             INSTALL_YARN=false
              TRANSLATE=false
              BUILD_JAVASCRIPT=true
              ;;
@@ -154,7 +154,8 @@ if  $INSTALL_PIP ; then
 fi
 
 # create the local_settings file if it does not exist
-if [ ! -f ./project/settings/local_settings.py ] ; then
+if [ ! -f ./project/local_settings.py ] ; then
+    print_green "Generating local settings"
     cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then
@@ -168,10 +169,11 @@ if [ ! -f ./project/settings/local_settings.py ] ; then
     fi
 fi
 
-if  $INSTALL_NPM ; then
+if  $INSTALL_YARN ; then
+    print_green "Installing yarn"
     # package.json modification
     replace "s/NAME/${PWD##*/}/g" package.json
     replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json
 
-    npm install
+    yarn install
 fi

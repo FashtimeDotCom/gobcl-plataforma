@@ -3,67 +3,35 @@ extends base.pug
 - load i18n cms_tags
 
 block content
-  main.site-main
-    section.section.bg-bluedark.text-light
-      .container
+  section.section.bg-bluedark.text-light
+    .container
+      {% include 'includes/search_bar.pug' %}
+
+  section.section
+    .container
+      h3.heading-medium {{ count }} {% trans 'Results' %}
+      .results
         .row
-          .col-12.col-lg-5.order-lg-12
-            .pull-md-right
-              {% include 'includes/toolbar.pug' %}
-          .col-12.col-lg-7
-            .search-form.search-form.nomargin-top.search-form--large
-              form.search-form_content(action="", method="get")
-                input.search-form_input(
-                  type="search",
-                  placeholder="{% trans 'Write here what you want to search' %}",
-                  name="q"
-                )
-                button.search-form_button.search-form_button--submit(type="submit"): i.ic-search
-                button.search-form_button.search-form_button--cancel(type="button"): i.ic-delete
-            .tags
-              label.heading-label(for="") {% trans 'Filter by Topics' %}
-              .tags_content
-                for category in categories
-                  .tags_item
-                    label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
-                      input.d-none(
-                        type="radio",
-                        id="category-input-{{category.slug}}",
-                        name="category_slug",
-                        value="{{category.slug}}"
-                      )
-            .filters
-              .row
-                .col-6
-                  div
-                    label.heading-label(for="") {% trans 'Topic' %}
-                    .select.select--dark
-                      select(name="")
-                        option {% trans 'All' %}
-                .col-6
-                  div
-                    label.heading-label(for="") {% trans 'Institution' %}
-                    .select.select--dark
-                      select(name="")
-                        option {% trans 'All' %}
-
-    section.section
-      .container
-        h3.heading-medium {{ object_list|length }} {% trans 'Results' %}
-        .results
-          .row
-            .col-12.col-md-10.col-lg-7
-              for article in object_list
-                .result
-                  a.result_link(href="{{ article.get_absolute_url }}")
-                    {% render_model article "title" %}
-                  p.result_excerpt
-                    {{ article.lead_in|striptags|truncatechars:100 }}
-                  span.result_date {{ article.publishing_date|date }}
+          .col-12.col-md-10.col-lg-7
+            for chile_atiende_file in chile_atiende_files
+              .result
+                a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
+                  {{chile_atiende_file.titulo}}
+                p.result_excerpt
+                  {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
+                span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
+                  |  {{chile_atiende_file.servicio}}
+            for article in object_list
+              .result
+                a.result_link(href="{{ article.get_absolute_url }}")
+                  {% render_model article "title" %}
+                p.result_excerpt
+                  {{ article.lead_in|striptags|truncatechars:100 }}
+                span.result_date {{ article.publishing_date|date }}
 
 
-    section
-      .container
-        {% include 'includes/social.pug' %}
+  section
+    .container
+      {% include 'includes/social.pug' %}
 
 

@@ -107,3 +107,8 @@ project/static
 .idea/
 */*.dump
 */*.tar.gz
+gobcl-posts.json
+gobcl-uploads/*
+gobcl.xlsx
+catastro.xlsx
+*.p12

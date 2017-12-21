@@ -2,7 +2,10 @@
 from django import forms
 from django.forms import HiddenInput
 
+# forms
 from form_utils.forms import BetterModelForm
+from parler.forms import BaseTranslatableModelForm
+
 
 setattr(
     forms.fields.Field, 'is_checkbox',
@@ -26,8 +29,12 @@ class BaseModelForm(BetterModelForm):
                 field.widget.attrs['class'] = 'form-control'
             elif isinstance(field.widget, forms.widgets.TextInput):
                 field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.PasswordInput):
+            else:
                 field.widget.attrs['class'] = 'form-control'
 
     def hide_field(self, field_name):
         self.fields[field_name].widget = HiddenInput()
+
+
+class TranslatableModelForm(BaseModelForm, BaseTranslatableModelForm):
+    pass

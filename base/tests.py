@@ -6,6 +6,7 @@ Replace this with more appropriate tests for your application.
 """
 
 # standard library
+import uuid
 
 # django
 from django.contrib import admin
@@ -14,6 +15,7 @@ from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.test import TestCase
+from django.utils.translation import activate
 
 # urls
 from project.urls import urlpatterns
@@ -35,9 +37,12 @@ class BaseTestCase(TestCase, Mockup):
     def setUp(self):
         super(BaseTestCase, self).setUp()
 
+        activate('es')
+
         self.password = random_gen.gen_text()
         self.user = mommy.prepare('users.User')
         self.user.set_password(self.password)
+        self.user.rut = self.random_rut()
         self.user.save()
 
         self.login()
@@ -47,7 +52,7 @@ class BaseTestCase(TestCase, Mockup):
             user = self.user
             password = self.password
 
-        return self.client.login(email=user.email, password=password)
+        return self.client.login(rut=user.rut, password=password)
 
 
 class IntegrityOnDeleteTestCase(BaseTestCase):
@@ -55,13 +60,22 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
         kwargs = {}
         for f in model._meta.fields:
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                kwargs[f.name] = mommy.make(f.rel.to)
+                model_name = underscore(f.rel.to.__name__)
+                method_name = 'create_{}'.format(model_name)
+                kwargs[f.name] = getattr(self, method_name)()
 
-        return mommy.make(model, **kwargs), kwargs
+        method_name = 'create_{}'.format(underscore(model.__name__))
+
+        return getattr(self, method_name)(**kwargs), kwargs
 
     def test_integrity_on_delete(self):
 
         for model in get_our_models():
+            # ignore gobcl_cms
+            if (model._meta.app_label == 'gobcl_cms' or
+                    model.__name__.endswith('Translation')):
+                continue
+
             obj, related_nullable_objects = self.create_full_object(model)
 
             obj_count = model.objects.count()
@@ -74,6 +88,9 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
                         continue
                 except AttributeError:
                     pass
+
+                if model.__name__.endswith('Translation'):
+                    continue
 
                 rel_obj.delete()
 
@@ -126,7 +143,16 @@ class UrlsTest(BaseTestCase):
             method_name = 'create_{}'.format(model_name)
             param_name = '{}_id'.format(model_name)
 
-            obj = mommy.make(model)
+            if model_name.endswith('_translation'):
+                continue
+            elif model_name == 'campaign':
+                obj = mommy.make(model, title='foo')
+            elif model_name == 'ministry' or model_name == 'region':
+                name = str(uuid.uuid4())
+                obj = mommy.make(
+                    model, name=name, description='')
+            else:
+                obj = mommy.make(model)
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 
@@ -159,15 +185,14 @@ class UrlsTest(BaseTestCase):
         ignored_namespaces = []
 
         ignored_urls = [
-            "/es/noticias/",
-            "/es/news/",
+            "/noticias/",
+            "/news/",
             "/admin/filer/clipboard/operations/upload/no_folder/",
         ]
 
         def test_url_patterns(patterns, namespace=''):
 
             if namespace in ignored_namespaces:
-                print('Ignored namespace: {}.'.format(namespace))
                 return
 
             for pattern in patterns:
@@ -181,7 +206,6 @@ class UrlsTest(BaseTestCase):
 
                     for ignored_url in ignored_urls:
                         if ignored_url in url:
-                            print('ignored url: {}'.format(url))
                             return
 
                     try:
@@ -195,7 +219,6 @@ class UrlsTest(BaseTestCase):
                     )
 
                     if response.status_code == 500:
-                        print(url)
                         print(response.content)
 
                     self.assertIn(

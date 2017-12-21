@@ -12,7 +12,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.urls import reverse
@@ -28,42 +27,43 @@ from django.views.generic.list import ListView
 
 # utils
 from base.view_utils import clean_query_string
+from base.view_utils import get_home_campaigns
 from inflection import underscore
 
 # models
 from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Region
-from regions.models import Commune
 
 
-def index(request):
-    """ view that renders a default home"""
-    articles = Article.objects.filter(
-        is_published=True,
-    ).order_by('-publishing_date')[:4]
+class IndexTemplateView(TemplateView):
+    template_name = 'index.pug'
 
-    gov_structure = request.government_structure
+    def get_context_data(self, **kwargs):
+        """ view that renders a default home"""
+        articles = Article.objects.filter(
+            is_published=True,
+        ).order_by('-publishing_date')[:4]
 
-    context = {
-        'procedures_and_benefits': None,
-        'campaigns': None,
-        'articles': articles,
-        'ministries_count': (
-            Ministry.objects.by_government_structure(gov_structure).count()
-        ),
-        'public_services_count': (
-            PublicService.objects.by_government_structure(
-                gov_structure
-            ).count()
-        ),
-        'regions_and_communes_count': (
-            Region.objects.by_government_structure(gov_structure).count()
-            + Commune.objects.by_government_structure(gov_structure).count()
-        ),
-    }
+        gov_structure = self.request.government_structure
 
-    return render(request, 'index.pug', context)
+        context = {
+            'procedures_and_benefits': None,
+            'campaigns': get_home_campaigns(self.request),
+            'articles': articles,
+            'ministries_count': (
+                Ministry.objects.by_government_structure(gov_structure).count()
+            ),
+            'public_services_count': (
+                PublicService.objects.by_government_structure(
+                    gov_structure
+                ).count()
+            ),
+            'regions_count': (
+                Region.objects.by_government_structure(gov_structure).count()
+            ),
+        }
+        return context
 
 
 def bad_request_view(request):

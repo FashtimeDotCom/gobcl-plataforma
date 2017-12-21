@@ -3,20 +3,41 @@
 # standard library
 
 # django
-from django import forms
 
 # models
 from .models import Ministry
+from .models import PublicService
 
-# views
+# forms
 from base.forms import BaseModelForm
+from base.forms import TranslatableModelForm
 
 
-class MinistryForm(BaseModelForm):
+class MinistryForm(TranslatableModelForm):
     """
     Form Ministry model.
     """
 
     class Meta:
         model = Ministry
+        exclude = (
+            'government_structure',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        public_servants = self.fields['public_servants'].queryset
+        public_servants = public_servants.filter(
+            government_structure=self.instance.government_structure
+        )
+        self.fields['public_servants'].queryset = public_servants
+
+
+class PublicServiceForm(BaseModelForm):
+    """
+    Form PublicService model.
+    """
+
+    class Meta:
+        model = PublicService
         exclude = ()
