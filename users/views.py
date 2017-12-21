@@ -31,7 +31,6 @@ from users.forms import UserForm
 from users.models import User
 
 # views
-from base.views import BaseListView
 
 # utils
 from users.login_settings import ClaveUnicaSettings
@@ -158,34 +157,6 @@ def user_new_confirm(request, uidb36=None, token=None,
                              _("Invalid verification link"))
 
     return redirect('login')
-
-
-class UserListView(BaseListView):
-    model = User
-    template_name = 'users/list.pug'
-    ordering = ('first_name', 'last_name')
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        # search users
-        q = self.request.GET.get('q')
-        if q:
-            queryset = queryset.search(q)
-
-        queryset = queryset.prefetch_related('groups')
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # we want to show a list of groups in each user, so we
-        # iterate through each user, and create a string with the groups
-        for obj in context['object_list']:
-            obj.group_names = ' '.join([g.name for g in obj.groups.all()])
-
-        return context
 
 
 @csrf_exempt
