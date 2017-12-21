@@ -31,9 +31,9 @@ if template
           )
         .new_title
           a(href="{{ campaign.get_absolute_url }}").link.link-clean
-            h4 {{ campaign.title|truncatechars:60 }}
+            h4 {{ campaign.title|truncatechars:50 }}
           a(href="{{ campaign.get_absolute_url }}").link.link--text-dark.visited
-            {{ campaign.description|truncatechars:110 }}
+            {{ campaign.description|truncatechars:60 }}
 
 else
   div(class="col-lg-{% widthratio 12 col 1 %}")
