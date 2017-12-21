@@ -439,6 +439,8 @@ MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'
 THUMBNAIL_ALIASES = {
     '': {
         'new_list_item': {'size': (495, 270), 'crop': True},
+        'avatar': {'size': (328, 342), 'crop': True},
+        'avatar_small': {'size': (218, 228), 'crop': True},
     },
 }
 

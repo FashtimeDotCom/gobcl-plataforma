@@ -6,11 +6,6 @@ from users import views as users_views
 
 urlpatterns = [
     url(
-        r'^$',
-        users_views.UserListView.as_view(),
-        name='user_list',
-    ),
-    url(
         r'^login/$',
         users_views.LoginView.as_view(),
         name='login'
@@ -29,11 +24,6 @@ urlpatterns = [
         r'^logout/$',
         auth_views.LogoutView.as_view(),
         name='logout'
-    ),
-    url(
-        r'^register/$',
-        users_views.UserCreateView.as_view(),
-        name='register',
     ),
     url(
         r'^password-reset/$',

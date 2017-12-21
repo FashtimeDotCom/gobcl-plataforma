@@ -21,12 +21,12 @@ from base.models import file_path
 class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
     name = models.CharField(
         _('name'),
-        max_length=100,
+        max_length=255,
     )
     translations = TranslatedFields(
         charge=models.CharField(
             _('charge'),
-            max_length=100,
+            max_length=255,
             null=True,
         ),
         description=models.TextField(
@@ -37,6 +37,7 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         _('photo'),
         upload_to=file_path,
         null=True,
+        max_length=255,
     )
     email = models.EmailField(
         _('email'),
@@ -59,7 +60,7 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         verbose_name_plural = _('public servants')
         unique_together = ('name', 'government_structure')
         permissions = (
-            ('view_public_servant', _('Can view public_servants')),
+            ('view_public_servant', _('Can view public servants')),
         )
 
     def __str__(self):

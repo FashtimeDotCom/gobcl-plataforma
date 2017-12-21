@@ -1,0 +1,40 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.public_services.add_public_service
+        a.btn.btn-primary(href="{% url 'publicservice_create' %}")
+          {% trans 'Add public_service' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.ministries.change_publicservice
+          th
+        if perms.ministries.delete_publicservice
+          th
+    tbody
+      for public_service in object_list
+        tr
+          td
+            {{public_service.id}}
+          td
+            {{public_service}}
+          if perms.ministries.change_publicservice
+            td
+              a.btn.btn-primary(href="{% url 'publicservice_update' public_service.id %}")
+                {% trans 'Update public_service' %}
+                i.fa.fa-edit
+          if perms.ministries.delete_publicservice
+            td
+              a.btn.btn-danger(href="{% url 'publicservice_delete' public_service.id %}")
+                {% trans 'Delete public_service' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

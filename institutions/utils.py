@@ -6,6 +6,7 @@ from .load_data.campaigns import create_campaign
 from .load_data.regions import create_region
 from .load_data.public_servants import create_public_servant
 from .load_data.communes import create_commune
+from .load_data.public_services import create_public_service
 
 from government_structures.models import GovernmentStructure
 
@@ -35,7 +36,7 @@ def load_data_from_xlsx():
         'Ministerios': create_ministry,
         'Subsecretarios': create_public_servant,
         'Intendencias': create_region,
-        'Servicios Públicos': None,
+        'Servicios Públicos': create_public_service,
         'Empresas Públicas': create_public_enterprise,
         'Campañas': create_campaign,
         'Acerca de Chile': None,

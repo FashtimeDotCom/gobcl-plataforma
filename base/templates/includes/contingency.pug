@@ -21,7 +21,7 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
         .article-schedule
           .row
             .col-12.col-lg-10.col-xl-10
-              if contingency.events
+              if contingency.events.exists
                 for event in contingency.events.all
                   .schedule
                     .schedule_left
@@ -36,27 +36,16 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
     h3.heading-medium.pt-2 {% trans 'Find more information on:' %}
     .row
       .col-lg-6
-        .card-small
-          h5.card-small_title
-            a.card-small_link(href="#")
-              | Onemi
-              i.ic-arrow-right.icon--right
-          .card-small_body
-            .row
-              .col-12.col-lg-7
-                p.card-small_text
-                  | Bajada ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  | labore et dolore magna aliqua.
-      .col-lg-6
-        .card-small
-          h5.card-small_title
-            a.card-small_link(href="#")
-              | Shoa
-              i.ic-arrow-right.icon--right
-          .card-small_body
-            .row
-              .col-12.col-lg-7
-                p.card-small_text
-                  | Bajada ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  | ut labore et dolore magna aliqua.
+        if contingency.informations.exists
+          for information in contingency.informations.all
+            .card-small
+              h5.card-small_title
+                a.card-small_link(href="#")
+                  | {{ information.title }}
+                  i.ic-arrow-right.icon--right
+              .card-small_body
+                .row
+                  .col-12.col-lg-7
+                    p.card-small_text
+                      {{ information.description }}
     {% include 'includes/social.pug' %}

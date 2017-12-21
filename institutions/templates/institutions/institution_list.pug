@@ -66,37 +66,61 @@ block content
               i.ic-filter
             button.search-form_button.search-form_button--cancel.d-none(type="button")
               i.ic-delete
-      h2#ministries.heading-medium {% trans 'Ministries' %}
-      - if ministry_list
-        .row
-          for ministry in ministry_list
-            .searchable.col-sm-12.col-md-4.ministry-item(data-search-value="{{ ministry.name }}")
-              p: a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
-        .row.search-not-found.not-found-ministry-item
-          .col-12
-            i.disable {% trans 'No results found.' %}
+                | 
 
-      - if public_service_list
-        br
-        h2#services.heading-medium {% trans 'public services'|capfirst %}
-        .row
+      h2#ministries.heading-medium 
+        {% trans 'Ministries' %}
+
+        if perms.ministries.add_ministry
+          a.btn.btn-primary.pull-right(href="{% url 'ministry_create' %}")
+            {% trans 'create ministry'|capfirst %}
+
+      .row
+        if ministry_list
+          for ministry in ministry_list
+            .searchable.col-sm-12.col-md-4.ministry-item(
+              data-search-value="{{ ministry.name }}"
+            )
+              p
+                a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+
+      .row.search-not-found.not-found-ministry-item
+        .col-12
+          i.disable {% trans 'No results found.' %}
+
+      br
+
+      h2#services.heading-medium {% trans 'public services'|capfirst %}
+
+        if perms.ministries.add_publicservice
+
+          a.btn.btn-primary.pull-right(href="{% url 'publicservice_create' %}")
+            {% trans 'create public service'|capfirst %}
+
+          a.btn.btn-primary.pull-right(href="{% url 'publicservice_list' %}")
+            {% trans 'public service list'|capfirst %}
+      .row
+        if public_service_list
           for public_service in public_service_list
             .searchable.col-sm-12.col-md-4.service-item(data-search-value="{{ public_service.name }}")
               p
                 a(href="{{ public_service.url }}")
                   {{ public_service }}
-        .row.search-not-found.not-found-service-item
-          .col-12
-            i.disable {% trans 'No results found.' %}
+      .row.search-not-found.not-found-service-item
+        .col-12
+          i.disable {% trans 'No results found.' %}
 
-      - if region_list
-        br
-        h2#regions.heading-medium {% trans 'Regions' %}
-        .row
+      br
+      h2#regions.heading-medium {% trans 'Regions' %}
+        if perms.regions.add_region
+          a.btn.btn-primary.pull-right(href="{% url 'region_create' %}")
+            {% trans 'create region'|capfirst %}
+      .row
+        if region_list
           for region in region_list
             .searchable.col-sm-12.col-md-4.region-item(data-search-value="{{ region.name }}")
               p: a(href="{{ region.get_absolute_url }}") {{ region }}
-        .row.search-not-found.not-found-region-item
-          .col-12
-            i.disable {% trans 'No results found.' %}
+      .row.search-not-found.not-found-region-item
+        .col-12
+          i.disable {% trans 'No results found.' %}
 

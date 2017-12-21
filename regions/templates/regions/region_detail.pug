@@ -56,6 +56,10 @@ block content
           .profile_buttons
             a(href="{{ region.url }}", target="blank").button.button--block
               {% trans 'Go to the regional government site' %}
+            a(href="{% url 'region_update' region.id %}", target="blank").button.button--block
+              {% trans 'edit region'|capfirst %}
+            a(href="{% url 'region_delete' region.id %}", target="blank").button.button--block
+              {% trans 'delete region'|capfirst %}
   section.section.bg-light
     .container
       .row

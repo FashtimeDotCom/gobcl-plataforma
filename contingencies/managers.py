@@ -11,3 +11,7 @@ class ContingencyQueryset(TranslatableQuerySet):
 
 class ContingencyEventQueryset(TranslatableQuerySet):
     pass
+
+
+class ContingencyInformationQueryset(TranslatableQuerySet):
+    pass
