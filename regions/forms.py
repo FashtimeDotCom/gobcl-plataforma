@@ -20,14 +20,13 @@ class RegionForm(TranslatableModelForm):
         model = Region
         exclude = (
             'government_structure',
+
         )
-
-
-class RegionCreateForm(RegionForm):
-    """
-    Form Region model.
-    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.user = kwargs.pop('government_structure')
+        public_servants = self.fields['governor'].queryset
+        public_servants = public_servants.filter(
+            government_structure=self.instance.government_structure
+        )
+        self.fields['governor'].queryset = public_servants
