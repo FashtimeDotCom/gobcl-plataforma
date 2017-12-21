@@ -39,6 +39,13 @@ class RegionCreateView(BaseCreateView):
     template_name = 'regions/region_create.pug'
     permission_required = 'regions.add_region'
 
+    def get_form_kwargs(self):
+        kwargs = super(RegionCreateView, self).get_form_kwargs()
+        kwargs['instance'] = Region(
+            government_structure=self.request.government_structure,
+        )
+        return kwargs
+
     def get_cancel_url(self):
         return reverse('institution_list')
 
