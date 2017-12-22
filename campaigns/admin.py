@@ -24,7 +24,8 @@ class CampaignAdmin(AllTranslationsMixin, TranslatableAdmin):
         }
 
     search_fields = (
-        'title',
+        'translations__title',
+        'translations__description',
     )
     list_display = (
         'title',

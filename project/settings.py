@@ -542,9 +542,9 @@ CRON_CLASSES = (
 )
 
 # Google Analytics API
-KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
-SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
-VIEW_ID = os.getenv('VIEW_ID', '')
+GA_KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
+GA_SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
+GA_VIEW_ID = os.getenv('GA_VIEW_ID', '')
 
 
 CACHES = {

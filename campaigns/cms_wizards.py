@@ -11,7 +11,7 @@ class CampaignWizard(Wizard):
 
 
 campaign_wizard = CampaignWizard(
-    title=_('Campaign'),
+    title=_('New Campaign'),
     weight=200,
     form=CampaignForm,
     description=_('Create a new Campaign'),

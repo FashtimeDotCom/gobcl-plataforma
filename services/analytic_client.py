@@ -10,9 +10,9 @@ import httplib2
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 DISCOVERY_URI = ('https://analyticsreporting.googleapis.com/$discovery/rest')
-KEY_FILE_LOCATION = settings.KEY_FILE_LOCATION
-SERVICE_ACCOUNT_EMAIL = settings.SERVICE_ACCOUNT_EMAIL
-VIEW_ID = settings.VIEW_ID
+KEY_FILE_LOCATION = settings.GA_KEY_FILE_LOCATION
+SERVICE_ACCOUNT_EMAIL = settings.GA_SERVICE_ACCOUNT_EMAIL
+VIEW_ID = settings.GA_VIEW_ID
 
 
 def initialize_analytics_reporting():
