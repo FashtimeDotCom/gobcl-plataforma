@@ -23,9 +23,9 @@ class ContingencyAdmin(AllTranslationsMixin, TranslatableAdmin):
         'created_at',
     )
     search_fields = (
-        'name',
-        'lead',
-        'description',
+        'translations__name',
+        'translations__lead',
+        'translations__description',
     )
     list_filter = (
         'is_active',
@@ -40,7 +40,7 @@ class ContingencyEventAdmin(AllTranslationsMixin, TranslatableAdmin):
         'date_time',
     )
     search_fields = (
-        'title',
+        'translations__title',
     )
     list_filter = (
         'contingency',
@@ -55,7 +55,8 @@ class ContingencyInformationAdmin(AllTranslationsMixin, TranslatableAdmin):
         'url',
     )
     search_fields = (
-        'title',
+        'translations__title',
+        'translations__description',
     )
     list_filter = (
         'contingency',
