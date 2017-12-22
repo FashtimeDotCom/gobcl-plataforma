@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # models
 from base.models import BaseModel
+from cms.models.fields import PlaceholderField
 
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel
@@ -65,6 +66,14 @@ class Campaign(BaseModel, TranslatableModel):
     is_featured = models.BooleanField(
         _('is featured'),
         default=False,
+    )
+    header_content = PlaceholderField(
+        'campaign header',
+        related_name='campaigns_as_header'
+    )
+    content = PlaceholderField(
+        'campaign content',
+        related_name='campaigns'
     )
 
     objects = CampaignQueryset.as_manager()

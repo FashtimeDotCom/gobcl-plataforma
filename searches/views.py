@@ -52,9 +52,9 @@ class ArticleListView(ListView):
 
         if self.query:
             queryset = queryset.filter(
-                Q(translations__title__icontains=self.query) |
-                Q(translations__lead_in__icontains=self.query) |
-                Q(translations__search_data__icontains=self.query)
+                Q(translations__title__unaccent__icontains=self.query) |
+                Q(translations__lead_in__unaccent__icontains=self.query) |
+                Q(translations__search_data__unaccent__icontains=self.query)
             ).distinct()
 
         if self.category_slug:
