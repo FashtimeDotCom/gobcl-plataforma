@@ -10,7 +10,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0017_auto_20171219_1102'),
         ('campaigns', '0013_auto_20171219_0755'),
     ]
 
