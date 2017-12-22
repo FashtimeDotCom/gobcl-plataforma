@@ -14,6 +14,9 @@ setattr(
 
 
 def get_widget_class(widget):
+    """
+    Returns a widget's corresponding class
+    """
     if isinstance(widget, forms.widgets.DateInput):
         widget.attrs['class'] = (
             'date-picker form-control vDateField'

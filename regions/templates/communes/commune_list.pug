@@ -1,0 +1,44 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.regions.add_commune
+        a.btn.btn-primary(href="{% url 'commune_create' region.slug %}")
+          {% trans 'add commune'|capfirst %}
+          i.fa.fa-plus
+
+  h1 {{region}}
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.regions.change_commune
+          th
+        if perms.regions.delete_commune
+          th
+    tbody
+      for commune in object_list
+        tr
+          td
+            a(href="{{ commune.get_absolute_url }}")
+              | {{commune.id}}
+          td
+            a(href="{{ commune.get_absolute_url }}")
+              | {{commune}}
+          if perms.communes.change_commune
+            td
+              a.btn.btn-primary(href="{% url 'commune_update' region.slug commune.id %}")
+                {% trans 'update commune'|capfirst %}
+                i.fa.fa-edit
+          if perms.communes.delete_commune
+            td
+              a.btn.btn-danger(href="{% url 'commune_delete' region.slug commune.id %}")
+                {% trans 'delete commune'|capfirst %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

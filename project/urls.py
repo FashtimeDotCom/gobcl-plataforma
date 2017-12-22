@@ -41,6 +41,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
+    url(_(r'^regions/'), include('regions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),

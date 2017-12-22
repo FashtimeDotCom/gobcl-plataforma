@@ -6,8 +6,10 @@
 
 # models
 from .models import Region
+from .models import Commune
 
 # views
+from base.forms import BaseModelForm
 from base.forms import TranslatableModelForm
 
 
@@ -30,3 +32,15 @@ class RegionForm(TranslatableModelForm):
             government_structure=self.instance.government_structure
         )
         self.fields['governor'].queryset = public_servants
+
+
+class CommuneForm(BaseModelForm):
+    """
+    Form Commune model.
+    """
+
+    class Meta:
+        model = Commune
+        exclude = (
+            'region',
+        )

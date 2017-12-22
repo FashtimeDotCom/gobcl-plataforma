@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-21 10:50-0300\n"
+"POT-Creation-Date: 2017-12-22 20:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,8 @@ msgstr "Regiones"
 msgid "Can view regions"
 msgstr "Puedo ver regiones"
 
-#: models.py:78 templates/regions/region_list.pug:17
+#: models.py:78 templates/communes/commune_list.pug:19
+#: templates/regions/region_list.pug:17
 msgid "name"
 msgstr "Nombre"
 
@@ -78,30 +79,45 @@ msgstr "Comunas"
 msgid "Can view communes"
 msgstr "Puedo ver comunas"
 
+#: templates/communes/commune_delete.pug:18
 #: templates/regions/region_delete.pug:18
 #, python-format
 msgid "Are you sure you want to delete' \"%(object)s\"?"
 msgstr ""
 
+#: templates/communes/commune_delete.pug:21
 #: templates/regions/region_delete.pug:21
 msgid "Confirm"
 msgstr "Confirmar"
 
+#: templates/communes/commune_delete.pug:23
 #: templates/regions/region_delete.pug:23
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: templates/communes/commune_list.pug:10
+msgid "add commune"
+msgstr "crear comuna"
+
+#: templates/communes/commune_list.pug:36
+msgid "update commune"
+msgstr "editar comuna"
+
+#: templates/communes/commune_list.pug:41
+msgid "delete commune"
+msgstr "borrar comuna"
 
 #: templates/regions/region_detail.pug:23
 msgid "Institutions"
 msgstr "Instituciones"
 
 #: templates/regions/region_detail.pug:53
-#: templates/regions/region_detail.pug:83
+#: templates/regions/region_detail.pug:89
 msgid "Phone"
 msgstr "Teléfono"
 
 #: templates/regions/region_detail.pug:54
-#: templates/regions/region_detail.pug:84
+#: templates/regions/region_detail.pug:90
 msgid "E-Mail"
 msgstr "Correo Electronico"
 
@@ -123,7 +139,15 @@ msgstr "borrar región"
 msgid "Municipalities"
 msgstr "Municipios"
 
-#: templates/regions/region_detail.pug:71
+#: templates/regions/region_detail.pug:73
+msgid "create commune"
+msgstr "crear comuna"
+
+#: templates/regions/region_detail.pug:76
+msgid "commune list"
+msgstr "lista de comunas"
+
+#: templates/regions/region_detail.pug:77
 msgid "Select a Comune"
 msgstr "Selecciona una comuna"
 

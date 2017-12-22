@@ -68,6 +68,12 @@ block content
         .col-sm-12.col-lg-4.col-xl-4
           article
             h2.heading-medium {{ region.commune_set.with_own_municipality.count }} {% trans 'Municipalities' %}
+            if perms.regions.add_commune
+              a(href="{% url 'commune_create' region.slug %}", target="blank").button.button--block
+                {% trans 'create commune'|capfirst %}
+            if perms.regions.view_commune
+              a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
+                {% trans 'commune list'|capfirst %}
             h3.heading-label {% trans 'Select a Comune' %}
             .select
               select(id="communes")

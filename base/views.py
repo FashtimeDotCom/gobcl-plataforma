@@ -172,7 +172,9 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
 
         obj = get_object_or_404(
             self.parent_model,
-            pk=self.kwargs['{}_id'.format(model_underscore_name)]
+            translations__slug=self.kwargs[
+                '{}_slug'.format(model_underscore_name)
+            ]
         )
 
         self.object = self.model(**{model_underscore_name: obj})
@@ -187,7 +189,9 @@ class BaseSubModelCreateView(CreateView, PermissionRequiredMixin):
 
         obj = get_object_or_404(
             self.parent_model,
-            pk=self.kwargs['{}_id'.format(model_underscore_name)]
+            translations__slug=self.kwargs[
+                '{}_slug'.format(model_underscore_name)
+            ]
         )
 
         context[model_underscore_name] = obj
