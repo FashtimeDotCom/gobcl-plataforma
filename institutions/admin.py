@@ -16,9 +16,9 @@ class InstitutionAdmin(AllTranslationsMixin, TranslatableAdmin):
         'url',
     )
     search_fields = (
-        'name',
+        'translations__name',
         'url',
-        'description',
+        'translations__description',
     )
     list_filter = (
         'government_structure__current_government',

@@ -15,17 +15,17 @@ urlpatterns = [
         name='campaign_create'
     ),
     url(
-        r'^(?P<pk>[\d]+)/$',
+        r'^(?P<slug>[\w-]+)/$',
         views.CampaignDetailView.as_view(),
         name='campaign_detail'
     ),
     url(
-        r'^(?P<pk>[\d]+)/update/$',
+        r'^(?P<slug>[\d]+)/update/$',
         views.CampaignUpdateView.as_view(),
         name='campaign_update'
     ),
     url(
-        r'^(?P<pk>[\d]+)/delete/$',
+        r'^(?P<slug>[\d]+)/delete/$',
         views.CampaignDeleteView.as_view(),
         name='campaign_delete',
     ),

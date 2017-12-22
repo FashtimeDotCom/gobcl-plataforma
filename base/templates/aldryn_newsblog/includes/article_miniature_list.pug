@@ -12,7 +12,7 @@
         figure.new_figure-mobile
           if article.featured_image_id
             img.img-fluid.w-100.img-frame(
-              src="{% thumbnail article.featured_image 495x270 crop subject_location=article.featured_image.subject_location %}",
+              src="{{ article.featured_image|thumbnail_url:'new_list_item' }}",
               alt="{{ article.featured_image.alt }}"
             )
           else

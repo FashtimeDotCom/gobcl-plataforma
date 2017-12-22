@@ -155,6 +155,7 @@ fi
 
 # create the local_settings file if it does not exist
 if [ ! -f ./project/local_settings.py ] ; then
+    print_green "Generating local settings"
     cp project/local_settings.py.default project/local_settings.py
 
     if [ INSTALL_POSTGRE ] ; then
@@ -169,6 +170,7 @@ if [ ! -f ./project/local_settings.py ] ; then
 fi
 
 if  $INSTALL_YARN ; then
+    print_green "Installing yarn"
     # package.json modification
     replace "s/NAME/${PWD##*/}/g" package.json
     replace "s/HOMEPAGE/https:\/\/bitbucket.org\/magnet-cl\/${PWD##*/}/g" package.json

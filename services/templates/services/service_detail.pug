@@ -1,0 +1,25 @@
+extends base.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'service_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.services.change_service
+        a.btn.btn-primary(href="{% url 'service_update' service.id %}")
+          {% trans 'Update service' %}
+          i.fa.fa-edit
+      if perms.services.delete_service
+        a.btn.btn-danger(href="{% url 'service_delete' service.id %}")
+          {% trans 'Delete service' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{service.id}}

@@ -12,7 +12,7 @@ class ClaveUnicaSettings(object):
 
     LOGIN_URL = 'https://accounts.claveunica.gob.cl/openid/authorize'
 
-    CLIENT_ID = 'C242172B23D349018620DAE9D39FD8EE'
+    CLIENT_ID = 'c242172b23d349018620dae9d39fd8ee'
 
     CALLBACK_URI = 'https://gobcl.magnet.cl/callback'
 
@@ -21,10 +21,10 @@ class ClaveUnicaSettings(object):
         'response_type': 'code',
         'redirect_uri': CALLBACK_URI,
         'state': '',
-        'scope': 'openid run name',
+        'scope': 'openid run name email',
     }
 
-    SECRET_KEY = '  ¯\_(ツ)_/¯  '
+    SECRET_KEY = '890e86cb19f94bca9e2787df5c6b1aaf'
 
     TOKEN_PARAMS_DICT = {
         'client_id': CLIENT_ID,

@@ -5,13 +5,13 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.db.models import Count
 from django.core.exceptions import MultipleObjectsReturned
-from parler.managers import TranslatableQuerySet
+from parler.managers import TranslatableQuerySet as BaseTranslatableQuerySet
 
 # standard library
 import json
 
 
-class QuerySet(TranslatableQuerySet):
+class QuerySet(models.query.QuerySet):
 
     def to_json(self):
         return json.dumps(list(self.values()), cls=DjangoJSONEncoder)
@@ -26,6 +26,10 @@ class QuerySet(TranslatableQuerySet):
             return queryset.get(**fields)
         except (self.model.DoesNotExist, MultipleObjectsReturned):
             return None
+
+
+class TranslatableQuerySet(BaseTranslatableQuerySet, QuerySet):
+    pass
 
 
 class BaseManager(models.Manager):
@@ -55,7 +59,7 @@ class BaseManager(models.Manager):
             return None
 
 
-class BaseGovernmentQuerySet(QuerySet):
+class BaseGovernmentQuerySet(TranslatableQuerySet):
 
     def by_government_structure(self, government_structure):
         qs = self

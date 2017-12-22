@@ -2,6 +2,17 @@
 # yarn lockfile v1
 
 
+"@gobdigital-cl/gob.cl@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@gobdigital-cl/gob.cl/-/gob.cl-1.1.4.tgz#c9145a816b0a7840789d9d1a3524b685c14ca0fe"
+  dependencies:
+    bootstrap "^4.0.0-beta.2"
+    jquery "^3.2.1"
+    jquery.easing "^1.4.1"
+    popper.js "^1.11.0"
+    sass-mq "^3.3.2"
+    slick-carousel "^1.8.1"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -630,17 +641,6 @@ globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
-
-"gob.cl@github:e-gob/gob.cl#v1.1.0":
-  version "1.1.0"
-  resolved "https://codeload.github.com/e-gob/gob.cl/tar.gz/f45e578abbe4258cdfe8b0133ec606e3ce5929bf"
-  dependencies:
-    bootstrap "^4.0.0-beta.2"
-    jquery "^3.2.1"
-    jquery.easing "^1.4.1"
-    popper.js "^1.11.0"
-    sass-mq "^3.3.2"
-    slick-carousel "^1.8.1"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"

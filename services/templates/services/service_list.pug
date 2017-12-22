@@ -1,0 +1,123 @@
+extends base.pug
+
+- load i18n
+- load staticfiles
+
+block content
+  section.section.bg-bluedark
+    .container
+      .row
+        .col-12.col-lg-7
+          article.article.article--dark.text-light
+            span.heading-label trámites y beneficios
+            h2.heading-large Trámites
+            p Tu guía ciudadana para acceder simple y rápido a servicios e información del Gobierno de Chile.
+            .search-form.search-form--large
+              input.search-form_input.active-search(type="search" placeholder="Escribe aquí lo que deseas buscar")
+              button.search-form_button.search-form_button--submit(type="submit"): i.ic-search
+              button.search-form_button.search-form_button--cancel(type="button"): i.ic-delete
+  section.section--medium
+    .container.d-sm-none
+      article.card-new
+        h2.card-new_title Tipos de Trámite
+        for service in object_list
+          a.link.link--text-dark.overflowed-xs(href="{{ service.get_absolute_url }}")
+            {{ service.name }}
+
+        a(href="#").link.hover.link--text-dark.overflowed-xs
+          | Ver más tipos de Trámites
+
+    .container.d-none.d-sm-block
+      h2.heading-large Tipos de Trámite
+      .row
+        for service in object_list
+          .col-12.col-lg-4
+            .card-kind
+              .card-kind_header
+                h2.heading-medium.card-kind_title
+                  a(href="{{ service.get_absolute_url }}") {{ service.name }}
+              .card-kind_body
+                for file in service.files.all|slice:":3"
+                  a.link.link--medium.link--text-dark(href="{{ file.get_absolute_url }}")
+                    {{ file.title }}
+                .clearfix
+                  a(href="#").more Ver más
+        .col-12.col-lg-4.offset-lg-8
+          a(href="#").button.button--block.button--clean Ver más tipos de tramite  ▾
+
+  section.section--medium
+    .container.section--medium.bg-red.d-sm-none
+      article.text-light
+        .row
+          .col-9
+            h1.heading-medium
+              | Haz tu trámite en línea con la CLAVE ÚNICA
+          .col-3.align-self-center
+            i.icon-key
+        .row
+          .col-12
+            p
+              a(href="#").link.link--clean.text-white
+                | Bajada ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                | labore et dolore magna aliqua.
+
+    .container.bg-bluedark.section--medium.d-none.d-sm-block
+      .row
+        .col-12.col-md-1.col-xl-1
+          .text-xs-center.text-sm-right
+            i.icon-key
+        .col-12.col-md-5.col-xl-5
+          .text-light
+            h3.heading-medium Trámites por internet con tu Clave Única
+            h4.heading-sub Con la Clave Única podrás obtener documentos y hacer 82 trámites del Estado en internet
+        .col-12.col-md-1.col-xl-2
+        .col-12.col-md-5.col-xl-4.align-self-center
+          a(href="#").button.button--lightgray.button--block Obtener mi Clave Única
+
+  section.section--medium
+    .container
+      h2.heading-large Aprende más sobre
+      br
+      .row
+        .col-12.col-lg-6
+          article.new.new--mobile
+            figure.new_figure-mobile
+              img(src="{% static 'images/default-news.png' %}", alt="").img-fluid.w-100
+            h2.new_title: a(href="#").link Cómo escoger o cambiarse de AFP
+            p.hidden-xs Bajada loreim ipsum cuales son las instrucciones relacionadas con ras finibus ligula ac mi.
+        .col-12.col-lg-6
+          article.new.new--mobile
+            figure.new_figure-mobile
+              img(src="{% static 'images/default-news.png' %}", alt="").img-fluid.w-100
+            h2.new_title: a(href="#").link Vacuna contra el Virus del Papiloma Humano (VPH)
+            p.hidden-xs Bajada loreim ipsum cuales son las instrucciones relacionadas con ras finibus ligula ac mi.
+        .col-12.col-lg-6
+          article.new.new--mobile
+            figure.new_figure-mobile
+              img(src="{% static 'images/default-news.png' %}", alt="").img-fluid.w-100
+            h2.new_title: a(href="#").link Permiso Postnatal
+            p.hidden-xs Bajada loreim ipsum cuales son las instrucciones relacionadas con ras finibus ligula ac mi.
+        .col-12.col-lg-6
+          article.new.new--mobile
+            figure.new_figure-mobile
+              img(src="{% static 'images/default-news.png' %}", alt="").img-responsive
+            h2.new_title: a(href="#").link Cómo funciona el Registro Social de Hogares
+            p.hidden-xs Bajada loreim ipsum cuales son las instrucciones relacionadas con ras finibus ligula ac mi.
+
+  section
+    .container
+      h3.heading-label Loreim ipsum
+      .row.section--medium.bg-bluedarkgray
+        .col-12.col-lg-4
+          .overflowed-xs.overflowed-sm
+            a(href="#").link.link--medium.link--text-dark ¿Qué es ChileAtiende?
+            a(href="#").link.link--medium.link--text-dark Centro de Ayuda
+            a(href="#").link.link--medium.link--text-dark Trámites disponibles en sucursales
+        .col-12.col-lg-4
+          .overflowed-xs.overflowed-sm
+            a(href="#").link.link--medium.link--text-dark Instituciones asociadas
+            a(href="#").link.link--medium.link--text-dark Política de privacidad
+            a(href="#").link.link--medium.link--text-dark Mapa de sitio
+        .col-12.col-lg-4
+          .overflowed-xs.overflowed-sm
+            a(href="#").link.link--medium.link--text-dark API para desarrolladores

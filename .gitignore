@@ -110,3 +110,5 @@ project/static
 gobcl-posts.json
 gobcl-uploads/*
 gobcl.xlsx
+catastro.xlsx
+*.p12

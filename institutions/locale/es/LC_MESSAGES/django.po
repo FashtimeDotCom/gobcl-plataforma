@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-14 13:55-0300\n"
+"POT-Creation-Date: 2017-12-21 09:04-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:23
+#: models.py:26
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:27
+#: models.py:30
 msgid "description"
 msgstr "Descripción"
 
-#: models.py:30
+#: models.py:33
 msgid "slug"
 msgstr "slug"
 
-#: models.py:36
+#: models.py:45
 msgid "url"
 msgstr "url"
 
-#: templates/institutions/institution_list.pug:19
+#: templates/institutions/institution_list.pug:14 views.py:29
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/institutions/institution_list.pug:20
-#: templates/institutions/institution_list.pug:29
-#: templates/institutions/institution_list.pug:38
-#: templates/institutions/institution_list.pug:45
-#: templates/institutions/institution_list.pug:51
+#: templates/institutions/institution_list.pug:15
+#: templates/institutions/institution_list.pug:24
+#: templates/institutions/institution_list.pug:33
+#: templates/institutions/institution_list.pug:42
+#: templates/institutions/institution_list.pug:50
 msgid ""
 "Your citizen guide for simple and fast access to services and information of "
 "Chile's government."
@@ -50,38 +50,63 @@ msgstr ""
 "Tu guía ciudadana para acceder simple y rápido a servicios e información del "
 "Gobierno de Chile."
 
-#: templates/institutions/institution_list.pug:28
+#: templates/institutions/institution_list.pug:23
 msgid "Presidency"
 msgstr "Presidencia"
 
-#: templates/institutions/institution_list.pug:31
+#: templates/institutions/institution_list.pug:26
+#: templates/institutions/institution_list.pug:35
+#: templates/institutions/institution_list.pug:44
+#: templates/institutions/institution_list.pug:52
 msgid "See more."
 msgstr "Ver más."
 
-#: templates/institutions/institution_list.pug:36
-#: templates/institutions/institution_list.pug:60
+#: templates/institutions/institution_list.pug:31
+#: templates/institutions/institution_list.pug:72
 msgid "Ministries"
 msgstr "Ministerios"
 
-#: templates/institutions/institution_list.pug:43
+#: templates/institutions/institution_list.pug:40
 msgid "Public Services."
 msgstr "Servicios Públicos"
 
-#: templates/institutions/institution_list.pug:50
+#: templates/institutions/institution_list.pug:49
 msgid "Regions and their Municipalities."
 msgstr "Regiones y sus Municipios"
 
-#: templates/institutions/institution_list.pug:57
+#: templates/institutions/institution_list.pug:63
 msgid "Write here what you want search."
 msgstr "Escribe aquí lo que quieres buscar"
 
-#: templates/institutions/institution_list.pug:69
+#: templates/institutions/institution_list.pug:76
+msgid "create ministry"
+msgstr "crear ministerio"
+
+#: templates/institutions/institution_list.pug:89
+#: templates/institutions/institution_list.pug:111
+#: templates/institutions/institution_list.pug:125
+msgid "No results found."
+msgstr "No se encontraron resultados."
+
+#: templates/institutions/institution_list.pug:93
 msgid "public services"
 msgstr "servicios públicos"
 
-#: templates/institutions/institution_list.pug:79
+#: templates/institutions/institution_list.pug:98
+msgid "create public service"
+msgstr "crear servicio público"
+
+#: templates/institutions/institution_list.pug:101
+msgid "public service list"
+msgstr "lista de servicios públicos"
+
+#: templates/institutions/institution_list.pug:114
 msgid "Regions"
 msgstr "Regiones"
+
+#: templates/institutions/institution_list.pug:117
+msgid "create region"
+msgstr "crear región"
 
 #: urls.py:16
 msgid "^presidency/$"

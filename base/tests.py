@@ -16,7 +16,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.test import TestCase
 from django.utils.translation import activate
-from django.utils import timezone
 
 # urls
 from project.urls import urlpatterns
@@ -43,6 +42,7 @@ class BaseTestCase(TestCase, Mockup):
         self.password = random_gen.gen_text()
         self.user = mommy.prepare('users.User')
         self.user.set_password(self.password)
+        self.user.rut = self.random_rut()
         self.user.save()
 
         self.login()
@@ -52,38 +52,21 @@ class BaseTestCase(TestCase, Mockup):
             user = self.user
             password = self.password
 
-        return self.client.login(email=user.email, password=password)
+        return self.client.login(rut=user.rut, password=password)
 
 
 class IntegrityOnDeleteTestCase(BaseTestCase):
     def create_full_object(self, model):
         kwargs = {}
         for f in model._meta.fields:
-
             if isinstance(f, models.fields.related.ForeignKey) and f.null:
-                model_name = f.rel.to.__name__
-                if model_name == 'Campaign':
-                    kwargs[f.name] = mommy.make(
-                        f.rel.to, title='foo', description='')
-                elif model_name == 'Image':
-                    kwargs[f.name] = mommy.make(
-                        f.rel.to, uploaded_at=timezone.now())
-                elif model_name == 'Ministry' or model_name == 'Region':
-                    name = str(uuid.uuid4())
-                    kwargs[f.name] = mommy.make(
-                        f.rel.to, name=name, description='')
-                else:
-                    kwargs[f.name] = mommy.make(f.rel.to)
+                model_name = underscore(f.rel.to.__name__)
+                method_name = 'create_{}'.format(model_name)
+                kwargs[f.name] = getattr(self, method_name)()
 
-        try:
-            return mommy.make(model, **kwargs), kwargs
+        method_name = 'create_{}'.format(underscore(model.__name__))
 
-        except:
-            kwargs['name'] = str(uuid.uuid4())
-
-            kwargs_complete = kwargs
-            del kwargs['name']
-            return mommy.make(model, **kwargs_complete), kwargs
+        return getattr(self, method_name)(**kwargs), kwargs
 
     def test_integrity_on_delete(self):
 
@@ -210,7 +193,6 @@ class UrlsTest(BaseTestCase):
         def test_url_patterns(patterns, namespace=''):
 
             if namespace in ignored_namespaces:
-                print('Ignored namespace: {}.'.format(namespace))
                 return
 
             for pattern in patterns:
@@ -224,7 +206,6 @@ class UrlsTest(BaseTestCase):
 
                     for ignored_url in ignored_urls:
                         if ignored_url in url:
-                            print('ignored url: {}'.format(url))
                             return
 
                     try:
@@ -238,7 +219,6 @@ class UrlsTest(BaseTestCase):
                     )
 
                     if response.status_code == 500:
-                        print(url)
                         print(response.content)
 
                     self.assertIn(

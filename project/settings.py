@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'hitcount',
     'haystack',
     'modeltranslation',
+    'django_cron',
 
     # internal
     'base',
@@ -106,8 +107,9 @@ INSTALLED_APPS = [
     'links',
     'public_enterprises',
     'searches',
-    'gobcl_cms',
+    'services',
     'campaigns',
+    'contingencies',
 
     # django cms
     'cms',
@@ -134,6 +136,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'taggit',
     'reversion',
+    'gobcl_cms',
 
 ]
 
@@ -201,6 +204,8 @@ TEMPLATES = [
                 'links.context_processors.footer_links',
                 'base.context_processors.categories',
                 'searches.context_processors.get_feature_news',
+                'contingencies.context_processors.get_contingencies',
+                'services.context_processors.get_chile_atiende_files',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -331,10 +336,10 @@ NPM_FILE_PATTERNS = {
         'build/js/bootstrap-datetimepicker.min.js',
         'build/css/bootstrap-datetimepicker.min.css'
     ],
-    'gob.cl': [
-        'dist/js/gob.cl.js',
-        'dist/fonts/*',
-        'dist/images/*'
+    '@gobdigital-cl': [
+        'gob.cl/dist/js/gob.cl.js',
+        'gob.cl/dist/fonts/*',
+        'gob.cl/dist/images/*'
     ],
     'popper.js': ['dist/umd/popper.js'],
     'select2': [
@@ -390,11 +395,21 @@ LOGGING = {
             'formatter': 'standard',
             'level': 'ERROR',
         },
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}/logs/{}/clave_unica.log'.format(BASE_DIR, env),
+        },
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'file'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'debug_messages': {
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
@@ -423,7 +438,9 @@ MOMMY_CUSTOM_CLASS = 'base.mommy.CustomMommy'
 
 THUMBNAIL_ALIASES = {
     '': {
-        'avatar': {'size': (218, 228), 'crop': True},
+        'new_list_item': {'size': (495, 270), 'crop': True},
+        'avatar': {'size': (328, 342), 'crop': True},
+        'avatar_small': {'size': (218, 228), 'crop': True},
     },
 }
 
@@ -505,6 +522,8 @@ THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'easy_thumbnails.storage.ThumbnailFileSystemStorage'
 )
 
+CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
+
 PARLER_LANGUAGES = {
     1: (
         {'code': 'es'},
@@ -513,5 +532,24 @@ PARLER_LANGUAGES = {
     'default': {
         'fallback': 'es',
         'hide_untranslated': False,
+    }
+}
+
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+
+CRON_CLASSES = (
+    'services.cron.ChargeChileAtiendeServiceFile',
+)
+
+# Google Analytics API
+GA_KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
+GA_SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
+GA_VIEW_ID = os.getenv('GA_VIEW_ID', '')
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/django_cache',
     }
 }

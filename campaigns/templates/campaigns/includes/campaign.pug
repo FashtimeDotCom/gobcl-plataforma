@@ -18,7 +18,7 @@ if template
         p {{ campaign.description }}
         .row
           .col-lg-10
-            a(href="{% url 'about' %}").button.button--block.button--light.button--clean.button--space
+            a(href="{{campaign.get_absolute_url}}").button.button--block.button--light.button--clean.button--space
               {% trans 'See more' %}
 
   if template == 'small'
@@ -31,9 +31,9 @@ if template
           )
         .new_title
           a(href="{{ campaign.get_absolute_url }}").link.link-clean
-            h4 {{ campaign.title }}
+            h4 {{ campaign.title|truncatechars:50 }}
           a(href="{{ campaign.get_absolute_url }}").link.link--text-dark.visited
-            {{ campaign.description|truncatechars:110 }}
+            {{ campaign.description|truncatechars:60 }}
 
 else
   div(class="col-lg-{% widthratio 12 col 1 %}")
@@ -45,13 +45,13 @@ else
         )
       .new_title
         a(href="{{ campaign.get_absolute_url }}").link.link-clean
-          h4 {{ campaign.title }}
+          h4 {{ campaign.title|truncatechars:50 }}
         a(href="{{ campaign.get_absolute_url }}").link.link--text-dark.visited
           {{ campaign.description|truncatechars:110 }}
     a(href="{{ campaign.get_absolute_url }}").featured-card.has-icon.d-none.d-lg-block
       .featured-card_figure.elem-bg
         img(src="{% thumbnail campaign.image 700x240 crop %}", alt="").card_image.img-to-bg
       .featured-card_body
-        h2.featured-card_title {{ campaign.title }}
+        h2.featured-card_title {{ campaign.title|truncatechars:50 }}
         p {{ campaign.description|truncatechars:110 }}
 

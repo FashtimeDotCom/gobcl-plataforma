@@ -6,7 +6,7 @@ doctype 5
 - load cms_tags
 - load sekizai_tags
 
-html(lang="es")
+html(lang="es").a11y-font-0
   head
     meta(charset="utf-8")
     title Gob.cl{% block title %}{% if title%}:{% endif %} {{title}} {%endblock%}
@@ -90,7 +90,10 @@ html(lang="es")
     block stylesheets
     {% endcompress %}
 
-  body(class='{{body_class|default:""}} footer-links-{{ footer_links|length }}')
+  body(
+    class='{{body_class|default:""}} footer-links-{{ footer_links|length }}',
+    data-main=".site-main"
+  )
     {% cms_toolbar %}
     {% include 'includes/navbar.pug' %}
     div
@@ -102,10 +105,16 @@ html(lang="es")
           {% endfor %}
           {% endif %}
 
-    {% placeholder "top_content" %}
     {% include 'includes/contingency.pug' %}
-    block content
-    {% placeholder "bottom_content" %}
+    main.site-main
+      block header
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "top_content" %}
+      block content
+      section.section.nopadding.bg-bluedark
+        .container
+          {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster
@@ -159,7 +168,7 @@ html(lang="es")
     {% render_block "js" %}
     {% compress js %}
     script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
-    script(src="{% static 'gob.cl/dist/js/gob.cl.js' %}")
+    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
@@ -173,7 +182,6 @@ html(lang="es")
           }
         });
       });
-    script(src="{% static 'js/utils/accent_fold.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")

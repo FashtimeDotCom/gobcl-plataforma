@@ -3,28 +3,35 @@ extends base.pug
 - load i18n cms_tags
 
 block content
-  main.site-main
-    section.section.bg-bluedark.text-light
-      .container
-        {% include 'includes/search_bar.pug' %}
+  section.section.bg-bluedark.text-light
+    .container
+      {% include 'includes/search_bar.pug' %}
 
-    section.section
-      .container
-        h3.heading-medium {{ object_list|length }} {% trans 'Results' %}
-        .results
-          .row
-            .col-12.col-md-10.col-lg-7
-              for article in object_list
-                .result
-                  a.result_link(href="{{ article.get_absolute_url }}")
-                    {% render_model article "title" %}
-                  p.result_excerpt
-                    {{ article.lead_in|striptags|truncatechars:100 }}
-                  span.result_date {{ article.publishing_date|date }}
+  section.section
+    .container
+      h3.heading-medium {{ count }} {% trans 'Results' %}
+      .results
+        .row
+          .col-12.col-md-10.col-lg-7
+            for chile_atiende_file in chile_atiende_files
+              .result
+                a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
+                  {{chile_atiende_file.titulo}}
+                p.result_excerpt
+                  {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
+                span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
+                  |  {{chile_atiende_file.servicio}}
+            for article in object_list
+              .result
+                a.result_link(href="{{ article.get_absolute_url }}")
+                  {% render_model article "title" %}
+                p.result_excerpt
+                  {{ article.lead_in|striptags|truncatechars:100 }}
+                span.result_date {{ article.publishing_date|date }}
 
 
-    section
-      .container
-        {% include 'includes/social.pug' %}
+  section
+    .container
+      {% include 'includes/social.pug' %}
 
 
