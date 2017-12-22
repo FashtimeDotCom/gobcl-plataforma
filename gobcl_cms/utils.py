@@ -3,6 +3,7 @@ from djangocms_picture.models import Picture
 
 from aldryn_newsblog.models import Article
 from filer.models.foldermodels import Folder
+from filer.models.imagemodels import Image
 
 
 def create_text_plugin(content, target_placeholder, language, position):
@@ -69,3 +70,15 @@ def reorder_by_folder_feature_image_articles():
 
         image.folder = folder_day
         image.save()
+
+
+def generate_sha1_to_image():
+
+    images = Image.objects.all()
+
+    for image in images:
+        image.save()
+        image.refresh_from_db()
+        print(image.sha1)
+        if not image.sha1:
+            image.delete()
