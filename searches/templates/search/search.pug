@@ -7,7 +7,7 @@ block javascripts
 
 block content
   section.section.bg-bluedark.text-light
-    .container
+    .container.result-search
       {% include 'includes/search_bar.pug' %}
 
   section.section
@@ -19,7 +19,7 @@ block content
             for chile_atiende_file in chile_atiende_files
               .result
                 a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
-                  {{chile_atiende_file.titulo}}
+                  {{ chile_atiende_file.titulo }}
                 p.result_excerpt
                   {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
                 span.result_date {{ chile_atiende_file.fecha|slice:":10" }}

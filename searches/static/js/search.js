@@ -3,8 +3,8 @@
  */
 $(function () {
 
-  $('.tags')
-    .on('change.gl.tags', function (value) {
+  $('.result-search .tags')
+    .on('change.gl.tags', function () {
       $('#search').closest('form').submit();
     })
     .on('cancel.gl.tags', function () {
