@@ -1,11 +1,15 @@
 from aldryn_newsblog.admin import ArticleAdmin as BaseArticleAdmin
 from aldryn_newsblog.admin import ArticleAdminForm as BaseArticleAdminForm
 from aldryn_newsblog.models import Article
+from aldryn_people.models import Group
+from aldryn_people.models import Person
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
 admin.site.unregister(Article)
+admin.site.unregister(Group)
+admin.site.unregister(Person)
 
 
 class ArticleAdminForm(BaseArticleAdminForm):
