@@ -17,4 +17,8 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
     # filter_fields = ('region',)
 
     def get_queryset(self):
-        return self.model.objects.filter()
+        return self.model.objects.filter().prefetch_related(
+            'translations',
+        ).select_related(
+            'app_config',
+        )
