@@ -1,0 +1,8 @@
+- load thumbnail
+
+.img-box
+  .gallery-image(
+    style="background-image: url({% thumbnail image.image 300x300  %})",
+    data-mfp-src="{{ image.image.url }}"
+    data-text="{{ image.caption|default:'' }}"
+  )
