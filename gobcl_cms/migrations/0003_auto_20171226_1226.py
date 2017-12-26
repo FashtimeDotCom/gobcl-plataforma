@@ -11,9 +11,9 @@ import filer.fields.image
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0017_auto_20171219_1102'),
+        ('cms', '0016_auto_20160608_1535'),
         migrations.swappable_dependency(settings.FILER_IMAGE_MODEL),
-        ('gobcl_cms', '0016_auto_20160608_1535'),
+        ('gobcl_cms', '0002_imageplugin_caption'),
     ]
 
     operations = [
