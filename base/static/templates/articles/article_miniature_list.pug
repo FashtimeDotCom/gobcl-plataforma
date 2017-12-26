@@ -3,11 +3,13 @@ each article in articles
   .col-12.col-lg-6
     article.new.new--mobile
       time.new_date 
-        #{article.publishing_date}
+        | #{article.publishing_date}
       figure.new_figure-mobile
-        if article.featured_image
+        if article.featured_image != ""
           img.img-fluid.w-100.img-frame(
             src="#{article.featured_image}"
           )
+        else 
+          img.img-fluid.w-100.img-frame.default-image
       h2.new_title
-        a(href="#").link.link--text-dark.visited #{article.translations.es.title}
+        a(href=article.url).link.link--text-dark.visited #{article.translations.es.title}
