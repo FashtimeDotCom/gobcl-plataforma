@@ -9,7 +9,7 @@ from searches.viewsets import ArticleSearchViewSet
 router = DefaultRouter()
 router.register(r'communes', CommuneViewSet, 'commune')
 router.register(r'articles', ArticleViewSet, 'article')
-router.register(r'search', ArticleSearchViewSet, 'article')
+# router.register(r'article-search', ArticleSearchViewSet, 'article')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
