@@ -6,7 +6,6 @@ if instance.child_plugin_instances
   .gallery
     .gallery-slide
       for image in instance.child_plugin_instances
-        {{ image.image }}
         .img-box
           .gallery-image(
             style="background-image: url({% thumbnail image.image 300x300  %})",
