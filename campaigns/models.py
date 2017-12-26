@@ -69,11 +69,13 @@ class Campaign(BaseModel, TranslatableModel):
     )
     header_content = PlaceholderField(
         'campaign header',
-        related_name='campaigns_as_header'
+        on_delete=models.SET_NULL,
+        related_name='campaigns_as_header',
     )
     content = PlaceholderField(
         'campaign content',
-        related_name='campaigns'
+        on_delete=models.SET_NULL,
+        related_name='campaigns',
     )
 
     objects = CampaignQueryset.as_manager()
