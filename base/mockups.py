@@ -8,10 +8,11 @@ import uuid
 from django.apps import apps
 from django.utils import timezone
 from django.utils.text import slugify
-from easy_thumbnails.files import get_thumbnailer
+from django.utils.translation import activate
 
-# cms
+# third party
 from cms.models import Page
+from easy_thumbnails.files import get_thumbnailer
 
 # utils
 from base.utils import random_string
@@ -19,24 +20,43 @@ from inflection import underscore
 from model_mommy import mommy
 
 # models
-from aldryn_newsblog.models import Article
-from campaigns.models import Campaign
-from government_structures.models import GovernmentStructure
-from filer.models.imagemodels import Image
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
-from ministries.models import Ministry
-from regions.models import Region
+from aldryn_newsblog.models import Article
 from aldryn_people.models import Person
+from campaigns.models import Campaign
+from cms.models.placeholdermodel import Placeholder
+from filer.models.imagemodels import Image
+from government_structures.models import GovernmentStructure
+from ministries.models import Ministry
+from ministries.models import PublicService
 from presidencies.models import Presidency
 from public_servants.models import PublicServant
+from regions.models import Region
 from users.models import User
 
 
 class Mockup(object):
+    def __init__(self):
+        super()
+        activate('es')
+
+    def create_article(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
+        self.set_required_foreign_key(kwargs, 'app_config')
+        self.set_required_foreign_key(kwargs, 'owner', 'user')
+        self.set_required_foreign_key(kwargs, 'author', 'person')
+        return Article.objects.create(**kwargs)
 
     def create_government_structure(self, **kwargs):
         self.set_required_datetime(kwargs, 'publication_date')
         return GovernmentStructure.objects.create(**kwargs)
+
+    def create_ministry(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        return Ministry.objects.create(**kwargs)
 
     def create_page(self, **kwargs):
         title = kwargs['reverse_id']
@@ -56,18 +76,20 @@ class Mockup(object):
 
         return page
 
+    def create_placeholder(self, **kwargs):
+        return Placeholder.objects.create(**kwargs)
+
+    def create_public_service(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'ministry')
+        return PublicService.objects.create(**kwargs)
+
     def create_user(self, **kwargs):
         self.set_required_email(kwargs, 'email')
         self.set_required_string(kwargs, 'first_name')
         self.set_required_string(kwargs, 'last_name')
         return User.objects.create(**kwargs)
-
-    def create_article(self, **kwargs):
-        self.set_required_string(kwargs, 'title')
-        self.set_required_foreign_key(kwargs, 'app_config')
-        self.set_required_foreign_key(kwargs, 'owner', 'user')
-        self.set_required_foreign_key(kwargs, 'author', 'person')
-        return Article.objects.create(**kwargs)
 
     def create_person(self, **kwargs):
         return Person.objects.create(**kwargs)
@@ -96,13 +118,6 @@ class Mockup(object):
             kwargs['photo'] = photo
 
         return Presidency.objects.create(**kwargs)
-
-    def create_ministry(self, **kwargs):
-        self.set_required_string(kwargs, 'name')
-        self.set_required_string(kwargs, 'description')
-        self.set_required_url(kwargs, 'url')
-        self.set_required_foreign_key(kwargs, 'government_structure')
-        return Ministry.objects.create(**kwargs)
 
     def create_region(self, **kwargs):
         self.set_required_string(kwargs, 'name')

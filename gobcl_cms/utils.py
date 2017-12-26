@@ -48,7 +48,7 @@ def reorder_by_folder_feature_image_articles():
     for article in articles:
         if not article.featured_image_id:
             continue
-        
+
         publishing_date = article.publishing_date
         year = publishing_date.year
         month = publishing_date.month
@@ -74,11 +74,18 @@ def reorder_by_folder_feature_image_articles():
 
 def generate_sha1_to_image():
 
-    images = Image.objects.all()
+    images = Image.objects.filter(sha1='').order_by('id')
+    print(images.count())
 
-    for image in images:
-        image.save()
-        image.refresh_from_db()
-        print(image.sha1)
-        if not image.sha1:
-            image.delete()
+    while images.exists():
+        for image in images[:5]:
+            print(image.id)
+            image.save()
+            print(image.url, image.sha1)
+            if not image.url:
+                image.delete()
+                print('delete because of missing url')
+
+            if not image.sha1:
+                image.delete()
+                print('delete because of missing sha1')
