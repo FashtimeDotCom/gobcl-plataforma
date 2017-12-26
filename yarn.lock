@@ -861,6 +861,10 @@ jquery.easing@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jquery.easing/-/jquery.easing-1.4.1.tgz#47982c5836bd758fd48494923c4a101ef6e93e3b"
 
+jquery@^1.7.4:
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
+
 jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
@@ -879,6 +883,12 @@ js-yaml@^3.4.3:
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
+
+jscroll@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/jscroll/-/jscroll-2.3.9.tgz#611dbee9ee2cd13741198de678143386a0713abc"
+  dependencies:
+    jquery "^1.7.4"
 
 json-schema@0.2.3:
   version "0.2.3"

@@ -1,5 +1,9 @@
 - load i18n staticfiles thumbnail cms_tags apphooks_config_tags
 
+
+block javascripts
+  script(src="{% static 'js/load_more_articles.js' %}")
+
 block content
   section.section.nopadding.bg-bluedark
     .container
@@ -26,16 +30,14 @@ block content
                 class="{% if newsblog_category.id == category.id %}active{% endif %}"
               )
                 {{ category }}
-
+      
       {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=article_list %}
       if not article_list
         h3 {% trans 'There are no news in this category' %}
 
       .col-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
         br
-        {% include 'aldryn_newsblog/includes/pagination.pug' %}
+        //- {% include 'aldryn_newsblog/includes/pagination.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
-
-

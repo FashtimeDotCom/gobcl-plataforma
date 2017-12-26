@@ -356,6 +356,9 @@ NPM_FILE_PATTERNS = {
     'magnific-popup': [
         'dist/jquery.magnific-popup.js',
         'dist/magnific-popup.css'
+    ],
+    'jscroll': [
+        'jquery.jscroll.js'
     ]
 }
 
