@@ -12,6 +12,12 @@ class ImagePlugin(CMSPlugin):
         blank=True,
         null=True,
     )
+    caption = models.CharField(
+        _('caption'),
+        max_length=255,
+        blank=True,
+        null=True,
+    )
 
 
 class HtmlPlugin(CMSPlugin):
