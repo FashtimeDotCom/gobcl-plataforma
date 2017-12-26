@@ -15,7 +15,7 @@ $(function () {
     // if the scroll is more than 90% from the top, load more content.
     if(scrollPercentage > 0.9) {
       isAlreadySent = true;
-    	currentRequest = $.ajax(url, {
+      currentRequest = $.ajax(url, {
         success: function(response){
           url = response.next;
           var newContent = templates['articles/article_miniature_list'](response.results);
