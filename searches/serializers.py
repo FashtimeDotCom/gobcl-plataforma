@@ -11,12 +11,14 @@ from aldryn_newsblog.models import Article
 class ThumbnailSerializer(serializers.ImageField):
 
     def to_representation(self, instance):
+        if not instance:
+            return ''
         return thumbnail_url(instance.file, 'new_list_item')
 
 
 class ArticleSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Article)
-    url = serializers.ReadOnlyField(
+    url = serializers.URLField(
         source='get_absolute_url',
     )
     alt_image = serializers.SerializerMethodField()

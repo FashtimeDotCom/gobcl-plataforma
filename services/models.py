@@ -98,6 +98,16 @@ class ChileAtiendeFile(BaseModel):
     def __str__(self):
         return self.title
 
+    def translations(self):
+        return ChileAtiendeService.objects.none()
+
+    def featured_image(self):
+        return ''
+    
+    @property
+    def featured_image_id(self):
+        return ''
+
     def get_absolute_url(self):
         url = '{}{}'.format(
                 'https://www.chileatiende.gob.cl/fichas/ver/',

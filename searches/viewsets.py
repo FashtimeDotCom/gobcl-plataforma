@@ -6,28 +6,15 @@ from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
-
-from cms.utils.i18n import get_current_language
-from django.utils.translation import get_language
+from rest_framework.pagination import _positive_int
 
 from .serializers import ArticleSerializer
+from services.serializers import ChileAtiendeFileSerializer
 
 from aldryn_newsblog.models import Article
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
 from services.models import ChileAtiendeFile
-
-
-def _positive_int(integer_string, strict=False, cutoff=None):
-    """
-    Cast a string to a strictly positive integer.
-    """
-    ret = int(integer_string)
-    if ret < 0 or (ret == 0 and strict):
-        raise ValueError()
-    if cutoff:
-        return min(ret, cutoff)
-    return ret
 
 
 class LimitOffsetPagination(LimitOffsetPagination):
@@ -95,11 +82,6 @@ class ArticleSearchViewSet(ArticleViewSet):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
-        # queryset = list(itertools.chain(
-        #         ChileAtiendeFile.objects.all()[:10], Article.objects.all()[:10]
-        #     )
-        # )
-
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -110,6 +92,7 @@ class ArticleSearchViewSet(ArticleViewSet):
 
     def get_queryset(self):
         queryset = super(ArticleSearchViewSet, self).get_queryset()
+        querysetfile = ChileAtiendeFile.objects.all()
 
         self.query = self.request.GET.get('q', '')
 
@@ -119,5 +102,16 @@ class ArticleSearchViewSet(ArticleViewSet):
                 Q(translations__lead_in__unaccent__icontains=self.query) |
                 Q(translations__search_data__unaccent__icontains=self.query)
             ).distinct()
+
+            querysetfile = querysetfile.filter(
+                Q(service__name__icontains=self.query) |
+                Q(title__icontains=self.query) |
+                Q(objective__icontains=self.query)
+            ).distinct()
+        
+        queryset = list(itertools.chain(
+                querysetfile, queryset
+            )
+        )
 
         return queryset
