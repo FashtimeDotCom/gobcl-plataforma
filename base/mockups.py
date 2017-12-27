@@ -42,7 +42,8 @@ from services.models import ChileAtiendeFile
 from contingencies.models import Contingency
 from contingencies.models import ContingencyEvent
 from contingencies.models import ContingencyInformation
-from gobcl_cms.models import ImagePlugin
+from gobcl_cms.models import GalleryPlugin
+from gobcl_cms.models import GalleryImagePlugin
 from gobcl_cms.models import HtmlPlugin
 
 
@@ -218,8 +219,12 @@ class Mockup(object):
         self.set_required_url(kwargs, 'url')
         return ContingencyInformation.objects.create(**kwargs)
 
-    def create_image_plugin(self, **kwargs):
-        return ImagePlugin.objects.create(**kwargs)
+    def create_gallery_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'description')
+        return GalleryPlugin.objects.create(**kwargs)
+
+    def create_gallery_image_plugin(self, **kwargs):
+        return GalleryImagePlugin.objects.create(**kwargs)
 
     def create_html_plugin(self, **kwargs):
         self.set_required_string(kwargs, 'html')
