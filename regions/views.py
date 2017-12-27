@@ -29,7 +29,7 @@ class RegionListView(BaseListView):
     View for displaying a list of regions.
     """
     model = Region
-    template_name = 'regions/list.pug'
+    template_name = 'regions/region_list.pug'
     permission_required = 'regions.view_region'
 
 

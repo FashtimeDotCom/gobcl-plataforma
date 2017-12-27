@@ -145,14 +145,8 @@ class UrlsTest(BaseTestCase):
 
             if model_name.endswith('_translation'):
                 continue
-            elif model_name == 'campaign':
-                obj = mommy.make(model, title='foo')
-            elif model_name == 'ministry' or model_name == 'region':
-                name = str(uuid.uuid4())
-                obj = mommy.make(
-                    model, name=name, description='')
-            else:
-                obj = mommy.make(model)
+
+            obj = getattr(self, method_name)()
 
             self.assertIsNotNone(obj, '{} returns None'.format(method_name))
 
