@@ -19,6 +19,7 @@ class ArticleSerializer(TranslatableModelSerializer):
     url = serializers.ReadOnlyField(
         source='get_absolute_url',
     )
+    alt_image = serializers.SerializerMethodField()
     featured_image = ThumbnailSerializer()
 
     class Meta:
@@ -29,4 +30,8 @@ class ArticleSerializer(TranslatableModelSerializer):
             'featured_image',
             'publishing_date',
             'url',
+            'alt_image',
         )
+
+    def get_alt_image(self, obj):
+        return ''
