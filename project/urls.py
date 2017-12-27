@@ -58,7 +58,7 @@ if settings.DEBUG:
         document_root=settings.MEDIA_ROOT,
     )
 
-if settings.TEST or settings.TRAVIS or settings.DOCKER:
+if settings.TEST:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
     ]
