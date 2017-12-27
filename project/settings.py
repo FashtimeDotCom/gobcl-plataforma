@@ -28,17 +28,41 @@ if 'TRAVIS' in os.environ:
     from project.travis_settings import ADMINS
     from project.travis_settings import LOCALLY_ALLOWED_HOSTS
 elif 'DOCKER' in os.environ:
-    from project.production.local_settings import DEBUG
-    from project.production.local_settings import LOCALLY_INSTALLED_APPS
-    from project.production.local_settings import ENABLE_EMAILS
     from project.production.local_settings import ADMINS
+    from project.production.local_settings import DEBUG
+    from project.production.local_settings import ENABLE_EMAILS
     from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
+    from project.production.local_settings import LOCALLY_INSTALLED_APPS
+    from project.production.local_settings import STATICFILES_STORAGE
+    from project.production.local_settings import DEFAULT_FILE_STORAGE
+    from project.production.local_settings import COMPRESS_STORAGE
+elif 'STAGING' in os.environ:
+    from project.local_settings import ADMINS
+    from project.staging.local_settings import DEBUG
+    from project.staging.local_settings import ENABLE_EMAILS
+    from project.staging.local_settings import LOCALLY_ALLOWED_HOSTS
+    from project.staging.local_settings import LOCALLY_INSTALLED_APPS
+    from project.staging.local_settings import STATICFILES_STORAGE
+    from project.staging.local_settings import DEFAULT_FILE_STORAGE
+    from project.staging.local_settings import COMPRESS_STORAGE
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
     from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    STATICFILES_STORAGE = os.getenv(
+        'STATICFILES_STORAGE',
+        'django.contrib.staticfiles.storage.StaticFilesStorage'
+    )
+    DEFAULT_FILE_STORAGE = os.getenv(
+        'DEFAULT_FILE_STORAGE',
+        'django.core.files.storage.FileSystemStorage'
+    )
+    COMPRESS_STORAGE = os.getenv(
+        'COMPRESS_STORAGE',
+        'compressor.storage.CompressorFileStorage'
+    )
 
 if DEBUG:
     env = 'development'
@@ -496,19 +520,7 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 STATIC_URL = os.getenv('STATIC_URL', '/static/')
 MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
-DEFAULT_FILE_STORAGE = os.getenv(
-    'DEFAULT_FILE_STORAGE',
-    'django.core.files.storage.FileSystemStorage'
-)
-STATICFILES_STORAGE = os.getenv(
-    'STATICFILES_STORAGE',
-    'django.contrib.staticfiles.storage.StaticFilesStorage'
-)
 COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
-COMPRESS_STORAGE = os.getenv(
-    'COMPRESS_STORAGE',
-    'compressor.storage.CompressorFileStorage'
-)
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
 THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'THUMBNAIL_DEFAULT_STORAGE',
