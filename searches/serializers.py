@@ -34,4 +34,9 @@ class ArticleSerializer(TranslatableModelSerializer):
         )
 
     def get_alt_image(self, obj):
-        return ''
+
+        if not obj.featured_image_id:
+            return ''
+
+        alt_text = obj.featured_image.default_alt_text
+        return alt_text or ''
