@@ -45,9 +45,10 @@ block content
               span.profile_job {{ region.governor.charge }}
 
             p {{ region.governor.description }}
-            p
-              a(href="https://twitter.com/{{ region.governor.twitter  }}", target="blank").profile_twitter
-                | {{ region.governor.twitter }}
+            if region.governor.twitter 
+              p
+                a(href="https://twitter.com/{{ region.governor.twitter  }}", target="blank").profile_twitter
+                  | @{{ region.governor.twitter }}
 
             ul.profile_info
               li: span {% trans 'Phone' %}: {{ region.governor.phone }}
