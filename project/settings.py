@@ -72,9 +72,6 @@ else:
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
 
-DOCKER = 'DOCKER' in os.environ
-TRAVIS = 'TRAVIS' in os.environ
-
 ADMINS = ADMINS
 
 
