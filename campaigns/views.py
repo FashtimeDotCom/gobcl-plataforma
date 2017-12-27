@@ -39,7 +39,7 @@ class CampaignCreateView(BaseCreateView):
     permission_required = 'campaigns.add_campaign'
 
     def get_cancel_url(self):
-        return reverse('campaigns:campaign_list')
+        return reverse('campaign_list')
 
 
 class CampaignDetailView(TranslatableSlugMixin, BaseDetailView):
@@ -70,4 +70,4 @@ class CampaignDeleteView(BaseDeleteView):
     template_name = 'campaigns/campaign_delete.pug'
 
     def get_success_url(self):
-        return reverse('campaigns:campaign_list')
+        return reverse('campaign_list')

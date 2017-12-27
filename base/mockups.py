@@ -17,7 +17,7 @@ from easy_thumbnails.files import get_thumbnailer
 # utils
 from base.utils import random_string
 from inflection import underscore
-from model_mommy import mommy
+# from model_mommy import mommy
 
 # models
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
@@ -30,9 +30,21 @@ from government_structures.models import GovernmentStructure
 from ministries.models import Ministry
 from ministries.models import PublicService
 from presidencies.models import Presidency
+from presidencies.models import PresidencyURL
 from public_servants.models import PublicServant
+from public_enterprises.models import PublicEnterprise
 from regions.models import Region
+from regions.models import Commune
 from users.models import User
+from links.models import FooterLink
+from services.models import ChileAtiendeService
+from services.models import ChileAtiendeFile
+from contingencies.models import Contingency
+from contingencies.models import ContingencyEvent
+from contingencies.models import ContingencyInformation
+from gobcl_cms.models import GalleryPlugin
+from gobcl_cms.models import GalleryImagePlugin
+from gobcl_cms.models import HtmlPlugin
 
 
 class Mockup(object):
@@ -119,9 +131,27 @@ class Mockup(object):
 
         return Presidency.objects.create(**kwargs)
 
+    def create_commune(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'region')
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_email(kwargs, 'email')
+        self.set_required_phone_number(kwargs, 'phone')
+        self.set_required_string(kwargs, 'twitter')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_boolean(kwargs, 'has_own_municipality')
+        return Commune.objects.create(**kwargs)
+
+    def create_presidency_url(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        return PresidencyURL.objects.create(**kwargs)
+
     def create_region(self, **kwargs):
         self.set_required_string(kwargs, 'name')
         self.set_required_string(kwargs, 'description')
+        self.set_required_slug(kwargs, 'slug')
         self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
         return Region.objects.create(**kwargs)
@@ -134,6 +164,71 @@ class Mockup(object):
 
     def create_image(self, **kwargs):
         return Image.objects.create(**kwargs)
+
+    def create_footer_link(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        return FooterLink.objects.create(**kwargs)
+
+    def create_public_enterprise(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        return PublicEnterprise.objects.create(**kwargs)
+
+    def create_chile_atiende_service(self, **kwargs):
+        self.set_required_string(kwargs, 'code')
+        self.set_required_string(kwargs, 'mision')
+        return ChileAtiendeService.objects.create(**kwargs)
+
+    def create_chile_atiende_file(self, **kwargs):
+        self.set_required_foreign_key(
+            kwargs,
+            'service',
+            model='chile_atiende_service',
+        )
+        self.set_required_string(kwargs, 'service_name')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'code')
+        self.set_required_string(kwargs, 'objective')
+        self.set_required_string(kwargs, 'beneficiaries')
+        self.set_required_string(kwargs, 'cost')
+        self.set_required_string(kwargs, 'period')
+        self.set_required_string(kwargs, 'duration')
+        self.set_required_int(kwargs, 'analytic_visits', minimum=1)
+        return ChileAtiendeFile.objects.create(**kwargs)
+
+    def create_contingency(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'lead')
+        self.set_required_string(kwargs, 'description')
+        return Contingency.objects.create(**kwargs)
+
+    def create_contingency_event(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'contingency')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_url(kwargs, 'url')
+        self.set_required_datetime(kwargs, 'date_time')
+        return ContingencyEvent.objects.create(**kwargs)
+
+    def create_contingency_information(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'contingency')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        return ContingencyInformation.objects.create(**kwargs)
+
+    def create_gallery_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'description')
+        return GalleryPlugin.objects.create(**kwargs)
+
+    def create_gallery_image_plugin(self, **kwargs):
+        return GalleryImagePlugin.objects.create(**kwargs)
+
+    def create_html_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'html')
+        return HtmlPlugin.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:
@@ -181,6 +276,10 @@ class Mockup(object):
         chars = string.digits
         return uuid.UUID(''.join(random.choice(chars) for x in range(32)))
 
+    def random_phone_number(self, *args, **kwargs):
+        chars = string.digits
+        return '+5698'.join(random.choice(chars) for x in range(7))
+
     def set_required_boolean(self, data, field, default=None, **kwargs):
         if field not in data:
 
@@ -192,6 +291,10 @@ class Mockup(object):
     def set_required_date(self, data, field, **kwargs):
         if field not in data:
             data[field] = timezone.now().date()
+
+    def set_required_phone_number(self, data, field, **kwargs):
+        if field not in data:
+            data[field] = self.random_phone_number()
 
     def set_required_datetime(self, data, field, **kwargs):
         if field not in data:
@@ -234,6 +337,10 @@ class Mockup(object):
         if field not in data:
             data[field] = self.random_string(length=length)
 
+    def set_required_slug(self, data, field, length=6):
+        if field not in data:
+            data[field] = slugify(self.random_string(length=length))
+
     def set_required_url(self, data, field, length=6):
         if field not in data:
             data[field] = 'http://{}.com'.format(
@@ -244,12 +351,12 @@ def add_get_or_create(cls, model):
     model_name = underscore(model.__name__)
     method_name = 'create_{}'.format(model_name)
 
-    if not hasattr(cls, method_name):
+    # if not hasattr(cls, method_name):
 
-        def create_obj(self, *args, **kwargs):
-            return mommy.make(model)
+    #     def create_obj(self, *args, **kwargs):
+    #         return mommy.make(model)
 
-        setattr(cls, method_name, create_obj)
+    #     setattr(cls, method_name, create_obj)
 
     def get_or_create(self, **kwargs):
         try:
