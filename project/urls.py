@@ -49,7 +49,7 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
-if settings.DEBUG:
+if settings.DEBUG or settings.TRAVIS or settings.DOCKER:
     import debug_toolbar
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
