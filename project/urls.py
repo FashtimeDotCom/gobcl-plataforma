@@ -26,11 +26,11 @@ from users.urls import callback_pattern
 
 
 urlpatterns = [
-    url(r'^api/1.0/', include('api.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += i18n_patterns(
+    url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),

@@ -30,8 +30,7 @@ class LimitOffsetPagination(LimitOffsetPagination):
         return default_limit
 
     def get_current_language(self):
-        language = get_language()
-        return language
+        return self.request.LANGUAGE_CODE
 
     def get_paginated_response(self, data):
         return Response(OrderedDict([
