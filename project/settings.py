@@ -36,6 +36,7 @@ elif 'DOCKER' in os.environ:
     from project.production.local_settings import STATICFILES_STORAGE
     from project.production.local_settings import DEFAULT_FILE_STORAGE
     from project.production.local_settings import COMPRESS_STORAGE
+    from project.production.local_settings import COMPRESS_URL
 elif 'STAGING' in os.environ:
     from project.local_settings import ADMINS
     from project.staging.local_settings import DEBUG
@@ -45,12 +46,14 @@ elif 'STAGING' in os.environ:
     from project.staging.local_settings import STATICFILES_STORAGE
     from project.staging.local_settings import DEFAULT_FILE_STORAGE
     from project.staging.local_settings import COMPRESS_STORAGE
+    from project.staging.local_settings import COMPRESS_URL
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
     from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
     STATICFILES_STORAGE = os.getenv(
         'STATICFILES_STORAGE',
         'django.contrib.staticfiles.storage.StaticFilesStorage'
@@ -72,8 +75,12 @@ else:
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
 
+# People who get code error notifications.
+# In the format [
+#     ('Full Name', 'email@example.com'),
+#     ('Full Name', 'anotheremail@example.com'),
+# ]
 ADMINS = ADMINS
-
 
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
@@ -520,7 +527,6 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 STATIC_URL = os.getenv('STATIC_URL', '/static/')
 MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
-COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
 THUMBNAIL_DEFAULT_STORAGE = os.getenv(
     'THUMBNAIL_DEFAULT_STORAGE',
