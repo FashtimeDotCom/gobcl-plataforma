@@ -18,9 +18,32 @@ from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 from services.models import ChileAtiendeFile
 
 
+def _positive_int(integer_string, strict=False, cutoff=None):
+    """
+    Cast a string to a strictly positive integer.
+    """
+    ret = int(integer_string)
+    if ret < 0 or (ret == 0 and strict):
+        raise ValueError()
+    if cutoff:
+        return min(ret, cutoff)
+    return ret
+
+
 class LimitOffsetPagination(LimitOffsetPagination):
 
     def get_limit(self, request):
+
+        if self.limit_query_param:
+            try:
+                return _positive_int(
+                    request.query_params[self.limit_query_param],
+                    strict=True,
+                    cutoff=self.max_limit
+                )
+            except (KeyError, ValueError):
+                pass
+
         newsblog_config = NewsBlogConfig.objects.filter(
             namespace='aldryn_newsblog_default'
         ).values('paginate_by')
