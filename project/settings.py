@@ -37,6 +37,8 @@ elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEFAULT_FILE_STORAGE
     from project.production.local_settings import COMPRESS_STORAGE
     from project.production.local_settings import COMPRESS_URL
+    from project.production.local_settings import THUMBNAIL_DEFAULT_STORAGE
+    from project.production.local_settings import STATIC_URL
 elif 'STAGING' in os.environ:
     from project.local_settings import ADMINS
     from project.staging.local_settings import DEBUG
@@ -47,12 +49,19 @@ elif 'STAGING' in os.environ:
     from project.staging.local_settings import DEFAULT_FILE_STORAGE
     from project.staging.local_settings import COMPRESS_STORAGE
     from project.staging.local_settings import COMPRESS_URL
+    from project.staging.local_settings import THUMBNAIL_DEFAULT_STORAGE
+    from project.staging.local_settings import STATIC_URL
 else:
     from project.local_settings import DEBUG
     from project.local_settings import LOCALLY_INSTALLED_APPS
     from project.local_settings import ENABLE_EMAILS
     from project.local_settings import ADMINS
     from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    STATIC_URL = os.getenv('STATIC_URL', '/static/')
+    THUMBNAIL_DEFAULT_STORAGE = os.getenv(
+        'THUMBNAIL_DEFAULT_STORAGE',
+        'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+    )
     COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
     STATICFILES_STORAGE = os.getenv(
         'STATICFILES_STORAGE',
@@ -521,13 +530,8 @@ AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
-STATIC_URL = os.getenv('STATIC_URL', '/static/')
 MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
-THUMBNAIL_DEFAULT_STORAGE = os.getenv(
-    'THUMBNAIL_DEFAULT_STORAGE',
-    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
-)
 
 CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
 
