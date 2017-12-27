@@ -14,21 +14,31 @@ $(function () {
     var elemTop = $('.loading-indicator').parent().offset().top;
     var elemBottom = elemTop + $('.loading-indicator').height();
 
-    var shouldLoadMore = ((elemBottom <= docViewBottom * 0.95) && (elemTop >= docViewTop));
+    var shouldLoadMore = ((elemBottom <= docViewBottom * 0.95 ) && (elemTop >= docViewTop));
 
     if(shouldLoadMore) {
       isAlreadySent = true;
       $('.loading-indicator').show();
 
-      currentRequest = $.ajax(url, {
+      var currentUrl = window.location.href ;
+      var match = currentUrl.match(/category\/([a-z-]+)\//);
+      var requestUrl = url;
+      if (match != null) {
+        requestUrl += ('&category_slug=' + match[1]);
+      }
+
+      currentRequest = $.ajax(requestUrl, {
         success: function(response){
-          url = response.next;
+          url = response.next || url;
           var articles = response.results.map(article => {
             return Object.assign({}, article, {
               publishing_date:  moment(article.publishing_date).format('LL')
             });
           });
-          var newContent = templates['articles/article_miniature_list'](articles);
+          var newContent = templates['articles/article_miniature_list']({
+            articles,
+            currentLanguage: response.current_language
+          });
           $('.article-miniature-list').append(newContent);
           isAlreadySent = false;
           $('.loading-indicator').hide();

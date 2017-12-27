@@ -1,4 +1,6 @@
--var articles = locals
+-var articles = locals.articles;
+-var language = locals.currentLanguage;
+  
 each article in articles
   .col-12.col-lg-6
     article.new.new--mobile
@@ -7,9 +9,16 @@ each article in articles
       figure.new_figure-mobile
         if article.featured_image != ""
           img.img-fluid.w-100.img-frame(
-            src="#{article.featured_image}"
+            src=article.featured_image,
+            alt=article.alt_image
           )
         else 
-          img.img-fluid.w-100.img-frame.default-image
+          img.img-fluid.w-100.img-frame.default-image(
+            alt=article.alt_image
+          )
       h2.new_title
-        a(href=article.url).link.link--text-dark.visited #{article.translations.es.title}
+        a(href=article.url).link.link--text-dark.visited
+          if language == 'en' && article.translations.en != null
+            | #{article.translations.en.title}
+          else
+            | #{article.translations.es.title}
