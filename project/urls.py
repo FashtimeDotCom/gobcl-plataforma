@@ -49,7 +49,7 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
-if settings.DEBUG or settings.TRAVIS or settings.DOCKER:
+if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
@@ -58,7 +58,7 @@ if settings.DEBUG or settings.TRAVIS or settings.DOCKER:
         document_root=settings.MEDIA_ROOT,
     )
 
-if settings.TEST:
+if settings.TEST or settings.TRAVIS or settings.DOCKER:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
     ]
