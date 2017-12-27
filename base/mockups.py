@@ -332,6 +332,10 @@ class Mockup(object):
         if field not in data:
             data[field] = self.random_string(length=length)
 
+    def set_required_slug(self, data, field, length=6):
+        if field not in data:
+            data[field] = slugify(self.random_string(length=length))
+
     def set_required_url(self, data, field, length=6):
         if field not in data:
             data[field] = 'http://{}.com'.format(
