@@ -16,7 +16,7 @@ block content
       .results
         .row
           .col-12.col-md-10.col-lg-7
-            for chile_atiende_file in chile_atiende_files
+            for chile_atiende_file in chile_atiende_files_json
               .result
                 a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
                   {{ chile_atiende_file.titulo }}

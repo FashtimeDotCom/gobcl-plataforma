@@ -64,10 +64,10 @@ def backup_db():
     dump_name = '{}/{}.dump'.format(dumps_folder, dump_name)
 
     if db_host and db_user:
-        cmd = 'pg_dump --host {} --username {} -p {} -Fc "{}" -f "{}"'.format(
+        cmd = 'pg_dump --host {} --username {} -p {} -Fc "{}" -f "{}" --no-owner --no-privileges'.format(
             db_host, db_user, db_port, db_name, dump_name)
     else:
-        cmd = 'pg_dump -Fc "{}" -f "{}"'.format(db_name, dump_name)
+        cmd = 'pg_dump -Fc "{}" -f "{}" --no-owner --no-privileges'.format(db_name, dump_name)
     run(cmd)
 
     return dump_name

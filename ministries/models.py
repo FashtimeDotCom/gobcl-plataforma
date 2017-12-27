@@ -151,8 +151,7 @@ class PublicService(TranslatableModel, BaseModel):
         return self.name
 
     def get_absolute_url(self):
-        """ Returns the canonical URL for the public service object """
-        return reverse('ministry_detail', args=(self.ministry.slug,))
+        return self.url
 
     class Meta:
         ordering = ('importance',)
