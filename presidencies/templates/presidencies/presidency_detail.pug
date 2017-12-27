@@ -21,8 +21,11 @@ block content
             img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
           .col-md-8
             .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
-            ul.profile_body
-              li: a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter {{ presidency.twitter }}
+            if presidency.twitter 
+              ul.profile_body
+                li
+                  a(href="https://twitter.com/{{ presidency.twitter }}").profile_twitter 
+                    | @ {{ presidency.twitter }}
             .row.d-sm-none.d-lg-flex
               .col-lg-6.mt-3
                 .overflowed-xs
