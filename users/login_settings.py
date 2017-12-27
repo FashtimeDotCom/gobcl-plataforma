@@ -14,7 +14,7 @@ class ClaveUnicaSettings(object):
 
     CLIENT_ID = 'c242172b23d349018620dae9d39fd8ee'
 
-    CALLBACK_URI = 'https://gobcl.magnet.cl/callback'
+    CALLBACK_URI = 'https://gobcl.digital.gob.cl/callback'
 
     CSRF_PARAMS_DICT = {
         'client_id': CLIENT_ID,
