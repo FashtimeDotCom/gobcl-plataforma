@@ -1,5 +1,5 @@
 $(function () {
-  var url = '/api/1.0/articles/?limit=12&offset=12';
+  var url = document.app.url + '?offset=' + parseInt(document.app.offset);
   var isAlreadySent = false;
   var blockFutureRequests = false;
   $('.loading-indicator').hide();
