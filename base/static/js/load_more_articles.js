@@ -1,6 +1,7 @@
 $(function () {
   var url = '/api/1.0/articles/?limit=12&offset=12';
   var isAlreadySent = false;
+  var blockFutureRequests = false;
   $('.loading-indicator').hide();
 
   document.addEventListener('scroll', function (event) {
@@ -16,7 +17,7 @@ $(function () {
 
     var shouldLoadMore = ((elemBottom <= docViewBottom * 0.95 ) && (elemTop >= docViewTop));
 
-    if(shouldLoadMore) {
+    if(shouldLoadMore && !blockFutureRequests) {
       isAlreadySent = true;
       $('.loading-indicator').show();
 
@@ -47,6 +48,10 @@ $(function () {
           $('img.default-image').each(function() {
             $(this).attr('src', $('.article-miniature-list').data('default-image-url'));
           })
+
+          if (response.results.length === 0) {
+            blockFutureRequests = true;
+          }
         }
       })
     }
