@@ -21,13 +21,7 @@ PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # local settings
-if 'TRAVIS' in os.environ:
-    from project.travis_settings import DEBUG
-    from project.travis_settings import LOCALLY_INSTALLED_APPS
-    from project.travis_settings import ENABLE_EMAILS
-    from project.travis_settings import ADMINS
-    from project.travis_settings import LOCALLY_ALLOWED_HOSTS
-elif 'DOCKER' in os.environ:
+if 'DOCKER' in os.environ:
     from project.production.local_settings import ADMINS
     from project.production.local_settings import DEBUG
     from project.production.local_settings import ENABLE_EMAILS
@@ -52,17 +46,25 @@ elif 'STAGING' in os.environ:
     from project.staging.local_settings import THUMBNAIL_DEFAULT_STORAGE
     from project.staging.local_settings import STATIC_URL
 else:
-    from project.local_settings import DEBUG
-    from project.local_settings import LOCALLY_INSTALLED_APPS
-    from project.local_settings import ENABLE_EMAILS
-    from project.local_settings import ADMINS
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    if 'TRAVIS' in os.environ:
+        from project.travis_settings import DEBUG
+        from project.travis_settings import LOCALLY_INSTALLED_APPS
+        from project.travis_settings import ENABLE_EMAILS
+        from project.travis_settings import ADMINS
+        from project.travis_settings import LOCALLY_ALLOWED_HOSTS
+    else:
+        from project.local_settings import DEBUG
+        from project.local_settings import LOCALLY_INSTALLED_APPS
+        from project.local_settings import ENABLE_EMAILS
+        from project.local_settings import ADMINS
+        from project.local_settings import LOCALLY_ALLOWED_HOSTS
+
     STATIC_URL = os.getenv('STATIC_URL', '/static/')
+    COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
     THUMBNAIL_DEFAULT_STORAGE = os.getenv(
         'THUMBNAIL_DEFAULT_STORAGE',
         'easy_thumbnails.storage.ThumbnailFileSystemStorage'
     )
-    COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
     STATICFILES_STORAGE = os.getenv(
         'STATICFILES_STORAGE',
         'django.contrib.staticfiles.storage.StaticFilesStorage'
