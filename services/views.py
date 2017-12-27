@@ -53,7 +53,7 @@ class FileSearchJson(View):
         return '{}'
 
     def get(self, request, *args, **kwargs):
-        return JsonResponse(self.get_file_list())
+        return JsonResponse(self.get_file_list(), safe=False)
 
 
 class ServiceDetailView(BaseDetailView):
