@@ -6,7 +6,6 @@ Replace this with more appropriate tests for your application.
 """
 
 # standard library
-import uuid
 
 # django
 from django.contrib import admin
@@ -46,6 +45,12 @@ class BaseTestCase(TestCase, Mockup):
         self.user.save()
 
         self.login()
+
+        self.create_page(
+            reverse_id='campaings',
+            application_namespace='campaigns',
+            application_urls='CampaignApp',
+        )
 
     def login(self, user=None, password=None):
         if user is None:

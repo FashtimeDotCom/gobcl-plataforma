@@ -97,7 +97,7 @@ class Campaign(BaseModel, TranslatableModel):
         if self.external_url:
             return self.external_url
         else:
-            return reverse('campaign_detail', args=(self.slug,))
+            return reverse('campaigns:campaign_detail', args=(self.slug,), )
 
     def save(self, *args, **kwargs):
         language = get_current_language()
