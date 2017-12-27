@@ -72,8 +72,12 @@ else:
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
 
+# People who get code error notifications.
+# In the format [
+#     ('Full Name', 'email@example.com'),
+#     ('Full Name', 'anotheremail@example.com'),
+# ]
 ADMINS = ADMINS
-
 
 # List of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true

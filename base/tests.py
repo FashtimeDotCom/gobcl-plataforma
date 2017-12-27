@@ -63,9 +63,7 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
                 model_name = underscore(f.rel.to.__name__)
                 method_name = 'create_{}'.format(model_name)
                 kwargs[f.name] = getattr(self, method_name)()
-
         method_name = 'create_{}'.format(underscore(model.__name__))
-
         return getattr(self, method_name)(**kwargs), kwargs
 
     def test_integrity_on_delete(self):
