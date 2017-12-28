@@ -15,8 +15,12 @@ elif 'STAGING' in os.environ:
     from project.staging.local_settings import CLAVE_UNICA_CALLBACK
     from project.staging.local_settings import CLAVE_UNICA_CLIENT_ID
 else:
-    from project.local_settings import CLAVE_UNICA_CALLBACK
-    from project.local_settings import CLAVE_UNICA_CLIENT_ID
+    try:
+        from project.local_settings import CLAVE_UNICA_CALLBACK
+        from project.local_settings import CLAVE_UNICA_CLIENT_ID
+    except ImportError:
+        CLAVE_UNICA_CALLBACK = ''
+        CLAVE_UNICA_CLIENT_ID = ''
 
 
 class ClaveUnicaSettings(object):
