@@ -1,26 +1,8 @@
-
 - load utils
-- load thumbnail
+- load cms_tags
 
 if instance.child_plugin_instances
   .gallery
-    for a, b, c in instance.child_plugin_instances|group:3
-      .gallery-slide
-        .img-box
-          .gallery-image(
-            style="background-image: url({% thumbnail a.image 300x300  %})",
-            data-mfp-src="{{ a.image.url }}"
-            data-text="{{ a.caption }}"
-          )
-        .img-box
-          .gallery-image(
-            style="background-image: url({% thumbnail b.image 300x300  %})",
-            data-mfp-src="{{ b.image.url }}"
-            data-text="{{ b.caption }}"
-          )
-        .img-box
-          .gallery-image(
-            style="background-image: url({% thumbnail c.image 300x300  %})",
-            data-mfp-src="{{ c.image.url }}"
-            data-text="{{ c.caption }}"
-          )
+    .gallery-slide
+      for image in instance.child_plugin_instances
+        {% render_plugin image %}

@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.conf.urls import include
 from django.utils.translation import ugettext_lazy as _
 
 from . import views
@@ -17,5 +16,4 @@ urlpatterns = [
         PresidencyDetailView.as_view(),
         name='presidency_detail'
     ),
-    url(r'^', include('regions.urls')),
 ]

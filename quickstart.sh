@@ -39,7 +39,7 @@ case "$(uname -s)" in
 esac
 
 
-while getopts “napbj” OPTION
+while getopts “yapbj” OPTION
 do
     case $OPTION in
         a)
@@ -69,8 +69,8 @@ do
              TRANSLATE=false
              BUILD_JAVASCRIPT=false
              ;;
-        n)
-             print_green "only node install"
+        y)
+             print_green "only yarn install"
              INSTALL_SYSTEM_DEPENDENCIES=false
              INSTALL_PIP=false
              INSTALL_BOWER=false

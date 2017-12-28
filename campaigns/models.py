@@ -19,7 +19,7 @@ from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from cms.utils.i18n import get_current_language
 
-from .managers import CampaignQueryset
+from .managers import CampaignManager
 
 
 def default_end_datetime():
@@ -69,24 +69,42 @@ class Campaign(BaseModel, TranslatableModel):
     )
     header_content = PlaceholderField(
         'campaign header',
-        related_name='campaigns_as_header'
+        on_delete=models.SET_NULL,
+        related_name='campaigns_as_header',
     )
     content = PlaceholderField(
         'campaign content',
-        related_name='campaigns'
+        on_delete=models.SET_NULL,
+        related_name='campaigns',
+    )
+    importance = models.PositiveIntegerField(
+        _('importance'),
+        default=0,
     )
 
-    objects = CampaignQueryset.as_manager()
+    objects = CampaignManager()
 
     class Meta:
         verbose_name = _('campaign')
         verbose_name_plural = _('campaigns')
         ordering = (
             '-is_featured',
+            'importance',
         )
         permissions = (
             ('view_campaign', _('Can view campaign')),
         )
+
+    @classmethod
+    def reorder_importance(cls):
+        '''
+        Take all campaings and change importance value orderly
+        '''
+        campaings = cls.objects.active()
+        importance = 0
+        for campaign in campaings:
+            campaign.update(importance=importance)
+            importance += 1
 
     def __str__(self):
         return self.title
@@ -95,9 +113,12 @@ class Campaign(BaseModel, TranslatableModel):
         if self.external_url:
             return self.external_url
         else:
-            return reverse('campaigns:campaign_detail', args=(self.slug,))
+            return reverse('campaigns:campaign_detail', args=(self.slug,), )
 
     def save(self, *args, **kwargs):
+        if not self.importance:
+            Campaign.reorder_importance()
+
         language = get_current_language()
         activate(language=language)
         self.slug = slugify(self.title)

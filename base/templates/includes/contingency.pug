@@ -1,8 +1,8 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
-  a.contingency-continue.button.button--block.button--yellow(href="#")
-    | Ultimo minuto: {{ contingency.name }}
+  a.contingency-continue.button.button--block.button--yellow(href="{% url 'home' %}")
+    | {% trans 'Breaking' %}: {{ contingency.name }}
   a.contingency-navigate.button.button--block(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
   .container
@@ -33,14 +33,18 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
                       else
                         {{ event.title }}
 
-    h3.heading-medium.pt-2 {% trans 'Find more information on:' %}
-    .row
-      .col-lg-6
-        if contingency.informations.exists
-          for information in contingency.informations.all
+    if contingency.informations.exists
+      h3.heading-medium.pt-2 {% trans 'Find more information on:' %}
+      .row
+        for information in contingency.informations.all
+          .col-lg-6
             .card-small
               h5.card-small_title
-                a.card-small_link(href="#")
+                if information.url
+                  a.card-small_link(href="{{information.url}}")
+                    | {{ information.title }}
+                    i.ic-arrow-right.icon--right
+                else
                   | {{ information.title }}
                   i.ic-arrow-right.icon--right
               .card-small_body

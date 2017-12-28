@@ -26,11 +26,11 @@ from users.urls import callback_pattern
 
 
 urlpatterns = [
-    url(r'^api/1.0/', include('api.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += i18n_patterns(
+    url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
@@ -41,9 +41,12 @@ urlpatterns += i18n_patterns(
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
+    url(_(r'^regions/'), include('regions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
+    url(r'^404/$', base_views.page_404, name='404'),
+    url(r'^500/$', base_views.page_500, name='500'),
     url(_(r'^'), include('cms.urls')),
     prefix_default_language=False,
 )
@@ -56,3 +59,6 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+
+handler404 = 'base.views.page_not_found_view'
+handler500 = 'base.views.error_view'

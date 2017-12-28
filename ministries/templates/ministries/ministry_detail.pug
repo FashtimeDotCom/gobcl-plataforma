@@ -44,9 +44,10 @@ block content
                 span.profile_job {{ ministry.minister.charge }}
 
             p {{ ministry.minister.description|linebreaks }}
-            p
-              a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter
-                | {{ ministry.minister.twitter }}
+            if ministry.minister.twitter 
+              p
+                a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter
+                  | @{{ ministry.minister.twitter }}
             ul.profile_info
               - if ministry.minister.phone
                 li: span {% trans 'Phone' %}: {{ ministry.minister.phone }}
@@ -79,7 +80,10 @@ block content
                 span.profile_job {{ servant.charge|default_if_none:"" }}
 
               p {{ servant.description|linebreaks }}
-              p: a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter {{ servant.twitter }}
+              if servant.twitter 
+                p
+                  a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter
+                    | @{{ servant.twitter }}
               ul.profile_info
                 - if servant.phone
                   li: span {% trans 'Phone' %}: {{ servant.phone }}

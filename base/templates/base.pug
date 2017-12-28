@@ -6,7 +6,7 @@ doctype 5
 - load cms_tags
 - load sekizai_tags
 
-html(lang="es", class="a11y-contrast@").a11y-font-0
+html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
   head
     meta(charset="utf-8")
     title Gob.cl{% block title %}{% if title%}:{% endif %} {{title}} {%endblock%}
@@ -32,7 +32,7 @@ html(lang="es", class="a11y-contrast@").a11y-font-0
       meta(name="description", content="{% page_attribute 'meta_description' %}")
 
     link(
-      href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css",
       rel="stylesheet"
     )
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
@@ -155,13 +155,18 @@ html(lang="es", class="a11y-contrast@").a11y-font-0
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
       script(src="{% static 'slick-carousel/slick/slick.js' %}")
       script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
+      script(src="{% static 'moment/moment.js' %}")
+      script(src="{% static 'moment/locale/es.js' %}")
+
     {% endcompress %}
 
     // templates
 
     {% compress js %}
-    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
+    script(type="text/pug", src="{% static 'templates/articles/article_miniature_list.pug' %}")
+    script(type="text/pug", src="{% static 'templates/search/list.pug' %}")
+
+
     {% endcompress %}
 
     block javascript_data
@@ -186,6 +191,6 @@ html(lang="es", class="a11y-contrast@").a11y-font-0
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")
     script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/load_more_function.js' %}")
     block javascripts
     {% endcompress %}
-

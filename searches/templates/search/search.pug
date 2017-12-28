@@ -1,22 +1,26 @@
 extends base.pug
 
-- load i18n cms_tags
+- load i18n cms_tags staticfiles
+
+block javascripts
+  script(src="{% static 'js/search.js' %}")
+  script(src="{% static 'js/load_more_found.js' %}")
 
 block content
   section.section.bg-bluedark.text-light
-    .container
+    .container.result-search
       {% include 'includes/search_bar.pug' %}
 
   section.section
     .container
       h3.heading-medium {{ count }} {% trans 'Results' %}
       .results
-        .row
+        .row.row-results
           .col-12.col-md-10.col-lg-7
-            for chile_atiende_file in chile_atiende_files
+            for chile_atiende_file in chile_atiende_files_json
               .result
                 a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
-                  {{chile_atiende_file.titulo}}
+                  {{ chile_atiende_file.titulo }}
                 p.result_excerpt
                   {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
                 span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
@@ -29,9 +33,18 @@ block content
                   {{ article.lead_in|striptags|truncatechars:100 }}
                 span.result_date {{ article.publishing_date|date }}
 
-
+        .row
+          {% include 'includes/loading-indicator.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
-
-
+      
+  script.
+    if (!document.app) {
+      document.app = {};
+    }
+    document.app.url = "{% url 'search-list' %}";
+    // - Temprorary solution until servr will get me this value
+    document.app.offset = {{ count }};
+    //- document.app.offset = "{{ article_list.count }}"
+    

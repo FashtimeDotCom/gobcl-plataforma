@@ -117,7 +117,7 @@ class Ministry(Institution):
         return super(Ministry, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        """ Returns the canonical URL for the public_servant object """
+        """ Returns the canonical URL for the ministry object """
         return reverse('ministry_detail', args=(self.slug,))
 
 
@@ -149,6 +149,9 @@ class PublicService(TranslatableModel, BaseModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return self.url
 
     class Meta:
         ordering = ('importance',)
