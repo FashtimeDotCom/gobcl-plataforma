@@ -222,9 +222,12 @@ def clave_unica_callback(request):
 
     token_response = s.send(prepped)
     logger.debug('token response: {}'.format(token_response))
+    logger.debug('token response headers: {}'.format(token_response.headers))
+    logger.debug('token response json: {}'.format(token_response.json()))
 
     if token_response.status_code == 200:
         access_token = token_response.json()['access_token']
+        logger.debug('access token: {}'.format(access_token))
         # expires_in = token_response.json['expires_in']
         # id_token = token_response.json['id_token']
         bearer = "Bearer {}".format(access_token)
