@@ -16,8 +16,16 @@ class ThumbnailSerializer(serializers.ImageField):
         return thumbnail_url(instance.file, 'new_list_item')
 
 
+class TranslationField(TranslatedFieldsField):
+    
+    def to_representation(self, value):
+        if isinstance(value, dict):
+            return value
+        return super(TranslationField, self).to_representation(value)
+
 class ArticleSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Article)
+
+    translations = TranslationField(shared_model=Article)
     url = serializers.URLField(
         source='get_absolute_url',
     )
@@ -28,11 +36,11 @@ class ArticleSerializer(TranslatableModelSerializer):
         model = Article
         fields = (
             'id',
-            'translations',
             'featured_image',
             'publishing_date',
             'url',
             'alt_image',
+            'translations',
         )
 
     def get_alt_image(self, obj):
