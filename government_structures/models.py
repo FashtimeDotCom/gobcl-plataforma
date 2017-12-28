@@ -6,7 +6,6 @@ import copy
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 
 # models
 from base.models import BaseModel
@@ -46,9 +45,8 @@ class GovernmentStructure(BaseModel):
     def get_government(cls, date=None):
         if not date:
             return cls.objects.get_or_none(current_government=True)
-        now = timezone.datetime.now()
 
-    def duplicate(self, date, with_public_servant=True):
+    def duplicate(self, date, with_public_servants=True):
         government_structures = GovernmentStructure.objects.filter(
             publication_date=date)
         if government_structures.exists():
@@ -61,7 +59,7 @@ class GovernmentStructure(BaseModel):
 
         for field in government_structure._meta.fields_map.values():
 
-            if not with_public_servant:
+            if not with_public_servants:
                 if field.name == 'publicservant':
                     continue
 
@@ -72,3 +70,5 @@ class GovernmentStructure(BaseModel):
                 new_obj.id = None
                 new_obj.government_structure = government_structure
                 new_obj.save()
+
+        return government_structure
