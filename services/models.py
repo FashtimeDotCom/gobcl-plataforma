@@ -103,6 +103,7 @@ class ChileAtiendeFile(BaseModel):
         inner_text = {
             'title': self.title,
             'lead_in': self.objective,
+            'service': self.service_name,
         }
         text = {
             'es': inner_text,
