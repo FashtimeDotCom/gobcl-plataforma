@@ -1,10 +1,18 @@
--var articles = locals.article
+-var articles = locals.articles;
+-var language = locals.currentLanguage;
 
 each article in articles
-  .result
-    //- a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
-    //-   {{ chile_atiende_file.titulo }}
-    //- p.result_excerpt
-    //-   {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
-    //- span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
-    //-   |  {{chile_atiende_file.servicio}}
+  .col-12.col-md-10.col-lg-7
+    .result
+      a.result_link(href=article.url)
+        if language == 'en' && article.translations.en != null
+          | #{article.translations.en.title}
+        else
+          | #{article.translations.es.title}
+      p.result_excerpt
+        if language == 'en' && article.translations.en != null
+          | #{article.translations.en.lead_in.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 97)}...
+        else
+          | #{article.translations.es.lead_in.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 97)}...
+      span.result_date 
+        | #{article.publishing_date}

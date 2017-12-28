@@ -12,6 +12,7 @@ $(function(){
     },
     'articles/article_miniature_list',
     '.article-miniature-list',
+    null,
     () => {
       //Setting default images
       $('img.default-image').each(function() {
