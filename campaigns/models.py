@@ -77,6 +77,10 @@ class Campaign(BaseModel, TranslatableModel):
         on_delete=models.SET_NULL,
         related_name='campaigns',
     )
+    importance = models.PositiveIntegerField(
+        _('importance'),
+        default=0,
+    )
 
     objects = CampaignManager()
 
@@ -85,10 +89,22 @@ class Campaign(BaseModel, TranslatableModel):
         verbose_name_plural = _('campaigns')
         ordering = (
             '-is_featured',
+            'importance',
         )
         permissions = (
             ('view_campaign', _('Can view campaign')),
         )
+
+    @classmethod
+    def reorder_importance(cls):
+        '''
+        Take all campaings and change importance value orderly
+        '''
+        campaings = cls.objects.active()
+        importance = 0
+        for campaign in campaings:
+            campaign.update(importance=importance)
+            importance += 1
 
     def __str__(self):
         return self.title
@@ -100,6 +116,9 @@ class Campaign(BaseModel, TranslatableModel):
             return reverse('campaigns:campaign_detail', args=(self.slug,), )
 
     def save(self, *args, **kwargs):
+        if not self.importance:
+            Campaign.reorder_importance()
+
         language = get_current_language()
         activate(language=language)
         self.slug = slugify(self.title)
