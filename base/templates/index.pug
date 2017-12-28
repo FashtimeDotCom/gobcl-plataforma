@@ -40,8 +40,15 @@ block content
             {% trans 'About Chile' %}
 
   {% include 'includes/social_small.pug' %}
+
   section
     .container
+      if featured_campaigns
+        section.sub-section
+          h2.heading-medium {% trans 'Campaigns' %}
+          {% include 'campaigns/includes/campaign_list.pug' with campaigns=featured_campaigns has_featured=True %}
+
+
       if procedures_and_benefits
         section.sub-section
           .row

@@ -8,9 +8,10 @@ from aldryn_newsblog.models import Article
 
 # django
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import FieldError
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
 from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -49,7 +50,6 @@ class IndexTemplateView(TemplateView):
 
         context = {
             'procedures_and_benefits': None,
-            'campaigns': get_home_campaigns(self.request),
             'articles': articles,
             'ministries_count': (
                 Ministry.objects.by_government_structure(gov_structure).count()
@@ -63,6 +63,8 @@ class IndexTemplateView(TemplateView):
                 Region.objects.by_government_structure(gov_structure).count()
             ),
         }
+
+        context.update(get_home_campaigns(self.request))
         return context
 
 
@@ -119,7 +121,7 @@ class BaseSlugDetailView(BaseDetailView):
     def get_object(self, *args, **kwargs):
         try:
             obj = self.model.objects.get_by_slug(self.kwargs['slug'])
-        except:
+        except self.model.DoesNotExist:
             raise Http404(
                 _("No %(verbose_name)s found matching the query") %
                 {'verbose_name': self.model._meta.verbose_name}
@@ -247,7 +249,7 @@ class BaseListView(ListView, PermissionRequiredMixin):
         for key, value in params.items():
             try:
                 queryset = queryset.filter(**{key: value})
-            except:
+            except FieldError:
                 pass
         return queryset
 
