@@ -51,9 +51,8 @@ function createInifiniteScroll(
 
             //transforming a publishing date to a readable format for all results
             var articles = response.results.map(article => {
-              return Object.assign({}, article, {
-                publishing_date:  moment(article.publishing_date).format('LL')
-              });
+              article.publishing_date =  moment(article.publishing_date).format('LL');
+              return article;
             });
 
             //Generating DOM using a pug-template
