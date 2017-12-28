@@ -36,8 +36,8 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
     if contingency.informations.exists
       h3.heading-medium.pt-2 {% trans 'Find more information on:' %}
       .row
-        .col-lg-6
-          for information in contingency.informations.all
+        for information in contingency.informations.all
+          .col-lg-6
             .card-small
               h5.card-small_title
                 if information.url
@@ -47,7 +47,6 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
                 else
                   | {{ information.title }}
                   i.ic-arrow-right.icon--right
-                    | 
               .card-small_body
                 .row
                   .col-12.col-lg-7

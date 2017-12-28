@@ -5,6 +5,7 @@
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from collections import OrderedDict
 
 # models
 from base.models import BaseModel
@@ -99,7 +100,15 @@ class ChileAtiendeFile(BaseModel):
         return self.title
 
     def translations(self):
-        return ChileAtiendeService.objects.none()
+        inner_text = {
+            'title': self.title,
+            'lead_in': self.objective,
+        }
+        text = {
+            'es': inner_text,
+            'en': inner_text,
+        }
+        return text
 
     def featured_image(self):
         return ''
@@ -107,6 +116,9 @@ class ChileAtiendeFile(BaseModel):
     @property
     def featured_image_id(self):
         return ''
+
+    def publishing_date(self):
+        return self.date
 
     def get_absolute_url(self):
         url = '{}{}'.format(
