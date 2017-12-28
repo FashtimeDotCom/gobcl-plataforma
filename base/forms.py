@@ -4,7 +4,7 @@ from django.forms import HiddenInput
 
 # forms
 from form_utils.forms import BetterModelForm
-from parler.forms import BaseTranslatableModelForm
+from parler.forms import TranslatableModelForm
 
 
 setattr(
@@ -13,28 +13,42 @@ setattr(
 )
 
 
+def get_widget_class(widget):
+    """
+    Returns a widget's corresponding class
+    """
+    if isinstance(widget, forms.widgets.DateInput):
+        widget.attrs['class'] = (
+            'date-picker form-control vDateField'
+        )
+    elif isinstance(widget, forms.widgets.DateTimeInput):
+        return 'datetime-picker form-control'
+    elif isinstance(widget, forms.widgets.Textarea):
+        return 'form-control'
+    elif isinstance(widget, forms.widgets.EmailInput):
+        return 'form-control'
+    elif isinstance(widget, forms.widgets.TextInput):
+        return 'form-control'
+    else:
+        return 'form-control'
+
+
 class BaseModelForm(BetterModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BaseModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if isinstance(field.widget, forms.widgets.DateInput):
-                field.widget.attrs['class'] = (
-                    'date-picker form-control vDateField')
-            elif isinstance(field.widget, forms.widgets.DateTimeInput):
-                field.widget.attrs['class'] = 'datetime-picker form-control'
-            elif isinstance(field.widget, forms.widgets.Textarea):
-                field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.EmailInput):
-                field.widget.attrs['class'] = 'form-control'
-            elif isinstance(field.widget, forms.widgets.TextInput):
-                field.widget.attrs['class'] = 'form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = get_widget_class(field.widget)
 
     def hide_field(self, field_name):
         self.fields[field_name].widget = HiddenInput()
 
 
-class TranslatableModelForm(BaseModelForm, BaseTranslatableModelForm):
-    pass
+class TranslatableModelForm(TranslatableModelForm):
+    def __init__(self, *args, **kwargs):
+        super(TranslatableModelForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = get_widget_class(field.widget)
+
+    def hide_field(self, field_name):
+        self.fields[field_name].widget = HiddenInput()

@@ -31,16 +31,16 @@ class ArticleListView(ListView):
         chile_atiende_file_client = File()
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
-                context['chile_atiende_files'] = json.loads(
+                context['chile_atiende_files_json'] = json.loads(
                     chile_atiende_file_client.list(query=self.query).text
                 )['fichas']['items']
         else:
-            context['chile_atiende_files'] = []
+            context['chile_atiende_files_json'] = []
 
         # Count the total list of objects
         context['count'] = (
             context['object_list'].count() +
-            len(context['chile_atiende_files'])
+            len(context['chile_atiende_files_json'])
         )
 
         context['query'] = self.query

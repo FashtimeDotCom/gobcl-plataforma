@@ -47,5 +47,5 @@ class CampaignModelTest(BaseTestCase):
 
         self.assertEqual(
             self.campaign.get_absolute_url(),
-            reverse('campaigns:campaign_detail', args=(self.campaign.slug,))
+            reverse('campaign_detail', args=(self.campaign.slug,))
         )

@@ -6,9 +6,11 @@
 
 # models
 from .models import Region
+from .models import Commune
 
 # views
-from parler.forms import TranslatableModelForm
+from base.forms import BaseModelForm
+from base.forms import TranslatableModelForm
 
 
 class RegionForm(TranslatableModelForm):
@@ -18,4 +20,27 @@ class RegionForm(TranslatableModelForm):
 
     class Meta:
         model = Region
-        exclude = ()
+        exclude = (
+            'government_structure',
+
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        public_servants = self.fields['governor'].queryset
+        public_servants = public_servants.filter(
+            government_structure=self.instance.government_structure
+        )
+        self.fields['governor'].queryset = public_servants
+
+
+class CommuneForm(BaseModelForm):
+    """
+    Form Commune model.
+    """
+
+    class Meta:
+        model = Commune
+        exclude = (
+            'region',
+        )

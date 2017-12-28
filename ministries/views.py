@@ -46,6 +46,13 @@ class MinistryCreateView(BaseCreateView):
     template_name = 'ministries/ministry_create.pug'
     permission_required = 'ministries.add_ministry'
 
+    def get_form_kwargs(self):
+        kwargs = super(MinistryCreateView, self).get_form_kwargs()
+        kwargs['instance'] = Ministry(
+            government_structure=self.request.government_structure
+        )
+        return kwargs
+
     def get_success_url(self):
         return reverse('institution_list')
 
@@ -114,6 +121,11 @@ class PublicServiceCreateView(BaseCreateView):
     template_name = 'ministries/ministry_create.pug'
     permission_required = 'ministries.add_publicservice'
 
+    def get_form_kwargs(self):
+        kwargs = super(PublicServiceCreateView, self).get_form_kwargs()
+        kwargs['government_structure'] = self.request.government_structure
+        return kwargs
+
     def get_success_url(self):
         return reverse('institution_list')
 
@@ -130,6 +142,12 @@ class PublicServiceUpdateView(BaseUpdateView):
     template_name = 'ministries/ministry_update.pug'
     permission_required = 'ministries.change_publicservice'
 
+    def get_success_url(self):
+        return reverse('institution_list')
+
+    def get_cancel_url(self):
+        return reverse('institution_list')
+
 
 class PublicServiceDeleteView(BaseDeleteView):
     """
@@ -138,4 +156,9 @@ class PublicServiceDeleteView(BaseDeleteView):
     model = PublicService
     permission_required = 'ministries.delete_publicservice'
     template_name = 'ministries/ministry_delete.pug'
-    # success url de institutions list
+
+    def get_success_url(self):
+        return reverse('institution_list')
+
+    def get_cancel_url(self):
+        return reverse('institution_list')

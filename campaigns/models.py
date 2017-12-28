@@ -19,7 +19,7 @@ from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from cms.utils.i18n import get_current_language
 
-from .managers import CampaignQueryset
+from .managers import CampaignManager
 
 
 def default_end_datetime():
@@ -69,14 +69,16 @@ class Campaign(BaseModel, TranslatableModel):
     )
     header_content = PlaceholderField(
         'campaign header',
-        related_name='campaigns_as_header'
+        on_delete=models.SET_NULL,
+        related_name='campaigns_as_header',
     )
     content = PlaceholderField(
         'campaign content',
-        related_name='campaigns'
+        on_delete=models.SET_NULL,
+        related_name='campaigns',
     )
 
-    objects = CampaignQueryset.as_manager()
+    objects = CampaignManager()
 
     class Meta:
         verbose_name = _('campaign')
@@ -95,7 +97,7 @@ class Campaign(BaseModel, TranslatableModel):
         if self.external_url:
             return self.external_url
         else:
-            return reverse('campaigns:campaign_detail', args=(self.slug,))
+            return reverse('campaigns:campaign_detail', args=(self.slug,), )
 
     def save(self, *args, **kwargs):
         language = get_current_language()

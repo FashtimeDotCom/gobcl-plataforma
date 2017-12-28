@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 16:41-0300\n"
+"POT-Creation-Date: 2017-12-26 19:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:16
+#: apps.py:7 models.py:27
+msgid "government structures"
+msgstr "estructuras de gobierno"
+
+#: models.py:17
 msgid "publication date"
-msgstr ""
+msgstr "fecha de publicación"
 
-#: models.py:20
+#: models.py:21
 msgid "current government"
-msgstr ""
-
-#: models.py:25
-msgid "government structure"
-msgstr ""
+msgstr "gobierno actual"
 
 #: models.py:26
-msgid "government structures"
-msgstr ""
+msgid "government structure"
+msgstr "estructura de gobierno"
 
-#: models.py:28
+#: models.py:29
 msgid "Can view government structures"
-msgstr ""
+msgstr "Puede ver las estructuras de gobierno"
 
 #: templates/government_structures/government_structure_delete.pug:18
 #, python-format
-msgid "Are you sure you want to delete' \"%(object)s\"?"
-msgstr ""
+msgid "Are you sure you want to delete \"%(object)s\"?"
+msgstr "¿Estás seguro que quieres borrar \"%(object)s\"?"
 
 #: templates/government_structures/government_structure_delete.pug:21
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: templates/government_structures/government_structure_delete.pug:23
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: templates/government_structures/government_structure_detail.pug:15
 #: templates/government_structures/government_structure_list.pug:34
 msgid "Update government structure"
-msgstr ""
+msgstr "Actualizar estructura de gobierno"
 
 #: templates/government_structures/government_structure_detail.pug:19
 #: templates/government_structures/government_structure_list.pug:39
 msgid "Delete government structure"
-msgstr ""
+msgstr "Borrar estrucutra de gobierno"
 
 #: templates/government_structures/government_structure_list.pug:10
 msgid "Add government structure"
-msgstr ""
+msgstr "Agregar estructura de gobierno"
 
 #: templates/government_structures/government_structure_list.pug:17
 msgid "name"
-msgstr ""
+msgstr "nombre"

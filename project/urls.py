@@ -26,11 +26,11 @@ from users.urls import callback_pattern
 
 
 urlpatterns = [
-    url(r'^api/1.0/', include('api.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += i18n_patterns(
+    url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
@@ -41,6 +41,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^about-interior/$'),
         base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
+    url(_(r'^regions/'), include('regions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),

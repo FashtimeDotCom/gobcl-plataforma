@@ -40,6 +40,13 @@ class PresidencyURL(BaseModel, TranslatableModel):
     def __str__(self):
         return self.url
 
+    class Meta:
+        verbose_name = _('presidency url')
+        verbose_name_plural = _('presidency urls')
+        permissions = (
+            ('view_presidency_url', _('Can view presidency urls')),
+        )
+
 
 class Presidency(BaseModel, TranslatableModel):
     government_structure = models.OneToOneField(
