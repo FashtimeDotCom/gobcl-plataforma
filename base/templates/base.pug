@@ -163,9 +163,9 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     // templates
 
     {% compress js %}
-    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
     script(type="text/pug", src="{% static 'templates/articles/article_miniature_list.pug' %}")
+    script(type="text/pug", src="{% static 'templates/search/list.pug' %}")
+
 
     {% endcompress %}
 
@@ -191,5 +191,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")
     script(src="{% static 'js/application.js' %}")
+    script(src="{% static 'js/load_more_function.js' %}")
     block javascripts
     {% endcompress %}

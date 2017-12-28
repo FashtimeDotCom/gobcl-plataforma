@@ -45,7 +45,7 @@ function createInifiniteScroll(
               articles,
               currentLanguage: response.current_language
             });
-            $('.article-miniature-list').append(newContent);
+            $(targetSelector).append(newContent);
             isAlreadySent = false;
             $('.loading-indicator').hide();
 
@@ -59,7 +59,5 @@ function createInifiniteScroll(
         })
       }
     });
-  });
-  }
-
+  };
 }

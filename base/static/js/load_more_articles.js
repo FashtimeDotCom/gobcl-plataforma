@@ -1,59 +1,23 @@
-$(function () {
-  var url = document.app.url + '?offset=' + parseInt(document.app.offset);
-  var isAlreadySent = false;
-  var blockFutureRequests = false;
-  $('.loading-indicator').hide();
-
-  document.addEventListener('scroll', function (event) {
-    if (isAlreadySent) {
-      return;
-    }
-
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
-
-    var elemTop = $('.loading-indicator').parent().offset().top;
-    var elemBottom = elemTop + $('.loading-indicator').height();
-
-    var shouldLoadMore = ((elemBottom <= docViewBottom * 0.95 ) && (elemTop >= docViewTop));
-
-    if(shouldLoadMore && !blockFutureRequests) {
-      isAlreadySent = true;
-      $('.loading-indicator').show();
-
-      var currentUrl = window.location.href ;
-      var match = currentUrl.match(/category\/([a-z-]+)\//);
-      var requestUrl = url;
+$(function(){
+  createInifiniteScroll(
+    document.app.url,
+    (url) =>  {
+      var currentLocation = window.location.href ;
+      var match = currentLocation.match(/category\/([a-z-]+)\//);
+      var result = url;
       if (match != null) {
-        requestUrl += ('&category_slug=' + match[1]);
+       result += ('&category_slug=' + match[1]);
       }
-
-      currentRequest = $.ajax(requestUrl, {
-        success: function(response){
-          url = response.next || url;
-          var articles = response.results.map(article => {
-            return Object.assign({}, article, {
-              publishing_date:  moment(article.publishing_date).format('LL')
-            });
-          });
-          var newContent = templates['articles/article_miniature_list']({
-            articles,
-            currentLanguage: response.current_language
-          });
-          $('.article-miniature-list').append(newContent);
-          isAlreadySent = false;
-          $('.loading-indicator').hide();
-
-          //Setting default images
-          $('img.default-image').each(function() {
-            $(this).attr('src', $('.article-miniature-list').data('default-image-url'));
-          })
-
-          if (response.results.length === 0) {
-            blockFutureRequests = true;
-          }
-        }
+      return result;
+    },
+    'articles/article_miniature_list',
+    '.article-miniature-list',
+    () => {
+      //Setting default images
+      $('img.default-image').each(function() {
+        $(this).attr('src', $('.article-miniature-list').
+          data('default-image-url'));
       })
     }
-  });
+  )();
 });
