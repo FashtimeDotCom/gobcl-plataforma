@@ -4,5 +4,4 @@
 $(function () {
 
   App.utils.enableSocialShare();
-
 });
