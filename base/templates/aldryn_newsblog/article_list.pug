@@ -31,11 +31,7 @@ section.section
     if not article_list
       h3 {% trans 'There are no news in this category' %}
 
-    .col-12.col-lg-4.offset-lg-4.col-xl-4.offset-xl-4.text-center
-      br
-      .loading-indicator
-        i.fa.fa-refresh.fa-spin.fa-3x.fa-fw
-        span.sr-only Cargando...
+    {% include 'includes/loading-indicator.pug' %}
 section
   .container
     {% include 'includes/social.pug' %}

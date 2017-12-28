@@ -34,10 +34,7 @@ block content
                 span.result_date {{ article.publishing_date|date }}
 
         .row
-          .col-12-xs
-            .loading-indicator
-              i.fa.fa-refresh.fa-spin.fa-3x.fa-fw
-              span.sr-only Cargando...
+          {% include 'includes/loading-indicator.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
@@ -47,6 +44,7 @@ block content
       document.app = {};
     }
     document.app.url = "{% url 'search-list' %}";
+    // - Temprorary solution until servr will get me this value
     document.app.offset = 0;
     //- document.app.offset = "{{ article_list.count }}"
     
