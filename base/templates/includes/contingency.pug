@@ -2,7 +2,7 @@
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
   a.contingency-continue.button.button--block.button--yellow(href="{% url 'home' %}")
-    | Ultimo minuto: {{ contingency.name }}
+    | {% trans 'Breaking' %}: {{ contingency.name }}
   a.contingency-navigate.button.button--block(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
   .container

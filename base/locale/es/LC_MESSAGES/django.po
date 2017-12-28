@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-28 08:57-0300\n"
+"POT-Creation-Date: 2017-12-28 09:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -200,6 +200,10 @@ msgstr "gobierno de Chile"
 #: templates/djangocms_video/default/video_player.html:22
 msgid "Your browser doesn't support this video format."
 msgstr "Tu navegador no soporta este formato de video"
+
+#: templates/includes/contingency.pug:5
+msgid "Breaking"
+msgstr "Último minuto"
 
 #: templates/includes/contingency.pug:7
 msgid "Continue browsing on Gob.cl"
