@@ -132,7 +132,7 @@ block content
       if campaigns
         section.sub-section
           h2.heading-medium {% trans 'Campaigns' %}
-          {% include 'campaigns/includes/campaign_list.pug' with campaign=campaigns %}
+          {% include 'campaigns/includes/campaign_list.pug' with campaign=campaigns has_featured=show_featured_on_normal %}
 
       section.sub-section
         .card-small.d-lg-none

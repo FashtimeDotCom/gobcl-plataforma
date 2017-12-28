@@ -51,4 +51,5 @@ def get_home_campaigns(request):
     return {
         'featured_campaigns': featured_campaigns,
         'campaigns': non_featured_campaigns,
+        'show_featured_on_normal': not featured_campaigns.exists(),
     }
