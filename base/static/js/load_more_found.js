@@ -3,7 +3,7 @@ $(function(){
     // a link for ajax request
     '/api/1.0/search' + '?offset=' + parseInt(document.app.offset),
     // a function that adds information about category and query string to a requestUrl
-    (url) => {
+    function(url) {
       var currentLocation = window.location.href ;
       var qMatch = currentLocation.match(/q=([^&]+)/);
       var result = url;
@@ -23,7 +23,7 @@ $(function(){
     // a selector to an existing container
     '.row-results',
     // postLoadingTransformation
-    () => {
+    function() {
       //Changing the displayed number of total results
       var headerText = $('.heading-medium').text().replace(/\d+/, $('.result').length);
       $('.heading-medium').text(headerText);

@@ -3,7 +3,7 @@ $(function(){
     // a link for ajax request
     document.app.url + '?offset=' + parseInt(document.app.offset),
     // a function that adds information about category to a requestUrl
-    (url) =>  {
+    function(url) {
       var currentLocation = window.location.href ;
       var match = currentLocation.match(/category\/([a-z-]+)\//);
       var result = url;
@@ -17,7 +17,7 @@ $(function(){
     // a selector to an existing container
     '.article-miniature-list',
     // postLoadingTransformation
-    () => {
+    function() {
       //Setting default images
       $('img.default-image').each(function() {
         $(this).attr('src', $('.article-miniature-list').
