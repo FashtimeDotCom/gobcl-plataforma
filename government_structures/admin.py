@@ -57,7 +57,7 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
         gov = GovernmentStructure.objects.get(pk=gov_id)
         gov.duplicate(date=timezone.now(), with_public_servants=False)
         url = reverse(
-            'admin:government_structures_government_structure_change',
+            'admin:government_structures_governmentstructure_change',
             args=[gov.pk],
             current_app=self.admin_site.name,
         )
@@ -66,10 +66,10 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
     def copy_actions(self, obj):
         return format_html(
             '<a class="button" href="{}">' + _(
-                'copy structure'
+                'copy government'
             ).capitalize() + '</a>&nbsp;'
             '<a class="button" href="{}">' + _(
-                'copy with servants'
+                'new government'
             ).capitalize() + '</a>',
             reverse('admin:copy', args=[obj.pk]),
             reverse('admin:copy_servants', args=[obj.pk]),
