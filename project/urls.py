@@ -45,6 +45,8 @@ urlpatterns += i18n_patterns(
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
+    url(r'^404/$', base_views.page_404, name='404'),
+    url(r'^500/$', base_views.page_500, name='500'),
     url(_(r'^'), include('cms.urls')),
     prefix_default_language=False,
 )
@@ -57,3 +59,6 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+
+handler404 = 'base.views.page_not_found_view'
+handler500 = 'base.views.error_view'

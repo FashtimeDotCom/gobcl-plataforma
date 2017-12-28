@@ -25,6 +25,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.defaults import server_error
+from django.views.defaults import page_not_found
 
 # utils
 from base.view_utils import clean_query_string
@@ -79,13 +81,19 @@ def permission_denied_view(request):
 
 
 def page_not_found_view(request):
-    return render_to_response('exceptions/404.jade', {},
-                              context_instance=RequestContext(request))
+    return page_not_found(request, 'exceptions/404.pug')
+
+def page_404(request):
+    from django.shortcuts import render
+    return render(request, 'exceptions/404.pug', {})
+
+def page_500(request):
+    from django.shortcuts import render
+    return render(request, 'exceptions/500.pug', {})
 
 
 def error_view(request):
-    return render_to_response('exceptions/500.jade', {},
-                              context_instance=RequestContext(request))
+    return server_error(request, 'exceptions/500.pug')
 
 
 class PermissionRequiredMixin:

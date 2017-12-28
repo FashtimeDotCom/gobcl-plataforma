@@ -3,38 +3,44 @@ extends base.pug
 - load i18n
 
 block content
-  .text-right
-    .btn-group
-      if perms.public_services.add_public_service
-        a.btn.btn-primary(href="{% url 'publicservice_create' %}")
-          {% trans 'Add public_service' %}
-          i.fa.fa-plus
+  .container
+    .text-right
+      .btn-group
+        if perms.public_services.add_public_service
+          a.btn.btn-primary(href="{% url 'publicservice_create' %}")
+            {% trans 'Add public_service' %}
+            i.fa.fa-plus
 
-  table.table.table-bordered.table-hover
-    thead
-      tr
-        th Id
-        th {% trans 'name'|capfirst %}
-        if perms.ministries.change_publicservice
-          th
-        if perms.ministries.delete_publicservice
-          th
-    tbody
-      for public_service in object_list
+    table.table.table-bordered.table-hover
+      thead
         tr
-          td
-            {{public_service.id}}
-          td
-            {{public_service}}
+          th Id
+          th {% trans 'name'|capfirst %}
+          th {% trans 'url'|capfirst %}
           if perms.ministries.change_publicservice
-            td
-              a.btn.btn-primary(href="{% url 'publicservice_update' public_service.id %}")
-                {% trans 'Update public_service' %}
-                i.fa.fa-edit
+            th
           if perms.ministries.delete_publicservice
+            th
+      tbody
+        for public_service in object_list
+          tr
             td
-              a.btn.btn-danger(href="{% url 'publicservice_delete' public_service.id %}")
-                {% trans 'Delete public_service' %}
-                i.fa.fa-times
+              {{public_service.id}}
+            td
+              {{public_service}}
+            td
+              if public_service.url
+                a(href="{{public_service.url}}")
+                  {{public_service.url}}
+            if perms.ministries.change_publicservice
+              td
+                a.btn.btn-primary(href="{% url 'publicservice_update' public_service.id %}")
+                  {% trans 'Update public_service' %}
+                  i.fa.fa-edit
+            if perms.ministries.delete_publicservice
+              td
+                a.btn.btn-danger(href="{% url 'publicservice_delete' public_service.id %}")
+                  {% trans 'Delete public_service' %}
+                  i.fa.fa-times
 
-  {% include 'includes/pagination.pug' %}
+    {% include 'includes/pagination.pug' %}
