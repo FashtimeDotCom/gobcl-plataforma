@@ -21,13 +21,7 @@ PROJECT_DIR = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # local settings
-if 'TRAVIS' in os.environ:
-    from project.travis_settings import DEBUG
-    from project.travis_settings import LOCALLY_INSTALLED_APPS
-    from project.travis_settings import ENABLE_EMAILS
-    from project.travis_settings import ADMINS
-    from project.travis_settings import LOCALLY_ALLOWED_HOSTS
-elif 'DOCKER' in os.environ:
+if 'DOCKER' in os.environ:
     from project.production.local_settings import ADMINS
     from project.production.local_settings import DEBUG
     from project.production.local_settings import ENABLE_EMAILS
@@ -37,6 +31,9 @@ elif 'DOCKER' in os.environ:
     from project.production.local_settings import DEFAULT_FILE_STORAGE
     from project.production.local_settings import COMPRESS_STORAGE
     from project.production.local_settings import COMPRESS_URL
+    from project.production.local_settings import THUMBNAIL_DEFAULT_STORAGE
+    from project.production.local_settings import STATIC_URL
+    from project.production.local_settings import MEDIA_URL
 elif 'STAGING' in os.environ:
     from project.local_settings import ADMINS
     from project.staging.local_settings import DEBUG
@@ -47,13 +44,30 @@ elif 'STAGING' in os.environ:
     from project.staging.local_settings import DEFAULT_FILE_STORAGE
     from project.staging.local_settings import COMPRESS_STORAGE
     from project.staging.local_settings import COMPRESS_URL
+    from project.staging.local_settings import THUMBNAIL_DEFAULT_STORAGE
+    from project.staging.local_settings import STATIC_URL
+    from project.staging.local_settings import MEDIA_URL
 else:
-    from project.local_settings import DEBUG
-    from project.local_settings import LOCALLY_INSTALLED_APPS
-    from project.local_settings import ENABLE_EMAILS
-    from project.local_settings import ADMINS
-    from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    if 'TRAVIS' in os.environ:
+        from project.travis_settings import DEBUG
+        from project.travis_settings import LOCALLY_INSTALLED_APPS
+        from project.travis_settings import ENABLE_EMAILS
+        from project.travis_settings import ADMINS
+        from project.travis_settings import LOCALLY_ALLOWED_HOSTS
+    else:
+        from project.local_settings import DEBUG
+        from project.local_settings import LOCALLY_INSTALLED_APPS
+        from project.local_settings import ENABLE_EMAILS
+        from project.local_settings import ADMINS
+        from project.local_settings import LOCALLY_ALLOWED_HOSTS
+
+    STATIC_URL = os.getenv('STATIC_URL', '/static/')
+    MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
     COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
+    THUMBNAIL_DEFAULT_STORAGE = os.getenv(
+        'THUMBNAIL_DEFAULT_STORAGE',
+        'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+    )
     STATICFILES_STORAGE = os.getenv(
         'STATICFILES_STORAGE',
         'django.contrib.staticfiles.storage.StaticFilesStorage'
@@ -525,15 +539,11 @@ AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
-STATIC_URL = os.getenv('STATIC_URL', '/static/')
-MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
-THUMBNAIL_DEFAULT_STORAGE = os.getenv(
-    'THUMBNAIL_DEFAULT_STORAGE',
-    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
-)
 
 CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
+
+CLAVEUNICA_SECRET_KEY = os.getenv('CLAVEUNICA_SECRET_KEY', '')
 
 PARLER_LANGUAGES = {
     1: (

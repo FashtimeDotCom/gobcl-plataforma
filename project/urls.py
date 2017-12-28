@@ -57,8 +57,3 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
-
-if settings.TEST:
-    urlpatterns += [
-        url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
-    ]

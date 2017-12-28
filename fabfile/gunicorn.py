@@ -45,6 +45,7 @@ def stop():
 def restart():
     """ Restarts the gunicorn service. """
     print(green('Restarting the gunicorn service. '))
+    run("sudo systemctl daemon-reload")
     gunicorn_handler('restart')
 
 

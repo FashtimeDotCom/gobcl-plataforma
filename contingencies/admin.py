@@ -8,11 +8,20 @@ from django.contrib import admin
 from aldryn_translation_tools.admin import AllTranslationsMixin
 
 from parler.admin import TranslatableAdmin
+from parler.admin import TranslatableTabularInline
 
 # models
 from .models import Contingency
 from .models import ContingencyEvent
 from .models import ContingencyInformation
+
+
+class ContingencyEventInline(TranslatableTabularInline):
+    model = ContingencyEvent
+
+
+class ContingencyInformationInline(TranslatableTabularInline):
+    model = ContingencyInformation
 
 
 @admin.register(Contingency)
@@ -30,6 +39,8 @@ class ContingencyAdmin(AllTranslationsMixin, TranslatableAdmin):
     list_filter = (
         'is_active',
     )
+
+    inlines = (ContingencyEventInline, ContingencyInformationInline)
 
 
 @admin.register(ContingencyEvent)

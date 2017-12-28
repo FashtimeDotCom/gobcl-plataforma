@@ -80,6 +80,8 @@ class ContingencyEvent(BaseModel, TranslatableModel):
 
     class Meta:
         ordering = ('-date_time',)
+        verbose_name = _('contingency event')
+        verbose_name_plural = _('contingency events')
 
     def __str__(self):
         return self.title
@@ -116,3 +118,7 @@ class ContingencyInformation(BaseModel, TranslatableModel):
 
     def get_absolute_url(self):
         return self.url
+
+    class Meta:
+        verbose_name = _('contingency information')
+        verbose_name_plural = _('contingency informations')
