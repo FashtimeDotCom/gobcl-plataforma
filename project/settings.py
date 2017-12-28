@@ -537,6 +537,8 @@ COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
 
 CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
 
+CLAVEUNICA_SECRET_KEY = os.getenv('CLAVEUNICA_SECRET_KEY', '')
+
 PARLER_LANGUAGES = {
     1: (
         {'code': 'es'},
