@@ -45,49 +45,27 @@ block content
     .container
       if featured_campaigns
         section.sub-section
-          h2.heading-medium {% trans 'Campaigns' %}
           {% include 'campaigns/includes/campaign_list.pug' with campaigns=featured_campaigns has_featured=True %}
 
+      section.sub-section
+        .row
+          .col-12.col-lg-8.col-xl-6
+            article.card-new
+              h2.heading-medium {% trans 'Procedures and benefits' %}
+              p
+                {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
 
-      if procedures_and_benefits
-        section.sub-section
-          .row
-            .col-12.col-lg-8.col-xl-6
-              article.card-new
-                h2.heading-medium {% trans 'Procedures and benefits' %}
-                p
-                  {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
-                a(href="tramites.html").card-new_more.d-md-none
-                  {% trans 'See more' %}
-              article.card-new.d-block.d-md-none
-                h2.heading-medium {% trans 'News' %}
-                p
-                  {% trans 'Find out about our proposals to improve the country and review how they advance.' %}
-                a(href="noticias.html").card-new_more.d-md-none
-                  {% trans 'See more' %}
-              article.card-new.d-block.d-md-none
-                h2.heading-medium {% trans 'Institutions' %}
-                p
-                  {% trans 'Meet the main government entities and their representatives.' %}
-                a(href="{% url 'institution_list' %}").card-new_more.d-md-none
-                  {% trans 'See more' %}
-          .row.d-none.d-md-flex
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.link--text-dark.link--has-dot.visited
-                  | Certificación de convertidores catalíticos de reposición
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.link--text-dark.visited
-                  | Concurso para inscribir nuevos taxis
-            .col-12.col-lg-4
-              .overflowed-xs
-                a(href="#").link.visited
-                  | Certificación de vehículos a gas
-          .row
-            .col-lg-4.offset-lg-4.d-none.d-md-block
-              a(href="#").button.button--block.button--light.button--clean.button--space
-                {% trans 'See more' %}
+        .row.d-none.d-md-flex
+          for file in chile_atiende_files
+            if forloop.counter0 < 3
+              .col-12.col-lg-4
+                .overflowed-xs
+                  a(href="{{ file.get_absolute_url }}").link.link--text-dark.link--has-dot.visited
+                  {{ file.title }}
+        .row
+          .col-lg-4.offset-lg-4.d-none.d-md-block
+            a(href="https://chileatiende.digital.gob.cl/").button.button--block.button--light.button--clean.button--space
+              {% trans 'See more' %}
 
       if articles
         section.sub-section.d-none.d-md-block
