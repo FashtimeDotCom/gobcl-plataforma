@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-DEBUG = True
+DEBUG = False
 
 LOCALLY_INSTALLED_APPS = [
 ]
@@ -15,6 +15,7 @@ COMPRESS_STORAGE = DEFAULT_FILE_STORAGE
 THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 # COMPRESS_URL = 'https://s3.amazonaws.com/gobcl-staging/'
 COMPRESS_URL = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
+MEDIA_URL = COMPRESS_URL
 STATIC_URL = '/static/'
 
 CLAVE_UNICA_CALLBACK = 'https://gobcl.magnet.cl/callback'
