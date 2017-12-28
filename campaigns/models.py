@@ -19,7 +19,7 @@ from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from cms.utils.i18n import get_current_language
 
-from .managers import CampaignQueryset
+from .managers import CampaignManager
 
 
 def default_end_datetime():
@@ -78,7 +78,7 @@ class Campaign(BaseModel, TranslatableModel):
         related_name='campaigns',
     )
 
-    objects = CampaignQueryset.as_manager()
+    objects = CampaignManager()
 
     class Meta:
         verbose_name = _('campaign')

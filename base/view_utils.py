@@ -30,7 +30,7 @@ def clean_query_string(request):
 
     try:
         del clean_query_set['p']
-    except:
+    except KeyError:
         pass
 
     mstring = []
@@ -43,4 +43,5 @@ def clean_query_string(request):
 
 def get_home_campaigns(request):
     campaigns = Campaign.objects.active()
+    campaigns = campaigns.prefetch_related('translations')
     return campaigns
