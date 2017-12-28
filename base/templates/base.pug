@@ -160,8 +160,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     // templates
 
     {% compress js %}
-    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
-    script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
     {% endcompress %}
 
     block javascript_data
