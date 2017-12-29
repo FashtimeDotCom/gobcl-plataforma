@@ -6,6 +6,12 @@
 //templateName - a pug template which will be used to render results from server
 //targetSelector - a selector to an existing container
 //postLoadingTransformation - a function that is caused in the end of the procedure (optional)
+
+
+
+/**
+ *
+ */
 function createInifiniteScroll(
   urlTemplate,
   urlTransformation,
@@ -37,7 +43,7 @@ function createInifiniteScroll(
       var elemTop = $('.loading-indicator').parent().offset().top;
       var elemBottom = elemTop + $('.loading-indicator').height();
 
-      var shouldLoadMore = ((elemBottom <= docViewBottom * 0.95 )
+      var shouldLoadMore = ((elemBottom <= docViewBottom - 10 )
         && (elemTop >= docViewTop));
 
       if(shouldLoadMore && !blockFutureRequests) {
@@ -50,14 +56,14 @@ function createInifiniteScroll(
             requestUrl = response.next || requestUrl;
 
             //transforming a publishing date to a readable format for all results
-            var articles = response.results.map(article => {
+            var articles = response.results.map(function(article) {
               article.publishing_date =  moment(article.publishing_date).format('LL');
               return article;
             });
 
             //Generating DOM using a pug-template
             var newContent = templates[templateName]({
-              articles,
+              articles: articles,
               currentLanguage: response.current_language
             });
 

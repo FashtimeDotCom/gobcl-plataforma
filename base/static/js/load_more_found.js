@@ -25,8 +25,8 @@ $(function(){
     // postLoadingTransformation
     function() {
       //Changing the displayed number of total results
-      var headerText = $('.heading-medium').text().replace(/\d+/, $('.result').length);
-      $('.heading-medium').text(headerText);
+      var headerText = $('.search-results-counts').text().replace(/\d+/, $('.result').length);
+      $('.search-results-counts').text(headerText);
     }
   )();
 });
