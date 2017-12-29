@@ -13,7 +13,11 @@ from aldryn_newsblog.models import Article
 from base.forms import BaseModelForm
 
 
-class CustonmMultipleChoiceField(forms.MultipleChoiceField):
+class NoValidateMultipleChoiceField(forms.MultipleChoiceField):
+
+    '''
+    MutipleChoiceField without validating choices
+    '''
 
     def validate(self, value):
         pass
@@ -21,12 +25,15 @@ class CustonmMultipleChoiceField(forms.MultipleChoiceField):
 
 class ArticleForm(forms.Form):
 
-    related = CustonmMultipleChoiceField(_('related'))
+    related = NoValidateMultipleChoiceField(
+            _('related')
+        )
     
     def __init__(self, *args, **kwargs):
         self.article = kwargs.pop('article') 
         super(ArticleForm, self).__init__(*args, **kwargs)
 
+        # get choices from related news from article object
         related_news = list(
             self.article.related.translated().values_list(
                 'pk',
