@@ -4,6 +4,7 @@ extends base.pug
 
 block javascripts
   script(src="{% static 'js/search.js' %}")
+  script(src="{% static 'js/load_more_found.js' %}")
 
 block content
   section.section.bg-bluedark.text-light
@@ -14,7 +15,7 @@ block content
     .container
       h3.heading-medium {{ count }} {% trans 'Results' %}
       .results
-        .row
+        .row.row-results
           .col-12.col-md-10.col-lg-7
             for chile_atiende_file in chile_atiende_files_json
               .result
@@ -32,9 +33,18 @@ block content
                   {{ article.lead_in|striptags|truncatechars:100 }}
                 span.result_date {{ article.publishing_date|date }}
 
-
+        .row
+          {% include 'includes/loading-indicator.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
-
-
+      
+  script.
+    if (!document.app) {
+      document.app = {};
+    }
+    document.app.url = "{% url 'search-list' %}";
+    // - Temprorary solution until servr will get me this value
+    document.app.offset = {{ count }};
+    //- document.app.offset = "{{ article_list.count }}"
+    

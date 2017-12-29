@@ -5,20 +5,3 @@
 @import "_variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/gob.cl";
-
-//TODO move to framework
-.pv-0-until-md,
-section.pv-0-until-md {
-  @media (max-width: map-get($grid-breakpoints, md)) {
-    padding-top: 0;
-    padding-right: 0;
-  }
-}
-
-//TODO move to framework
-.featured-card_title {
-  @media (min-width: map-get($grid-breakpoints, xl)) {
-    overflow: hidden;
-    height: 3.25rem;
-  }
-}

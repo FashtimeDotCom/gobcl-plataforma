@@ -1,0 +1,18 @@
+-var articles = locals.articles;
+-var language = locals.currentLanguage;
+
+each article in articles
+  .col-12.col-md-10.col-lg-7
+    .result
+      a.result_link(href=article.url)
+        if language == 'en' && article.translations.en != null
+          | #{article.translations.en.title}
+        else
+          | #{article.translations.es.title}
+      p.result_excerpt
+        if language == 'en' && article.translations.en != null
+          | #{article.translations.en.lead_in.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 97)}...
+        else
+          | #{article.translations.es.lead_in.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 97)}...
+      span.result_date 
+        | #{article.publishing_date}
