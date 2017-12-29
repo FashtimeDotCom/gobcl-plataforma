@@ -401,6 +401,10 @@ NPM_FILE_PATTERNS = {
     'magnific-popup': [
         'dist/jquery.magnific-popup.js',
         'dist/magnific-popup.css'
+    ],
+    'moment': [
+        'moment.js',
+        'locale/es.js'
     ]
 }
 

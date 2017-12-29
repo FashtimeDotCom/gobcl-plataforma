@@ -19,7 +19,7 @@ MEDIA_URL = COMPRESS_URL
 STATIC_URL = '/static/'
 
 CLAVE_UNICA_CALLBACK = 'https://gobcl.magnet.cl/callback'
-CLAVE_UNICA_CLIENT_ID = 'a73c92446de1481abf61c61fc2c5e091'
+CLAVE_UNICA_CLIENT_ID = 'c242172b23d349018620dae9d39fd8ee'
 
 COMPRESS_URL = '/static/'
 COMPRESS_STORAGE = 'compressor.storage.CompressorFileStorage'
