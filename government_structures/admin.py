@@ -5,6 +5,7 @@
 # django
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils import timezone
@@ -51,6 +52,11 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
             args=[gov.pk],
             current_app=self.admin_site.name,
         )
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            _('government structure copy succesful'),
+        )
         return HttpResponseRedirect(url)
 
     def copy_structure_without_servants(self, request, gov_id):
@@ -60,6 +66,11 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
             'admin:government_structures_governmentstructure_change',
             args=[gov.pk],
             current_app=self.admin_site.name,
+        )
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            _('new government structure succesful'),
         )
         return HttpResponseRedirect(url)
 
