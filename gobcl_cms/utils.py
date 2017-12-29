@@ -108,3 +108,4 @@ def change_text_for_html():
         HtmlPlugin.objects.create(
             **data
         )
+        text.delete()
