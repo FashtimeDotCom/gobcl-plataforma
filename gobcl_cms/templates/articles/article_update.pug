@@ -1,0 +1,28 @@
+extends form.pug
+-load static
+-load i18n
+
+block javascripts
+  script(src="{% static 'articles/js/related.select2.js' %}")
+
+block content
+  br
+  .container
+    h1 {% trans 'Related News' %}
+    h2 "{{ article.title }}"
+    div(role="alert").alert.alert-info
+      | {% trans 'Can add or remove related news' %}
+    form.model-form(method="post", enctype="multipart/form-data", role="form", action="{{action}}")
+      {% csrf_token %}
+      {{ form }}
+      - if not hide_buttons
+        div.form-group
+          div.row
+            .col-sm-6.text-right
+              .btn-group
+                block buttons
+                  button.btn.btn-primary.js-submit-button(type="submit")
+                    | {% block submit_button_value%}Guardar{% endblock%}
+                  a.btn.btn-danger.js-cancel-btn(
+                    href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}")
+                    | {% block cancel_button_value%}Cancelar{% endblock%}

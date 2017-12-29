@@ -52,7 +52,7 @@ class ArticleAdmin(BaseArticleAdmin):
                 'is_published',
                 'is_featured',
                 'featured_image',
-                'lead_in',
+                'lead_in',                
             )
         }),
         (_('Meta Options'), {

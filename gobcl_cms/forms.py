@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+""" Forms for the institutions application. """
+# standard library
+
+# django
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+
+# models
+from aldryn_newsblog.models import Article
+
+# views
+from base.forms import BaseModelForm
+
+
+class CustonmMultipleChoiceField(forms.MultipleChoiceField):
+
+    def validate(self, value):
+        pass
+
+
+class ArticleForm(forms.Form):
+
+    related = CustonmMultipleChoiceField(_('related'))
+    
+    def __init__(self, *args, **kwargs):
+        self.article = kwargs.pop('article') 
+        super(ArticleForm, self).__init__(*args, **kwargs)
+
+        related_news = list(
+            self.article.related.translated().values_list(
+                'pk',
+                'translations__title',
+            )
+        )
+
+        self.fields['related'].choices = related_news
