@@ -11,7 +11,7 @@ block content
     h1 {% trans 'Related News' %}
     h2 "{{ article.title }}"
     div(role="alert").alert.alert-info
-      | {% trans 'Can add or remove related news' %}
+      | {% trans 'Here you can add or remove related news' %}
     form.model-form(method="post", enctype="multipart/form-data", role="form", action="{{action}}")
       {% csrf_token %}
       {{ form }}
@@ -22,7 +22,7 @@ block content
               .btn-group
                 block buttons
                   button.btn.btn-primary.js-submit-button(type="submit")
-                    | {% block submit_button_value%}Guardar{% endblock%}
+                    | {% block submit_button_value %}{% trans 'Save' %}{% endblock %}
                   a.btn.btn-danger.js-cancel-btn(
                     href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}")
-                    | {% block cancel_button_value%}Cancelar{% endblock%}
+                    | {% block cancel_button_value %}{% trans 'Cancel' %}{% endblock %}
