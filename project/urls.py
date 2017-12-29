@@ -51,6 +51,11 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
+if settings.TEST:
+    urlpatterns += [
+        url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
+    ]
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
