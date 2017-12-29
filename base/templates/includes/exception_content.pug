@@ -10,9 +10,14 @@ section.section.section--medium
           h2.article_title.title--light {{header}}
 
           p 
-            | Lo sentimos pero hubo un error al intentar cargar la página solicitada. 
+            | {% trans 'we are sorry but an error occured when trying to load this page'|capfirst %} 
+            //- Lo sentimos pero hubo un error al intentar cargar la página solicitada. 
             br
-            | Puedes <a href="#">recargar</a> o buscar nuevamente acá abajo
+            | {% trans 'you could try'|capfirst %} 
+            a(href="#") {% trans 'to reload' %}
+            | {% trans 'or use a search bar below' %}
+            //- Puedes <a href="#">recargar</a> o buscar nuevamente acá abajo
+          p {% trans 'go home' %}
 
           .search-form.search-form--large#searchHero
             .search-form_content
@@ -25,10 +30,11 @@ section.section.section--medium.bg-white.hidden-xs
     .row
       .col-8
         ul.list-ib
-          li Te sugerimos: 
+          li {% trans 'we suggest:'|capfirst %} 
+          //- Te sugerimos: 
           li 
-            a(href="{% url 'home' %}") Ir al inicio
+            a(href="{% url 'home' %}") {% trans 'go home'|capfirst %} 
           li 
-            a(href="#") Revisar el centro de ayuda 
+            a(href="#") {% trans 'check help'|capfirst %}  
           li 
-            a(href="#") Contactarnos
+            a(href="#") {% trans 'feedback'|capfirst %}  
