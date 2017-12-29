@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-29 12:37-0300\n"
+"POT-Creation-Date: 2017-12-29 12:53-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,36 +225,36 @@ msgid "we are sorry but an error occured when trying to load this page"
 msgstr ""
 "lo sentimos pero hubo un error al intentar cargar la página solicitada."
 
-#: templates/includes/exception_content.pug:16
+#: templates/includes/exception_content.pug:15
 msgid "you could try"
 msgstr "puedes"
 
-#: templates/includes/exception_content.pug:17
+#: templates/includes/exception_content.pug:16
 msgid "to reload"
 msgstr "recargar"
 
-#: templates/includes/exception_content.pug:18
+#: templates/includes/exception_content.pug:17
 msgid "or use a search bar below"
 msgstr "o buscar nuevamente acá abajo"
 
-#: templates/includes/exception_content.pug:23
+#: templates/includes/exception_content.pug:21
 #: templates/includes/search_bar.pug:13 templates/index.pug:22
 msgid "Write here what you want to search"
 msgstr "Escribe aquí lo que deseas buscar"
 
-#: templates/includes/exception_content.pug:32
+#: templates/includes/exception_content.pug:30
 msgid "we suggest:"
 msgstr "te sugerimos:"
 
-#: templates/includes/exception_content.pug:35
+#: templates/includes/exception_content.pug:33
 msgid "go home"
 msgstr "ir al inicio"
 
-#: templates/includes/exception_content.pug:37
+#: templates/includes/exception_content.pug:35
 msgid "check help"
 msgstr "Revisar el centro de ayuda "
 
-#: templates/includes/exception_content.pug:39
+#: templates/includes/exception_content.pug:37
 msgid "feedback"
 msgstr "contactarnos"
 
