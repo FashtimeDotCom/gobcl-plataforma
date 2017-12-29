@@ -1,5 +1,5 @@
 $(function(){
-  createInifiniteScroll(
+  document.createInifiniteScroll(
     // a link for ajax request
     document.app.url + '?offset=' + parseInt(document.app.offset),
     // a function that adds information about category to a requestUrl

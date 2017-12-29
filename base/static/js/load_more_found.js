@@ -1,5 +1,5 @@
 $(function(){
-  createInifiniteScroll(
+  doument.createInifiniteScroll(
     // a link for ajax request
     '/api/1.0/search' + '?offset=' + parseInt(document.app.offset),
     // a function that adds information about category and query string to a requestUrl
