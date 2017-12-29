@@ -1,4 +1,8 @@
 extends base.pug
 
+- load i18n
+- load staticfiles
+
 block content
-    h1 500
+  {% trans 'An error occured' as header %}
+  {% include 'includes/exception_content.pug' with header=header %}
