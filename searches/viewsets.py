@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.pagination import _positive_int
+from rest_framework.utils.urls import remove_query_param, replace_query_param
 
 from .serializers import ArticleSerializer
 from services.serializers import ChileAtiendeFileSerializer
@@ -18,6 +19,29 @@ from services.models import ChileAtiendeFile
 
 
 class LimitOffsetPagination(LimitOffsetPagination):
+
+    def get_next_link(self):
+        if self.offset + self.limit >= self.count:
+            return None
+
+        url = self.request.get_full_path()
+        url = replace_query_param(url, self.limit_query_param, self.limit)
+
+        offset = self.offset + self.limit
+        return replace_query_param(url, self.offset_query_param, offset)
+
+    def get_previous_link(self):
+        if self.offset <= 0:
+            return None
+
+        url = self.request.get_full_path()
+        url = replace_query_param(url, self.limit_query_param, self.limit)
+
+        if self.offset - self.limit <= 0:
+            return remove_query_param(url, self.offset_query_param)
+
+        offset = self.offset - self.limit
+        return replace_query_param(url, self.offset_query_param, offset)
 
     def get_limit(self, request):
 
@@ -68,6 +92,14 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
         self.category_slug = self.request.GET.get('category_slug', '')
+        self.query = self.request.GET.get('q', '')
+
+        if self.query:
+            queryset = queryset.filter(
+                Q(translations__title__unaccent__icontains=self.query) |
+                Q(translations__lead_in__unaccent__icontains=self.query) |
+                Q(translations__search_data__unaccent__icontains=self.query)
+            ).distinct()
 
         if self.category_slug:
             queryset = queryset.filter(
@@ -79,34 +111,15 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ArticleSearchViewSet(ArticleViewSet):
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
     def get_queryset(self):
         queryset = super(ArticleSearchViewSet, self).get_queryset()
         querysetfile = ChileAtiendeFile.objects.all()
 
-        self.query = self.request.GET.get('q', '')
-
         if self.query:
-            queryset = queryset.filter(
-                Q(translations__title__unaccent__icontains=self.query) |
-                Q(translations__lead_in__unaccent__icontains=self.query) |
-                Q(translations__search_data__unaccent__icontains=self.query)
-            ).distinct()
-
             querysetfile = querysetfile.filter(
-                Q(service__name__icontains=self.query) |
-                Q(title__icontains=self.query) |
-                Q(objective__icontains=self.query)
+                Q(service__name__unaccent__icontains=self.query) |
+                Q(title__unaccent__icontains=self.query) |
+                Q(objective__unaccent__icontains=self.query)
             ).distinct()
         
         queryset = list(itertools.chain(

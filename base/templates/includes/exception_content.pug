@@ -1,0 +1,37 @@
+- load i18n
+- load staticfiles
+
+    
+section.section.section--medium
+  .container
+    .row
+      .col-12.col-md-7
+        article.article.article--dark.text-dark
+          h2.article_title.title--light {{header}}
+
+          p 
+            | {% trans 'we are sorry but an error occured when trying to load this page'|capfirst %} 
+            br
+            | {% trans 'you could try'|capfirst %} 
+            a(href="#") {% trans 'to reload' %}
+            | &nbsp;{% trans 'or use a search bar below' %}
+
+          .search-form.search-form--large#searchHero
+            .search-form_content
+              input(type="search" placeholder="{% trans 'Write here what you want to search'%}").search-form_input.toggle-search
+              button(type="submit").search-form_button.search-form_button--submit: i.ic-search
+              button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
+                
+section.section.section--medium.bg-white.hidden-xs
+  .container
+    .row
+      .col-8
+        ul.list-ib
+          li {% trans 'we suggest:'|capfirst %} 
+          //- Te sugerimos: 
+          li 
+            a(href="{% url 'home' %}") {% trans 'go home'|capfirst %} 
+          li 
+            a(href="#") {% trans 'check help'|capfirst %}  
+          li 
+            a(href="#") {% trans 'feedback'|capfirst %}  

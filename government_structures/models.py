@@ -6,7 +6,6 @@ import copy
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 
 # models
 from base.models import BaseModel
@@ -46,9 +45,8 @@ class GovernmentStructure(BaseModel):
     def get_government(cls, date=None):
         if not date:
             return cls.objects.get_or_none(current_government=True)
-        now = timezone.datetime.now()
 
-    def duplicate(self, date, with_public_servant=True):
+    def duplicate(self, date, with_public_servants=True):
         government_structures = GovernmentStructure.objects.filter(
             publication_date=date)
         if government_structures.exists():
@@ -56,12 +54,13 @@ class GovernmentStructure(BaseModel):
 
         government_structure = copy.copy(self)
         government_structure.id = None
+        government_structure.current_government = False
         government_structure.publication_date = date
         government_structure.save()
 
-        for field in government_structure._meta.fields_map.values():
+        for field in self._meta.fields_map.values():
 
-            if not with_public_servant:
+            if not with_public_servants:
                 if field.name == 'publicservant':
                     continue
 
@@ -69,6 +68,22 @@ class GovernmentStructure(BaseModel):
             objects = model.objects.filter(government_structure=self)
             for obj in objects:
                 new_obj = copy.copy(obj)
+
+                # check for and copy translations in model
+                if hasattr(new_obj, 'translations'):
+                    translations = copy.copy(new_obj.translations.all())
+                else:
+                    translations = None
+
                 new_obj.id = None
                 new_obj.government_structure = government_structure
                 new_obj.save()
+
+                # save new translations
+                if translations:
+                    for translation in translations:
+                        translation.id = None
+                        translation.master_id = new_obj.id
+                        translation.save()
+
+        return government_structure
