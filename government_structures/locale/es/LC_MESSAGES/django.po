@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-26 19:09-0300\n"
+"POT-Creation-Date: 2017-12-29 10:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps.py:7 models.py:27
+#: admin.py:58
+msgid "government structure copy succesful"
+msgstr "copia de estructura de gobierno existosa"
+
+#: admin.py:73
+msgid "new government structure succesful"
+msgstr "nueva estructura de gobierno exitosa"
+
+#: admin.py:80
+msgid "copy government"
+msgstr "copiar gobierno"
+
+#: admin.py:83
+msgid "new government"
+msgstr "nuevo gobierno"
+
+#: admin.py:90
+msgid "copy structure"
+msgstr "copiar estructura"
+
+#: admin.py:94
+msgid "copy without servants"
+msgstr "copiar sin servidores"
+
+#: apps.py:7 models.py:26
 msgid "government structures"
 msgstr "estructuras de gobierno"
 
-#: models.py:17
+#: models.py:16
 msgid "publication date"
 msgstr "fecha de publicación"
 
-#: models.py:21
+#: models.py:20
 msgid "current government"
 msgstr "gobierno actual"
 
-#: models.py:26
+#: models.py:25
 msgid "government structure"
 msgstr "estructura de gobierno"
 
-#: models.py:29
+#: models.py:28
 msgid "Can view government structures"
 msgstr "Puede ver las estructuras de gobierno"
 
@@ -68,3 +92,8 @@ msgstr "Agregar estructura de gobierno"
 #: templates/government_structures/government_structure_list.pug:17
 msgid "name"
 msgstr "nombre"
+
+#, fuzzy
+#~| msgid "copy structure"
+#~ msgid "copy succesful"
+#~ msgstr "copiar estructura"
