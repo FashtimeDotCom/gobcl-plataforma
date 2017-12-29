@@ -1,5 +1,6 @@
 from djangocms_text_ckeditor.models import Text
 from djangocms_picture.models import Picture
+from gobcl_cms.models import HtmlPlugin
 
 from aldryn_newsblog.models import Article
 from filer.models.foldermodels import Folder
@@ -89,3 +90,21 @@ def generate_sha1_to_image():
             if not image.sha1:
                 image.delete()
                 print('delete because of missing sha1')
+
+
+def change_text_for_html():
+
+    texts = Text.objects.filter(body__startswith='<p>&lt;')
+
+    for text in texts:
+        data = {
+            'html': text.body,
+            'position': text.position,
+            'language': text.language,
+            'placeholder': text.placeholder,
+            'plugin_type': 'HtmlCMSPlugin',
+        }
+
+        HtmlPlugin.objects.create(
+            **data
+        )
