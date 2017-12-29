@@ -50,14 +50,14 @@ function createInifiniteScroll(
             requestUrl = response.next || requestUrl;
 
             //transforming a publishing date to a readable format for all results
-            var articles = response.results.map(article => {
+            var articles = response.results.map(function(article) {
               article.publishing_date =  moment(article.publishing_date).format('LL');
               return article;
             });
 
             //Generating DOM using a pug-template
             var newContent = templates[templateName]({
-              articles,
+              articles: articles,
               currentLanguage: response.current_language
             });
 
