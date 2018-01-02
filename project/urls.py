@@ -45,6 +45,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
+    url(_(r'^articles/'), include('gobcl_cms.urls')),
     url(r'^404/$', base_views.page_404, name='404'),
     url(r'^500/$', base_views.page_500, name='500'),
     url(_(r'^'), include('cms.urls')),

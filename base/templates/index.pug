@@ -6,7 +6,7 @@ extends base.pug
 - load apphooks_config_tags
 
 block content
-  section.section.bg-bluedark.elem-bg.hero-background
+  section.section.bg-bluedark.hero-background
     .container
       .row
         .col-12.col-lg-5.order-lg-12.col-xl-5
@@ -53,7 +53,8 @@ block content
               h2.heading-medium {% trans 'Procedures and benefits' %}
               p
                 {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
-
+              a(href="https://chileatiende.digital.gob.cl/").card-new_more.d-md-none
+                | {% trans 'See more' %}
         .row.d-none.d-md-flex
           for file in chile_atiende_files
             if forloop.counter0 < 3

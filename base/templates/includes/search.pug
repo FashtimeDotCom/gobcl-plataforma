@@ -23,7 +23,7 @@
         .col-12.col-lg-4
           h2.heading-label.heading-label--light {% trans 'News' %}
           div.search_section.overflowed-xs
-            for news in feature_news
+            for news in featured_news
               article.new.new--search
                 span.new_category.new_category--light
                   {{ news.categories.all|join:", " }}
