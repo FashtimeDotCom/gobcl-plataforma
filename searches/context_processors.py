@@ -41,10 +41,11 @@ def get_featured_news(request):
     cache = caches['default']
     featured_news_cache = cache.get('featured_news')
     if not featured_news_cache:
-        featured_news_cache = cache.set(
+        cache.set(
             'featured_news',
             featured_news(),
             86400,
         )
+        featured_news_cache = cache.get('featured_news')
 
     return {'featured_news': featured_news_cache}

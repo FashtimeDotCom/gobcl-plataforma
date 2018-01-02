@@ -34,11 +34,12 @@ def get_chile_atiende_files(request):
     cache = caches['default']
     chile_atiende_files_cache = cache.get('chile_atiende_files')
     if not chile_atiende_files_cache:
-        chile_atiende_files_cache = cache.set(
+        cache.set(
             'chile_atiende_files',
             chile_atiende_files(),
             86400,
         )
+        chile_atiende_files_cache = cache.get('chile_atiende_files')
 
     return {
         'chile_atiende_files': chile_atiende_files_cache

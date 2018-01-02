@@ -32,10 +32,11 @@ def get_most_visited_urls(request):
     cache = caches['default']
     most_visited_urls_cache = cache.get('most_visited_urls')
     if not most_visited_urls_cache:
-        most_visited_urls_cache = cache.set(
+        cache.set(
             'most_visited_urls',
             most_visited_urls(),
             86400,
         )
+        most_visited_urls_cache = cache.get('most_visited_urls')
 
     return {'most_visited_urls': most_visited_urls_cache}
