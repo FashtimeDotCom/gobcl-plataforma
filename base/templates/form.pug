@@ -48,9 +48,9 @@ block content
                 .btn-group
                   block buttons
                     button.btn.btn-primary.js-submit-button(type="submit")
-                      | {% block submit_button_value%}Guardar{% endblock%}
+                      | {% block submit_button_value %}{% trans 'Save' %}{% endblock %}
                     a.btn.btn-danger.js-cancel-btn(
                       href="{% block cancel_button_url %}{{cancel_url}}{% endblock %}")
-                      | {% block cancel_button_value%}Cancelar{% endblock%}
+                      | {% block cancel_button_value %}{% trans 'Cancel' %}{% endblock %}
 
     block content_footer
