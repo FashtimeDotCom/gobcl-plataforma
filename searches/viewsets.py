@@ -106,6 +106,10 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
                 categories__translations__slug__icontains=self.category_slug
             ).distinct()
 
+        queryset = queryset.filter(
+            translations__language_code=self.request.LANGUAGE_CODE
+        )
+
         return queryset
 
 
@@ -113,17 +117,17 @@ class ArticleSearchViewSet(ArticleViewSet):
 
     def get_queryset(self):
         queryset = super(ArticleSearchViewSet, self).get_queryset()
-        querysetfile = ChileAtiendeFile.objects.all()
+        queryset_file = ChileAtiendeFile.objects.all()
 
         if self.query:
-            querysetfile = querysetfile.filter(
+            queryset_file = queryset_file.filter(
                 Q(service__name__unaccent__icontains=self.query) |
                 Q(title__unaccent__icontains=self.query) |
                 Q(objective__unaccent__icontains=self.query)
             ).distinct()
         
         queryset = list(itertools.chain(
-                querysetfile, queryset
+                queryset_file, queryset
             )
         )
 
