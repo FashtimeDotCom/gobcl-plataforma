@@ -46,4 +46,4 @@ class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the PublicEnterprise object """
-        return reverse('public_enterprise_detail', args=(self.pk,))
+        return self.url

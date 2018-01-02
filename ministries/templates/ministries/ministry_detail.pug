@@ -95,11 +95,25 @@ block content
       h2.heading-medium {% trans 'Institutions of' %} {{ ministry.name }}
       h3.heading-sub {% trans 'Public Enterprises' %}
       .row
+        for public_enterprise in ministry.publicenterprise_set.all
+          .col-12.col-md-4
+            .list-links
+              li
+                if public_enterprise.get_absolute_url
+                  a(href="{{ public_enterprise.url }}", target="blank").link
+                    | {{ public_enterprise.name }}
+                else
+                  | {{ public_enterprise.name }}
+      h3.heading-sub {% trans 'Public Services' %}
+      .row
         for public_service in ministry.publicservice_set.all
           .col-12.col-md-4
             .list-links
               li
-                a(href="{{ public_service.url }}", target="blank").link
+                if public_service.get_absolute_url
+                  a(href="{{ public_service.get_absolute_url }}", target="blank").link
+                    | {{ public_service.name }}
+                else
                   | {{ public_service.name }}
   section
     .container

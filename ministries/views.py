@@ -73,6 +73,13 @@ class MinistryDetailView(TranslatableSlugMixin, HitCountDetailView):
         queryset = super(MinistryDetailView, self).get_queryset()
         queryset = queryset.by_government_structure(
             self.request.government_structure)
+        queryset = queryset.prefetch_related(
+            'publicenterprise_set',
+            'publicservice_set',
+            'public_servants',
+        ).select_related(
+            'minister',
+        )
         return queryset
 
 
