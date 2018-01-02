@@ -75,7 +75,7 @@ block content
             if perms.regions.view_commune
               a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
                 {% trans 'commune list'|capfirst %}
-            h3.heading-label {% trans 'Select a Comune' %}
+            h3.heading-label {% trans 'Select a Commune' %}
             .select
               select(id="communes")
                 for commune in region.commune_set.all
