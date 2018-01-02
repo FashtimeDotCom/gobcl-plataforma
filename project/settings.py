@@ -245,10 +245,10 @@ TEMPLATES = [
                     'government_structures.context_processors.'
                     'add_government_structure_to_context'
                 ),
-                'institutions.context_processors.most_visited_urls',
+                'institutions.context_processors.get_most_visited_urls',
                 'links.context_processors.footer_links',
                 'base.context_processors.categories',
-                'searches.context_processors.get_feature_news',
+                'searches.context_processors.get_featured_news',
                 'contingencies.context_processors.get_contingencies',
                 'services.context_processors.get_chile_atiende_files',
             ],
