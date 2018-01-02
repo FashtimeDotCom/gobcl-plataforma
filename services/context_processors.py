@@ -8,7 +8,7 @@ from django.core.cache import caches
 from .models import ChileAtiendeFile
 
 
-def chile_atiende_files(request):
+def chile_atiende_files():
     """
     Returns a list of 6 ChileAtiendeFile.
     """
