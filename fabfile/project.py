@@ -68,7 +68,7 @@ def update_server():
             run('yarn install')
 
             print(green('collecting static files'))
-            run('yes yes | python manage.py collectstatic')
+            run('python manage.py collectstatic --noinput')
 
             print(green('compiling translations'))
             run('./translate.sh -c')
