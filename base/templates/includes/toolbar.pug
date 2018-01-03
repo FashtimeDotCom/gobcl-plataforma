@@ -11,21 +11,17 @@
     a(href="#").toolbar-button.toolbar-button--plus
       span.toolbar-button_content
         i.ic-font-size-plus.toolbar-button_icon
-    .toolbar_player.d-none
-      a(href="#track")#listen.toolbar-button.toolbar-button--listen
-        span.toolbar-button_content
-          i.toolbar-button_icon.ic-volume
-          span.toolbar-button_text {% trans 'Listen' %}
-      .toolbar-player.invisible
-        a(href="#").toolbar-player_toggle
-          span.toolbar-button_content
-            i.ic-pause.toolbar-button_icon-pause
-            i.ic-play.toolbar-button_icon-play
-        .toolbar-player_timeline
-          span
-        a(href="#").toolbar-player_download
-          span.toolbar-button_content
-            i.ic-download
+    .toolbar_player.rs_skip.rsbtn-gobcl-skin.rs_preserve#readspeaker_button1
+      a.toolbar-button.toolbar-button--listen.rsbtn_play(
+      rel="nofollow",
+      accesskey="L",
+        href="//app-na.readspeaker.com/cgi-bin/rsent?customerid=9676&lang=es_us&readclass=a11y-text&url={{request.scheme}}://{{request.get_host}}{{request.path}}"
+      )
+        span.toolbar-button_content.rsbtn_left.rsimg.rspart
+          span.rsbtn_text
+            i.toolbar-button_icon.ic-volume
+            span.toolbar-button_text {% trans 'Listen' %}
+        span.toolbar-button_content.rsbtn_right.rsimg.rsplay.rspart
   a(href="#").toolbar-button.toolbar-button--toggle
     span.toolbar-button_content
       i.ic-accessibility.toolbar-button_icon

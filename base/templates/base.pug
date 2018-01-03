@@ -167,16 +167,14 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
       script(src="{% static 'moment/moment.js' %}")
       script(src="{% static 'moment/locale/es.js' %}")
-
     {% endcompress %}
 
+    script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")
     // templates
 
     {% compress js %}
     script(type="text/pug", src="{% static 'templates/articles/article_miniature_list.pug' %}")
     script(type="text/pug", src="{% static 'templates/search/list.pug' %}")
-
-
     {% endcompress %}
 
     block javascript_data
