@@ -18,6 +18,7 @@ from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.defaults import page_not_found
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
@@ -25,12 +26,12 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-from django.views.defaults import page_not_found
 
 # utils
 from base.view_utils import clean_query_string
 from base.view_utils import get_home_campaigns
 from inflection import underscore
+from base.utils import get_or_set_cache
 
 # models
 from ministries.models import Ministry
@@ -43,6 +44,7 @@ class IndexTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         """ view that renders a default home"""
+
         articles = Article.objects.filter(
             is_published=True,
         ).order_by('-publishing_date')[:4]
@@ -52,16 +54,19 @@ class IndexTemplateView(TemplateView):
         context = {
             'procedures_and_benefits': None,
             'articles': articles,
-            'ministries_count': (
-                Ministry.objects.by_government_structure(gov_structure).count()
+            'ministries_count': get_or_set_cache(
+                'ministries_count',
+                Ministry.objects.by_government_structure(gov_structure).count
             ),
-            'public_services_count': (
+            'public_services_count': get_or_set_cache(
+                'public_services_count',
                 PublicService.objects.by_government_structure(
                     gov_structure
-                ).count()
+                ).count
             ),
-            'regions_count': (
-                Region.objects.by_government_structure(gov_structure).count()
+            'regions_count': get_or_set_cache(
+                'regions_count',
+                Region.objects.by_government_structure(gov_structure).count
             ),
         }
 

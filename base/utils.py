@@ -10,6 +10,7 @@ import unicodedata
 
 # django
 from django.apps import apps
+from django.core.cache import caches
 from django.utils import timezone
 
 
@@ -87,3 +88,18 @@ def get_our_models():
 def can_loginas(request, target_user):
     """ This will only allow admins to log in as other users """
     return request.user.is_superuser and not target_user.is_superuser
+
+
+def get_or_set_cache(name, default_callback, ttl=1800):
+    """
+    get a value from the cache. If not set, use the default callcabk
+    Set it with a time to live that by default is ttl
+    """
+    cache = caches['default']
+    value = cache.get(name)
+
+    if value is None:
+        value = default_callback()
+        cache.set(name, value, ttl)
+
+    return value
