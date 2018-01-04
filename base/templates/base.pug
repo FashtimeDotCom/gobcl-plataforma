@@ -24,7 +24,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
 
     block meta_tags
       meta(itemprop='description', content='Gobierno de Chile')
-      meta(itemprop='image', content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/ms-icon-310x310.png' %}")
+      meta(itemprop='image', content="{% static 'favicon/ms-icon-310x310.png' %}")
       meta(itemprop='name', content='Gob.cl: {{title}}')
 
     block newsblog_meta_tags

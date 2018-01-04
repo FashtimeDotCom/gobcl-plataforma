@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-21 10:50-0300\n"
+"POT-Creation-Date: 2018-01-04 10:44-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps.py:7 models.py:66
+msgid "ministries"
+msgstr "Ministerios"
 
 #: models.py:32
 msgid "minister"
@@ -30,116 +34,90 @@ msgstr "funcionarios públicos"
 msgid "procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: models.py:57 models.py:142
+#: models.py:59 models.py:144
 msgid "importance"
 msgstr "importancia"
 
-#: models.py:63 models.py:132
+#: models.py:65 models.py:134
 msgid "ministry"
 msgstr "Ministerio"
 
-#: models.py:64
-msgid "ministries"
-msgstr "Ministerios"
-
-#: models.py:94
+#: models.py:96
 msgid "ministries's name and government structure, are not unique."
 msgstr ""
 
-#: models.py:125 templates/ministries/ministry_list.pug:17
-#: templates/public_services/public_services_list.pug:17
+#: models.py:127
 msgid "name"
 msgstr "nombre"
 
-#: models.py:135
+#: models.py:137
 msgid "url"
 msgstr "url"
 
-#: models.py:153
+#: models.py:158
 msgid "public service"
 msgstr "servicio público"
 
-#: models.py:154
+#: models.py:159
 msgid "public services"
 msgstr "servicios públicos"
 
-#: templates/ministries/ministry_delete.pug:18
-#, python-format
-msgid "Are you sure you want to delete' \"%(object)s\"?"
-msgstr "¿Estas seguro que quieres borrar' \"%(object)s\"?"
+#~ msgid "Are you sure you want to delete' \"%(object)s\"?"
+#~ msgstr "¿Estas seguro que quieres borrar' \"%(object)s\"?"
 
-#: templates/ministries/ministry_delete.pug:21
-msgid "Confirm"
-msgstr "Confirmar"
+#~ msgid "Confirm"
+#~ msgstr "Confirmar"
 
-#: templates/ministries/ministry_delete.pug:23
-msgid "Cancel"
-msgstr "Cancelar"
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
 
-#: templates/ministries/ministry_detail.pug:17
-msgid "Home"
-msgstr "Inicio"
+#~ msgid "Home"
+#~ msgstr "Inicio"
 
-#: templates/ministries/ministry_detail.pug:18
-msgid "Institutions"
-msgstr "Instituciones"
+#~ msgid "Institutions"
+#~ msgstr "Instituciones"
 
-#: templates/ministries/ministry_detail.pug:52
-#: templates/ministries/ministry_detail.pug:85
-msgid "Phone"
-msgstr "Teléfono"
+#~ msgid "Phone"
+#~ msgstr "Teléfono"
 
-#: templates/ministries/ministry_detail.pug:54
-#: templates/ministries/ministry_detail.pug:87
-msgid "E-Mail"
-msgstr "Correo electrónico"
+#~ msgid "E-Mail"
+#~ msgstr "Correo electrónico"
 
-#: templates/ministries/ministry_detail.pug:58
-msgid "Go to the ministry site"
-msgstr "Ir al sitio del Ministerio"
+#~ msgid "Go to the ministry site"
+#~ msgstr "Ir al sitio del Ministerio"
 
-#: templates/ministries/ministry_detail.pug:62
-msgid "edit ministry"
-msgstr "editar ministerio"
+#~ msgid "edit ministry"
+#~ msgstr "editar ministerio"
 
-#: templates/ministries/ministry_detail.pug:66
-msgid "delete ministry"
-msgstr "borrar ministerio"
+#~ msgid "delete ministry"
+#~ msgstr "borrar ministerio"
 
-#: templates/ministries/ministry_detail.pug:91
-msgid "Institutions of"
-msgstr "Instituciones del"
+#~ msgid "Institutions of"
+#~ msgstr "Instituciones del"
 
-#: templates/ministries/ministry_detail.pug:92
-msgid "Public Enterprises"
-msgstr "Empresas públicas"
+#~ msgid "Public Enterprises"
+#~ msgstr "Empresas públicas"
 
-#: templates/ministries/ministry_list.pug:10
-msgid "Add ministry"
-msgstr "Agregra ministerio"
+#~ msgid "Add ministry"
+#~ msgstr "Agregra ministerio"
 
-#: templates/ministries/ministry_list.pug:34
-msgid "Update ministry"
-msgstr "Actualizar ministerio"
+#~ msgid "Update ministry"
+#~ msgstr "Actualizar ministerio"
 
-#: templates/ministries/ministry_list.pug:39
-msgid "Delete ministry"
-msgstr "Borrar ministerio"
+#~ msgid "Delete ministry"
+#~ msgstr "Borrar ministerio"
 
-#: templates/public_services/public_services_list.pug:10
 #, fuzzy
-#| msgid "public service"
-msgid "Add public service"
-msgstr "agregar servicio público"
+#~| msgid "public service"
+#~ msgid "Add public service"
+#~ msgstr "agregar servicio público"
 
-#: templates/public_services/public_services_list.pug:32
 #, fuzzy
-#| msgid "public service"
-msgid "update public service"
-msgstr "editar servicio público"
+#~| msgid "public service"
+#~ msgid "update public service"
+#~ msgstr "editar servicio público"
 
-#: templates/public_services/public_services_list.pug:37
 #, fuzzy
-#| msgid "public service"
-msgid "delete public service"
-msgstr "borrar servicio público"
+#~| msgid "public service"
+#~ msgid "delete public service"
+#~ msgstr "borrar servicio público"
