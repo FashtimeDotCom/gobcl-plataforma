@@ -80,7 +80,7 @@ block content
               {% trans 'See more' %}
 
       if ministries_count or public_services_count or regions_count
-        section.sub-section.d-none.d-md-block
+        section.sub-section
           .row
             .col-12.col-lg-7
               h2.heading-medium {% trans 'Institutions' %}
@@ -89,20 +89,20 @@ block content
             .col-12
               .row
                 .col-md-6.col-lg-3
-                  a(href="{% url 'presidency_detail' %}").card-data
+                  a(href="{% url 'presidency_detail' %}").card-data.py-5.py-sm-auto
                     h2.card-data_title: span {% trans 'Presidency of the Republic' %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
+                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto
                     h3.card-data_title
                       span.card-data_number {{ ministries_count }}
                       span.card-data_title-text {% trans 'Ministries' %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
+                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto
                     h3.card-data_title
                       span.card-data_number {{ public_services_count }}
                       span.card-data_title-text {% trans 'Public Services.' %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data
+                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto
                     h3.card-data_title
                       span.card-data_number {{ regions_count }}
                       span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
