@@ -36,3 +36,6 @@ class HtmlPlugin(CMSPlugin):
     html = models.TextField(
         _('html'),
     )
+
+    def __str__(self):
+        return self.html[:50]
