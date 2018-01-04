@@ -11,8 +11,8 @@ block content
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-7
           article.text-light
-            h2.heading-large {% trans 'Institutions' %}
-            p {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+            h2.heading-large.a11y-tts {% trans 'Institutions' %}
+            p.a11y-tts {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
   section.section.pv-0-until-md
     .container
       .row
@@ -20,34 +20,34 @@ block content
           .card-data-small
             h1.card-data-small_title
               span.d-none.d-md-block &nbsp;
-              small {% trans 'Presidency' %}
-            p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              small.a11y-tts {% trans 'Presidency' %}
+            p.card-data-small_text.a11y-tts {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
             .clearfix
-              a.pull-right(href="{% url 'presidency_detail' %}") {% trans 'See more.' %}
+              a.pull-right.a11y-tts(href="{% url 'presidency_detail' %}") {% trans 'See more.' %}
         .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
           .card-data-small
             h1.card-data-small_title
-              span {{ ministry_list|length }}
-              small {% trans 'Ministries' %}
-            p.card-data-small_text
+              span.a11y-tts {{ ministry_list|length }}
+              small.a11y-tts {% trans 'Ministries' %}
+            p.card-data-small_text.a11y-tts
               | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
             .clearfix.d-md-none
               a.pull-right(href="#ministries") {% trans 'See more.' %}
         .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
           .card-data-small
             h1.card-data-small_title
-              span {{ public_service_list|length }}
-              small {% trans 'Public Services.' %}
-            p.card-data-small_text
+              span.a11y-tts {{ public_service_list|length }}
+              small.a11y-tts {% trans 'Public Services.' %}
+            p.card-data-small_text.a11y-tts
               | {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
             .clearfix.d-md-none
               a.pull-right(href="#services") {% trans 'See more.' %}
         .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
           .card-data-small
             h1.card-data-small_title
-              span {{ region_list|length }}
-              small {% trans 'Regions and their Municipalities.' %}
-            p.card-data-small_text {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              span.a11y-tts {{ region_list|length }}
+              small.a11y-tts {% trans 'Regions and their Municipalities.' %}
+            p.card-data-small_text.a11y-tts {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
             .clearfix.d-md-none
               a.pull-right(href="#regions") {% trans 'See more.' %}
   section.section--medium.nopadding-top
@@ -68,7 +68,7 @@ block content
               i.ic-delete
                 | 
 
-      h2#ministries.heading-medium 
+      h2#ministries.heading-medium.a11y-tts
         {% trans 'Ministries' %}
 
         if perms.ministries.add_ministry
@@ -82,7 +82,7 @@ block content
               data-search-value="{{ ministry.name }}"
             )
               p
-                a(href="{{ ministry.get_absolute_url }}") {{ ministry }}
+                a.a11y-tts(href="{{ ministry.get_absolute_url }}") {{ ministry }}
 
       .row.search-not-found.not-found-ministry-item
         .col-12
@@ -90,7 +90,7 @@ block content
 
       br
 
-      h2#services.heading-medium {% trans 'public services'|capfirst %}
+      h2#services.heading-medium.a11y-tts {% trans 'public services'|capfirst %}
 
         if perms.ministries.add_publicservice
 
@@ -104,17 +104,17 @@ block content
           for public_service in public_service_list
             .searchable.col-sm-12.col-md-4.service-item(data-search-value="{{ public_service.name }}")
               p
-                if public_service.url 
-                  a(href="{{ public_service.url }}")
+                if public_service.url
+                  a.a11y-tts(href="{{ public_service.url }}")
                     {{ public_service }}
                 else
-                  {{ public_service }}
+                  span.a11y-tts {{ public_service }}
       .row.search-not-found.not-found-service-item
         .col-12
           i.disable {% trans 'No results found.' %}
 
       br
-      h2#regions.heading-medium {% trans 'Regions' %}
+      h2#regions.heading-medium.a11y-tts {% trans 'Regions' %}
         if perms.regions.add_region
           a.btn.btn-primary.pull-right(href="{% url 'region_create' %}")
             {% trans 'create region'|capfirst %}
@@ -122,7 +122,7 @@ block content
         if region_list
           for region in region_list
             .searchable.col-sm-12.col-md-4.region-item(data-search-value="{{ region.name }}")
-              p: a(href="{{ region.get_absolute_url }}") {{ region }}
+              p: a.a11y-tts(href="{{ region.get_absolute_url }}") {{ region }}
       .row.search-not-found.not-found-region-item
         .col-12
           i.disable {% trans 'No results found.' %}

@@ -19,9 +19,9 @@ block content
   section.bg-light
     .container
       ol.breadcrumb
-        li: a(href="/") Home
-        li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
-        li: a(href="{{ region.region.get_absolute_url }}") {{ region.name }}
+        li: a.a11y-tts(href="/") Home
+        li: a.a11y-tts(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li: a.a11y-tts(href="{{ region.region.get_absolute_url }}") {{ region.name }}
   section.section--medium.bg-bluedark
     .container
       .row
@@ -29,14 +29,14 @@ block content
           .pull-md-right
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-7.col-xl-7
-          article.text-light
+          article.text-light.a11y-tts
             h1.heading-large {{ region.name }}
             p {{ region.description }}
   section
     .container
       .row
         .col-sm-12.col-lg-8
-          .profile.profile--half
+          .profile.profile--half.a11y-tts
             .profile_image
               if region.governor.photo
                 img.img-fluid.w-100.img-frame(src="{{ region.governor.photo|thumbnail_url:'avatar' }}", alt="")
@@ -68,21 +68,21 @@ block content
       .row
         .col-sm-12.col-lg-4.col-xl-4
           article
-            h2.heading-medium {{ region.commune_set.with_own_municipality.count }} {% trans 'Municipalities' %}
+            h2.heading-medium.a11y-tts {{ region.commune_set.with_own_municipality.count }} {% trans 'Municipalities' %}
             if perms.regions.add_commune
               a(href="{% url 'commune_create' region.slug %}", target="blank").button.button--block
                 {% trans 'create commune'|capfirst %}
             if perms.regions.view_commune
               a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
                 {% trans 'commune list'|capfirst %}
-            h3.heading-label {% trans 'Select a Commune' %}
+            h3.heading-label.a11y-tts {% trans 'Select a Commune' %}
             .select
               select(id="communes")
                 for commune in region.commune_set.all
                   option(value="{{ commune.id }}") {{ commune.name }}
         for commune in region.commune_set.all
           .commune(id="commune-{{ commune.id }}").col-sm-12.col-lg-6.col-xl-4.d-none
-            article.card-new
+            article.card-new.a11y-tts
               h2.card-new_title {{ commune.name }}
               p.card-new_text {{ commune.description }}
               p: a(href="https://twitter.com/{{ commune.twitter }}", target="blank").profile_twitter {{ commune.twitter }}

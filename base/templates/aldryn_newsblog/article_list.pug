@@ -9,19 +9,19 @@ section.section.nopadding.bg-bluedark
           .pull-md-right
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-6.col-xl-7
-          h1.heading-large {% trans 'News' %}
+          h1.heading-large.a11y-tts {% trans 'News' %}
       {% static_placeholder "newsblog_feature" %}
 
 section.section
   .container
-    h2.heading-label {% trans 'Filter by Topic' %}:
+    h2.heading-label.a11y-tts {% trans 'Filter by Topic' %}:
     .tags(
       data-cancel-link="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
     )
       .tags_content
         for category in categories
           .tags_item
-            a.ctag.ctag--light(
+            a.ctag.ctag--light.a11y-tts(
               href="{% namespace_url 'article-list-by-category' category.slug namespace=namespace default='' %}",
               class="{% if newsblog_category.id == category.id %}active{% endif %}"
             )
