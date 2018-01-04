@@ -28,6 +28,6 @@ MEDIA_URL = 'https://s3-us-west-2.amazonaws.com/gob.cl/'
 COMPRESS_URL = MEDIA_URL
 
 # override with local static files
-COMPRESS_STORAGE = STATICFILES_STORAGE
 COMPRESS_URL = '/static/'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+COMPRESS_STORAGE = STATICFILES_STORAGE
