@@ -7,11 +7,9 @@ from filer.fields.image import FilerImageField
 
 
 class GalleryPlugin(CMSPlugin):
-    description = models.CharField(
+    description = models.TextField(
         _('description'),
-        max_length=255,
         default='',
-        blank=True,
     )
 
     def __str__(self):
@@ -24,9 +22,8 @@ class GalleryImagePlugin(CMSPlugin):
         blank=True,
         null=True,
     )
-    caption = models.CharField(
+    caption = models.TextField(
         _('caption'),
-        max_length=255,
         blank=True,
         null=True,
     )

@@ -1,8 +1,21 @@
 - load utils
 - load cms_tags
 
+{% with description=instance.description %}
 if instance.child_plugin_instances
   .gallery
-    .gallery-slide
+    if instance.child_plugin_instances|length < 4
       for image in instance.child_plugin_instances
-        {% render_plugin image %}
+        .gallery-slide
+          {% render_plugin image %}
+    elif instance.child_plugin_instances|length < 7
+      for images in instance.child_plugin_instances|group:2
+        .gallery-slide
+          for image in images
+            {% render_plugin image %}
+    else
+      for images in instance.child_plugin_instances|group:3
+        .gallery-slide
+          for image in images
+            {% render_plugin image %}
+{% endwith %}

@@ -1,8 +1,10 @@
 /**
  * Set behavior to the gallery cms plugin.
  */
-$(function () {
+$(function() {
+
   $('.gallery')
+
   // enable carousel of images.
     .slick({
       infinite: true,
@@ -27,6 +29,7 @@ $(function () {
         }
       ]
     })
+
     // enable popup with gallery for images
     .magnificPopup({
       delegate: '.slick-slide:not(.slick-cloned) .gallery-slide .gallery-image',
@@ -39,12 +42,13 @@ $(function () {
       image: {
         titleSrc: 'data-text',
         markup: (
-          '<div class="row">'+
+          '<div class="row">' +
+
             // '<div class="mfp-close"></div>'+
-            '<div class="col-md-8">' +
+            '<div class="col-md-6 offset-md-2">' +
               '<div class="mfp-img"></div>' +
             '</div>' +
-            '<div class="col-md-4 align-self-end">' +
+            '<div class="col-md-2 align-self-end">' +
               '<div class="mfp-title"></div>' +
             '</div>' +
           '</div>'
