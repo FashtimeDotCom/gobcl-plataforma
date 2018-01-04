@@ -66,5 +66,5 @@ if settings.DEBUG:
         document_root=settings.MEDIA_ROOT,
     )
 
-handler404 = 'base.views.page_not_found_view'
-handler500 = 'base.views.error_view'
+handler404 = 'base.views.page_404'
+handler500 = 'base.views.page_500'
