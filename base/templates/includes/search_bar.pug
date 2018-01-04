@@ -17,7 +17,7 @@ form(action="{% url 'article_list' %}")
           button(type="submit").search-form_button.search-form_button--submit: i.ic-search
           button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
   .row
-    .col-12
+    .col-12(class="{{custom_class}}")
       h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
       .tags
         .tags_content

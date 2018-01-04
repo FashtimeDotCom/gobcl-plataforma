@@ -10,16 +10,16 @@ block content
           .d-none.d-lg-block.pull-md-right
             {% include 'includes/toolbar.pug' with dark=True %}
         .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
-          article.main-post
+          article.main-post.a11y-tts
             time.main-post_date {{ campaign.activation_datetime|date }}
-            h1.main-post_title 
+            h1.main-post_title
               {% render_model campaign "title" %}
             h2.main-post_subtitle
               {{ campaign.description|striptags }}
 
             {% render_placeholder campaign.header_content language placeholder_language %}
 
-            ul.main-post_social-share
+            ul.main-post_social-share.rs_skip
               li: p {% trans 'Share this campaign through your social networks' %}
               li.d-sm-none
                 a.share(
