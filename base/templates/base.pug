@@ -180,7 +180,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     block javascript_data
     {% render_block "js" %}
     {% compress js %}
-    script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
     script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'select2/dist/js/select2.full.js' %}")
     script(src="{% static 'js/context.js' %}")
@@ -200,5 +199,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     script(src="{% static 'js/social.js' %}")
     script(src="{% static 'js/application.js' %}")
     script(src="{% static 'js/load_more_function.js' %}")
+    script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
     block javascripts
     {% endcompress %}

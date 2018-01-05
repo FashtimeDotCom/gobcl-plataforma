@@ -48,7 +48,7 @@ $(function() {
             '<div class="col-md-6 offset-md-2">' +
               '<div class="mfp-img"></div>' +
             '</div>' +
-            '<div class="col-md-2 align-self-end">' +
+            '<div class="col-md-3 align-self-end">' +
               '<div class="mfp-title"></div>' +
             '</div>' +
           '</div>'
