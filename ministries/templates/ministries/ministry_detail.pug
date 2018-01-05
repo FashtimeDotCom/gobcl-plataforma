@@ -14,8 +14,8 @@ block content
   section.bg-light
     .container
       ol.breadcrumb
-        li: a(href="{% url 'home' %}") {% trans 'Home' %}
-        li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li: a.a11y-tts(href="{% url 'home' %}") {% trans 'Home' %}
+        li: a.a11y-tts(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
 
   section.section.bg-bluedark
     .container
@@ -25,16 +25,16 @@ block content
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-7.col-xl-7
           article.text-light
-            h2.heading-large {{ ministry.name }}
+            h2.heading-large.a11y-tts {{ ministry.name }}
             .row
-              .col-xl-10
+              .col-xl-10.a11y-tts
                 p {{ ministry.description|linebreaks }}
 
   section
     .container
       .row
         .col-sm-12.col-lg-8
-          .profile.profile--half
+          .profile.profile--half.a11y-tts
             .profile_image
               if ministry.minister.photo
                 img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
@@ -43,10 +43,11 @@ block content
               if ministry.minister.charge 
                 span.profile_job {{ ministry.minister.charge }}
 
-            p {{ ministry.minister.description|linebreaks }}
+            div
+              p {{ ministry.minister.description|linebreaks }}
             if ministry.minister.twitter 
               p
-                a(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank").profile_twitter
+                a.profile_twitter(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank")
                   | @{{ ministry.minister.twitter }}
             ul.profile_info
               - if ministry.minister.phone
@@ -55,7 +56,7 @@ block content
                 li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
         .col-sm-12.col-lg-4.align-self-end
           .profile_buttons
-            a.button.button--block(href="{{ ministry.url }}", target="blank")
+            a.button.button--block.a11y-tts(href="{{ ministry.url }}", target="blank")
               {% trans 'Go to the ministry site' %}
   
             if perms.ministries.change_ministry
@@ -70,7 +71,7 @@ block content
     .container
       .row
         for servant in ministry.public_servants.all
-          .col-sm-12.col-lg-6
+          .col-sm-12.col-lg-6.a11y-tts
             .profile.profile--half-small
               div.profile_image.profile_image--small
                 if servant.photo
@@ -91,7 +92,7 @@ block content
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
 
   section.section
-    .container
+    .container.a11y-tts
       h2.heading-medium {% trans 'Institutions of' %} {{ ministry.name }}
       if ministry.publicenterprise_set.exists
         h3.heading-sub {% trans 'Public Enterprises' %}

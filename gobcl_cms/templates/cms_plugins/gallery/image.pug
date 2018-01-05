@@ -4,5 +4,5 @@
   .gallery-image(
     style="background-image: url({% thumbnail image.image 300x300  %})",
     data-mfp-src="{{ image.image.url }}"
-    data-text="{{ image.caption|default:'' }}"
+    data-text="{% if image.caption %}{{image.caption|linebreaks}}{% else %}{{description|linebreaks}}{% endif %}"
   )
