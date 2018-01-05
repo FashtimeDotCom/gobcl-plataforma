@@ -31,3 +31,25 @@ body {
     height: 100%;
   }
 }
+
+img.mfp-img {
+  margin-left: auto;
+  margin-right: 0px;
+}
+
+.mfp-content {
+  .row {
+    pointer-events: none;
+    div {
+      pointer-events: all;
+    }
+  }
+
+  .mfp-close {
+    right: 4px;
+  }
+
+  .mfp-counter {
+    right: 10px;
+  }
+}
