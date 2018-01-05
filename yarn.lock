@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gobdigital-cl/gob.cl@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@gobdigital-cl/gob.cl/-/gob.cl-1.3.0.tgz#5631673eafc66efde016e7d51390012875a7f30b"
+"@gobdigital-cl/gob.cl@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@gobdigital-cl/gob.cl/-/gob.cl-1.3.1.tgz#a48c335b1343d7d09982ae98dcd87a330fcd8f21"
   dependencies:
     bootstrap "^4.0.0-beta.2"
     jquery "^3.2.1"
