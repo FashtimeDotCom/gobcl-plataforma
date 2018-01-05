@@ -26,6 +26,7 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
                   .schedule
                     .schedule_left
                       time.schedule_time.schedule_time--has-dot {{ event.date_time|time:"H:i" }}
+                      time.schedule_date {{ event.date_time|date:"SHORT_DATE_FORMAT" }}
                     .schedule_right
                       if event.url
                         a(href="{{ event.get_absolute_url }}").schedule_link
