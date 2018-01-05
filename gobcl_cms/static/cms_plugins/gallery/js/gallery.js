@@ -44,12 +44,13 @@ $(function() {
         markup: (
           '<div class="row">' +
 
-            // '<div class="mfp-close"></div>'+
             '<div class="col-md-6 offset-md-2">' +
+              '<div class="mfp-close"></div>' +
               '<div class="mfp-img"></div>' +
             '</div>' +
             '<div class="col-md-3 align-self-end">' +
               '<div class="mfp-title"></div>' +
+              '<div class="mfp-counter"></div>' +
             '</div>' +
           '</div>'
         )
