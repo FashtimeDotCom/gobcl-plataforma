@@ -119,13 +119,11 @@ msgstr "Teléfono"
 #: templates/regions/region_detail.pug:54
 #: templates/regions/region_detail.pug:90
 msgid "E-Mail"
-msgstr "Correo Electronico"
+msgstr "Correo Electrónico"
 
-#: templates/regions/region_detail.pug:58
-#, fuzzy
-#| msgid "Go to the ministry site"
+#: templates/regions/region_detail.pug:59
 msgid "Go to the regional government site"
-msgstr "Ir al sitio del Ministerio"
+msgstr "Ir al sitio de la municipalidad"
 
 #: templates/regions/region_detail.pug:61
 msgid "edit region"
@@ -147,8 +145,8 @@ msgstr "crear comuna"
 msgid "commune list"
 msgstr "lista de comunas"
 
-#: templates/regions/region_detail.pug:77
-msgid "Select a Comune"
+#: templates/regions/region_detail.pug:78
+msgid "Select a Commune"
 msgstr "Selecciona una comuna"
 
 #: templates/regions/region_list.pug:10
