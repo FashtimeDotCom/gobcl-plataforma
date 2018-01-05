@@ -39,3 +39,21 @@ class HtmlPlugin(CMSPlugin):
 
     def __str__(self):
         return self.html[:50]
+
+
+class ContentPlugin(CMSPlugin):
+    title = models.CharField(
+        _('title'),
+        max_length=255,
+    )
+    description = models.TextField(
+        _('description'),
+    )
+    image = FilerImageField(
+        verbose_name=_('image'),
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return self.title
