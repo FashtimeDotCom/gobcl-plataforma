@@ -376,7 +376,6 @@ LIBSASS_PRECISION = 10
 NPM_FILE_PATTERNS = {
     'bootstrap': ['dist/js/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
-    'moment': ['min/moment-with-locales.min.js'],
     'eonasdan-bootstrap-datetimepicker': [
         'build/js/bootstrap-datetimepicker.min.js',
         'build/css/bootstrap-datetimepicker.min.css'
@@ -393,6 +392,7 @@ NPM_FILE_PATTERNS = {
     ],
     'slick-carousel': [
         'slick/slick.js',
+        'slick/slick.min.js',
         'slick/slick.css',
         'slick/slick-theme.css',
         'slick/fonts/*',
@@ -404,7 +404,8 @@ NPM_FILE_PATTERNS = {
     ],
     'moment': [
         'moment.js',
-        'locale/es.js'
+        'locale/es.js',
+        'min/moment-with-locales.min.js',
     ]
 }
 
