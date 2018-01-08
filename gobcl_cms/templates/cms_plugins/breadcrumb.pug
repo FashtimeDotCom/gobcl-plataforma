@@ -1,0 +1,12 @@
+- load i18n
+- load cms_tags
+
+section.bg-light
+  .container
+    ol.breadcrumb
+      li
+        a(href="{% url 'home' %}") {% trans 'Home' %}
+      li 
+        a(href="{% page_url request.current_page %}") 
+          {% page_attribute "page_title" %}
+
