@@ -52,7 +52,7 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
-if settings.TEST:
+if settings.TEST or settings.TRAVIS:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
     ]

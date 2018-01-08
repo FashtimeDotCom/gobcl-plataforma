@@ -88,6 +88,7 @@ else:
 
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
+TRAVIS = 'TRAVIS' in os.environ
 
 # People who get code error notifications.
 # In the format [
