@@ -45,6 +45,8 @@ from contingencies.models import ContingencyInformation
 from gobcl_cms.models import GalleryPlugin
 from gobcl_cms.models import GalleryImagePlugin
 from gobcl_cms.models import HtmlPlugin
+from gobcl_cms.models import HeaderPlugin
+from gobcl_cms.models import ContentPlugin
 
 
 class Mockup(object):
@@ -198,6 +200,12 @@ class Mockup(object):
         self.set_required_string(kwargs, 'duration')
         self.set_required_int(kwargs, 'analytic_visits', minimum=1)
         return ChileAtiendeFile.objects.create(**kwargs)
+
+    def create_header_plugin(self, **kwargs):
+        return HeaderPlugin.objects.create(**kwargs)
+
+    def create_content_plugin(self, **kwargs):
+        return ContentPlugin.objects.create(**kwargs)
 
     def create_contingency(self, **kwargs):
         self.set_required_string(kwargs, 'name')
