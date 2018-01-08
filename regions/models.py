@@ -90,6 +90,7 @@ class Commune(BaseModel):
     )
     twitter = models.CharField(
         max_length=50,
+        blank=True,
     )
     url = models.URLField(
         _('url'),
