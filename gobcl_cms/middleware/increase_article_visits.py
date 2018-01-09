@@ -5,6 +5,9 @@ from aldryn_newsblog.models import Article
 
 
 class IncreaseArticleVisits(MiddlewareMixin):
+    '''
+    Increase visits when enter to detail new (Article)
+    '''
 
     def process_view(self, request, view_func, view_args, view_kwargs):
 
