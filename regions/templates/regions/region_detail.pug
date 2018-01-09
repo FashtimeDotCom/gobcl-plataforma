@@ -51,8 +51,10 @@ block content
                   | @{{ region.governor.twitter }}
 
             ul.profile_info
-              li: span {% trans 'Phone' %}: {{ region.governor.phone }}
-              li: span {% trans 'E-Mail' %}: {{ region.governor.email }}
+              if region.governor.phone
+                li: span {% trans 'Phone' %}: {{ region.governor.phone }}
+              if region.governor.email
+                li: span {% trans 'E-Mail' %}: {{ region.governor.email }}
         .col-sm-12.col-lg-4.align-self-end
           .profile_buttons
             a(href="{{ region.url }}", target="blank").button.button--block
@@ -87,8 +89,10 @@ block content
               p.card-new_text {{ commune.description }}
               p: a(href="https://twitter.com/{{ commune.twitter }}", target="blank").profile_twitter {{ commune.twitter }}
               ul.profile_info
-                li: span {% trans 'Phone' %}: {{ commune.phone }}
-                li: span {% trans 'E-Mail' %}: {{ commune.email }}
+                if commune.phone
+                  li: span {% trans 'Phone' %}: {{ commune.phone }}
+                if commune.email
+                  li: span {% trans 'E-Mail' %}: {{ commune.email }}
 
               a(href="{{ commune.url }}", target="blank").link.link--clean.text-red {{ commune.url }}
   section
