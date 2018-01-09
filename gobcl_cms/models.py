@@ -107,6 +107,7 @@ class ArticleCount(BaseModel):
         Article,
         verbose_name=_('article'),
         related_name='count',
+        null=True,
     )
     visits = models.PositiveIntegerField(
         _('visits'),
