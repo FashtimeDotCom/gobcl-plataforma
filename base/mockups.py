@@ -47,6 +47,7 @@ from gobcl_cms.models import GalleryImagePlugin
 from gobcl_cms.models import HtmlPlugin
 from gobcl_cms.models import HeaderPlugin
 from gobcl_cms.models import ContentPlugin
+from gobcl_cms.models import ArticleCount
 
 
 class Mockup(object):
@@ -206,6 +207,9 @@ class Mockup(object):
 
     def create_content_plugin(self, **kwargs):
         return ContentPlugin.objects.create(**kwargs)
+
+    def create_article_count(self, **kwargs):
+        return ArticleCount.objects.create(**kwargs)
 
     def create_contingency(self, **kwargs):
         self.set_required_string(kwargs, 'name')

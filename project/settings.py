@@ -217,6 +217,7 @@ MIDDLEWARE = [
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     'users.middleware.font_size.FontSizeMiddleware',
+    'gobcl_cms.middleware.increase_article_visits.IncreaseArticleVisits',
 ]
 
 if DEBUG:

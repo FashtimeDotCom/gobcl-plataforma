@@ -2,6 +2,8 @@ from djangocms_text_ckeditor.models import Text
 from djangocms_picture.models import Picture
 from gobcl_cms.models import HtmlPlugin
 
+from base.utils import keymap_replace
+
 from aldryn_newsblog.models import Article
 from filer.models.foldermodels import Folder
 from filer.models.imagemodels import Image
@@ -109,3 +111,18 @@ def change_text_for_html():
             **data
         )
         text.delete()
+
+    texts = Text.objects.filter(body__contains='&lt;')
+
+    text_dict = {
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+    }
+
+    for text in texts:
+
+        body = keymap_replace(text.body, text_dict)
+
+        text.body = body
+        text.save()
