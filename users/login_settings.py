@@ -32,16 +32,13 @@ class ClaveUnicaSettings(object):
 
     LOGIN_URL = 'https://accounts.claveunica.gob.cl/openid/authorize'
 
-    CLIENT_ID = CLAVE_UNICA_CLIENT_ID
-
-    CALLBACK_URI = CLAVE_UNICA_CALLBACK
-
     CSRF_PARAMS_DICT = {
-        'client_id': CLIENT_ID,
+        'client_id': CLAVE_UNICA_CLIENT_ID,
         'response_type': 'code',
-        'redirect_uri': CALLBACK_URI,
+        'redirect_uri': CLAVE_UNICA_CALLBACK,
         'state': '',
         'scope': 'openid run name email',
+        'q': '1',
     }
 
     CLAVEUNICA_SECRET_KEY = settings.CLAVEUNICA_SECRET_KEY
