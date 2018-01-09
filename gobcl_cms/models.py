@@ -1,8 +1,15 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.db.models import F
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 from cms.models.pluginmodel import CMSPlugin
 from cms.models import Page
+from aldryn_newsblog.models import Article
+from base.models import BaseModel
+
 
 from filer.fields.image import FilerImageField
 
@@ -93,3 +100,29 @@ class ContentPlugin(CMSPlugin):
 
     def __str__(self):
         return self.title
+
+
+class ArticleCount(BaseModel):
+    article = models.OneToOneField(
+        Article,
+        verbose_name=_('article'),
+        related_name='count',
+    )
+    visits = models.PositiveIntegerField(
+        _('visits'),
+        default=0
+    )
+
+    class Meta:
+        ordering = ('visits',)
+    
+    def __str__(self):
+        return self.article.title
+    
+    def increase(self):
+        self.visits = F('visits') + 1
+        self.save()
+
+    def decrease(self):
+        self.visits = F('visits') - 1
+        self.save()
