@@ -577,3 +577,5 @@ CACHES = {
         'LOCATION': '/tmp/django_cache',
     }
 }
+
+COMPRESS_OFFLINE = True
