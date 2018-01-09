@@ -41,7 +41,6 @@ class ClaveUnicaSettings(object):
         'redirect_uri': CLAVE_UNICA_CALLBACK,
         'state': '',
         'scope': 'openid run name email',
-        'q': '1',
     }
 
     TOKEN_PARAMS_DICT = {
