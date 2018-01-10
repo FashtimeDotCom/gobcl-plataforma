@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block javascripts %}
+{% compress js %}
 <script src="{% static 'js/load_more_articles.js' %}"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block javascript_data %}
