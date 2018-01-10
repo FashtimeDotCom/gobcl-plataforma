@@ -40,7 +40,7 @@ def get_featured_news(request):
     """
     cache = caches['default']
     featured_news_cache = cache.get('featured_news')
-    if not featured_news_cache:
+    if featured_news_cache is None:
         cache.set(
             'featured_news',
             featured_news(),

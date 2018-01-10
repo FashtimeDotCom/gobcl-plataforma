@@ -574,7 +574,7 @@ GA_VIEW_ID = os.getenv('GA_VIEW_ID', '')
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/django_cache',
+        'LOCATION': '{}{}'.format(BASE_DIR, '/tmp/django_cache'),
     }
 }
 

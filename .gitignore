@@ -112,3 +112,4 @@ gobcl-uploads/*
 gobcl.xlsx
 catastro.xlsx
 *.p12
+tmp/
