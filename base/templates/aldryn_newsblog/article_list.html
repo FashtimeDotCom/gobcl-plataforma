@@ -1,10 +1,4 @@
 {% extends "aldryn_newsblog/base.html" %}
-{% load compress %}
-{% load staticfiles %}
-
-{% block javascripts %}
-<script src="{% static 'js/load_more_articles.js' %}"></script>
-{% endblock %}
 
 {% block newsblog_content %}
 {% include 'aldryn_newsblog/article_list.pug' %}

@@ -1,6 +1,9 @@
 /* globals $, document */
 
 $(function () {
+  if (document.app == undefined) {
+    return
+  }
   document.createInifiniteScroll(
     // a link for ajax request
     document.app.url + '?offset=' + parseInt(document.app.offset, 10),
