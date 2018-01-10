@@ -311,14 +311,14 @@ def download_file_from_url(url):
     return files.File(lf)
 
 
-def create_news_from_json():
+def create_news_from_json(json_name: str='gobcl-posts.json'):
     '''
     Open gobcl-posts.json and read
     data to create news from old site gob.cl
     '''
 
     # open gobcl-posts.json
-    with open(settings.BASE_DIR + '/gobcl-posts.json') as news:
+    with open(settings.BASE_DIR + '/' + json_name) as news:
         json_news = json.loads(news.read())
 
     # get basic data required by model Article (aldryn newsblog)   
@@ -376,6 +376,9 @@ def create_news_from_json():
             img_url = s3_url + 'gobcl-uploads/' + '/'.join(data_image)
 
             img = download_file_from_url(img_url)
+            if not img:
+                print('No image')
+
             if img:
                 img_name = data_image[-1]
 
