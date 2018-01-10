@@ -67,6 +67,9 @@ def update_server():
             print(green('installing yarn packages'))
             run('yarn install')
 
+            print(green('compress files'))
+            run('python manage.py compress --extension=pug')
+
             print(green('collecting static files'))
             run('python manage.py collectstatic --noinput')
 
