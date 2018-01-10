@@ -1,1 +1,8 @@
+- load compress
+- load static
+
+{% compress js %}
+script(src="{% static 'js/load_more_articles.js' %}")
+{% endcompress %}
+
 include aldryn_newsblog/article_list.html
