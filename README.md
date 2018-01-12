@@ -1,4 +1,4 @@
-# plataforma-gobcl
+# Plataforma Gob.cl
 [![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=master)](https://travis-ci.org/e-gob/plataforma-gobcl)
 [![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=staging)](https://travis-ci.org/e-gob/plataforma-gobcl)
 [![Build Status](https://travis-ci.org/e-gob/plataforma-gobcl.svg?branch=testing)](https://travis-ci.org/e-gob/plataforma-gobcl)
