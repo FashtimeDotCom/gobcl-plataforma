@@ -5,7 +5,6 @@ import string
 import urllib
 
 # django
-from django.conf import settings
 
 # local settings
 if 'DOCKER' in os.environ:
@@ -15,7 +14,7 @@ if 'DOCKER' in os.environ:
 elif 'STAGING' in os.environ:
     from project.staging.local_settings import CLAVE_UNICA_CALLBACK
     from project.staging.local_settings import CLAVE_UNICA_CLIENT_ID
-    CLAVE_UNICA_SECRET_KEY = settings.CLAVE_UNICA_SECRET_KEY
+    from project.staging.local_settings import CLAVE_UNICA_SECRET_KEY
 else:
     try:
         from project.local_settings import CLAVE_UNICA_CALLBACK
