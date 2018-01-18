@@ -12,7 +12,7 @@ if template
         p.a11y-tts {{ campaign.description }}
     .row.d-none.d-lg-flex.a11y-tts
       .col-md-6.align-self-center
-        img.img-fluid.w-100.img-frame(src="{% thumbnail campaign.image 1080x559 crop %}", alt="")
+        img.img-fluid.w-100.img-frame(src="{% thumbnail campaign.image 1080x559 crop=campaign.image_crop_when_single %}", alt="")
       .col-md-1
       .col-md-5.align-self-center
         h5.heading-medium {{ campaign.title }}

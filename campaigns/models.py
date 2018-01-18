@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 from cms.models.fields import PlaceholderField
+from base.enums import ThumbnailCropChoices
 
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel
@@ -67,6 +68,34 @@ class Campaign(BaseModel, TranslatableModel):
         _('is featured'),
         default=False,
     )
+    importance = models.PositiveIntegerField(
+        _('importance'),
+        default=0,
+    )
+    image_crop_when_single = models.CharField(
+        _('image crop when single'),
+        max_length=255,
+        choices=ThumbnailCropChoices.choices,
+        default=ThumbnailCropChoices.MIDDLE_CENTER,
+    )
+    image_crop_when_on_pair = models.CharField(
+        _('image crop when on pair'),
+        max_length=255,
+        choices=ThumbnailCropChoices.choices,
+        default=ThumbnailCropChoices.MIDDLE_CENTER,
+    )
+    image_crop_when_on_trio = models.CharField(
+        _('image crop when on trio'),
+        max_length=255,
+        choices=ThumbnailCropChoices.choices,
+        default=ThumbnailCropChoices.MIDDLE_CENTER,
+    )
+    image_crop_when_small = models.CharField(
+        _('image crop when small'),
+        max_length=255,
+        choices=ThumbnailCropChoices.choices,
+        default=ThumbnailCropChoices.MIDDLE_CENTER,
+    )
     header_content = PlaceholderField(
         'campaign header',
         on_delete=models.SET_NULL,
@@ -76,10 +105,6 @@ class Campaign(BaseModel, TranslatableModel):
         'campaign content',
         on_delete=models.SET_NULL,
         related_name='campaigns',
-    )
-    importance = models.PositiveIntegerField(
-        _('importance'),
-        default=0,
     )
 
     objects = CampaignManager()
