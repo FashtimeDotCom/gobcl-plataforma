@@ -9,4 +9,4 @@ RUN npm install -g yarn
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT gunicorn project.wsgi:application -c project/production/gunicorn_conf.py
+ENTRYPOINT gunicorn project.wsgi:application -c project/production/gunicorn_conf.py --reload
