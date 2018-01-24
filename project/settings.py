@@ -156,6 +156,7 @@ INSTALLED_APPS = [
     'services',
     'campaigns',
     'contingencies',
+    'streams',
 
     # django cms
     'cms',
@@ -510,6 +511,7 @@ CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
     ('campaigns/campaign_detail.pug', _('Campaign template')),
     ('empty.pug', _('Empty template')),
+    ('streams/stream_detail.pug', _('Stream template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [

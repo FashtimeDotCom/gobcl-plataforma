@@ -43,6 +43,8 @@ block content
 
   section
     .container
+      if stream
+        {% include 'streams/include/stream_detail.pug' %}
       if featured_campaigns
         section.sub-section
           {% include 'campaigns/includes/campaign_list.pug' with campaigns=featured_campaigns has_featured=True %}

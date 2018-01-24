@@ -1,0 +1,20 @@
+- load i18n
+
+section.sub-section
+  .row
+    .col-12
+      .row
+        .col-md-6.col-lg-7
+          iframe(
+            width="560",
+            height="315",
+            src="{{ stream.get_url }}",
+            frameborder="0",
+            allow="autoplay; encrypted-media",
+            allowfullscreen
+          )
+        .col-md-6.col-lg-5
+          h2 {{ stream.title }}
+          p {{ stream.description }}
+          a(href="", style="display:none;").button.button--block.button--light.button--clean.button--space.a11y-tts
+            {% trans 'See more' %}
