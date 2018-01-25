@@ -43,7 +43,7 @@ class ArticleAdmin(BaseArticleAdmin):
     Also call prefetch related on the translations
     """
     form = ArticleAdminForm
-    list_display = ('title', 'slug', 'is_featured', 'is_published')
+    list_display = ('title', 'publishing_date', 'is_featured', 'is_published')
 
     fieldsets = (
         (None, {
