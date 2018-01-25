@@ -109,9 +109,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     main.site-main
       block header
       block top_content
-        section.section
-          .container
-            {% placeholder "top_content" %}
+        {% placeholder "top_content" %}
       block content
         {% placeholder "content" %}
     {% include 'includes/search.pug' %}
