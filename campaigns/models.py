@@ -74,24 +74,28 @@ class Campaign(BaseModel, TranslatableModel):
     )
     image_crop_when_single = models.CharField(
         _('image crop when single'),
+        help_text=_('crop orientation for size: 1080x600'),
         max_length=255,
         choices=ThumbnailCropChoices.choices,
         default=ThumbnailCropChoices.MIDDLE_CENTER,
     )
     image_crop_when_on_pair = models.CharField(
         _('image crop when on pair'),
+        help_text=_('crop orientation for size: 1072x240'),
         max_length=255,
         choices=ThumbnailCropChoices.choices,
         default=ThumbnailCropChoices.MIDDLE_CENTER,
     )
     image_crop_when_on_trio = models.CharField(
         _('image crop when on trio'),
+        help_text=_('crop orientation for size: 700x240'),
         max_length=255,
         choices=ThumbnailCropChoices.choices,
         default=ThumbnailCropChoices.MIDDLE_CENTER,
     )
     image_crop_when_small = models.CharField(
         _('image crop when small'),
+        help_text=_('crop orientation for size: 164x90'),
         max_length=255,
         choices=ThumbnailCropChoices.choices,
         default=ThumbnailCropChoices.MIDDLE_CENTER,
