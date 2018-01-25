@@ -108,14 +108,12 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     {% include 'includes/contingency.pug' %}
     main.site-main
       block header
-      section.section.nopadding.bg-bluedark
-        .container
-          {% placeholder "top_content" %}
+      block top_content
+        section.section
+          .container
+            {% placeholder "top_content" %}
       block content
         {% placeholder "content" %}
-      section.section.nopadding.bg-bluedark
-        .container
-          {% placeholder "bottom_content" %}
     {% include 'includes/search.pug' %}
     {% include 'includes/footer.pug' %}
     // Javascript Placed at the end of the document so the pages load faster

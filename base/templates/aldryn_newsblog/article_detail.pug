@@ -15,11 +15,7 @@ block content
             h2.main-post_subtitle
               {{ article.lead_in|striptags }}
 
-            if article.featured_image_id
-              img.img-fluid.w-100.img-frame(
-                src="{% thumbnail article.featured_image 1600x1600 subject_location=article.featured_image.subject_location %}",
-                alt="{{ article.featured_image.alt }}"
-              )
+            {% placeholder "top_content" %}
 
             ul.main-post_social-share
               li: p {% trans 'Share this news through your social networks' %}

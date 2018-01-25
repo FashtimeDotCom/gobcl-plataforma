@@ -1,22 +1,58 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations for the base app
+# Copyright (C) 
+# This file is distributed under the same license as the plataforma-gobcl package.
+# Ignacio Munizaga <muni@magnet.cl>, 2017.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-29 12:53-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-01-25 08:35-0300\n"
+"PO-Revision-Date: 2018-01-25 08:35-0300\n"
+"Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: enums.py:40
+msgid "Top left"
+msgstr "Arriba izquierda"
+
+#: enums.py:41
+msgid "Top center"
+msgstr "Arriba centro"
+
+#: enums.py:42
+msgid "Top right"
+msgstr "Arriba derecha"
+
+#: enums.py:43
+msgid "Middle left"
+msgstr "Medio izquierda"
+
+#: enums.py:44
+msgid "Middle center"
+msgstr "Medio centro"
+
+#: enums.py:45
+msgid "Middle right"
+msgstr "Medio derecha"
+
+#: enums.py:46
+msgid "Bottom left"
+msgstr "Abajo izquierda"
+
+#: enums.py:47
+msgid "Bottom center"
+msgstr "Abajo centro"
+
+#: enums.py:48
+msgid "Bottom right"
+msgstr "Abajo derecha"
 
 #: models.py:42
 msgid "No"
@@ -157,16 +193,16 @@ msgstr "Himno nacional"
 msgid "National anthem of Chile"
 msgstr "Himno nacional de Chile"
 
-#: templates/aldryn_newsblog/article_detail.pug:25
+#: templates/aldryn_newsblog/article_detail.pug:21
 msgid "Share this news through your social networks"
 msgstr "Comparte esta noticia a través de tus redes sociales"
 
-#: templates/aldryn_newsblog/article_detail.pug:50
+#: templates/aldryn_newsblog/article_detail.pug:47
 msgid "Related news"
 msgstr "Noticias relacionadas"
 
 #: templates/aldryn_newsblog/article_list.pug:12
-#: templates/includes/search.pug:24 templates/index.pug:72
+#: templates/includes/search.pug:24 templates/index.pug:75
 msgid "News"
 msgstr "Noticias"
 
@@ -208,6 +244,14 @@ msgstr "Página no encontrada"
 msgid "An error occured"
 msgstr "Ha ocurrido un error"
 
+#: templates/form.pug:51
+msgid "Save"
+msgstr "Guardar"
+
+#: templates/form.pug:54
+msgid "Cancel"
+msgstr "Cancelar"
+
 #: templates/includes/contingency.pug:5
 msgid "Breaking"
 msgstr "Último minuto"
@@ -216,7 +260,7 @@ msgstr "Último minuto"
 msgid "Continue browsing on Gob.cl"
 msgstr "Continuar navegando en Gob.cl"
 
-#: templates/includes/contingency.pug:37
+#: templates/includes/contingency.pug:38
 msgid "Find more information on:"
 msgstr "Encontrar más información en:"
 
@@ -275,7 +319,7 @@ msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
 #: templates/includes/navbar.pug:41 templates/includes/search.pug:36
-#: templates/index.pug:86
+#: templates/index.pug:89
 msgid "Institutions"
 msgstr "Instituciones"
 
@@ -292,8 +336,8 @@ msgid "Procedures"
 msgstr "Trámites"
 
 #: templates/includes/search.pug:21 templates/includes/search.pug:33
-#: templates/includes/search.pug:41 templates/index.pug:68
-#: templates/index.pug:80 templates/index.pug:130
+#: templates/includes/search.pug:41 templates/index.pug:58
+#: templates/index.pug:71 templates/index.pug:83 templates/index.pug:133
 msgid "See more"
 msgstr "Ver más"
 
@@ -309,7 +353,7 @@ msgstr "Filtrar por temas"
 msgid "Follow us on our social media:"
 msgstr "Síguenos a través de redes sociales:"
 
-#: templates/includes/toolbar.pug:19 templates/includes/toolbar.pug:50
+#: templates/includes/toolbar.pug:24
 msgid "Listen"
 msgstr "Escuchar"
 
@@ -329,7 +373,7 @@ msgstr ""
 msgid "Most searched"
 msgstr "Lo más buscado"
 
-#: templates/index.pug:40 templates/index.pug:119 templates/index.pug:125
+#: templates/index.pug:40 templates/index.pug:122 templates/index.pug:128
 msgid "About Chile"
 msgstr "Acerca de Chile"
 
@@ -341,31 +385,31 @@ msgstr ""
 "Infórmate sobre los principales beneficios del Estado, además de los "
 "trámites que se realizan en ChileAtiende."
 
-#: templates/index.pug:87
+#: templates/index.pug:90
 msgid "Know the main government entities and their authorities."
 msgstr "Conoce las principales entidades de Gobierno y sus autoridades."
 
-#: templates/index.pug:93
+#: templates/index.pug:96
 msgid "Presidency of the Republic"
 msgstr "Presidencia de la República"
 
-#: templates/index.pug:98
+#: templates/index.pug:101
 msgid "Ministries"
 msgstr "Ministerios"
 
-#: templates/index.pug:103
+#: templates/index.pug:106
 msgid "Public Services."
 msgstr "Servicios Públicos"
 
-#: templates/index.pug:108
+#: templates/index.pug:111
 msgid "Regions and their Municipalities."
 msgstr "Regiones y sus Municipios"
 
-#: templates/index.pug:112
+#: templates/index.pug:115
 msgid "Campaigns"
 msgstr "Campañas"
 
-#: templates/index.pug:122 templates/index.pug:126
+#: templates/index.pug:125 templates/index.pug:129
 msgid ""
 "Information for tourists, migrants and those who want to study or do "
 "business in Chile."
@@ -373,22 +417,22 @@ msgstr ""
 "Información para turistas, migrantes y quienes quieran estudiar o hacer "
 "negocios en Chile."
 
-#: views.py:134
+#: views.py:141
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "No se encontraron %(verbose_name)s para la consulta"
 
-#: views.py:155 views.py:208
+#: views.py:162 views.py:215
 #, python-format
 msgid "Create %s"
 msgstr "Creado %s"
 
-#: views.py:293
+#: views.py:300
 #, python-format
 msgid "Update %s"
 msgstr "Actualizado %s"
 
-#: views.py:308
+#: views.py:315
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
