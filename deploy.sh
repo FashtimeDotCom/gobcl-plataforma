@@ -1,5 +1,10 @@
+git checkout beta
+git pull origin beta
+
 git checkout staging
 git pull origin staging
+git merge beta
+git push origin staging
 
 git checkout testing
 git pull origin testing
