@@ -1,12 +1,13 @@
 - load i18n
 - load thumbnail
+- load cms_tags
 
 if template
   if template == 'big'
     .card-small.d-lg-none.a11y-tts
       h5.card-small_title
         a(href="{{ campaign.get_absolute_url }}").card-small_link
-          {{ campaign.title }}
+          {% render_model campaign "title" %}
           i.ic-arrow-right.icon--right
       .card-small_body
         p.a11y-tts {{ campaign.description }}
@@ -15,7 +16,8 @@ if template
         img.img-fluid.w-100.img-frame(src="{% thumbnail campaign.image 1080x559 crop=campaign.image_crop_when_single %}", alt="")
       .col-md-1
       .col-md-5.align-self-center
-        h5.heading-medium {{ campaign.title }}
+        h5.heading-medium 
+          {% render_model campaign "title" %}
         p {{ campaign.description }}
         .row
           .col-lg-10
@@ -32,7 +34,8 @@ if template
           )
         .new_title
           a(href="{{ campaign.get_absolute_url }}").link.link-clean
-            h4 {{ campaign.title|truncatechars:50 }}
+            h4 
+              {% render_model campaign "title"|truncatechars:50 %}
           a(href="{{ campaign.get_absolute_url }}").link.link--text-dark.visited
             {{ campaign.description|truncatechars:60 }}
 
@@ -64,6 +67,7 @@ else
             alt=""
           )
       .featured-card_body
-        h2.featured-card_title {{ campaign.title|truncatechars:50 }}
+        h2.featured-card_title 
+          {% render_model campaign "title"|truncatechars:50 %}
         p {{ campaign.description|truncatechars:110 }}
 
