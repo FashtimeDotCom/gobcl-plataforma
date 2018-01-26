@@ -1,0 +1,42 @@
+extends base.pug
+
+- load i18n
+
+block content
+  .text-right
+    .btn-group
+      if perms.streams.add_stream
+        a.btn.btn-primary(href="{% url 'stream_create' %}")
+          {% trans 'Add stream' %}
+          i.fa.fa-plus
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.streams.change_stream
+          th
+        if perms.streams.delete_stream
+          th
+    tbody
+      for stream in object_list
+        tr
+          td
+            a(href="{{ stream.get_absolute_url }}")
+              | {{stream.id}}
+          td
+            a(href="{{ stream.get_absolute_url }}")
+              | {{stream}}
+          if perms.streams.change_stream
+            td
+              a.btn.btn-primary(href="{% url 'stream_update' stream.id %}")
+                {% trans 'Update stream' %}
+                i.fa.fa-edit
+          if perms.streams.delete_stream
+            td
+              a.btn.btn-danger(href="{% url 'stream_delete' stream.id %}")
+                {% trans 'Delete stream' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.pug' %}

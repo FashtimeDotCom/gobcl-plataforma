@@ -37,6 +37,7 @@ from base.utils import get_or_set_cache
 from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Region
+from streams.models import Stream
 
 
 class IndexTemplateView(TemplateView):
@@ -49,11 +50,14 @@ class IndexTemplateView(TemplateView):
             is_published=True,
         ).order_by('-publishing_date')[:4]
 
+        stream = Stream.objects.active().first()
+
         gov_structure = self.request.government_structure
 
         context = {
             'procedures_and_benefits': None,
             'articles': articles,
+            'stream': stream,
             'ministries_count': get_or_set_cache(
                 'ministries_count',
                 Ministry.objects.by_government_structure(gov_structure).count

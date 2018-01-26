@@ -1,0 +1,8 @@
+extends form.pug
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'stream_list' %}")
+      | {{opts.verbose_name_plural.capfirst}}
