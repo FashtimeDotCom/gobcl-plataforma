@@ -52,6 +52,7 @@ urlpatterns += i18n_patterns(
 if settings.TEST or settings.TRAVIS:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
+        url(r'^streams/', include('streams.urls'), name='streams'),
     ]
 
 if settings.DEBUG:
