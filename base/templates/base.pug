@@ -156,8 +156,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
 
     block uncompressible_javascripts
 
-    {% compress js %}
     if debug
+      {% compress js %}
       script(src="{% static 'jquery/dist/jquery.min.js' %}")
       script(src="{% static 'popper.js/dist/umd/popper.js' %}")
       script(src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}")
@@ -165,7 +165,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
       script(src="{% static 'moment/moment.js' %}")
       script(src="{% static 'moment/locale/es.js' %}")
-    {% endcompress %}
+      {% endcompress %}
 
     script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")
     // templates
