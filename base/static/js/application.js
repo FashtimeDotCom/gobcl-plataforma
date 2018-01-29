@@ -1,7 +1,6 @@
 /**
  * Main application script.
  */
-$(function () {
-
+$(function() {
   App.utils.enableSocialShare();
 });
