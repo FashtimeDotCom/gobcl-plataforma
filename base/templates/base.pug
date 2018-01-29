@@ -177,10 +177,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
 
     block javascript_data
     {% render_block "js" %}
-    {% compress js %}
-    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
-    script(src="{% static 'select2/dist/js/select2.full.js' %}")
-    script(src="{% static 'js/context.js' %}")
+
     script(type='text/javascript').
       $(function () {
         /**
@@ -192,6 +189,11 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
           }
         });
       });
+
+    {% compress js %}
+    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
+    script(src="{% static 'select2/dist/js/select2.full.js' %}")
+    script(src="{% static 'js/context.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")
