@@ -13,6 +13,8 @@ from base.models import BaseModel
 
 from filer.fields.image import FilerImageField
 
+from .managers import HeaderImageQueryset
+
 
 class GalleryPlugin(CMSPlugin):
     description = models.TextField(
@@ -116,10 +118,10 @@ class ArticleCount(BaseModel):
 
     class Meta:
         ordering = ('visits',)
-    
+
     def __str__(self):
         return self.article.title
-    
+
     def increase(self):
         self.visits = F('visits') + 1
         self.save()
@@ -127,3 +129,31 @@ class ArticleCount(BaseModel):
     def decrease(self):
         self.visits = F('visits') - 1
         self.save()
+
+
+class HeaderImage(BaseModel):
+    name = models.CharField(
+        _('name'),
+        max_length=150,
+    )
+    image = FilerImageField(
+        verbose_name=_('image'),
+        blank=True,
+        null=True,
+    )
+    is_active = models.BooleanField(
+        _('is active'),
+        default=True,
+    )
+
+    objects = HeaderImageQueryset.as_manager()
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            HeaderImage.objects.filter(
+                is_active=True
+            ).update(is_active=False)
+        return super(HeaderImage, self).save(*args, **kwargs)

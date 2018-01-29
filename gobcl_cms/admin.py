@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from .models import ArticleCount
+from .models import HeaderImage
+
 
 # Register your models here.
 admin.site.unregister(Article)
@@ -100,3 +102,14 @@ class ArticleCountAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+@admin.register(HeaderImage)
+class HeaderImage(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'is_active',
+    )
+    list_filter = (
+        'is_active',
+    )
