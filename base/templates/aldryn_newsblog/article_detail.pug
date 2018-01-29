@@ -12,8 +12,8 @@ block content
           article.main-post.a11y-tts
             time.main-post_date {{ article.publishing_date|date }}
             h1.main-post_title {% render_model article "title" %}
-            h2.main-post_subtitle
-              {{ article.lead_in|striptags }}
+            .main-post_subtitle
+              {{ article.lead_in }}
 
             {% placeholder "top_content" %}
 
