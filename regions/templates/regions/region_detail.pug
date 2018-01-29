@@ -71,12 +71,6 @@ block content
         .col-sm-12.col-lg-4.col-xl-4
           article
             h2.heading-medium.a11y-tts {{ region.commune_set.with_own_municipality.count }} {% trans 'Municipalities' %}
-            if perms.regions.add_commune
-              a(href="{% url 'commune_create' region.slug %}", target="blank").button.button--block
-                {% trans 'create commune'|capfirst %}
-            if perms.regions.view_commune
-              a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
-                {% trans 'commune list'|capfirst %}
             h3.heading-label.a11y-tts {% trans 'Select a Commune' %}
             .select
               select(id="communes")
@@ -95,6 +89,14 @@ block content
                   li: span {% trans 'E-Mail' %}: {{ commune.email }}
 
               a(href="{{ commune.url }}", target="blank").link.link--clean.text-red {{ commune.url }}
+        .col-sm-12.col-lg-4.col-xl-4
+          if perms.regions.add_commune
+            a(href="{% url 'commune_create' region.slug %}", target="blank").button.button--block
+              {% trans 'create commune'|capfirst %}
+          if perms.regions.view_commune
+            a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
+              {% trans 'commune list'|capfirst %}
+
   section
     .container
       {% include 'includes/social.pug' %}
