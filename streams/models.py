@@ -13,7 +13,6 @@ from parler.models import TranslatedFields
 
 # models
 from base.models import BaseModel
-from users.models import User
 
 from .managers import StreamQueryset
 from .managers import StreamEventQueryset
@@ -55,7 +54,7 @@ class Stream(BaseModel, TranslatableModel):
             url_data = urlparse(self.url)
             query = parse_qs(url_data.query)
             youtube_id = query.get('v')[0]
-            url = 'https://www.youtube.com/embed/{}'.format(
+            url = 'https://www.youtube.com/embed/{}/?autoplay=1'.format(
                 youtube_id
             )
             return url
