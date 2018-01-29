@@ -123,7 +123,7 @@ msgstr "Correo Electrónico"
 
 #: templates/regions/region_detail.pug:59
 msgid "Go to the regional government site"
-msgstr "Ir al sitio de la municipalidad"
+msgstr "Ir al sitio de la intendencia"
 
 #: templates/regions/region_detail.pug:61
 msgid "edit region"
