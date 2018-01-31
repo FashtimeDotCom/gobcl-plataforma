@@ -5,10 +5,12 @@ section.sub-section
     .col-12
       .row
         .col-md-6.col-lg-7
+          width = 560
+          height = 315
           if stream.is_youtube
             iframe(
-              width="560",
-              height="315",
+              width=width,
+              height=height,
               src="{{ stream.get_url }}",
               frameborder="0",
               allow="autoplay; encrypted-media",
@@ -17,8 +19,8 @@ section.sub-section
           elif stream.is_facebook
             iframe(
               src="{{ stream.get_url }}",
-              width="560",
-              height="315",
+              width=width,
+              height=height,
               style="border:none;overflow:hidden",
               scrolling="no",
               frameborder="0",
@@ -28,8 +30,8 @@ section.sub-section
           elif stream.is_mediastream
             iframe(
               src="{{ stream.get_url }}",
-              width="560",
-              height="315",
+              width=width,
+              height=height,
               frameborder="0",
               allowfullscreen="",
               allowscriptaccess="always",
