@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 08:35-0300\n"
+"POT-Creation-Date: 2018-02-20 17:37-0300\n"
 "PO-Revision-Date: 2018-01-25 08:35-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -119,6 +119,7 @@ msgid "Can view campaign"
 msgstr "Puede ver la campaña"
 
 #: templates/campaigns/campaign_delete.pug:19
+#, python-format
 msgid "Are you sure you want to delete \"%(object)s\"?"
 msgstr "¿Estas seguro que quieres borrar \"%(object)s\"?"
 
