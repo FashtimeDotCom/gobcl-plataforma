@@ -50,7 +50,7 @@ class Stream(BaseModel, TranslatableModel):
         return self.title
 
     def get_url(self):
-        if 'youtube' in self.url:
+        if self.is_youtube():
             url_data = urlparse(self.url)
             query = parse_qs(url_data.query)
             youtube_id = query.get('v')[0]
@@ -58,10 +58,27 @@ class Stream(BaseModel, TranslatableModel):
                 youtube_id
             )
             return url
-        elif 'mediastream' in self.url:
-            return ''
-        elif 'tvn' in self.url:
-            return ''
+
+        elif self.is_mediastream():
+            url = 'http://mdstrm.com/live-stream/57a498c4d7b86d600e5461cb'
+            url += '?jsapi=true&amp;autoplay=true&amp;controls=true&amp;volume=75&amp;player=57f40bb4dc5b9f3075c49cfe&amp;custom.preroll=&amp;custom.overlay='
+            return url
+
+        elif self.is_facebook():
+            url = 'https://www.facebook.com/plugins/video.php?href={}'.format(
+                self.url
+            )
+            url += '?&width=560&show_text=false&height=315&autoplay=true'
+            return url
+
+    def is_youtube(self):
+        return 'youtube' in self.url
+
+    def is_mediastream(self):
+        return 'mdstrm' in self.url
+
+    def is_facebook(self):
+        return 'facebook' in self.url
 
     def save(self, *args, **kwargs):
         if self.is_active:

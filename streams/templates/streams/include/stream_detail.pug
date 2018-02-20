@@ -5,14 +5,38 @@ section.sub-section
     .col-12
       .row
         .col-md-6.col-lg-7
-          iframe(
-            width="560",
-            height="315",
-            src="{{ stream.get_url }}",
-            frameborder="0",
-            allow="autoplay; encrypted-media",
-            allowfullscreen
-          )
+          width = 560
+          height = 315
+          if stream.is_youtube
+            iframe(
+              width=width,
+              height=height,
+              src="{{ stream.get_url }}",
+              frameborder="0",
+              allow="autoplay; encrypted-media",
+              allowfullscreen
+            )
+          elif stream.is_facebook
+            iframe(
+              src="{{ stream.get_url }}",
+              width=width,
+              height=height,
+              style="border:none;overflow:hidden",
+              scrolling="no",
+              frameborder="0",
+              allowTransparency="true",
+              allowFullScreen="true",
+            )
+          elif stream.is_mediastream
+            iframe(
+              src="{{ stream.get_url }}",
+              width=width,
+              height=height,
+              frameborder="0",
+              allowfullscreen="",
+              allowscriptaccess="always",
+              scrolling="no",
+            )
         .col-md-6.col-lg-5
           h2 {{ stream.title }}
           p {{ stream.description }}
