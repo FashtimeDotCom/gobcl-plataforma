@@ -33,6 +33,7 @@ from gobcl_cms.models import ArticleCount
 from gobcl_cms.models import ContentPlugin
 from gobcl_cms.models import GalleryImagePlugin
 from gobcl_cms.models import GalleryPlugin
+from gobcl_cms.models import HeaderImage
 from gobcl_cms.models import HeaderPlugin
 from gobcl_cms.models import HtmlPlugin
 from government_structures.models import GovernmentStructure
@@ -204,6 +205,10 @@ class Mockup(object):
         self.set_required_int(kwargs, 'analytic_visits', minimum=1)
         return ChileAtiendeFile.objects.create(**kwargs)
 
+    def create_header_image(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        return HeaderImage.objects.create(**kwargs)
+
     def create_header_plugin(self, **kwargs):
         return HeaderPlugin.objects.create(**kwargs)
 
@@ -341,6 +346,13 @@ class Mockup(object):
 
         if field not in data and '{}_id'.format(field) not in data:
             data[field] = getattr(self, 'create_{}'.format(model))(**kwargs)
+
+    def set_required_image(self, data, field, **kwargs):
+        if field not in data:
+            test_root = os.path.realpath(os.path.dirname(__file__))
+            photo = open('{}/tests/gondola.jpg'.format(test_root), 'rb')
+            photo = get_thumbnailer(photo, relative_name='photos/gondola.jpg')
+            data[field] = photo
 
     def set_required_int(self, data, field, **kwargs):
         if field not in data:
