@@ -32,6 +32,7 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         ),
         description=HTMLField(
             _('description'),
+            blank=True,
         ),
     )
     photo = ThumbnailerImageField(
