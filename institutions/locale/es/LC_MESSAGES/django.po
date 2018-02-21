@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-21 09:04-0300\n"
+"POT-Creation-Date: 2018-02-20 17:37-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -34,15 +34,15 @@ msgstr "slug"
 msgid "url"
 msgstr "url"
 
-#: templates/institutions/institution_list.pug:14 views.py:29
+#: templates/institutions/institution_list.pug:17 views.py:33
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/institutions/institution_list.pug:15
-#: templates/institutions/institution_list.pug:24
-#: templates/institutions/institution_list.pug:33
-#: templates/institutions/institution_list.pug:42
+#: templates/institutions/institution_list.pug:21
+#: templates/institutions/institution_list.pug:36
 #: templates/institutions/institution_list.pug:50
+#: templates/institutions/institution_list.pug:64
+#: templates/institutions/institution_list.pug:78
 msgid ""
 "Your citizen guide for simple and fast access to services and information of "
 "Chile's government."
@@ -50,64 +50,64 @@ msgstr ""
 "Tu guía ciudadana para acceder simple y rápido a servicios e información del "
 "Gobierno de Chile."
 
-#: templates/institutions/institution_list.pug:23
+#: templates/institutions/institution_list.pug:32
 msgid "Presidency"
 msgstr "Presidencia"
 
-#: templates/institutions/institution_list.pug:26
-#: templates/institutions/institution_list.pug:35
-#: templates/institutions/institution_list.pug:44
-#: templates/institutions/institution_list.pug:52
+#: templates/institutions/institution_list.pug:39
+#: templates/institutions/institution_list.pug:53
+#: templates/institutions/institution_list.pug:67
+#: templates/institutions/institution_list.pug:81
 msgid "See more."
 msgstr "Ver más."
 
-#: templates/institutions/institution_list.pug:31
-#: templates/institutions/institution_list.pug:72
+#: templates/institutions/institution_list.pug:46
+#: templates/institutions/institution_list.pug:102
 msgid "Ministries"
 msgstr "Ministerios"
 
-#: templates/institutions/institution_list.pug:40
-msgid "Public Services."
+#: templates/institutions/institution_list.pug:60
+#: templates/institutions/institution_list.pug:126
+msgid "Public Services"
 msgstr "Servicios Públicos"
 
-#: templates/institutions/institution_list.pug:49
-msgid "Regions and their Municipalities."
+#: templates/institutions/institution_list.pug:74
+msgid "Regions and their Municipalities"
 msgstr "Regiones y sus Municipios"
 
-#: templates/institutions/institution_list.pug:63
+#: templates/institutions/institution_list.pug:92
 msgid "Write here what you want search."
 msgstr "Escribe aquí lo que quieres buscar"
 
-#: templates/institutions/institution_list.pug:76
+#: templates/institutions/institution_list.pug:107
 msgid "create ministry"
 msgstr "crear ministerio"
 
-#: templates/institutions/institution_list.pug:89
-#: templates/institutions/institution_list.pug:111
-#: templates/institutions/institution_list.pug:125
+#: templates/institutions/institution_list.pug:120
+#: templates/institutions/institution_list.pug:148
+#: templates/institutions/institution_list.pug:165
 msgid "No results found."
 msgstr "No se encontraron resultados."
 
-#: templates/institutions/institution_list.pug:93
-msgid "public services"
-msgstr "servicios públicos"
-
-#: templates/institutions/institution_list.pug:98
+#: templates/institutions/institution_list.pug:132
 msgid "create public service"
 msgstr "crear servicio público"
 
-#: templates/institutions/institution_list.pug:101
+#: templates/institutions/institution_list.pug:135
 msgid "public service list"
 msgstr "lista de servicios públicos"
 
-#: templates/institutions/institution_list.pug:114
+#: templates/institutions/institution_list.pug:153
 msgid "Regions"
 msgstr "Regiones"
 
-#: templates/institutions/institution_list.pug:117
+#: templates/institutions/institution_list.pug:157
 msgid "create region"
 msgstr "crear región"
 
-#: urls.py:16
+#: urls.py:15
 msgid "^presidency/$"
 msgstr "^presidencia/$"
+
+#~ msgid "public services"
+#~ msgstr "servicios públicos"
