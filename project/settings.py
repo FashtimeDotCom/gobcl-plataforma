@@ -189,8 +189,8 @@ INSTALLED_APPS = [
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'no-reply@gob.cl'
-EMAIL_SENDER_NAME = 'GOB'
+DEFAULT_FROM_EMAIL = 'noreply@email.magnet.cl'
+EMAIL_SENDER_NAME = 'GOBCL'
 
 if DEBUG:
     INSTALLED_APPS += [
