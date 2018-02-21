@@ -46,12 +46,6 @@ class HtmlCMSPlugin(CMSPluginBase):
     render_template = 'cms_plugins/html.pug'
 
 
-class PlainTextCMSPlugin(CMSPluginBase):
-    name = _('Plain text')
-    model = PlainTextPlugin
-    render_template = 'cms_plugins/plain_text.pug'
-
-
 class ImageCMSPlugin(CMSPluginBase):
     name = _('Image')
     model = GalleryImagePlugin
@@ -60,9 +54,16 @@ class ImageCMSPlugin(CMSPluginBase):
     parent_classes = ['GalleryCMSPlugin']
 
 
+class PlainTextCMSPlugin(CMSPluginBase):
+    name = _('Plain text')
+    model = PlainTextPlugin
+    render_template = 'cms_plugins/plain_text.pug'
+
+
 plugin_pool.register_plugin(BradcrumCMSPlugin)
 plugin_pool.register_plugin(ContentCMSPlugin)
 plugin_pool.register_plugin(GalleryCMSPlugin)
 plugin_pool.register_plugin(HeaderCMSPlugin)
 plugin_pool.register_plugin(HtmlCMSPlugin)
 plugin_pool.register_plugin(ImageCMSPlugin)
+plugin_pool.register_plugin(PlainTextCMSPlugin)
