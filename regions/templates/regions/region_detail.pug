@@ -60,7 +60,7 @@ block content
             a(href="{{ region.url }}", target="blank").button.button--block
               {% trans 'Go to the regional government site' %}
             if perms.regions.change_region
-              a(href="{% url 'region_update' region.id %}", target="blank").button.button--block
+              a(href="{% url 'admin:regions_region_change' region.id %}", target="blank").button.button--block
                 {% trans 'edit region'|capfirst %}
             if perms.regions.delete_region
               a(href="{% url 'region_delete' region.id %}", target="blank").button.button--block
@@ -94,7 +94,7 @@ block content
             a(href="{% url 'commune_create' region.slug %}", target="blank").button.button--block
               {% trans 'create commune'|capfirst %}
           if perms.regions.view_commune
-            a(href="{% url 'commune_list' region.slug %}", target="blank").button.button--block
+            a(href="{% url 'admin:regions_commune_changelist' %}", target="blank").button.button--block
               {% trans 'commune list'|capfirst %}
 
   section
