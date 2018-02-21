@@ -6,6 +6,7 @@ from cms.plugin_pool import plugin_pool
 
 from .models import GalleryImagePlugin
 from .models import HtmlPlugin
+from .models import PlainTextPlugin
 from .models import GalleryPlugin
 from .models import ContentPlugin
 from .models import HeaderPlugin
@@ -43,6 +44,12 @@ class HtmlCMSPlugin(CMSPluginBase):
     name = _('HTML')
     model = HtmlPlugin
     render_template = 'cms_plugins/html.pug'
+
+
+class PlainTextCMSPlugin(CMSPluginBase):
+    name = _('Plain text')
+    model = PlainTextPlugin
+    render_template = 'cms_plugins/plain_text.pug'
 
 
 class ImageCMSPlugin(CMSPluginBase):

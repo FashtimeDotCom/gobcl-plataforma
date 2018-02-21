@@ -1,8 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.db.models import F
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 
 from cms.models.pluginmodel import CMSPlugin
@@ -49,6 +47,15 @@ class HtmlPlugin(CMSPlugin):
 
     def __str__(self):
         return self.html[:50]
+
+
+class PlainTextPlugin(CMSPlugin):
+    text = models.TextField(
+        _('text'),
+    )
+
+    def __str__(self):
+        return self.text[:50]
 
 
 class HeaderPlugin(CMSPlugin):
