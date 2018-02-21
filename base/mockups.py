@@ -36,6 +36,7 @@ from gobcl_cms.models import GalleryPlugin
 from gobcl_cms.models import HeaderImage
 from gobcl_cms.models import HeaderPlugin
 from gobcl_cms.models import HtmlPlugin
+from gobcl_cms.models import PlainTextPlugin
 from government_structures.models import GovernmentStructure
 from links.models import FooterLink
 from ministries.models import Ministry
@@ -248,6 +249,10 @@ class Mockup(object):
     def create_html_plugin(self, **kwargs):
         self.set_required_string(kwargs, 'html')
         return HtmlPlugin.objects.create(**kwargs)
+
+    def create_plain_text_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'text')
+        return PlainTextPlugin.objects.create(**kwargs)
 
     def create_stream(self, **kwargs):
         self.set_required_string(kwargs, 'title')
