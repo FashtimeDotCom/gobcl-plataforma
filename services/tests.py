@@ -73,7 +73,7 @@ class ChileAtiendeClient(BaseTestCase):
 
         self.assertEqual(
             response.url,
-            '{}/servicios/{}?access_token={}&type=json'.format(
+            '{}/servicios/{}/?access_token={}&type=json'.format(
                 self.base_url,
                 self.service_id,
                 self.access_token,
@@ -121,7 +121,7 @@ class ChileAtiendeClient(BaseTestCase):
 
         self.assertEqual(
             response.url,
-            '{}/servicios/{}/fichas?access_token={}&type=json'.format(
+            '{}/servicios/{}/fichas/?access_token={}&type=json'.format(
                 self.base_url,
                 self.service_id,
                 self.access_token,
