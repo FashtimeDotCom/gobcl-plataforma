@@ -26,7 +26,7 @@ if 'DOCKER' in os.environ:
     local_settings = import_module('project.production.local_settings')
 elif 'STAGING' in os.environ:
     local_settings = import_module('project.staging.local_settings')
-if 'TRAVIS' in os.environ:
+elif 'TRAVIS' in os.environ:
     local_settings = import_module('project.travis_settings')
 else:
     local_settings = import_module('project.local_settings')
