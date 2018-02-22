@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from importlib import import_module
 import os
 import sys
 
@@ -22,64 +23,50 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # local settings
 if 'DOCKER' in os.environ:
-    from project.production.local_settings import ADMINS
-    from project.production.local_settings import DEBUG
-    from project.production.local_settings import ENABLE_EMAILS
-    from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
-    from project.production.local_settings import LOCALLY_INSTALLED_APPS
-    from project.production.local_settings import STATICFILES_STORAGE
-    from project.production.local_settings import DEFAULT_FILE_STORAGE
-    from project.production.local_settings import COMPRESS_STORAGE
-    from project.production.local_settings import COMPRESS_URL
-    from project.production.local_settings import THUMBNAIL_DEFAULT_STORAGE
-    from project.production.local_settings import STATIC_URL
-    from project.production.local_settings import MEDIA_URL
+    local_settings = import_module('project.production.local_settings')
 elif 'STAGING' in os.environ:
-    from project.local_settings import ADMINS
-    from project.staging.local_settings import DEBUG
-    from project.staging.local_settings import ENABLE_EMAILS
-    from project.staging.local_settings import LOCALLY_ALLOWED_HOSTS
-    from project.staging.local_settings import LOCALLY_INSTALLED_APPS
-    from project.staging.local_settings import STATICFILES_STORAGE
-    from project.staging.local_settings import DEFAULT_FILE_STORAGE
-    from project.staging.local_settings import COMPRESS_STORAGE
-    from project.staging.local_settings import COMPRESS_URL
-    from project.staging.local_settings import THUMBNAIL_DEFAULT_STORAGE
-    from project.staging.local_settings import STATIC_URL
-    from project.staging.local_settings import MEDIA_URL
+    local_settings = import_module('project.staging.local_settings')
+if 'TRAVIS' in os.environ:
+    local_settings = import_module('project.travis_settings')
 else:
-    if 'TRAVIS' in os.environ:
-        from project.travis_settings import DEBUG
-        from project.travis_settings import LOCALLY_INSTALLED_APPS
-        from project.travis_settings import ENABLE_EMAILS
-        from project.travis_settings import ADMINS
-        from project.travis_settings import LOCALLY_ALLOWED_HOSTS
-    else:
-        from project.local_settings import DEBUG
-        from project.local_settings import LOCALLY_INSTALLED_APPS
-        from project.local_settings import ENABLE_EMAILS
-        from project.local_settings import ADMINS
-        from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    local_settings = import_module('project.local_settings')
 
-    STATIC_URL = os.getenv('STATIC_URL', '/static/')
-    MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
-    COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
-    THUMBNAIL_DEFAULT_STORAGE = os.getenv(
-        'THUMBNAIL_DEFAULT_STORAGE',
-        'easy_thumbnails.storage.ThumbnailFileSystemStorage'
-    )
-    STATICFILES_STORAGE = os.getenv(
-        'STATICFILES_STORAGE',
-        'django.contrib.staticfiles.storage.StaticFilesStorage'
-    )
-    DEFAULT_FILE_STORAGE = os.getenv(
-        'DEFAULT_FILE_STORAGE',
-        'django.core.files.storage.FileSystemStorage'
-    )
-    COMPRESS_STORAGE = os.getenv(
-        'COMPRESS_STORAGE',
-        'compressor.storage.CompressorFileStorage'
-    )
+
+def get_local_value(key, default_value):
+    try:
+        return getattr(local_settings, key)
+    except AttributeError:
+        return default_value
+
+
+ADMINS = local_settings.ADMINS
+DEBUG = local_settings.DEBUG
+ENABLE_EMAILS = local_settings.ENABLE_EMAILS
+LOCALLY_ALLOWED_HOSTS = local_settings.LOCALLY_ALLOWED_HOSTS
+LOCALLY_INSTALLED_APPS = local_settings.LOCALLY_INSTALLED_APPS
+
+STATIC_URL = get_local_value('STATIC_URL', '/static/')
+MEDIA_URL = get_local_value('MEDIA_URL', '/uploads/')
+COMPRESS_URL = get_local_value('COMPRESS_URL', '/static/')
+THUMBNAIL_DEFAULT_STORAGE = get_local_value(
+    'THUMBNAIL_DEFAULT_STORAGE',
+    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+)
+STATICFILES_STORAGE = get_local_value(
+    'STATICFILES_STORAGE',
+    'django.contrib.staticfiles.storage.StaticFilesStorage'
+)
+DEFAULT_FILE_STORAGE = get_local_value(
+    'DEFAULT_FILE_STORAGE',
+    'django.core.files.storage.FileSystemStorage'
+)
+COMPRESS_STORAGE = get_local_value(
+    'COMPRESS_STORAGE',
+    'compressor.storage.CompressorFileStorage'
+)
+
+CHILEATIENDE_ACCESS_TOKEN = get_local_value('CHILEATIENDE_ACCESS_TOKEN', '')
+
 
 if DEBUG:
     env = 'development'
@@ -548,8 +535,6 @@ AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
-
-CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
 
 CLAVE_UNICA_SECRET_KEY = os.getenv('CLAVE_UNICA_SECRET_KEY', '')
 
