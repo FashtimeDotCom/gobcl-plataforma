@@ -124,7 +124,7 @@ block content
                       {% trans 'Presidency of the Republic' %}
                       {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#ministries").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ ministries_count }}
                       span.card-data_title-text 
@@ -132,7 +132,7 @@ block content
                         {% trans 'Ministries' %}
                         {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#services").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ public_services_count }}
                       span.card-data_title-text 
@@ -140,7 +140,7 @@ block content
                         {% trans 'Public Services' %}
                         {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#regions").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ regions_count }}
                       span.card-data_title-text 
