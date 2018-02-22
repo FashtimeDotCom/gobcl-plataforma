@@ -555,7 +555,10 @@ CLAVE_UNICA_SECRET_KEY = os.getenv('CLAVE_UNICA_SECRET_KEY', '')
 
 PARLER_LANGUAGES = {
     1: (
-        {'code': 'es'},
+        {
+            'code': 'es',
+            'fallbacks': ['en'],
+        },
         {'code': 'en'},
     ),
     'default': {
