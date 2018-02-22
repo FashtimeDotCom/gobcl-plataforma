@@ -104,7 +104,7 @@ class ChileAtiendeClient(BaseTestCase):
 
         self.assertEqual(
             response.url,
-            '{}/fichas/{}?access_token={}&type=json'.format(
+            '{}/fichas/{}/?access_token={}&type=json'.format(
                 self.base_url,
                 self.file_id,
                 self.access_token,
