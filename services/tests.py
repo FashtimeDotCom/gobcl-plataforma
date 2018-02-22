@@ -12,7 +12,7 @@ class ChileAtiendeClient(BaseTestCase):
     '''
 
     def setUp(self):
-        self.base_url = 'https://chileatiende.digital.gob.cl/api'
+        self.base_url = 'https://www.chileatiende.gob.cl/api'
         self.access_token = settings.CHILEATIENDE_ACCESS_TOKEN
         self.service_id = self.get_service_id()
         self.file_id = self.get_file_id()
