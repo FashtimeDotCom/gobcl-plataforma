@@ -31,7 +31,11 @@ block content
                 .overflowed-xs
                   a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
                   if perms.presidencies.change_presidency
-                    a.button.button--block(href="{% url 'admin:presidencies_presidency_change' presidency.id %}", target="blank")
+                    - get_current_language as current_language
+                    a.button.button--block(
+                      href="{% url 'admin:presidencies_presidency_change' presidency.id %}?language={{ current_language }}",
+                      target="blank"
+                    )
                       | {% trans 'edit presidency'|capfirst %}
         .row.d-sm-none.d-none.d-sm-flex.d-lg-none
           .col-md-12.mt-3

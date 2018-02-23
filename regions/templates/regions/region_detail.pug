@@ -60,7 +60,11 @@ block content
             a(href="{{ region.url }}", target="blank").button.button--block
               {% trans 'Go to the regional government site' %}
             if perms.regions.change_region
-              a(href="{% url 'admin:regions_region_change' region.id %}", target="blank").button.button--block
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:regions_region_change' region.id %}?language={{ current_language }}",
+                target="blank"
+              )
                 {% trans 'edit region'|capfirst %}
             if perms.regions.delete_region
               a(href="{% url 'region_delete' region.id %}", target="blank").button.button--block
