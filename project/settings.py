@@ -157,6 +157,7 @@ INSTALLED_APPS = [
     'djangocms_snippet',
     'djangocms_style',
     'djangocms_file',
+    'bootstrap4_grid',
 
     'aldryn_apphooks_config',
     'aldryn_categories',
