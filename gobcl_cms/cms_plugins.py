@@ -5,12 +5,13 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from .models import AudioPlugin
+from .models import ContentPlugin
 from .models import GalleryImagePlugin
+from .models import GalleryPlugin
+from .models import HeaderPlugin
 from .models import HtmlPlugin
 from .models import PlainTextPlugin
-from .models import GalleryPlugin
-from .models import ContentPlugin
-from .models import HeaderPlugin
+from .models import SectionPlugin
 
 
 class AudioCMSPlugin(CMSPluginBase):
@@ -67,6 +68,14 @@ class PlainTextCMSPlugin(CMSPluginBase):
     render_template = 'cms_plugins/plain_text.pug'
 
 
+class SectionCMSPlugin(CMSPluginBase):
+    name = _('Section')
+    model = SectionPlugin
+    render_template = 'cms_plugins/section.pug'
+    allow_children = True
+
+
+plugin_pool.register_plugin(AudioCMSPlugin)
 plugin_pool.register_plugin(BradcrumCMSPlugin)
 plugin_pool.register_plugin(ContentCMSPlugin)
 plugin_pool.register_plugin(GalleryCMSPlugin)
@@ -74,3 +83,4 @@ plugin_pool.register_plugin(HeaderCMSPlugin)
 plugin_pool.register_plugin(HtmlCMSPlugin)
 plugin_pool.register_plugin(ImageCMSPlugin)
 plugin_pool.register_plugin(PlainTextCMSPlugin)
+plugin_pool.register_plugin(SectionCMSPlugin)

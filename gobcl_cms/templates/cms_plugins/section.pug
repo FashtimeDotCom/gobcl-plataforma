@@ -1,0 +1,9 @@
+- load cms_tags
+section
+  div.container
+    section.sub-section
+      article
+        h2.heading-medium {{ instance.title }}
+        if instance.child_plugin_instances
+          for plugin in instance.child_plugin_instances
+            {% render_plugin plugin %}

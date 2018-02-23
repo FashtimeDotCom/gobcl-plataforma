@@ -20,6 +20,33 @@ from filer.fields.image import FilerFileField
 from .managers import HeaderImageQueryset
 
 
+class ArticleCount(BaseModel):
+    article = models.OneToOneField(
+        Article,
+        verbose_name=_('article'),
+        related_name='count',
+        null=True,
+    )
+    visits = models.PositiveIntegerField(
+        _('visits'),
+        default=0
+    )
+
+    class Meta:
+        ordering = ('visits',)
+
+    def __str__(self):
+        return self.article.title
+
+    def increase(self):
+        self.visits = F('visits') + 1
+        self.save()
+
+    def decrease(self):
+        self.visits = F('visits') - 1
+        self.save()
+
+
 class AudioPlugin(CMSPlugin):
     title = models.CharField(
         _('title'),
@@ -124,14 +151,6 @@ class ContentPlugin(CMSPlugin):
     description = models.TextField(
         _('description'),
     )
-    last_elements_on_right_column = models.PositiveIntegerField(
-        _('move last x elements to right '),
-        default=0,
-        help_text=_(
-            'move the number of last elements indicated by this field to the'
-            ' right column'
-        )
-    )
     image = FilerImageField(
         verbose_name=_('image'),
         blank=True,
@@ -140,33 +159,6 @@ class ContentPlugin(CMSPlugin):
 
     def __str__(self):
         return self.title
-
-
-class ArticleCount(BaseModel):
-    article = models.OneToOneField(
-        Article,
-        verbose_name=_('article'),
-        related_name='count',
-        null=True,
-    )
-    visits = models.PositiveIntegerField(
-        _('visits'),
-        default=0
-    )
-
-    class Meta:
-        ordering = ('visits',)
-
-    def __str__(self):
-        return self.article.title
-
-    def increase(self):
-        self.visits = F('visits') + 1
-        self.save()
-
-    def decrease(self):
-        self.visits = F('visits') - 1
-        self.save()
 
 
 class HeaderImage(BaseModel):
@@ -195,3 +187,13 @@ class HeaderImage(BaseModel):
                 is_active=True
             ).update(is_active=False)
         return super(HeaderImage, self).save(*args, **kwargs)
+
+
+class SectionPlugin(CMSPlugin):
+    title = models.CharField(
+        _('title'),
+        max_length=255,
+    )
+
+    def __str__(self):
+        return self.title
