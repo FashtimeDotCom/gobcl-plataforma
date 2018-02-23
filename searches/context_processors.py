@@ -24,7 +24,7 @@ def featured_news():
         base_dict = article.__dict__
         article_dict = copy.copy(base_dict)
         article_dict['title'] = article.title
-        article_dict['categories'] = article.categories.all().distinct()
+        article_dict['categories'] = article.categories.all()
         article_dict['get_absolute_url'] = article.get_absolute_url()
         featured_news_list.append(article_dict)
 
