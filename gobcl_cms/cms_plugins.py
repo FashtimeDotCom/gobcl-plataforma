@@ -4,12 +4,19 @@ from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
+from .models import AudioPlugin
 from .models import GalleryImagePlugin
 from .models import HtmlPlugin
 from .models import PlainTextPlugin
 from .models import GalleryPlugin
 from .models import ContentPlugin
 from .models import HeaderPlugin
+
+
+class AudioCMSPlugin(CMSPluginBase):
+    name = _('Audio')
+    model = AudioPlugin
+    render_template = 'cms_plugins/audio.pug'
 
 
 class BradcrumCMSPlugin(CMSPluginBase):

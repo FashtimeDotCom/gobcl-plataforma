@@ -12,4 +12,7 @@ section
 								{% render_plugin plugin %}
 					.col-12.col-md-6.d-none.d-sm-block
 						if instance.image
-							img.img-fluid.w-100.img-frame(src="{{ instance.image.url }}", alt="{% if instance.image.caption %}{{instance.image.caption|linebreaks}}{% else %}{{description|linebreaks}}{% endif %}")
+              img.img-fluid.w-100.img-frame(
+                src="{{ instance.image.url }}",
+                alt="{% if instance.image.caption %}{{instance.image.caption|linebreaks}}{% else %}{{description|linebreaks}}{% endif %}"
+              )

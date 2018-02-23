@@ -1,17 +1,40 @@
+# -*- coding: utf-8 -*-
+#
+""" Models for the cms plugins used in gob.cl"""
+
+# standard library
+import os
+
+# django
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.db.models import F
 
-
+# models
 from cms.models.pluginmodel import CMSPlugin
 from cms.models import Page
 from aldryn_newsblog.models import Article
 from base.models import BaseModel
-
-
 from filer.fields.image import FilerImageField
-
+from filer.fields.image import FilerFileField
 from .managers import HeaderImageQueryset
+
+
+class AudioPlugin(CMSPlugin):
+    title = models.CharField(
+        _('title'),
+        max_length=50,
+    )
+    audio = FilerFileField(
+        verbose_name=_('audio'),
+    )
+    audio_length = models.CharField(
+        _('audio length'),
+        max_length=10,
+    )
+
+    def __str__(self):
+        return os.path.basename(self.audio.path)
 
 
 class GalleryPlugin(CMSPlugin):
@@ -100,6 +123,14 @@ class ContentPlugin(CMSPlugin):
     )
     description = models.TextField(
         _('description'),
+    )
+    last_elements_on_right_column = models.PositiveIntegerField(
+        _('move last x elements to right '),
+        default=0,
+        help_text=_(
+            'move the number of last elements indicated by this field to the'
+            ' right column'
+        )
     )
     image = FilerImageField(
         verbose_name=_('image'),
