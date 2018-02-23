@@ -61,11 +61,16 @@ block content
               {% trans 'Go to the ministry site' %}
   
             if perms.ministries.change_ministry
-              a.button.button--block(href="{% url 'admin:ministries_ministry_change' ministry.id %}", target="blank")
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:ministries_ministry_change' ministry.id %}?language={{ current_language }}",
+                target="blank"
+              )
                 | {% trans 'edit ministry'|capfirst %}
             if perms.public_servants.change_publicservant
+              - get_current_language as current_language
               a.button.button--block(
-                href="{% url 'admin:public_servants_publicservant_change' ministry.minister_id %}", 
+                href="{% url 'admin:public_servants_publicservant_change' ministry.minister_id %}?language={{ current_language }}", 
                 target="blank"
               )
                 | {% trans 'edit minister'|capfirst %}
@@ -98,8 +103,9 @@ block content
                 - if servant.email
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
             if perms.public_servants.change_publicservant
+              - get_current_language as current_language
               a.button.btn.btn-xs.pull-right(
-                href="{% url 'admin:public_servants_publicservant_change' servant.id %}", 
+                href="{% url 'admin:public_servants_publicservant_change' servant.id %}?language={{ current_language }}", 
                 target="blank"
               )
                 | {% trans 'edit'|capfirst %}
