@@ -35,10 +35,12 @@ class Region(Institution):
         _('email'),
         max_length=100,
         null=True,
+        blank=True,
     )
     phone = PhoneNumberField(
         _('phone'),
         null=True,
+        blank=True,
     )
     twitter = models.CharField(
         max_length=50,
