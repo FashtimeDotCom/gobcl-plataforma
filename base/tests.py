@@ -75,8 +75,11 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
         for model in get_our_models():
             # ignore gobcl_cms
-            if (model._meta.app_label == 'gobcl_cms' or
-                    model.__name__.endswith('Translation')):
+            if (
+                model._meta.app_label == 'gobcl_cms' or
+                model.__name__.endswith('Translation') or
+                model._meta.app_label == 'bootstrap4_grid'
+            ):
                 continue
 
             obj, related_nullable_objects = self.create_full_object(model)
@@ -147,6 +150,12 @@ class UrlsTest(BaseTestCase):
             param_name = '{}_id'.format(model_name)
 
             if model_name.endswith('_translation'):
+                continue
+
+            if model._meta.app_label == 'bootstrap4_grid':
+                continue
+
+            if model._meta.app_label == 'gobcl_cms':
                 continue
 
             obj = getattr(self, method_name)()
