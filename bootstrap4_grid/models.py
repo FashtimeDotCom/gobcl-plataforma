@@ -9,13 +9,13 @@ from django.utils.translation import ugettext, ungettext, ugettext_lazy as _
 
 from cms.models import CMSPlugin
 
-from djangocms_bootstrap4.constants import DEVICE_SIZES
-from djangocms_bootstrap4.fields import (
+from .constants import DEVICE_SIZES
+from .fields import (
     TagTypeField,
     AttributesField,
     IntegerRangeField,
 )
-from djangocms_bootstrap4.helpers import mark_safe_lazy
+from .helpers import mark_safe_lazy
 
 from .constants import (
     GRID_SIZE,
@@ -39,8 +39,9 @@ class Bootstrap4GridContainer(CMSPlugin):
         default=GRID_CONTAINER_CHOICES[0][0],
         max_length=255,
         help_text=mark_safe_lazy(_(
-            'Defines if the grid should use fixed width (<code>.container</code>) '
-            'or fluid width (<code>.container-fluid</code>).'
+            'Defines if the grid should use fixed width '
+            '(<code>.container</code>) or fluid width '
+            '(<code>.container-fluid</code>).'
         )),
     )
     tag_type = TagTypeField()
@@ -69,8 +70,13 @@ class Bootstrap4GridRow(CMSPlugin):
         blank=True,
         max_length=255,
         help_text=mark_safe_lazy(_(
-            'Read more in the <a href="{link}" target="_blank">documentation</a>.')
-                .format(link='https://getbootstrap.com/docs/4.0/layout/grid/#vertical-alignment')
+            'Read more: <a href="{link}" target="_blank">documentation</a>.')
+                .format(
+                    link=(
+                        'https://getbootstrap.com/docs/4.0/layout/grid/'
+                        '#vertical-alignment'
+                    )
+                )
         ),
     )
     horizontal_alignment = models.CharField(
@@ -79,8 +85,11 @@ class Bootstrap4GridRow(CMSPlugin):
         blank=True,
         max_length=255,
         help_text=mark_safe_lazy(_(
-            'Read more in the <a href="{link}" target="_blank">documentation</a>.')
-                .format(link='https://getbootstrap.com/docs/4.0/layout/grid/#horizontal-alignment')
+            'Read more: <a href="{link}" target="_blank">documentation</a>.')
+                .format(link=(
+                    'https://getbootstrap.com/docs/4.0/layout/grid/'
+                    '#horizontal-alignment'
+                ))
         ),
     )
     gutters = models.BooleanField(
@@ -150,7 +159,7 @@ class Bootstrap4GridColumn(CMSPlugin):
 
     def get_short_description(self):
         text = ''
-        classes = self.get_grid_values();
+        classes = self.get_grid_values()
         if self.column_size:
             text += '(col-{}) '.format(self.column_size)
         else:
@@ -167,7 +176,11 @@ class Bootstrap4GridColumn(CMSPlugin):
             for element in ('col', 'order', 'ml', 'mr'):
                 size = getattr(self, '{}_{}'.format(device, element))
                 if size and (element == 'col' or element == 'order'):
-                    classes.append('{}-{}-{}'.format(element, device, int(size)))
+                    classes.append('{}-{}-{}'.format(
+                        element,
+                        device,
+                        int(size))
+                    )
                 elif size:
                     classes.append('{}-{}-{}'.format(element, device, 'auto'))
         return classes

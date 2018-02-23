@@ -9,7 +9,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0017_auto_20171226_1915'),
         ('gobcl_cms', '0011_audioplugin'),
     ]
 

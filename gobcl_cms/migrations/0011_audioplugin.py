@@ -10,8 +10,6 @@ import filer.fields.file
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0017_auto_20171226_1915'),
-        ('filer', '0007_auto_20161016_1055'),
         ('gobcl_cms', '0010_plaintextplugin'),
     ]
 

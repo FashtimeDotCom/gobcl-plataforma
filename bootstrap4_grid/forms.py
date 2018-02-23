@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.forms import models, IntegerField, BooleanField
 from django.utils.translation import ugettext_lazy as _
 
-from djangocms_bootstrap4.constants import DEVICE_SIZES
-from djangocms_bootstrap4.fields import IntegerRangeField
+from .constants import DEVICE_SIZES
+from .fields import IntegerRangeField
 
 from .constants import GRID_SIZE
 from .models import Bootstrap4GridRow, Bootstrap4GridColumn
