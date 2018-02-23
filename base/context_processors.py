@@ -8,7 +8,9 @@ def categories(request):
     """
 
     context = {
-        'categories': Category.objects.order_by('article__count__visits')[:5]
+        'categories': Category.objects.order_by(
+            'article__count__visits'
+        ).distinct()[:5]
     }
 
     return context
