@@ -8,8 +8,16 @@ extends base.pug
 
 block top_content
 
+block stylesheets
+  style.
+    @media (min-width: 36em) {
+      .hero-background {
+          background-image: url({{ header_image.image.url }});
+      }
+    }
+
 block content
-  section(style="background-image: url({{ header_image.image.url }});").section.bg-bluedark.hero-background
+  section.section.bg-bluedark.hero-background
     .container
       .row
         .col-12.col-lg-5.order-lg-12.col-xl-5

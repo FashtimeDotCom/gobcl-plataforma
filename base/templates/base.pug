@@ -86,10 +86,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     )
     {% endcompress %}
 
-    {% compress css %}
     block stylesheets
-    {% endcompress %}
-
   body(
     class='{{body_class|default:""}} footer-links-{{ footer_links|length }}',
     data-main=".site-main"
