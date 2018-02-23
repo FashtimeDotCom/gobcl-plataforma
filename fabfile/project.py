@@ -54,7 +54,7 @@ def validate_deployment():
 def update_server():
     """ Updates server repository. """
     # backup database before updating
-    backup_db()
+    # backup_db()
 
     update_helper(env.server_root_dir)
 
@@ -66,6 +66,9 @@ def update_server():
 
             print(green('installing yarn packages'))
             run('yarn install')
+
+            print(green('collecting static files'))
+            run('python manage.py collectstatic --noinput')
 
             print(green('compress files'))
             run('python manage.py compress --extension=pug')

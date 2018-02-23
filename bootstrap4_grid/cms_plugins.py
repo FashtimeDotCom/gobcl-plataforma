@@ -7,8 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from djangocms_bootstrap4.constants import DEVICE_SIZES
-from djangocms_bootstrap4.helpers import concat_classes
+from .constants import DEVICE_SIZES
+from .helpers import concat_classes
 
 from .models import (
     Bootstrap4GridContainer,
@@ -29,7 +29,7 @@ class Bootstrap4GridContainerPlugin(CMSPluginBase):
     model = Bootstrap4GridContainer
     name = _('Container')
     module = _('Bootstrap 4')
-    render_template = 'djangocms_bootstrap4/grid_container.html'
+    render_template = 'bootstrap4_grid/grid_container.html'
     allow_children = True
 
     fieldsets = [
@@ -68,8 +68,8 @@ class Bootstrap4GridRowPlugin(CMSPluginBase):
     name = _('Row')
     module = _('Bootstrap 4')
     form = Bootstrap4GridRowForm
-    change_form_template = 'djangocms_bootstrap4/admin/grid_row.html'
-    render_template = 'djangocms_bootstrap4/grid_row.html'
+    change_form_template = 'bootstrap4_grid/admin/grid_row.html'
+    render_template = 'bootstrap4_grid/grid_row.html'
     allow_children = True
     child_classes = ['Bootstrap4GridColumnPlugin']
 
@@ -133,8 +133,8 @@ class Bootstrap4GridColumnPlugin(CMSPluginBase):
     name = _('Column')
     module = _('Bootstrap 4')
     form = Bootstrap4GridColumnForm
-    change_form_template = 'djangocms_bootstrap4/admin/grid_column.html'
-    render_template = 'djangocms_bootstrap4/grid_column.html'
+    change_form_template = 'bootstrap4_grid/admin/grid_column.html'
+    render_template = 'bootstrap4_grid/grid_column.html'
     allow_children = True
     require_parent = True
     # TODO it should allow for the responsive utilitiy class
