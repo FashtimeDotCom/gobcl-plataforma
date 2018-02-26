@@ -40,6 +40,9 @@ def get_queryset(self):
     return qs
 
 
+ArticleList.get_queryset = get_queryset
+
+
 class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
     form_class = ArticleForm
     template_name = 'articles/article_update.pug'
