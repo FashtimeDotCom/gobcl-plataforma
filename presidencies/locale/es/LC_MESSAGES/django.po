@@ -93,5 +93,5 @@ msgstr "Instituciones"
 
 #: templates/presidencies/presidency_detail.pug:32
 #: templates/presidencies/presidency_detail.pug:36
-msgid "Go to the presidency site"
-msgstr "Ir al sitio de la presidencia"
+msgid "Go to the Presidency Press site"
+msgstr "Ir al sitio de Prensa Presidencia"

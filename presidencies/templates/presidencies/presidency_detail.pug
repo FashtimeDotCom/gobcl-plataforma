@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load thumbnail
+- load cms_tags
 
 block content
   section.bg-light
@@ -29,7 +30,10 @@ block content
             .row.d-sm-none.d-lg-flex
               .col-lg-6.mt-3
                 .overflowed-xs
-                  a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
+                  a(href="{{ presidency.url }}", target="blank").button.button--block 
+                    {% static_placeholder 'Go to the Presidency Press site' or %}
+                    {% trans 'Go to the Presidency Press site' %}
+                    {% endstatic_placeholder %}
                   if perms.presidencies.change_presidency
                     - get_current_language as current_language
                     a.button.button--block(
