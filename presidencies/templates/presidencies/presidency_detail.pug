@@ -47,7 +47,7 @@ block content
       .row
         for url in presidency.urls.all
           .col-sm-12.col-lg-4.a11y-tts
-            .card-small
+            .card-small.h-100
               h5.card-small_title
                 a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
                   i.icon-arrow-right-black.icon--right
