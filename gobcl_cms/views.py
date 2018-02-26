@@ -17,6 +17,8 @@ from aldryn_newsblog.models import Article
 # forms
 from .forms import ArticleForm
 
+from aldryn_apphooks_config.utils import get_app_instance
+
 # newsblog
 from aldryn_newsblog.views import ArticleList
 
@@ -25,7 +27,12 @@ def get_queryset(self):
     qs = super(ArticleList, self).get_queryset()
     # exclude featured articles from queryset, to allow featured article
     # plugin on the list view page without duplicate entries in page qs.
+
+    if not self.config:
+        self.namespace, self.config = get_app_instance(self.request)
+
     exclude_count = self.config.exclude_featured
+
     if exclude_count:
         featured_qs = Article.objects.all().filter(is_featured=True)
         if not self.edit_mode:
@@ -74,8 +81,8 @@ class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
 
         # Update initial data
         initial.update({
-                'related': self.initial_list
-            })
+            'related': self.initial_list
+        })
 
         return initial
 

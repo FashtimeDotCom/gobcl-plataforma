@@ -1,3 +1,8 @@
+import json
+
+from django.conf import settings
+from django.utils.translation import activate
+
 from djangocms_text_ckeditor.models import Text
 from djangocms_picture.models import Picture
 from gobcl_cms.models import HtmlPlugin
@@ -126,3 +131,25 @@ def change_text_for_html():
 
         text.body = body
         text.save()
+
+
+def update_news_by_language(json_name: str='posts.json'):
+    # open gobcl-posts.json
+    with open(settings.BASE_DIR + '/' + json_name) as news:
+        json_news = json.loads(news.read())
+
+    for news in json_news:
+        title = news.get('titulo', '')[0]
+
+        language = news.get('lang', 'es')
+
+        if language == 'es-CL' or language == 'es':
+            activate('es')
+            language = 'es'
+        elif language == 'en-US':
+            activate('en')
+            language = 'en'
+
+        article = Article.objects.translated(
+            title=title
+        )
