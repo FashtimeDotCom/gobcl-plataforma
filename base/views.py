@@ -13,12 +13,9 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.defaults import page_not_found
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
@@ -26,6 +23,10 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.defaults import bad_request
+from django.views.defaults import permission_denied
+from django.views.defaults import page_not_found
+from django.views.defaults import server_error
 
 # utils
 from base.view_utils import clean_query_string
@@ -81,33 +82,20 @@ class IndexTemplateView(TemplateView):
         return context
 
 
-def bad_request_view(request):
-    return render_to_response('exceptions/400.jade', {},
-                              context_instance=RequestContext(request))
+def bad_request_view(request, exception, template=None):
+    return bad_request(request, exception, 'exceptions/400.pug')
 
 
-def permission_denied_view(request):
-    return render_to_response('exceptions/403.jade', {},
-                              context_instance=RequestContext(request))
+def permission_denied_view(request, exception, template=None):
+    return permission_denied(request, exception, 'exceptions/403.pug')
 
 
-def page_not_found_view(request):
-    return page_not_found(request, 'exceptions/404.pug')
+def page_not_found_view(request, exception, template=None):
+    return page_not_found(request, exception, 'exceptions/404.pug')
 
 
-def page_404(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/404.pug', {})
-
-
-def page_500(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/500.pug', {})
-
-
-def error_view(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/500.pug', {})
+def server_error_view(request, template=None):
+    return server_error(request, 'exceptions/500.pug')
 
 
 class PermissionRequiredMixin:

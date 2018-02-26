@@ -9,6 +9,7 @@ Replace this with more appropriate tests for your application.
 
 # django
 from django.contrib import admin
+from django.contrib.redirects.models import Redirect
 from django.core.urlresolvers import NoReverseMatch
 from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
@@ -29,6 +30,9 @@ from base.scenarios import create_presidency
 # Third-party app imports
 from model_mommy import mommy
 from model_mommy import random_gen
+
+# models
+from ministries.models import Ministry
 
 
 class BaseTestCase(TestCase, Mockup):
@@ -239,3 +243,26 @@ class UrlsTest(BaseTestCase):
         for model, model_admin in admin.site._registry.items():
             patterns = model_admin.get_urls()
             test_url_patterns(patterns, namespace='admin')
+
+
+class TestRedirects(BaseTestCase):
+    def test_redirect(self):
+        Ministry.objects.all().delete()
+        old_path = '/a/'
+        new_path = '/'
+        Redirect.objects.create(
+            site_id=1,
+            old_path=old_path,
+            new_path=new_path,
+        )
+
+        response = self.client.get(old_path)
+        self.assertRedirects(
+            response,
+            new_path,
+            status_code=301,
+            target_status_code=200,
+            host=None,
+            msg_prefix='',
+            fetch_redirect_response=True
+        )

@@ -43,8 +43,8 @@ urlpatterns += i18n_patterns(
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
     url(_(r'^articles/'), include('gobcl_cms.urls')),
-    url(r'^404/$', base_views.page_404, name='404'),
-    url(r'^500/$', base_views.page_500, name='500'),
+    url(r'^404/$', base_views.page_not_found_view, name='404'),
+    url(r'^500/$', base_views.server_error_view, name='500'),
     url(_(r'^'), include('cms.urls')),
     prefix_default_language=False,
 )
@@ -64,5 +64,8 @@ if settings.DEBUG:
         document_root=settings.MEDIA_ROOT,
     )
 
-handler404 = 'base.views.page_404'
-handler500 = 'base.views.page_500'
+# custom error pages
+handler400 = 'base.views.bad_request_view'
+handler403 = 'base.views.permission_denied_view'
+handler404 = 'base.views.page_not_found_view'
+handler500 = 'base.views.server_error_view'
