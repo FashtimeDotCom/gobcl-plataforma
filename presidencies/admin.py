@@ -28,4 +28,4 @@ class PresidencyAdmin(AllTranslationsMixin, TranslatableAdmin):
 
 @admin.register(PresidencyURL)
 class PresidencyURLAdmin(AllTranslationsMixin, TranslatableAdmin):
-    list_display = ('url',)
+    list_display = ('url', 'order')
