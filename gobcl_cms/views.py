@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -15,7 +14,30 @@ from django.shortcuts import get_object_or_404
 # models
 from aldryn_newsblog.models import Article
 
+# forms
 from .forms import ArticleForm
+
+# newsblog
+from aldryn_newsblog.views import ArticleList
+
+
+def get_queryset(self):
+    qs = super(ArticleList, self).get_queryset()
+    # exclude featured articles from queryset, to allow featured article
+    # plugin on the list view page without duplicate entries in page qs.
+    exclude_count = self.config.exclude_featured
+    if exclude_count:
+        featured_qs = Article.objects.all().filter(is_featured=True)
+        if not self.edit_mode:
+            featured_qs = featured_qs.published()
+        exclude_featured = featured_qs[:exclude_count].values_list('pk')
+        qs = qs.exclude(pk__in=exclude_featured)
+
+    qs = qs.filter(
+        translations__language_code=self.request.LANGUAGE_CODE
+    )
+
+    return qs
 
 
 class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
@@ -55,9 +77,10 @@ class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(
-            ArticleRelatedUpdateView, self).get_context_data(**kwargs)
-        
+        context = super(ArticleRelatedUpdateView, self).get_context_data(
+            **kwargs
+        )
+
         # send article object to template
         context['article'] = self.article
 
