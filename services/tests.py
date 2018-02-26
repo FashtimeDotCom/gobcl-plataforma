@@ -25,28 +25,21 @@ class ChileAtiendeClient(BaseTestCase):
         except:
             service_object = {
                 'servicios': {
-                    'items': [{
-                        'id': 1,
-                    }]
+                    'items': {
+                        'servicio': [{
+                            'id': 1,
+                        }]
+                    }
                 }
             }
-        service_id = service_object['servicios']['items'][0]['id']
+        service_id = service_object['servicios']['items']['servicio'][0]['id']
         return service_id
 
     def get_file_id(self):
         file_object = File()
-        response = file_object.list()
-        try:
-            service_object = response.json()
-        except:
-            service_object = {
-                'fichas': {
-                    'items': [{
-                        'id': 1,
-                    }]
-                }
-            }
-        file_id = service_object['fichas']['items'][0]['id']
+        files = file_object.parsed_list()
+
+        file_id = files[0]['id']
         return file_id
 
     def test_service_list_ok(self):

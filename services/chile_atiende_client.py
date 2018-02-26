@@ -1,5 +1,8 @@
+# standard library
+import json
 import requests
 
+# django
 from django.conf import settings
 
 
@@ -74,6 +77,18 @@ class File(ChileAtiende):
         return self._connect(
             self._get_url('/fichas', query=query)
         )
+
+    def parsed_list(self, query=None):
+
+        response = self.list(query)
+
+        if response.status_code == 200:
+            return json.loads(
+                response.text
+            )['fichas']['items']['ficha']
+
+        # fail silently
+        return []
 
     def get(self, file_id):
 
