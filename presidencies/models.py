@@ -35,6 +35,10 @@ class PresidencyURL(BaseModel, TranslatableModel):
         _('url'),
         max_length=200,
     )
+    order = models.PositiveIntegerField(
+        _('order'),
+        default=0,
+    )
 
     objects = PresidencyURLQueryset.as_manager()
 
@@ -42,6 +46,7 @@ class PresidencyURL(BaseModel, TranslatableModel):
         return self.url
 
     class Meta:
+        ordering = ('order',)
         verbose_name = _('presidency url')
         verbose_name_plural = _('presidency urls')
         permissions = (
