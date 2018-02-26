@@ -28,10 +28,14 @@ def get_queryset(self):
     # exclude featured articles from queryset, to allow featured article
     # plugin on the list view page without duplicate entries in page qs.
 
-    if not self.config:
-        self.namespace, self.config = get_app_instance(self.request)
+    # if not self.config:
+    #     self.namespace, self.config = get_app_instance(self.request)
 
-    exclude_count = self.config.exclude_featured
+    try:
+        exclude_count = self.config.exclude_featured
+    except:
+        self.namespace, self.config = get_app_instance(self.request)
+        exclude_count = self.config.exclude_featured
 
     if exclude_count:
         featured_qs = Article.objects.all().filter(is_featured=True)
