@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404
 
 # models
 from aldryn_newsblog.models import Article
+from aldryn_newsblog.models import NewsBlogConfig
 
 # forms
 from .forms import ArticleForm
@@ -31,11 +32,10 @@ def get_queryset(self):
     # if not self.config:
     #     self.namespace, self.config = get_app_instance(self.request)
 
-    try:
-        exclude_count = self.config.exclude_featured
-    except:
-        self.namespace, self.config = get_app_instance(self.request)
-        exclude_count = self.config.exclude_featured
+    if not self.config:
+        self.config = NewsBlogConfig.objects.first()
+
+    exclude_count = self.config.exclude_featured
 
     if exclude_count:
         featured_qs = Article.objects.all().filter(is_featured=True)
