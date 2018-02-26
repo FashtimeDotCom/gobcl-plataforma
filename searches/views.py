@@ -1,6 +1,5 @@
 # standard library
-import json
-
+#
 # django
 from django.conf import settings
 from django.db.models import Q
@@ -34,12 +33,9 @@ class ArticleListView(ListView):
         context['chile_atiende_files_json'] = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
-                response = chile_atiende_file_client.list(query=self.query)
-
-                if response.status_code == 200:
-                    context['chile_atiende_files_json'] = json.loads(
-                        response.text
-                    )['fichas']['items']
+                context['chile_atiende_files_json'] = (
+                    chile_atiende_file_client.parsed_list(query=self.query)
+                )
 
         # Count the total list of objects
         context['count'] = (
