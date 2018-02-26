@@ -46,3 +46,5 @@ COMPRESS_STORAGE = os.getenv(
     'COMPRESS_STORAGE',
     'compressor.storage.CompressorFileStorage'
 )
+
+CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
