@@ -109,6 +109,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.redirects',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
 
@@ -190,6 +191,7 @@ if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
 
 MIDDLEWARE = [
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
