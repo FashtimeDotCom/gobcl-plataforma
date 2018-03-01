@@ -4,7 +4,70 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
-from gobcl_cms.utils import create_redirects
+
+def create_redirects(apps, schema_editor):
+    import json
+    from django.conf import settings
+    from django.contrib.sites.shortcuts import get_current_site
+    from django.utils.translation import activate
+    Article = apps.get_model('aldryn_newsblog', 'Article')
+    Redirect = apps.get_model('redirects', 'Redirect')
+    Site = apps.get_model('sites', 'Site')
+
+    from aldryn_newsblog.models import Article as RealArticle
+
+    with open(settings.BASE_DIR + '/gobcl_cms/utils/posts.json') as news:
+        json_news = json.loads(news.read())
+
+    site = Site.objects.first()
+    for news in json_news:
+
+        new_path = ''
+        title = news.get('titulo', '')[0]
+        url = news.get('url', '')
+
+        old_path = url.split('/')[-2]
+
+        language = 'es'
+        activate('es')
+        article = Article.objects.filter(translations__title=title)
+        if not article.exists():
+            language = 'en'
+            activate('en')
+            article = Article.objects.filter(translations__title=title)
+            if not article.exists():
+                continue
+
+        article = article.first()
+        real_article = RealArticle.objects.get(pk=article.pk)
+        new_path = real_article.get_absolute_url(language=language)
+
+        try:
+            Redirect.objects.get_or_create(
+                site=site,
+                old_path=old_path,
+                defaults={
+                    'new_path': new_path,
+                }
+            )
+        except Exception as e:
+            print(e)
+            print('*' * 10)
+            print('antigua url:', old_path)
+            print('nueva url:', new_path)
+            print('*' * 10)
+            new_path = new_path.split('/')[1]
+            new_path = '/{}/{}/'.format(
+                new_path,
+                article.pk,
+            )
+            Redirect.objects.get_or_create(
+                site=site,
+                old_path=old_path,
+                defaults={
+                    'new_path': new_path,
+                }
+            )
 
 
 class Migration(migrations.Migration):
@@ -14,5 +77,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_redirects()),
+        migrations.RunPython(create_redirects),
     ]
