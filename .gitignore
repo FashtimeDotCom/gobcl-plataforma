@@ -113,4 +113,5 @@ gobcl.xlsx
 catastro.xlsx
 *.p12
 tmp/
-posts.json
+gobcl-posts-2.json
+gobcl-posts-3.json
