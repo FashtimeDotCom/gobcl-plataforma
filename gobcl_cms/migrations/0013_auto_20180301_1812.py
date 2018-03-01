@@ -39,7 +39,10 @@ def create_redirects(apps, schema_editor):
                 continue
 
         article = article.first()
-        real_article = RealArticle.objects.get(pk=article.pk)
+        try:
+            real_article = RealArticle.objects.get(pk=article.pk)
+        except:
+            continue
         new_path = real_article.get_absolute_url(language=language)
 
         try:
