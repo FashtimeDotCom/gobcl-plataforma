@@ -96,7 +96,7 @@ block content
               {% trans 'See more' %}
 
       if articles
-        section.sub-section.d-md-block
+        section.sub-section.d-none.d-md-block
           h2.heading-medium.a11y-tts 
             {% static_placeholder 'News' or %}
             {% trans 'News' %}
@@ -183,14 +183,14 @@ block content
               {% static_placeholder 'About Chile' or %}
               {% trans 'About Chile' %}
               {% endstatic_placeholder %}
-              p.a11y-tts 
-                {% static_placeholder 'About Chile lead in' or %}
-                {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
-                {% endstatic_placeholder %}
-              .row
-                .col-lg-10
-                  a(href="{% page_url 'about' about_url %}{{about_url}}").button.button--block.button--light.button--clean.button--space.a11y-tts
-                    {% trans 'See more' %}
+            p.a11y-tts 
+              {% static_placeholder 'About Chile lead in' or %}
+              {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
+              {% endstatic_placeholder %}
+            .row
+              .col-lg-10
+                a(href="{% page_url 'about' about_url %}{{about_url}}").button.button--block.button--light.button--clean.button--space.a11y-tts
+                  {% trans 'See more' %}
           .col-md-1
           .col-md-6.align-self-center
             img.img-fluid.w-100.img-frame(src="{% static 'images/about-of.jpg' %}", alt="")
