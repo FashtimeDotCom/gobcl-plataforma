@@ -1,9 +1,12 @@
+# django
 from django.utils.translation import ugettext_lazy as _
 
+# cms
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
+# models
 from .models import AudioPlugin
 from .models import ContentPlugin
 from .models import GalleryImagePlugin
