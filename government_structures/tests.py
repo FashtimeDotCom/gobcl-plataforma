@@ -11,7 +11,7 @@ class GovernmentStructureModelTest(BaseTestCase):
 
     def setUp(self):
         GovernmentStructure.objects.all().delete()
-        self.now = timezone.datetime.now()
+        self.now = timezone.now()
         self.government_structure = self.create_government_structure(
             publication_date=self.now)
         self.public_servant = self.create_public_servant(
