@@ -27,6 +27,7 @@ from users.urls import callback_pattern
 
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^', include('gobcl_cms.news_urls')),
 ]
 
 urlpatterns += i18n_patterns(

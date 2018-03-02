@@ -8,7 +8,6 @@ from django.db import migrations
 def create_redirects(apps, schema_editor):
     import json
     from django.conf import settings
-    from django.contrib.sites.shortcuts import get_current_site
     from django.utils.translation import activate
     Article = apps.get_model('aldryn_newsblog', 'Article')
     Redirect = apps.get_model('redirects', 'Redirect')
@@ -80,5 +79,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_redirects),
     ]

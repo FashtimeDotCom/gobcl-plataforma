@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
+from django.contrib.redirects.models import Redirect
+from django.shortcuts import redirect
 
 # base
 from django.views.generic import FormView
@@ -128,3 +130,12 @@ class ArticleRedirectView(RedirectView):
         if self.request.LANGUAGE_CODE == 'en':
             return '/en/news/{}/'.format(article.slug)
         return article.get_absolute_url(self.request.LANGUAGE_CODE)
+
+
+class ArticleDateRedirectView(RedirectView):
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        slug = '/{}/'.format(kwargs['slug'])
+        r = get_object_or_404(Redirect, old_path=slug)
+        return r.new_path
