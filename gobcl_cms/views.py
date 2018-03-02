@@ -8,7 +8,6 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
 from django.contrib.redirects.models import Redirect
-from django.shortcuts import redirect
 
 # base
 from django.views.generic import FormView
@@ -136,6 +135,15 @@ class ArticleDateRedirectView(RedirectView):
     permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
-        slug = '/{}/'.format(kwargs['slug'])
+        slug = kwargs['slug']
+        has_slash = '/'
+
+        if 'ministra-blanco-destaco-que-congreso-aprobara-en-tramite-' in slug:
+            has_slash = ''
+
+        slug = '/{}{}'.format(
+            slug,
+            has_slash
+        )
         r = get_object_or_404(Redirect, old_path=slug)
         return r.new_path
