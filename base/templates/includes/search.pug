@@ -11,7 +11,7 @@
       {% include 'includes/search_bar.pug' with custom_class="a11y-tts-search" %}
 
       .row
-        .col-12.col-lg-4.a11y-tts-search
+        .col-12.col-lg-4.a11y-tts-search.rs_preserve
           h2.heading-label.heading-label--light {% trans 'Procedures' %}
           div.search_section.overflowed-xs
             for file in chile_atiende_files
@@ -20,7 +20,7 @@
             .clearfix
               a(href="https://www.chileatiende.gob.cl/").more.more--right {% trans 'See more' %}
 
-        .col-12.col-lg-4.a11y-tts-search
+        .col-12.col-lg-4.a11y-tts-search.rs_preserve
           h2.heading-label.heading-label--light {% trans 'News' %}
           div.search_section.overflowed-xs
             for news in featured_news
@@ -32,13 +32,13 @@
             .clearfix
               a(href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}").more.more--right {% trans 'See more' %}
 
-        .col-12.col-lg-4.a11y-tts-search
+        .col-12.col-lg-4.a11y-tts-search.rs_preserve
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
           div.search_section.overflowed-xs
             for page in most_visited_urls
               a(href="{{ page.content_object.get_absolute_url }}").link.link--text-light {{ page.content_object }}
             .clearfix
               a(href="{% url 'institution_list' %}").more.more--right {% trans 'See more' %}
-        .col-sm-12.col-md-12.text-xs-center.text-sm-center.a11y-tts-search
+        .col-sm-12.col-md-12.text-xs-center.text-sm-center.a11y-tts-search.rs_preserve
           .site-search_button-results.text-center
             a(href="{% url 'article_list' %}").button.button--clean.button--more {% trans 'See all results' %}

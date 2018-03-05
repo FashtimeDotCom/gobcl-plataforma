@@ -150,6 +150,11 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         integrity="sha256-/mb3JxYal3hmaaGtudBFnE9hoRK7CwKBeZlKUD2Ahqw=",
         crossorigin="anonymous"
       )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"
+        integrity="sha256-FJuLxhiJiX+5Qgs0c2JYLIyJ5i0o4ccg6DQ6zgitCYY="
+        crossorigin="anonymous"
+      )
 
     block uncompressible_javascripts
 
@@ -162,6 +167,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       script(src="{% static 'magnific-popup/dist/jquery.magnific-popup.js' %}")
       script(src="{% static 'moment/moment.js' %}")
       script(src="{% static 'moment/locale/es.js' %}")
+      script(src="{% static 'select2/dist/js/select2.full.js' %}")
       {% endcompress %}
 
     script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")
@@ -175,6 +181,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     block javascript_data
     {% render_block "js" %}
 
+    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
+    script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
         /**
@@ -188,9 +196,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       });
 
     {% compress js %}
-    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
-    script(src="{% static 'select2/dist/js/select2.full.js' %}")
-    script(src="{% static 'js/context.js' %}")
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")

@@ -13,12 +13,12 @@ block content
 
   section.section
     .container
-      h3.heading-medium.search-results-counts.a11y-tts {{ count }} {% trans 'Results' %}
+      h3.heading-medium.search-results-counts.a11y-tts.rs_preserve {{ count }} {% trans 'Results' %}
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
             for chile_atiende_file in chile_atiende_files_json
-              .result.a11y-tts
+              .result.a11y-tts.rs_preserve
                 a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
                   {{ chile_atiende_file.titulo }}
                 p.result_excerpt
@@ -26,7 +26,7 @@ block content
                 span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
                   |  {{chile_atiende_file.servicio}}
             for article in object_list
-              .result.a11y-tts
+              .result.a11y-tts.rs_preserve
                 a.result_link(href="{{ article.get_absolute_url }}")
                   {% render_model article "title" %}
                 p.result_excerpt
