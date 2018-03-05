@@ -136,7 +136,7 @@ def change_text_for_html():
         text.save()
 
 
-def delete_repeted_news(json_name: str='posts-lang.json'):
+def delete_repeated_news(json_name: str='posts-lang.json'):
     # open posts-lang.json
     with open(settings.BASE_DIR + '/gobcl_cms/utils/' + json_name) as news:
         json_news = json.loads(news.read())

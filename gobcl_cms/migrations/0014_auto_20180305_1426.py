@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
-def delete_repeted_news(apps, schema_editor):
+def delete_repeated_news(apps, schema_editor):
     import json
     from django.conf import settings
     from django.utils.translation import activate
@@ -48,5 +48,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(delete_repeted_news),
+        migrations.RunPython(delete_repeated_news),
     ]
