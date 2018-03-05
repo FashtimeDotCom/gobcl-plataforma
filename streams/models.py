@@ -10,6 +10,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+from django.core.exceptions import ValidationError
 
 # models
 from base.models import BaseModel
@@ -31,6 +32,11 @@ class Stream(BaseModel, TranslatableModel):
     url = models.URLField(
         _('url'),
         max_length=250,
+        blank=True,
+    )
+    iframe = models.TextField(
+        _('iframe'),
+        blank=True,
     )
     is_active = models.BooleanField(
         _('is active'),
@@ -45,6 +51,23 @@ class Stream(BaseModel, TranslatableModel):
         permissions = (
             ('view_stream', _('Can view stream')),
         )
+
+    def clean(self):
+        if not self.url and not self.iframe:
+            message = _('This field is required.')
+
+            raise ValidationError({
+                'url': ValidationError(message, code='required'),
+                'iframe': ValidationError(message, code='required'),
+            })
+
+        if self.url and self.iframe:
+            message = _('You can only choose one of these fields')
+
+            raise ValidationError({
+                'url': ValidationError(message),
+                'iframe': ValidationError(message),
+            })
 
     def __str__(self):
         return self.title
