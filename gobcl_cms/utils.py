@@ -12,6 +12,7 @@ from gobcl_cms.models import HtmlPlugin
 from base.utils import keymap_replace
 
 from aldryn_newsblog.models import Article
+from aldryn_newsblog.models import ArticleTranslation
 from filer.models.foldermodels import Folder
 from filer.models.imagemodels import Image
 
@@ -135,26 +136,32 @@ def change_text_for_html():
         text.save()
 
 
-def update_news_by_language(json_name: str='posts.json'):
-    # open gobcl-posts.json
-    with open(settings.BASE_DIR + '/' + json_name) as news:
+def delete_repeted_news(json_name: str='posts-lang.json'):
+    # open posts-lang.json
+    with open(settings.BASE_DIR + '/gobcl_cms/utils/' + json_name) as news:
         json_news = json.loads(news.read())
 
     for news in json_news:
-        title = news.get('titulo', '')[0]
-
+        title = news.get('titulo', '')
         language = news.get('lang', 'es')
 
-        if language == 'es-CL' or language == 'es':
-            activate('es')
-            language = 'es'
-        elif language == 'en-US':
-            activate('en')
-            language = 'en'
+        if language == 'es-CL':
+            continue
 
-        article = Article.objects.translated(
-            title=title
+        article_translation = ArticleTranslation.objects.filter(
+            title=title,
         )
+
+        if not article_translation.exists():
+            continue
+
+        article_translation = article_translation.filter(language_code='es')
+
+        if not article_translation.exists():
+            continue
+
+        activate('es')
+        Article.objects.translated(title=title).delete()
 
 
 def create_json_news():
@@ -180,6 +187,32 @@ def create_json_news():
         json.dump(json_output, f)
 
 
+def create_json_language():
+
+    json_files = ('gobcl-posts-lang.json', 'gobcl-posts-lang-2.json',
+                  'gobcl-posts-lang-3.json',)
+
+    json_output = []
+    for json_file in json_files:
+        with open(settings.BASE_DIR + '/' + json_file) as news:
+            json_news = json.loads(news.read())
+        for news in json_news:
+            title = news.get('titulo', '')[0]
+            url = news.get('url', '')
+            language = news.get('lang', '') or news.get('language', '')
+
+            json_output.append(
+                {
+                    'titulo': title,
+                    'url': url,
+                    'lang': language,
+                }
+            )
+
+    with open('gobcl_cms/utils/posts-lang.json', 'w') as f:
+        json.dump(json_output, f)
+
+
 def create_redirects(json_name: str='posts.json'):
 
     with open(settings.BASE_DIR + '/gobcl_cms/utils/' + json_name) as news:
@@ -191,7 +224,7 @@ def create_redirects(json_name: str='posts.json'):
         title = news.get('titulo', '')[0]
         url = news.get('url', '')
 
-        old_path = url.split('/')[-2]
+        old_path = url
 
         language = 'es'
         activate('es')
@@ -221,14 +254,18 @@ def create_redirects(json_name: str='posts.json'):
             print('nueva url:', new_path)
             print('*' * 10)
             new_path = new_path.split('/')[1]
+            print(new_path)
             new_path = '/{}/{}/'.format(
                 new_path,
                 article.pk,
             )
-            Redirect.objects.get_or_create(
-                site=site,
-                old_path=old_path,
-                defaults={
-                    'new_path': new_path,
-                }
-            )
+            try:
+                Redirect.objects.get_or_create(
+                    site=site,
+                    old_path=old_path,
+                    defaults={
+                        'new_path': new_path,
+                    }
+                )
+            except:
+                pass
