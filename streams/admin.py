@@ -22,6 +22,9 @@ class StreamEventInline(TranslatableTabularInline):
 @admin.register(Stream)
 class StreamAdmin(AllTranslationsMixin, TranslatableAdmin):
     inlines = (StreamEventInline,)
+    exclude = (
+        'url',
+    )
     list_display = (
         'title',
         'url',

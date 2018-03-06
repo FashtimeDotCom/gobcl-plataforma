@@ -33,10 +33,11 @@ class Stream(BaseModel, TranslatableModel):
         _('url'),
         max_length=250,
         blank=True,
+        null=True,
     )
     iframe = models.TextField(
         _('iframe'),
-        blank=True,
+        blank=False,
     )
     is_active = models.BooleanField(
         _('is active'),
