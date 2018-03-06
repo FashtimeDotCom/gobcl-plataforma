@@ -19,10 +19,15 @@ class FooterLink(BaseGovernmentStructureModel):
         _('url'),
         max_length=200,
     )
+    order = models.PositiveSmallIntegerField(
+        _('oder'),
+        default=0,
+    )
 
     class Meta:
         verbose_name = _('footer link')
         verbose_name_plural = _('footer links')
+        ordering = ('order',)
         permissions = (
             ('view_link', _('Can view link')),
         )
