@@ -96,7 +96,7 @@ block content
               {% trans 'See more' %}
 
       if articles
-        section.sub-section.d-none.d-md-block
+        section.sub-section
           h2.heading-medium.a11y-tts.rs_preserve
             {% static_placeholder 'News' or %}
             {% trans 'News' %}
@@ -104,7 +104,7 @@ block content
 
           {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
-          .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
+          .col-12.col-lg-4.offset-lg-4
             a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
               href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
             )
