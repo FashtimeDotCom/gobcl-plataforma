@@ -13,8 +13,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -25,17 +23,23 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.defaults import bad_request
+from django.views.defaults import permission_denied
 from django.views.defaults import page_not_found
+from django.views.defaults import server_error
 
 # utils
 from base.view_utils import clean_query_string
 from base.view_utils import get_home_campaigns
 from inflection import underscore
+from base.utils import get_or_set_cache
 
 # models
 from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Region
+from streams.models import Stream
+from gobcl_cms.models import HeaderImage
 
 
 class IndexTemplateView(TemplateView):
@@ -43,25 +47,34 @@ class IndexTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         """ view that renders a default home"""
+
         articles = Article.objects.filter(
             is_published=True,
         ).order_by('-publishing_date')[:4]
+
+        stream = Stream.objects.active().first()
+        header_image = HeaderImage.objects.active().first()
 
         gov_structure = self.request.government_structure
 
         context = {
             'procedures_and_benefits': None,
+            'header_image': header_image,
             'articles': articles,
-            'ministries_count': (
-                Ministry.objects.by_government_structure(gov_structure).count()
+            'stream': stream,
+            'ministries_count': get_or_set_cache(
+                'ministries_count',
+                Ministry.objects.by_government_structure(gov_structure).count
             ),
-            'public_services_count': (
+            'public_services_count': get_or_set_cache(
+                'public_services_count',
                 PublicService.objects.by_government_structure(
                     gov_structure
-                ).count()
+                ).count
             ),
-            'regions_count': (
-                Region.objects.by_government_structure(gov_structure).count()
+            'regions_count': get_or_set_cache(
+                'regions_count',
+                Region.objects.by_government_structure(gov_structure).count
             ),
         }
 
@@ -69,33 +82,20 @@ class IndexTemplateView(TemplateView):
         return context
 
 
-def bad_request_view(request):
-    return render_to_response('exceptions/400.jade', {},
-                              context_instance=RequestContext(request))
+def bad_request_view(request, exception, template=None):
+    return bad_request(request, exception, 'exceptions/400.pug')
 
 
-def permission_denied_view(request):
-    return render_to_response('exceptions/403.jade', {},
-                              context_instance=RequestContext(request))
+def permission_denied_view(request, exception, template=None):
+    return permission_denied(request, exception, 'exceptions/403.pug')
 
 
-def page_not_found_view(request):
-    return page_not_found(request, 'exceptions/404.pug')
+def page_not_found_view(request, exception, template=None):
+    return page_not_found(request, exception, 'exceptions/404.pug')
 
 
-def page_404(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/404.pug', {})
-
-
-def page_500(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/500.pug', {})
-
-
-def error_view(request):
-    from django.shortcuts import render
-    return render(request, 'exceptions/500.pug', {})
+def server_error_view(request, template=None):
+    return server_error(request, 'exceptions/500.pug')
 
 
 class PermissionRequiredMixin:

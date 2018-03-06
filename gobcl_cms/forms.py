@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # models
 from aldryn_newsblog.models import Article
+from .models import ContentPlugin
 
 # views
 from base.forms import BaseModelForm

@@ -1,101 +1,137 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations for the campaigns app
+# Copyright (C) 
+# This file is distributed under the same license as the plataforma-gobcl package.
+# Ignacio Munizaga <muni@magnet.cl>, 2017.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 12:55-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"PO-Revision-Date: 2018-01-25 08:35-0300\n"
+"Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cms_apps.py:12 templates/campaigns/includes/campaign_list.pug:5
+#: apps.py:6 models.py:118 templates/campaigns/campaign_list.pug:14
+msgid "campaigns"
+msgstr "campañas"
+
+#: cms_apps.py:12
 msgid "Campaigns"
 msgstr "Campañas"
 
 #: cms_wizards.py:14
-msgid "Campaign"
-msgstr "campaña"
+msgid "New Campaign"
+msgstr "Nueva campaña"
 
 #: cms_wizards.py:17
 msgid "Create a new Campaign"
 msgstr "Crear una nueva campaña"
 
-#: models.py:31
+#: models.py:33
 msgid "title"
 msgstr "título"
 
-#: models.py:36
+#: models.py:38
 msgid "slug"
 msgstr "slug"
 
-#: models.py:41
+#: models.py:43
 msgid "description"
 msgstr "descripción"
 
-#: models.py:45
+#: models.py:47
 msgid "image"
 msgstr "imágen"
 
-#: models.py:51
+#: models.py:53
 msgid "external url"
 msgstr "url externa"
 
-#: models.py:56
+#: models.py:58
 msgid "activation datetime`"
 msgstr "fecha y hora activación "
 
-#: models.py:58
+#: models.py:60
 msgid "The date this campaign will be activated"
 msgstr "La fecha y la hora en la que la campaña será activada"
 
-#: models.py:61
+#: models.py:63
 msgid "deactivation datetime`"
 msgstr "fecha y hora desactivación"
 
-#: models.py:63
+#: models.py:65
 msgid "The date this campaign will be deactivated"
 msgstr "La fecha y la hora en la que esta campaña será desactivada"
 
-#: models.py:66
+#: models.py:68
 msgid "is featured"
 msgstr "destacada"
 
-#: models.py:73
+#: models.py:72
+msgid "importance"
+msgstr "importancia"
+
+#: models.py:76
+msgid "image crop when single"
+msgstr "orientación del corte de la imagen cuando está sola"
+
+#: models.py:77
+msgid "crop orientation for size: 1080x600"
+msgstr "orientación corte para tamaño: 1080x600"
+
+#: models.py:83
+msgid "image crop when on pair"
+msgstr "orientación del corte de la imagen cuando van de a pares"
+
+#: models.py:84
+msgid "crop orientation for size: 1072x240"
+msgstr "orientación corte para tamaño: 1072x240"
+
+#: models.py:90
+msgid "image crop when on trio"
+msgstr "orientación del corte de la imagen cuando van de a trios"
+
+#: models.py:91
+msgid "crop orientation for size: 700x240"
+msgstr "orientación corte para tamaño: 700x240"
+
+#: models.py:97
+msgid "image crop when small"
+msgstr "orientación del corte de la imagen cuando va pequeña (lisado)"
+
+#: models.py:98
+msgid "crop orientation for size: 164x90"
+msgstr "orientación corte para tamaño: 164x90"
+
+#: models.py:117
 msgid "campaign"
 msgstr "campaña"
 
-#: models.py:74 templates/campaigns/campaign_list.pug:15
-msgid "campaigns"
-msgstr "campañas"
-
-#: models.py:79
+#: models.py:124
 msgid "Can view campaign"
 msgstr "Puede ver la campaña"
 
-#: templates/campaigns/campaign_delete.pug:18
+#: templates/campaigns/campaign_delete.pug:19
 #, python-format
-msgid "Are you sure you want to delete' \"%(object)s\"?"
+msgid "Are you sure you want to delete \"%(object)s\"?"
 msgstr "¿Estas seguro que quieres borrar \"%(object)s\"?"
 
-#: templates/campaigns/campaign_delete.pug:21
+#: templates/campaigns/campaign_delete.pug:22
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: templates/campaigns/campaign_delete.pug:23
+#: templates/campaigns/campaign_delete.pug:24
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/campaigns/campaign_detail.pug:21
+#: templates/campaigns/campaign_detail.pug:25
 msgid "Share this campaign through your social networks"
 msgstr "Compartir esta campaña en tus redes sociales"
 
@@ -103,6 +139,6 @@ msgstr "Compartir esta campaña en tus redes sociales"
 msgid "There are no campaigns to display"
 msgstr "No hay campañas para mostrar"
 
-#: templates/campaigns/includes/campaign.pug:22
+#: templates/campaigns/includes/campaign.pug:25
 msgid "See more"
 msgstr "Ver más"

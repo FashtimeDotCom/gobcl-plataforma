@@ -1,6 +1,9 @@
 - load i18n cms_tags apphooks_config_tags
 - load thumbnail
 
+block javascripts
+  script(async="", src="https://platform.twitter.com/widgets.js", charset="utf-8")
+
 block content
   section.section
     .container
@@ -9,17 +12,13 @@ block content
           .d-none.d-lg-block.pull-md-right
             {% include 'includes/toolbar.pug' with dark=True %}
         .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
-          article.main-post.a11y-tts
+          article.main-post.a11y-tts.rs_preserve
             time.main-post_date {{ article.publishing_date|date }}
             h1.main-post_title {% render_model article "title" %}
-            h2.main-post_subtitle
-              {{ article.lead_in|striptags }}
+            .main-post_subtitle
+              {{ article.lead_in }}
 
-            if article.featured_image_id
-              img.img-fluid.w-100.img-frame(
-                src="{% thumbnail article.featured_image 1600x1600 subject_location=article.featured_image.subject_location %}",
-                alt="{{ article.featured_image.alt }}"
-              )
+            {% placeholder "top_content" %}
 
             ul.main-post_social-share
               li: p {% trans 'Share this news through your social networks' %}
@@ -38,10 +37,11 @@ block content
               li
                 a.share(
                   href="{{ request.scheme }}://{{ request.get_host }}{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}",
-                  data-text="{% render_model article 'title' %}"
+                  data-text="{{article.title}}"
                   data-social="twitter"
                 )
                   i.ic-twitter
+                    | 
             {% render_placeholder article.content language placeholder_language %}
 
   if article.related.all

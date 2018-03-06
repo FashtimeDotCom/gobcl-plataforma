@@ -6,6 +6,10 @@ from aldryn_people.models import Person
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
+from .models import ArticleCount
+from .models import HeaderImage
+
+
 # Register your models here.
 admin.site.unregister(Article)
 admin.site.unregister(Group)
@@ -41,7 +45,7 @@ class ArticleAdmin(BaseArticleAdmin):
     Also call prefetch related on the translations
     """
     form = ArticleAdminForm
-    list_display = ('title', 'slug', 'is_featured', 'is_published')
+    list_display = ('title', 'publishing_date', 'is_featured', 'is_published')
 
     fieldsets = (
         (None, {
@@ -80,3 +84,32 @@ class ArticleAdmin(BaseArticleAdmin):
 
 
 admin.site.register(Article, ArticleAdmin)
+
+
+@admin.register(ArticleCount)
+class ArticleCountAdmin(admin.ModelAdmin):
+    list_display = (
+        'article',
+        'visits',
+    )
+    readonly_fields = (
+        'article',
+        'visits',
+    )
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(HeaderImage)
+class HeaderImage(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'is_active',
+    )
+    list_filter = (
+        'is_active',
+    )

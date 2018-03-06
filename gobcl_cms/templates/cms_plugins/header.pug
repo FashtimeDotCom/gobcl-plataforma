@@ -1,0 +1,22 @@
+- load i18n
+
+section.section--medium.bg-bluedark
+  .container
+    .row
+      .col-12.d-lg-none
+        {% include 'includes/toolbar.pug' %}
+      .col-xs-12.col-sm-12.col-md-7.col-lg-7
+        article.text-light
+          h1.heading-large {{ instance.title}}
+          {{instance.description|linebreaks}}
+
+      .col-12.col-lg-5.col-xl-5
+        .d-none.d-lg-block.pull-md-right
+          {% include 'includes/toolbar.pug' %}
+        .clearfix
+        if instance.internal_link
+          a(href="{{instance.internal_link.get_absolute_url}}").button.button--block.button--side 
+            | {{instance.link_text}}
+        elif instance.external_link
+          a(href="{{instance.external_link}}").button.button--block.button--side 
+            | {{instance.link_text}}

@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from djangocms_text_ckeditor.fields import HTMLField
 from easy_thumbnails.fields import ThumbnailerImageField
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
@@ -26,13 +27,17 @@ class PresidencyURL(BaseModel, TranslatableModel):
             max_length=100,
             null=True,
         ),
-        description=models.TextField(
+        description=HTMLField(
             _('description'),
         ),
     )
     url = models.URLField(
         _('url'),
         max_length=200,
+    )
+    order = models.PositiveIntegerField(
+        _('order'),
+        default=0,
     )
 
     objects = PresidencyURLQueryset.as_manager()
@@ -41,6 +46,7 @@ class PresidencyURL(BaseModel, TranslatableModel):
         return self.url
 
     class Meta:
+        ordering = ('order',)
         verbose_name = _('presidency url')
         verbose_name_plural = _('presidency urls')
         permissions = (
@@ -62,7 +68,7 @@ class Presidency(BaseModel, TranslatableModel):
             _('title'),
             max_length=50,
         ),
-        description=models.TextField(
+        description=HTMLField(
             _('description'),
         ),
     )
@@ -98,4 +104,4 @@ class Presidency(BaseModel, TranslatableModel):
     def get_absolute_url(self):
         """ Returns the canonical URL for the Presidency object """
 
-        return reverse('presidency_detail', args=(self.slug,))
+        return reverse('presidency_detail')

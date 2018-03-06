@@ -1,9 +1,9 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
-  a.contingency-continue.button.button--block.button--yellow.a11y-tts(href="{% url 'home' %}")
+  a.contingency-continue.button.button--block.button--yellow.a11y-tts.rs_preserve(href="{% url 'home' %}")
     | {% trans 'Breaking' %}: {{ contingency.name }}
-  a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
+  a.contingency-navigate.button.button--block.a11y-tts-contingency.rs_preserve(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
   .container
     .row
@@ -12,20 +12,21 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
           .row
             .col-12.col-lg-10
               {% include 'includes/toolbar.pug' with dark=True custom_class="a11y-tts-contingency" %}
-              h2.heading-large.a11y-tts-contingency {{ contingency.name }}
-              h3.heading-sub.a11y-tts-contingency
+              h2.heading-large.a11y-tts-contingency.rs_preserve {{ contingency.name }}
+              h3.heading-sub.a11y-tts-contingency.rs_preserve
                 {{ contingency.lead|linebreaksbr }}
-              p.a11y-tts-contingency
+              p.a11y-tts-contingency.rs_preserve
                 {{ contingency.description|linebreaksbr }}
       .col-12.col-md-5.col-xl-6.top.bg-bluedark.article--dark.expand-bluedark-right
         .article-schedule
           .row
-            .col-12.col-lg-10.col-xl-10.a11y-tts-contingency
+            .col-12.col-lg-10.col-xl-10.a11y-tts-contingency.rs_preserve
               if contingency.events.exists
                 for event in contingency.events.all
                   .schedule
                     .schedule_left
                       time.schedule_time.schedule_time--has-dot {{ event.date_time|time:"H:i" }}
+                      time.schedule_date {{ event.date_time|date:"SHORT_DATE_FORMAT" }}
                     .schedule_right
                       if event.url
                         a(href="{{ event.get_absolute_url }}").schedule_link
@@ -34,10 +35,10 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
                         {{ event.title }}
 
     if contingency.informations.exists
-      h3.heading-medium.pt-2.a11y-tts-contingency {% trans 'Find more information on:' %}
+      h3.heading-medium.pt-2.a11y-tts-contingency.rs_preserve {% trans 'Find more information on:' %}
       .row
         for information in contingency.informations.all
-          .col-lg-6.a11y-tts-contingency
+          .col-lg-6.a11y-tts-contingency.rs_preserve
             .card-small
               h5.card-small_title
                 if information.url

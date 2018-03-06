@@ -12,6 +12,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+from djangocms_text_ckeditor.fields import HTMLField
 
 # models
 from base.models import BaseGovernmentStructureModel
@@ -29,8 +30,9 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
             max_length=255,
             null=True,
         ),
-        description=models.TextField(
+        description=HTMLField(
             _('description'),
+            blank=True,
         ),
     )
     photo = ThumbnailerImageField(

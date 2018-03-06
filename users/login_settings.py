@@ -5,15 +5,16 @@ import string
 import urllib
 
 # django
-from django.conf import settings
 
 # local settings
 if 'DOCKER' in os.environ:
     from project.production.local_settings import CLAVE_UNICA_CALLBACK
     from project.production.local_settings import CLAVE_UNICA_CLIENT_ID
+    from project.production.local_settings import CLAVE_UNICA_SECRET_KEY
 elif 'STAGING' in os.environ:
     from project.staging.local_settings import CLAVE_UNICA_CALLBACK
     from project.staging.local_settings import CLAVE_UNICA_CLIENT_ID
+    from project.staging.local_settings import CLAVE_UNICA_SECRET_KEY
 else:
     try:
         from project.local_settings import CLAVE_UNICA_CALLBACK
@@ -21,6 +22,7 @@ else:
     except ImportError:
         CLAVE_UNICA_CALLBACK = ''
         CLAVE_UNICA_CLIENT_ID = ''
+        CLAVE_UNICA_SECRET_KEY = ''
 
 
 class ClaveUnicaSettings(object):
@@ -32,24 +34,18 @@ class ClaveUnicaSettings(object):
 
     LOGIN_URL = 'https://accounts.claveunica.gob.cl/openid/authorize'
 
-    CLIENT_ID = CLAVE_UNICA_CLIENT_ID
-
-    CALLBACK_URI = CLAVE_UNICA_CALLBACK
-
     CSRF_PARAMS_DICT = {
-        'client_id': CLIENT_ID,
+        'client_id': CLAVE_UNICA_CLIENT_ID,
         'response_type': 'code',
-        'redirect_uri': CALLBACK_URI,
+        'redirect_uri': CLAVE_UNICA_CALLBACK,
         'state': '',
         'scope': 'openid run name email',
     }
 
-    CLAVEUNICA_SECRET_KEY = settings.CLAVEUNICA_SECRET_KEY
-
     TOKEN_PARAMS_DICT = {
-        'client_id': CLIENT_ID,
-        'client_secret': CLAVEUNICA_SECRET_KEY,
-        'redirect_uri': CALLBACK_URI,
+        'client_id': CLAVE_UNICA_CLIENT_ID,
+        'client_secret': CLAVE_UNICA_SECRET_KEY,
+        'redirect_uri': CLAVE_UNICA_CALLBACK,
         'grant_type': 'authorization_code',
         'code': '',
         'state': '',

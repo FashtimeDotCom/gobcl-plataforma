@@ -27,9 +27,11 @@ from users.urls import callback_pattern
 
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^', include('gobcl_cms.news_urls')),
 ]
 
 urlpatterns += i18n_patterns(
+    url(_(r'^news/'), include('gobcl_cms.news_urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
     url(r'^admin/', admin.site.urls),
@@ -37,24 +39,20 @@ urlpatterns += i18n_patterns(
     url(r'^api/1.0/', include('api.urls')),
     url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
     url(r'^callback/', include(callback_pattern)),
-    url(_(r'^about/$'), base_views.AboutTemplateView.as_view(), name='about'),
-    url(_(r'^about-interior/$'),
-        base_views.AboutInteriorTemplateView.as_view(), name='about_interior'),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^regions/'), include('regions.urls')),
     url(_(r'^ministries/'), include('ministries.urls')),
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
     url(_(r'^articles/'), include('gobcl_cms.urls')),
-    url(r'^404/$', base_views.page_404, name='404'),
-    url(r'^500/$', base_views.page_500, name='500'),
     url(_(r'^'), include('cms.urls')),
     prefix_default_language=False,
 )
 
-if settings.TEST:
+if settings.TEST or settings.TRAVIS:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
+        url(r'^streams/', include('streams.urls'), name='streams'),
     ]
 
 if settings.DEBUG:
@@ -66,5 +64,8 @@ if settings.DEBUG:
         document_root=settings.MEDIA_ROOT,
     )
 
-handler404 = 'base.views.page_404'
-handler500 = 'base.views.page_500'
+# custom error pages
+handler400 = 'base.views.bad_request_view'
+handler403 = 'base.views.permission_denied_view'
+handler404 = 'base.views.page_not_found_view'
+handler500 = 'base.views.server_error_view'

@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load thumbnail
+- load cms_tags
 
 block meta_tags
   meta(name="description", content="{{ministry.description}}")
@@ -14,8 +15,8 @@ block content
   section.bg-light
     .container
       ol.breadcrumb
-        li: a.a11y-tts(href="{% url 'home' %}") {% trans 'Home' %}
-        li: a.a11y-tts(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+        li: a.a11y-tts.rs_preserve(href="{% url 'home' %}") {% trans 'Home' %}
+        li: a.a11y-tts.rs_preserve(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
 
   section.section.bg-bluedark
     .container
@@ -25,16 +26,16 @@ block content
             {% include 'includes/toolbar.pug' %}
         .col-sm-12.col-md-12.col-lg-7.col-xl-7
           article.text-light
-            h2.heading-large.a11y-tts {{ ministry.name }}
+            h2.heading-large.a11y-tts.rs_preserve {{ ministry.name }}
             .row
-              .col-xl-10.a11y-tts
+              .col-xl-10.a11y-tts.rs_preserve
                 p {{ ministry.description|linebreaks }}
 
   section
     .container
       .row
         .col-sm-12.col-lg-8
-          .profile.profile--half.a11y-tts
+          .profile.profile--half.a11y-tts.rs_preserve
             .profile_image
               if ministry.minister.photo
                 img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
@@ -56,12 +57,23 @@ block content
                 li: span {% trans 'E-Mail' %}: {{ ministry.minister.email }}
         .col-sm-12.col-lg-4.align-self-end
           .profile_buttons
-            a.button.button--block.a11y-tts(href="{{ ministry.url }}", target="blank")
+            a.button.button--block.a11y-tts.rs_preserve(href="{{ ministry.url }}", target="blank")
               {% trans 'Go to the ministry site' %}
   
             if perms.ministries.change_ministry
-              a.button.button--block(href="{% url 'ministry_update' ministry.id %}", target="blank")
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:ministries_ministry_change' ministry.id %}?language={{ current_language }}",
+                target="blank"
+              )
                 | {% trans 'edit ministry'|capfirst %}
+            if perms.public_servants.change_publicservant
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:public_servants_publicservant_change' ministry.minister_id %}?language={{ current_language }}", 
+                target="blank"
+              )
+                | {% trans 'edit minister'|capfirst %}
 
             if perms.ministries.delete_ministry
               a.button.button--block(href="{% url 'ministry_delete' ministry.id %}", target="blank")
@@ -71,7 +83,7 @@ block content
     .container
       .row
         for servant in ministry.public_servants.all
-          .col-sm-12.col-lg-6.a11y-tts
+          .col-sm-12.col-lg-6.a11y-tts.rs_preserve
             .profile.profile--half-small
               div.profile_image.profile_image--small
                 if servant.photo
@@ -90,12 +102,26 @@ block content
                   li: span {% trans 'Phone' %}: {{ servant.phone }}
                 - if servant.email
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
+            if perms.public_servants.change_publicservant
+              - get_current_language as current_language
+              a.button.btn.btn-xs.pull-right(
+                href="{% url 'admin:public_servants_publicservant_change' servant.id %}?language={{ current_language }}", 
+                target="blank"
+              )
+                | {% trans 'edit'|capfirst %}
 
   section.section
-    .container.a11y-tts
-      h2.heading-medium {% trans 'Institutions of' %} {{ ministry.name }}
+    .container.a11y-tts.rs_preserve
+      h2.heading-medium 
+        {% static_placeholder 'Institutions of' or %} 
+        {% trans 'Institutions of' %} 
+        {% endstatic_placeholder %}
+        {{ ministry.name }}
       if ministry.publicenterprise_set.exists
-        h3.heading-sub {% trans 'Public Enterprises' %}
+        h3.heading-sub 
+          {% static_placeholder 'Public Enterprises' or %}
+          {% trans 'Public Enterprises' %}
+          {% endstatic_placeholder %}
         .row
           for public_enterprise in ministry.publicenterprise_set.all
             .col-12.col-md-4
@@ -107,7 +133,10 @@ block content
                   else
                     | {{ public_enterprise.name }}
       if ministry.publicservice_set.exists
-        h3.heading-sub {% trans 'Public Services' %}
+        h3.heading-sub 
+          {% static_placeholder 'Public Services' or %}
+          {% trans 'Public Services' %}
+          {% endstatic_placeholder %}
         .row
           for public_service in ministry.publicservice_set.all
             .col-12.col-md-4

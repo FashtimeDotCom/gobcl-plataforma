@@ -8,7 +8,9 @@ def categories(request):
     """
 
     context = {
-        'categories': Category.objects.all().prefetch_related('translations')
+        'categories': Category.objects.order_by(
+            'article__count__visits'
+        ).distinct()[:5]
     }
 
     return context

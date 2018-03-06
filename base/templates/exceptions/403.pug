@@ -1,0 +1,8 @@
+extends base.pug
+
+- load i18n
+- load staticfiles
+
+block content
+  {% trans 'Forbidden' as header %}
+  {% include 'includes/exception_content.pug' with header=header %}

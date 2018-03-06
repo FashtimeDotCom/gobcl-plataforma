@@ -30,5 +30,5 @@ class PublicServantAdmin(AllTranslationsMixin, TranslatableAdmin):
         'email',
         'phone',
         'twitter',
-        'description',
+        'translations__description',
     )

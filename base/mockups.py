@@ -25,26 +25,34 @@ from aldryn_newsblog.models import Article
 from aldryn_people.models import Person
 from campaigns.models import Campaign
 from cms.models.placeholdermodel import Placeholder
+from contingencies.models import Contingency
+from contingencies.models import ContingencyEvent
+from contingencies.models import ContingencyInformation
 from filer.models.imagemodels import Image
+from gobcl_cms.models import ArticleCount
+from gobcl_cms.models import ContentPlugin
+from gobcl_cms.models import GalleryImagePlugin
+from gobcl_cms.models import GalleryPlugin
+from gobcl_cms.models import HeaderImage
+from gobcl_cms.models import HeaderPlugin
+from gobcl_cms.models import HtmlPlugin
+from gobcl_cms.models import PlainTextPlugin
+from gobcl_cms.models import SectionPlugin
 from government_structures.models import GovernmentStructure
+from links.models import FooterLink
 from ministries.models import Ministry
 from ministries.models import PublicService
 from presidencies.models import Presidency
 from presidencies.models import PresidencyURL
-from public_servants.models import PublicServant
 from public_enterprises.models import PublicEnterprise
-from regions.models import Region
+from public_servants.models import PublicServant
 from regions.models import Commune
-from users.models import User
-from links.models import FooterLink
-from services.models import ChileAtiendeService
+from regions.models import Region
 from services.models import ChileAtiendeFile
-from contingencies.models import Contingency
-from contingencies.models import ContingencyEvent
-from contingencies.models import ContingencyInformation
-from gobcl_cms.models import GalleryPlugin
-from gobcl_cms.models import GalleryImagePlugin
-from gobcl_cms.models import HtmlPlugin
+from services.models import ChileAtiendeService
+from streams.models import Stream
+from streams.models import StreamEvent
+from users.models import User
 
 
 class Mockup(object):
@@ -199,6 +207,19 @@ class Mockup(object):
         self.set_required_int(kwargs, 'analytic_visits', minimum=1)
         return ChileAtiendeFile.objects.create(**kwargs)
 
+    def create_header_image(self, **kwargs):
+        self.set_required_string(kwargs, 'name')
+        return HeaderImage.objects.create(**kwargs)
+
+    def create_header_plugin(self, **kwargs):
+        return HeaderPlugin.objects.create(**kwargs)
+
+    def create_content_plugin(self, **kwargs):
+        return ContentPlugin.objects.create(**kwargs)
+
+    def create_article_count(self, **kwargs):
+        return ArticleCount.objects.create(**kwargs)
+
     def create_contingency(self, **kwargs):
         self.set_required_string(kwargs, 'name')
         self.set_required_string(kwargs, 'lead')
@@ -229,6 +250,27 @@ class Mockup(object):
     def create_html_plugin(self, **kwargs):
         self.set_required_string(kwargs, 'html')
         return HtmlPlugin.objects.create(**kwargs)
+
+    def create_plain_text_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'text')
+        return PlainTextPlugin.objects.create(**kwargs)
+
+    def create_section_plugin(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
+        return SectionPlugin.objects.create(**kwargs)
+
+    def create_stream(self, **kwargs):
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_url(kwargs, 'url')
+        return Stream.objects.create(**kwargs)
+
+    def create_stream_event(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'stream')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_datetime(kwargs, 'date_time')
+        return StreamEvent.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:
@@ -314,6 +356,13 @@ class Mockup(object):
 
         if field not in data and '{}_id'.format(field) not in data:
             data[field] = getattr(self, 'create_{}'.format(model))(**kwargs)
+
+    def set_required_image(self, data, field, **kwargs):
+        if field not in data:
+            test_root = os.path.realpath(os.path.dirname(__file__))
+            photo = open('{}/tests/gondola.jpg'.format(test_root), 'rb')
+            photo = get_thumbnailer(photo, relative_name='photos/gondola.jpg')
+            data[field] = photo
 
     def set_required_int(self, data, field, **kwargs):
         if field not in data:

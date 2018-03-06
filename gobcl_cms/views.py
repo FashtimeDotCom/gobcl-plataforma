@@ -3,10 +3,11 @@
 # standard library
 
 # django
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils.decorators import method_decorator
+from django.views.generic.base import RedirectView
+from django.contrib.redirects.models import Redirect
 
 # base
 from django.views.generic import FormView
@@ -14,8 +15,43 @@ from django.shortcuts import get_object_or_404
 
 # models
 from aldryn_newsblog.models import Article
+from aldryn_newsblog.models import NewsBlogConfig
 
+# forms
 from .forms import ArticleForm
+
+# newsblog
+from aldryn_newsblog.views import ArticleList
+
+
+def get_queryset(self):
+    qs = super(ArticleList, self).get_queryset()
+    # exclude featured articles from queryset, to allow featured article
+    # plugin on the list view page without duplicate entries in page qs.
+
+    # if not self.config:
+    #     self.namespace, self.config = get_app_instance(self.request)
+
+    if not self.config:
+        self.config = NewsBlogConfig.objects.first()
+
+    exclude_count = self.config.exclude_featured
+
+    if exclude_count:
+        featured_qs = Article.objects.all().filter(is_featured=True)
+        if not self.edit_mode:
+            featured_qs = featured_qs.published()
+        exclude_featured = featured_qs[:exclude_count].values_list('pk')
+        qs = qs.exclude(pk__in=exclude_featured)
+
+    qs = qs.filter(
+        translations__language_code=self.request.LANGUAGE_CODE
+    )
+
+    return qs
+
+
+ArticleList.get_queryset = get_queryset
 
 
 class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
@@ -49,15 +85,16 @@ class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
 
         # Update initial data
         initial.update({
-                'related': self.initial_list
-            })
+            'related': self.initial_list
+        })
 
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(
-            ArticleRelatedUpdateView, self).get_context_data(**kwargs)
-        
+        context = super(ArticleRelatedUpdateView, self).get_context_data(
+            **kwargs
+        )
+
         # send article object to template
         context['article'] = self.article
 
@@ -82,3 +119,31 @@ class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
 
         # Go to article detail
         return self.article.get_absolute_url()
+
+
+class ArticleRedirectView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        article = get_object_or_404(Article, pk=kwargs['article_id'])
+        if self.request.LANGUAGE_CODE == 'en':
+            return '/en/news/{}/'.format(article.slug)
+        return article.get_absolute_url(self.request.LANGUAGE_CODE)
+
+
+class ArticleDateRedirectView(RedirectView):
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        slug = kwargs['slug']
+        has_slash = '/'
+
+        if 'ministra-blanco-destaco-que-congreso-aprobara-en-tramite-' in slug:
+            has_slash = ''
+
+        slug = '/{}{}'.format(
+            slug,
+            has_slash
+        )
+        r = get_object_or_404(Redirect, old_path=slug)
+        return r.new_path
