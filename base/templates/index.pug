@@ -25,8 +25,8 @@ block content
             {% include 'includes/toolbar.pug' %}
         .col-12.col-lg-7
           article.article.article--dark.text-light
-            h2.article_title.title--light.a11y-tts {% trans 'You are on Gob.cl' %}
-            p.a11y-tts 
+            h2.article_title.title--light.a11y-tts.rs_preserve {% trans 'You are on Gob.cl' %}
+            p.a11y-tts.rs_preserve
               {% static_placeholder 'You are on Gob.cl lead in' or %}
               {% trans 'Your portal to access information of the Government of Chile in a simple and fast way.' %}
               {% endstatic_placeholder %}
@@ -41,13 +41,13 @@ block content
       .row
         .col-md-9.col-xl-10
           ul.list-ib
-            li.a11y-tts 
+            li.a11y-tts.rs_preserve
               {% static_placeholder 'Most searched' or %}
               {% trans 'Most searched' %}
               {% endstatic_placeholder %}:
             for category in categories
               li
-                a.link.link--clean.text-white.a11y-tts(
+                a.link.link--clean.text-white.a11y-tts.rs_preserve(
                   href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
                 )
                   {{ category }}
@@ -71,11 +71,11 @@ block content
         .row
           .col-12.col-lg-8.col-xl-6
             article.card-new
-              h2.heading-medium.a11y-tts 
+              h2.heading-medium.a11y-tts.rs_preserve
                 {% static_placeholder 'Procedures and benefits' or %}
                 {% trans 'Procedures and benefits' %}
                 {% endstatic_placeholder %}
-              p.a11y-tts
+              p.a11y-tts.rs_preserve
                 {% static_placeholder 'Procedures and benefits lead in' or %}
                 {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
                 {% endstatic_placeholder %}
@@ -86,18 +86,18 @@ block content
             if forloop.counter0 < 3
               .col-12.col-lg-4
                 .overflowed-xs
-                  a(href="{{ file.get_absolute_url }}").link.link--text-dark.link--has-dot.visited.a11y-tts
+                  a(href="{{ file.get_absolute_url }}").link.link--text-dark.link--has-dot.visited.a11y-tts.rs_preserve
                     {{ file.title }}
         .row
           .col-lg-4.offset-lg-4.d-none.d-md-block
-            a.button.button--block.button--light.button--clean.button--space.a11y-tts(
+            a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
               href="https://www.chileatiende.gob.cl/"
             )
               {% trans 'See more' %}
 
       if articles
         section.sub-section.d-none.d-md-block
-          h2.heading-medium.a11y-tts 
+          h2.heading-medium.a11y-tts.rs_preserve
             {% static_placeholder 'News' or %}
             {% trans 'News' %}
             {% endstatic_placeholder %}
@@ -105,7 +105,7 @@ block content
           {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
           .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-            a.button.button--block.button--light.button--clean.button--space.a11y-tts(
+            a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
               href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
             )
               {% trans 'See more' %}
@@ -114,11 +114,11 @@ block content
         section.sub-section
           .row
             .col-12.col-lg-7
-              h2.heading-medium.a11y-tts
+              h2.heading-medium.a11y-tts.rs_preserve
                 {% static_placeholder 'Institutions' or %}
                 {% trans 'Institutions' %}
                 {% endstatic_placeholder %}
-              p.a11y-tts 
+              p.a11y-tts.rs_preserve
                 {% static_placeholder 'Institutions lead in' or %}
                 {% trans 'Know the main government entities and their authorities.' %}
                 {% endstatic_placeholder %}
@@ -126,13 +126,13 @@ block content
             .col-12
               .row
                 .col-md-6.col-lg-3
-                  a(href="{% url 'presidency_detail' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'presidency_detail' %}").card-data.py-5.py-sm-auto.a11y-tts.rs_preserve
                     h2.card-data_title: span 
                       {% static_placeholder 'Presidency of the Republic' or %}
                       {% trans 'Presidency of the Republic' %}
                       {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}#ministries").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#ministries").card-data.py-5.py-sm-auto.a11y-tts.rs_preserve
                     h3.card-data_title
                       span.card-data_number {{ ministries_count }}
                       span.card-data_title-text 
@@ -140,7 +140,7 @@ block content
                         {% trans 'Ministries' %}
                         {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}#services").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#services").card-data.py-5.py-sm-auto.a11y-tts.rs_preserve
                     h3.card-data_title
                       span.card-data_number {{ public_services_count }}
                       span.card-data_title-text 
@@ -148,7 +148,7 @@ block content
                         {% trans 'Public Services' %}
                         {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}#regions").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#regions").card-data.py-5.py-sm-auto.a11y-tts.rs_preserve
                     h3.card-data_title
                       span.card-data_number {{ regions_count }}
                       span.card-data_title-text 
@@ -158,7 +158,7 @@ block content
 
       if campaigns
         section.sub-section
-          h2.heading-medium.a11y-tts 
+          h2.heading-medium.a11y-tts.rs_preserve
             {% static_placeholder 'Campaigns' or %}
             {% trans 'Campaigns' %}
             {% endstatic_placeholder %}
@@ -179,17 +179,17 @@ block content
               {% endstatic_placeholder %}
         .row.d-none.d-lg-flex
           .col-md-5.align-self-center
-            h5.heading-medium.a11y-tts 
+            h5.heading-medium.a11y-tts.rs_preserve
               {% static_placeholder 'About Chile' or %}
               {% trans 'About Chile' %}
               {% endstatic_placeholder %}
-            p.a11y-tts 
+            p.a11y-tts.rs_preserve
               {% static_placeholder 'About Chile lead in' or %}
               {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
               {% endstatic_placeholder %}
             .row
               .col-lg-10
-                a(href="{% page_url 'about' about_url %}{{about_url}}").button.button--block.button--light.button--clean.button--space.a11y-tts
+                a(href="{% page_url 'about' about_url %}{{about_url}}").button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve
                   {% trans 'See more' %}
           .col-md-1
           .col-md-6.align-self-center
