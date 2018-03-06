@@ -1,7 +1,7 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
-  a.contingency-continue.button.button--block.button--yellow.a11y-tts.rs_preserve(href="{% url 'home' %}")
+  a.contingency-continue.button.button--block.button--yellow.a11y-tts-contingency.rs_preserve(href="{% url 'home' %}")
     | {% trans 'Breaking' %}: {{ contingency.name }}
   a.contingency-navigate.button.button--block.a11y-tts-contingency.rs_preserve(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
