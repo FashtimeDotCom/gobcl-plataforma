@@ -3,7 +3,7 @@
 
 each article in articles
   .col-12.col-md-10.col-lg-7
-    .result.a11y-tts.rs_preserve
+    .result.a11y-tts
       a.result_link(href=article.url)
         if language == 'en' && article.translations.en != null
           | #{article.translations.en.title}

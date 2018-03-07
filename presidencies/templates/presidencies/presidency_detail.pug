@@ -13,7 +13,7 @@ block content
 
   section.bg-bluedark
     .container
-      .profile.profile--bluedark.text-light.a11y-tts.rs_preserve
+      .profile.profile--bluedark.text-light.a11y-tts
         .profile_header
           h2.heading-large {{ presidency.name }}
           span.profile_job {{ presidency.title }}
@@ -50,7 +50,7 @@ block content
     .container
       .row
         for url in presidency.urls.all
-          .col-sm-12.col-lg-4.a11y-tts.rs_preserve
+          .col-sm-12.col-lg-4.a11y-tts
             .card-small.h-100
               h5.card-small_title
                 a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
