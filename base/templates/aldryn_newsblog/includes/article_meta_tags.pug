@@ -1,4 +1,4 @@
-
+-load thumbnail
 // Search Engine
 meta(name='description', content='{{article.meta_description}}')
 meta(name='image', content='{{article.featured_image.url}}')
@@ -16,6 +16,6 @@ meta(name='twitter:image:src', content='{{article.featured_image.url}}')
 // Open Graph general (Facebook, Pinterest & Google+)
 meta(name='og:title', content='{{article.meta_title}}')
 meta(name='og:description', content='{{article.meta_description}}')
-meta(name='og:image', content='{{article.featured_image.url}}')
+meta(name='og:image', content="{{article.featured_image|thumbnail_url:'og_image' }}")
 meta(name='og:url', content='{{ request.scheme }}://{{ request.get_host }}{{article.get_absolute_url}}')
 meta(name='og:locale', content='{{request.LANGUAGE_CODE}}')

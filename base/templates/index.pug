@@ -12,7 +12,7 @@ block stylesheets
   style.
     @media (min-width: 36em) {
       .hero-background {
-          background-image: url({{ header_image.image.url }});
+          background-image: url({{ header_image.image|thumbnail_url:'image_home' }});
       }
     }
 
