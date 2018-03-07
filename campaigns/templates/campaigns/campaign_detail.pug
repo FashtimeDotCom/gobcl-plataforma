@@ -12,7 +12,7 @@ block content
           .d-none.d-lg-block.pull-md-right
             {% include 'includes/toolbar.pug' with dark=True %}
         .col-sm-12.col-lg-10.offset-lg-1.col-xl-8.offset-xl-2
-          article.main-post.a11y-tts.rs_preserve
+          article.main-post.a11y-tts
             time.main-post_date {{ campaign.activation_datetime|date }}
             h1.main-post_title
               {% render_model campaign "title" %}

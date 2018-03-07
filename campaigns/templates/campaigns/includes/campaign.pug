@@ -4,14 +4,14 @@
 
 if template
   if template == 'big'
-    .card-small.d-lg-none.a11y-tts.rs_preserve
+    .card-small.d-lg-none.a11y-tts
       h5.card-small_title
         a(href="{{ campaign.get_absolute_url }}").card-small_link
           {% render_model campaign "title" %}
           i.ic-arrow-right.icon--right
       .card-small_body
-        p.a11y-tts.rs_preserve {{ campaign.description }}
-    .row.d-none.d-lg-flex.a11y-tts.rs_preserve
+        p.a11y-tts {{ campaign.description }}
+    .row.d-none.d-lg-flex.a11y-tts
       .col-md-6.align-self-center
         img.img-fluid.w-100.img-frame(src="{% thumbnail campaign.image 1080x600 crop=campaign.image_crop_when_single %}", alt="")
       .col-md-1
@@ -25,7 +25,7 @@ if template
               {% trans 'See more' %}
 
   if template == 'small'
-    .col-12.col-lg-6.a11y-tts.rs_preserve
+    .col-12.col-lg-6.a11y-tts
       article.new.new--mobile
         figure.new_figure-mobile
           img.img-fluid.w-100.img-frame(
@@ -41,7 +41,7 @@ if template
 
 else
   div(class="col-lg-{% widthratio 12 col 1 %}")
-    article.new.new--mobile.d-block.d-lg-none.a11y-tts.rs_preserve
+    article.new.new--mobile.d-block.d-lg-none.a11y-tts
       figure.new_figure-mobile
         img.img-fluid.w-100.img-frame(
           src="{% thumbnail campaign.image 164x90 crop %}",
@@ -52,7 +52,7 @@ else
           h4 {{ campaign.title|truncatechars:50 }}
         a(href="{{ campaign.get_absolute_url }}").link.link--text-dark.visited
           {{ campaign.description|truncatechars:110 }}
-    a.featured-card.has-icon.d-none.d-lg-block.a11y-tts.rs_preserve(
+    a.featured-card.has-icon.d-none.d-lg-block.a11y-tts(
       href="{{ campaign.get_absolute_url }}"
     )
       .featured-card_figure.elem-bg
