@@ -12,7 +12,7 @@ block stylesheets
   style.
     @media (min-width: 36em) {
       .hero-background {
-          background-image: url({{ header_image.image.url }});
+          background-image: url({{ header_image.image|thumbnail_url:'image_home' }});
       }
     }
 
@@ -96,7 +96,7 @@ block content
               {% trans 'See more' %}
 
       if articles
-        section.sub-section.d-none.d-md-block
+        section.sub-section
           h2.heading-medium.a11y-tts
             {% static_placeholder 'News' or %}
             {% trans 'News' %}
