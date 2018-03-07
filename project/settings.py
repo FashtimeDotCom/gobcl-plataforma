@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     'haystack',
     'modeltranslation',
     'django_cron',
+    'adminsortable2',
 
     # internal
     'base',
