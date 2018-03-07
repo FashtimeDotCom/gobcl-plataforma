@@ -487,6 +487,8 @@ THUMBNAIL_ALIASES = {
         'new_list_item': {'size': (495, 270), 'crop': True},
         'avatar': {'size': (328, 342), 'crop': True},
         'avatar_small': {'size': (218, 228), 'crop': True},
+        'og_image': {'size': (1200, 630), 'crop': False},
+        'image_home': {'size': (2500, 840), 'crop': True},
     },
 }
 
