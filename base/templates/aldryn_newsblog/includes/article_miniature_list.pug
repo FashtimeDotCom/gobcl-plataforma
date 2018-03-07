@@ -6,7 +6,7 @@
 .row.article-miniature-list(data-default-image-url="{% static 'images/default-news.png' %}")
   each article in articles
     .col-12.col-lg-6
-      article.new.new--mobile.a11y-tts.rs_preserve
+      article.new.new--mobile.a11y-tts
         time.new_date
           {{ article.publishing_date|date }}
         figure.new_figure-mobile
