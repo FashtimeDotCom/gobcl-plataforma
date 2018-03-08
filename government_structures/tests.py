@@ -5,6 +5,7 @@ from base.tests import BaseTestCase
 from .models import GovernmentStructure
 from regions.models import Region
 from public_servants.models import PublicServant
+from ministries.models import Ministry
 
 
 class GovernmentStructureModelTest(BaseTestCase):
@@ -14,10 +15,23 @@ class GovernmentStructureModelTest(BaseTestCase):
         self.now = timezone.now()
         self.government_structure = self.create_government_structure(
             publication_date=self.now)
+
         self.public_servant = self.create_public_servant(
             government_structure=self.government_structure)
         self.region = self.create_region(
             governor=self.public_servant,
+            government_structure=self.government_structure)
+
+        self.public_servant2 = self.create_public_servant(
+            government_structure=self.government_structure)
+        self.ministry = self.create_ministry(
+            minister=self.public_servant2,
+            government_structure=self.government_structure)
+
+        self.public_servant3 = self.create_public_servant(
+            government_structure=self.government_structure)
+        self.ministry2 = self.create_ministry(
+            minister=self.public_servant3,
             government_structure=self.government_structure)
 
     def test_duplicate_government_structure_with_existing_date(self):
@@ -44,3 +58,17 @@ class GovernmentStructureModelTest(BaseTestCase):
         self.assertEqual(GovernmentStructure.objects.count(), 2)
         self.assertEqual(Region.objects.count(), 2)
         # self.assertEqual(PublicServant.objects.count(), 1)
+
+    def test_duplicate(self):
+        tomorrow = self.now + timezone.timedelta(days=1)
+        self.assertEqual(GovernmentStructure.objects.count(), 1)
+        self.assertEqual(Ministry.objects.count(), 2)
+        self.assertEqual(PublicServant.objects.count(), 3)
+        self.assertEqual(Region.objects.count(), 1)
+
+        self.government_structure.duplicate(date=tomorrow)
+
+        self.assertEqual(GovernmentStructure.objects.count(), 2)
+        self.assertEqual(Region.objects.count(), 2)
+        self.assertEqual(Ministry.objects.count(), 4)
+        self.assertEqual(PublicServant.objects.count(), 6)

@@ -18,6 +18,9 @@ class RegionAdmin(InstitutionAdmin):
 
 @admin.register(Commune)
 class CommuneAdmin(admin.ModelAdmin):
+    search_fields = (
+        'name',
+    )
     list_display = (
         'name',
         'region',
