@@ -19,6 +19,13 @@ from .models import Ministry, PublicService
 
 @admin.register(Ministry)
 class MinistryAdmin(InstitutionAdmin):
+    list_display = (
+        'name',
+        'government_structure',
+        'minister',
+        'url',
+    )
+
     filter_horizontal = (
         'public_servants',
     )

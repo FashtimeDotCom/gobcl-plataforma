@@ -13,7 +13,12 @@ from .models import Region, Commune
 
 @admin.register(Region)
 class RegionAdmin(InstitutionAdmin):
-    pass
+    list_display = (
+        'name',
+        'government_structure',
+        'governor',
+        'url',
+    )
 
 
 @admin.register(Commune)
