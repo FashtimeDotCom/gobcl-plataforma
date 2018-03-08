@@ -6,7 +6,7 @@ from django.db import migrations
 
 
 def reorder_footer_links(apps, schema_editor):
-    FooterLink = apps.get_model('links', 'FooterLink')
+    from links.models import FooterLink
     FooterLink.reorder_order()
 
 
@@ -17,4 +17,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(reorder_footer_links)
     ]
