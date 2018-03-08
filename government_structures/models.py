@@ -177,6 +177,12 @@ class GovernmentStructure(BaseModel):
                         translation.save()
 
                 if child == 'ministry':
+                    if not with_public_servants:
+                        new_obj.minister = None
+                        new_obj.public_servants.clear()
+                        new_obj.save()
+                        continue
+
                     minister = PublicServant.objects.filter(
                         government_structure=government_structure
                     ).filter(name=obj.minister.name).first()
@@ -190,6 +196,11 @@ class GovernmentStructure(BaseModel):
                     new_obj.save()
 
                 if child == 'region':
+                    if not with_public_servants:
+                        new_obj.governor = None
+                        new_obj.save()
+                        continue
+
                     governor = PublicServant.objects.filter(
                         government_structure=government_structure
                     ).filter(name=obj.governor.name).first()

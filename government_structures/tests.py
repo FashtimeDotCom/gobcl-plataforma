@@ -42,22 +42,37 @@ class GovernmentStructureModelTest(BaseTestCase):
     def test_duplicate_government_with_public_servants(self):
         tomorrow = self.now + timezone.timedelta(days=1)
         self.assertEqual(GovernmentStructure.objects.count(), 1)
-        self.assertEqual(PublicServant.objects.count(), 1)
+        self.assertEqual(PublicServant.objects.count(), 3)
         self.assertEqual(Region.objects.count(), 1)
         self.government_structure.duplicate(date=tomorrow)
         self.assertEqual(GovernmentStructure.objects.count(), 2)
         self.assertEqual(Region.objects.count(), 2)
-        self.assertEqual(PublicServant.objects.count(), 2)
+        self.assertEqual(PublicServant.objects.count(), 6)
 
     def test_duplicate_government_withouth_public_servants(self):
         tomorrow = self.now + timezone.timedelta(days=1)
         self.assertEqual(GovernmentStructure.objects.count(), 1)
-        self.assertEqual(PublicServant.objects.count(), 1)
+        self.assertEqual(PublicServant.objects.count(), 3)
         self.assertEqual(Region.objects.count(), 1)
-        self.government_structure.duplicate(date=tomorrow)
+        self.government_structure.duplicate(
+            date=tomorrow, with_public_servants=False)
         self.assertEqual(GovernmentStructure.objects.count(), 2)
         self.assertEqual(Region.objects.count(), 2)
-        # self.assertEqual(PublicServant.objects.count(), 1)
+
+        government_structure = GovernmentStructure.objects.last()
+        regions = Region.objects.by_government_structure(government_structure)
+
+        for region in regions:
+            self.assertEqual(region.governor, None)
+
+        ministries = Ministry.objects.by_government_structure(
+            government_structure)
+
+        for ministry in ministries:
+            self.assertEqual(ministry.minister, None)
+            self.assertEqual(list(ministry.public_servants.all()), [])
+
+        self.assertEqual(PublicServant.objects.count(), 3)
 
     def test_duplicate(self):
         tomorrow = self.now + timezone.timedelta(days=1)
