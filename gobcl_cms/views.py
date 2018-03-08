@@ -4,8 +4,10 @@
 
 # django
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils.decorators import method_decorator
+from django.views.generic.base import RedirectView
+from django.contrib.redirects.models import Redirect
 
 # base
 from django.views.generic import FormView
@@ -17,8 +19,6 @@ from aldryn_newsblog.models import NewsBlogConfig
 
 # forms
 from .forms import ArticleForm
-
-from aldryn_apphooks_config.utils import get_app_instance
 
 # newsblog
 from aldryn_newsblog.views import ArticleList
@@ -119,3 +119,31 @@ class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):
 
         # Go to article detail
         return self.article.get_absolute_url()
+
+
+class ArticleRedirectView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        article = get_object_or_404(Article, pk=kwargs['article_id'])
+        if self.request.LANGUAGE_CODE == 'en':
+            return '/en/news/{}/'.format(article.slug)
+        return article.get_absolute_url(self.request.LANGUAGE_CODE)
+
+
+class ArticleDateRedirectView(RedirectView):
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        slug = kwargs['slug']
+        has_slash = '/'
+
+        if 'ministra-blanco-destaco-que-congreso-aprobara-en-tramite-' in slug:
+            has_slash = ''
+
+        slug = '/{}{}'.format(
+            slug,
+            has_slash
+        )
+        r = get_object_or_404(Redirect, old_path=slug)
+        return r.new_path

@@ -12,7 +12,7 @@ block stylesheets
   style.
     @media (min-width: 36em) {
       .hero-background {
-          background-image: url({{ header_image.image.url }});
+          background-image: url({{ header_image.image|thumbnail_url:'image_home' }});
       }
     }
 
@@ -26,7 +26,7 @@ block content
         .col-12.col-lg-7
           article.article.article--dark.text-light
             h2.article_title.title--light.a11y-tts {% trans 'You are on Gob.cl' %}
-            p.a11y-tts 
+            p.a11y-tts
               {% static_placeholder 'You are on Gob.cl lead in' or %}
               {% trans 'Your portal to access information of the Government of Chile in a simple and fast way.' %}
               {% endstatic_placeholder %}
@@ -41,7 +41,7 @@ block content
       .row
         .col-md-9.col-xl-10
           ul.list-ib
-            li.a11y-tts 
+            li.a11y-tts
               {% static_placeholder 'Most searched' or %}
               {% trans 'Most searched' %}
               {% endstatic_placeholder %}:
@@ -71,7 +71,7 @@ block content
         .row
           .col-12.col-lg-8.col-xl-6
             article.card-new
-              h2.heading-medium.a11y-tts 
+              h2.heading-medium.a11y-tts
                 {% static_placeholder 'Procedures and benefits' or %}
                 {% trans 'Procedures and benefits' %}
                 {% endstatic_placeholder %}
@@ -96,16 +96,16 @@ block content
               {% trans 'See more' %}
 
       if articles
-        section.sub-section.d-none.d-md-block
-          h2.heading-medium.a11y-tts 
+        section.sub-section
+          h2.heading-medium.a11y-tts.rs_preserve
             {% static_placeholder 'News' or %}
             {% trans 'News' %}
             {% endstatic_placeholder %}
 
           {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
-          .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-            a.button.button--block.button--light.button--clean.button--space.a11y-tts(
+          .col-12.col-lg-4.offset-lg-4
+            a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
               href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
             )
               {% trans 'See more' %}
@@ -118,7 +118,7 @@ block content
                 {% static_placeholder 'Institutions' or %}
                 {% trans 'Institutions' %}
                 {% endstatic_placeholder %}
-              p.a11y-tts 
+              p.a11y-tts
                 {% static_placeholder 'Institutions lead in' or %}
                 {% trans 'Know the main government entities and their authorities.' %}
                 {% endstatic_placeholder %}
@@ -158,7 +158,7 @@ block content
 
       if campaigns
         section.sub-section
-          h2.heading-medium.a11y-tts 
+          h2.heading-medium.a11y-tts
             {% static_placeholder 'Campaigns' or %}
             {% trans 'Campaigns' %}
             {% endstatic_placeholder %}
@@ -179,11 +179,11 @@ block content
               {% endstatic_placeholder %}
         .row.d-none.d-lg-flex
           .col-md-5.align-self-center
-            h5.heading-medium.a11y-tts 
+            h5.heading-medium.a11y-tts
               {% static_placeholder 'About Chile' or %}
               {% trans 'About Chile' %}
               {% endstatic_placeholder %}
-            p.a11y-tts 
+            p.a11y-tts
               {% static_placeholder 'About Chile lead in' or %}
               {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
               {% endstatic_placeholder %}
