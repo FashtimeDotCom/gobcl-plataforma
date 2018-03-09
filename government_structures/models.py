@@ -46,78 +46,6 @@ class GovernmentStructure(BaseModel):
         if not date:
             return cls.objects.get_or_none(current_government=True)
 
-    def _duplicate(self, date, with_public_servants=True):
-
-        government_structures = GovernmentStructure.objects.filter(
-            publication_date=date)
-        if government_structures.exists():
-            return
-
-        government_structure = copy.copy(self)
-        government_structure.id = None
-        government_structure.current_government = False
-        government_structure.publication_date = date
-        government_structure.save()
-
-        for field in self._meta.fields_map.values():
-
-            if not with_public_servants:
-                if field.name == 'publicservant':
-                    continue
-
-            model = field.related_model
-            objects = model.objects.filter(government_structure=self)
-            for obj in objects:
-                new_obj = copy.copy(obj)
-
-                # check for and copy translations in model
-                if hasattr(new_obj, 'translations'):
-                    translations = copy.copy(new_obj.translations.all())
-                else:
-                    translations = None
-
-                new_obj.id = None
-                new_obj.government_structure = government_structure
-                new_obj.save()
-
-                # save new translations
-                if translations:
-                    for translation in translations:
-                        translation.id = None
-                        translation.master_id = new_obj.id
-                        translation.save()
-
-            # for f in field.related_model._meta.fields_map.values():
-
-            #     if not with_public_servants:
-            #         if f.name == 'publicservant':
-            #             continue
-
-            #     model = f.related_model
-            #     objects = model.objects.filter(government_structure=self)
-            #     for obj in objects:
-            #         new_obj = copy.copy(obj)
-
-            #         # check for and copy translations in model
-            #         if hasattr(new_obj, 'translations'):
-            #             translations = copy.copy(new_obj.translations.all())
-            #         else:
-            #             translations = None
-
-            #         new_obj.id = None
-            #         if hasattr(new_obj, 'government_structure'):
-            #             new_obj.government_structure = government_structure
-            #         new_obj.save()
-
-            #         # save new translations
-            #         if translations:
-            #             for translation in translations:
-            #                 translation.id = None
-            #                 translation.master_id = new_obj.id
-            #                 translation.save()
-
-        return government_structure
-
     def duplicate(self, date, with_public_servants=True):
         from ministries.models import Ministry
         from public_servants.models import PublicServant
@@ -242,43 +170,23 @@ class GovernmentStructure(BaseModel):
                     new_obj.ministries.add(*ministries)
                     new_obj.save()
 
-                # for k, value in dict(obj._meta.fields_map).items():
-                #     import ipdb
-                #     ipdb.set_trace()
-                #     remote_field = value.remote_field.name
-                #     objs = value.related_model.objects.filter(
-                #         **{remote_field: obj}
-                #     )
-                #     for child in objs:
-                #         new_child = copy.copy(child)
-                #         new_child.id = None
-                #         setattr(
-                #             new_child,
-                #             '{}_id'.format(
-                #                 remote_field,
-                #             ),
-                #             new_obj.id
-                #         )
-                #         new_child.save()
+                if child == 'presidency':
+                    urls = []
+                    for link in obj.urls.all():
+                        new_link = copy.copy(link)
+                        new_link.id = None
+                        new_link.save()
 
-                # if not hasattr(obj, str(value.related_name)):
-                #     continue
+                        translations = copy.copy(
+                            link.translations.all()
+                        )
 
-                # # if v.related_name == 'translations':
-                # #     import ipdb
-                # #     ipdb.set_trace()
+                        for translation in translations:
+                            translation.id = None
+                            translation.master_id = new_link.id
+                            translation.save()
+                        urls.append(new_link)
 
-                # for child in getattr(obj, value.related_name).all():
-                #     new_child = copy.copy(child)
-
-                #     new_child.id = None
-                #     setattr(
-                #         new_child,
-                #         '{}_id'.format(
-                #             value.remote_field.name,
-                #         ),
-                #         new_obj.id
-                #     )
-                #     new_child.save()
+                    new_obj.urls.add(*urls)
 
         return government_structure
