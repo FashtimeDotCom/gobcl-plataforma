@@ -3,9 +3,12 @@
 # standard library
 import copy
 
+from threading import Thread
+
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate
 
 # models
 from base.models import BaseModel
@@ -20,6 +23,11 @@ class GovernmentStructure(BaseModel):
         _('current government'),
         default=False,
     )
+    archive_news = models.BooleanField(
+        _('archive news'),
+        default=False,
+        help_text='archive government news',
+    )
 
     class Meta:
         verbose_name = _('government structure')
@@ -27,6 +35,10 @@ class GovernmentStructure(BaseModel):
         permissions = (
             ('view_government_structure', _('Can view government structures')),
         )
+
+    def __init__(self, *args, **kwargs):
+        super(GovernmentStructure, self).__init__(*args, **kwargs)
+        self.previous_archive_news = self.archive_news
 
     def __str__(self):
         return '{}'.format(self.publication_date)
@@ -39,12 +51,38 @@ class GovernmentStructure(BaseModel):
             ).update(
                 current_government=False,
             )
+        if self.archive_news and not self.previous_archive_news:
+            self._archive_news()
         super(GovernmentStructure, self).save(**kwargs)
 
     @classmethod
     def get_government(cls, date=None):
         if not date:
             return cls.objects.get_or_none(current_government=True)
+
+    def _archive_news(self):
+        t = Thread(target=self._archive_news2)
+        t.start()
+
+    def _archive_news2(self):
+        from aldryn_newsblog.models import Article
+        from taggit.models import Tag
+
+        articles = Article.objects.language('es').all()
+        tag = Tag.objects.get_or_create(name='archivo')[0]
+        for article in articles:
+            article.title = '[ARCHIVO] ' + article.title
+            article.tags.add(tag)
+            article.save()
+            print(article.title)
+
+        articles = Article.objects.language('en').all()
+        tag = Tag.objects.get_or_create(name='archive')[0]
+        for article in articles:
+            article.title = '[ARCHIVE] ' + article.title
+            article.tags.add(tag)
+            article.save()
+            print(article.title)
 
     def duplicate(self, date, with_public_servants=True):
         from ministries.models import Ministry
