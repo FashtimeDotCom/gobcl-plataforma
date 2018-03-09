@@ -137,8 +137,8 @@ class GovernmentStructure(BaseModel):
 
         children_government_structure = {
             'publicservant': field_map.get('publicservant'),
-            'region': field_map.get('region'),
             'ministry': field_map.get('ministry'),
+            'region': field_map.get('region'),
             'publicenterprise': field_map.get('publicenterprise'),
             'footerlink': field_map.get('footerlink'),
             'presidency': field_map.get('presidency'),
@@ -146,7 +146,6 @@ class GovernmentStructure(BaseModel):
 
         for child in children_government_structure:
             field = children_government_structure.get(child)
-            print(field)
 
             if not field:
                 continue
@@ -177,6 +176,23 @@ class GovernmentStructure(BaseModel):
                         translation.save()
 
                 if child == 'ministry':
+
+                    # copy public services
+                    for public_service in obj.publicservice_set.all():
+                        new_public_service = copy.copy(public_service)
+                        new_public_service.id = None
+                        new_public_service.ministry_id = new_obj.id
+                        new_public_service.save()
+
+                        translations = copy.copy(
+                            public_service.translations.all()
+                        )
+
+                        for translation in translations:
+                            translation.id = None
+                            translation.master_id = new_public_service.id
+                            translation.save()
+
                     if not with_public_servants:
                         new_obj.minister = None
                         new_obj.public_servants.clear()
@@ -196,6 +212,14 @@ class GovernmentStructure(BaseModel):
                     new_obj.save()
 
                 if child == 'region':
+                    # copy communes
+
+                    for commune in obj.commune_set.all():
+                        new_commune = copy.copy(commune)
+                        new_commune.id = None
+                        new_commune.region_id = new_obj.id
+                        new_commune.save()
+
                     if not with_public_servants:
                         new_obj.governor = None
                         new_obj.save()
@@ -204,6 +228,7 @@ class GovernmentStructure(BaseModel):
                     governor = PublicServant.objects.filter(
                         government_structure=government_structure
                     ).filter(name=obj.governor.name).first()
+
                     new_obj.governor = governor
                     new_obj.save()
 
