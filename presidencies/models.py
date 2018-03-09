@@ -43,7 +43,10 @@ class PresidencyURL(BaseModel, TranslatableModel):
     objects = PresidencyURLQueryset.as_manager()
 
     def __str__(self):
-        return self.url
+        return '{} ({})'.format(
+            self.name,
+            self.url,
+        )
 
     class Meta:
         ordering = ('order',)
