@@ -24,8 +24,11 @@ class PresidencyAdmin(AllTranslationsMixin, TranslatableAdmin):
         'twitter',
         'url',
     )
+    filter_horizontal = (
+        'urls',
+    )
 
 
 @admin.register(PresidencyURL)
 class PresidencyURLAdmin(AllTranslationsMixin, TranslatableAdmin):
-    list_display = ('url', 'order')
+    list_display = ('url', 'name', 'order')

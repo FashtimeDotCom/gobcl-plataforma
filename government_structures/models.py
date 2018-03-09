@@ -171,10 +171,23 @@ class GovernmentStructure(BaseModel):
                     new_obj.save()
 
                 if child == 'presidency':
+
+                    # Blank presidency
+                    new_obj.name = ''
+                    new_obj.photo = None
+                    new_obj.twitter = ''
+                    new_obj.url = ''
+
+                    for translation in new_obj.translations.all():
+                        translation.title = ''
+                        translation.description = ''
+                        translation.save()
+
                     urls = []
                     for link in obj.urls.all():
                         new_link = copy.copy(link)
                         new_link.id = None
+                        new_link.url = 'https://www.gob.cl/'
                         new_link.save()
 
                         translations = copy.copy(
@@ -183,10 +196,13 @@ class GovernmentStructure(BaseModel):
 
                         for translation in translations:
                             translation.id = None
+                            translation.name = 'ingrese texto relevante'
+                            translation.description = 'ingrese texto relevante'
                             translation.master_id = new_link.id
                             translation.save()
                         urls.append(new_link)
 
                     new_obj.urls.add(*urls)
+                    new_obj.save()
 
         return government_structure
