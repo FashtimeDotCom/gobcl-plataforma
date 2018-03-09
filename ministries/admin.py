@@ -4,6 +4,8 @@
 
 # django
 from django.contrib import admin
+from django.urls import reverse
+from django.shortcuts import redirect
 
 from institutions.admin import InstitutionAdmin
 
@@ -19,6 +21,9 @@ from .models import Ministry, PublicService
 
 @admin.register(Ministry)
 class MinistryAdmin(InstitutionAdmin):
+    list_filter = (
+        'government_structure',
+    )
     list_display = (
         'name',
         'government_structure',
@@ -29,6 +34,16 @@ class MinistryAdmin(InstitutionAdmin):
     filter_horizontal = (
         'public_servants',
     )
+
+    def changelist_view(self, request, extra_content=None):
+        if not request.GET.get('government_structure__id__exact'):
+            return redirect(
+                reverse('admin:ministries_ministry_changelist') +
+                '?government_structure__id__exact=' +
+                str(request.government_structure.pk)
+            )
+        else:
+            return super().changelist_view(request, extra_content)
 
 
 @admin.register(PublicService)
