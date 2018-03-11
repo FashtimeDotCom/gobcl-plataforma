@@ -59,7 +59,9 @@ class GovernmentStructureModelTest(BaseTestCase):
         self.assertEqual(GovernmentStructure.objects.count(), 2)
         self.assertEqual(Region.objects.count(), 2)
 
-        government_structure = GovernmentStructure.objects.last()
+        # government structures are ordered by -publication date, so obtain
+        # the first one to get the newest one
+        government_structure = GovernmentStructure.objects.first()
         regions = Region.objects.by_government_structure(government_structure)
 
         for region in regions:
