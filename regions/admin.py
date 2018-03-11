@@ -11,6 +11,7 @@ from institutions.admin import InstitutionAdmin
 
 # models
 from .models import Region, Commune
+from public_servants.models import PublicServant
 
 
 @admin.register(Region)
@@ -32,6 +33,17 @@ class RegionAdmin(InstitutionAdmin):
             )
         else:
             return super().changelist_view(request, extra_content)
+
+    def render_change_form(self, request, context, *args, **kwargs):
+        form = context['adminform'].form
+        fields = form.fields
+        public_servants = PublicServant.objects.filter(
+            government_structure_id=form.instance.government_structure_id
+        )
+        fields['governor'].queryset = public_servants
+        return super(RegionAdmin, self).render_change_form(
+            request, context, *args, **kwargs
+        )
 
 
 @admin.register(Commune)
