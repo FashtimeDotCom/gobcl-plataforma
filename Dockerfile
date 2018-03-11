@@ -9,4 +9,4 @@ RUN npm install -g yarn
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT gunicorn project.wsgi:application -c project/production/gunicorn_conf.py --reload
+ENTRYPOINT gunicorn project.wsgi:application -c project/production/gunicorn_conf.py --max-requests 400 --workers 4 --worker-class gevent
