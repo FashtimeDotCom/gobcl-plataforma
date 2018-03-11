@@ -8,7 +8,6 @@ from threading import Thread
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import activate
 
 # models
 from base.models import BaseModel
@@ -30,6 +29,7 @@ class GovernmentStructure(BaseModel):
     )
 
     class Meta:
+        ordering = ('-publication_date',)
         verbose_name = _('government structure')
         verbose_name_plural = _('government structures')
         permissions = (

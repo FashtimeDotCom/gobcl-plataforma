@@ -25,7 +25,7 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
     )
 
     def get_readonly_fields(self, request, obj=None):
-        if obj.archive_news:
+        if obj and obj.archive_news:
             return ('archive_news',)
         return []
 
