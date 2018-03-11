@@ -25,7 +25,7 @@ class Region(Institution):
     # foreign keys
     governor = models.ForeignKey(
         'public_servants.PublicServant',
-        verbose_name=_('governor'),
+        verbose_name=_('region manager'),
         null=True,
         on_delete=models.SET_NULL,
     )
