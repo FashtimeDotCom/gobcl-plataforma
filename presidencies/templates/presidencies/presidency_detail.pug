@@ -20,7 +20,7 @@ block content
         .row
           .col-md-4
             if presidency.photo
-              img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
+              img.img-fluid.w-100.img-frame(src="{% thumbnail presidency.photo 700x1000 %}", alt="")
           .col-md-8
             .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
             if presidency.twitter 
