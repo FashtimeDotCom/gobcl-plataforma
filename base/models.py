@@ -131,7 +131,11 @@ class BaseModel(models.Model):
 
 def lastest_government_structure():
     from government_structures.models import GovernmentStructure
-    return GovernmentStructure.objects.order_by('publication_date').last().pk
+    government_structure = GovernmentStructure.objects.order_by(
+        'publication_date').last()
+    if government_structure:
+        return government_structure.pk
+    return
 
 
 class BaseGovernmentStructureModel(BaseModel):
