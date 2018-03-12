@@ -9,7 +9,7 @@ def categories(request):
 
     category_ids = list(set(Category.objects.order_by(
         'article__count__visits'
-    ).values_list('id')))
+    ).values_list('id', flat=True)))
 
     context = {
         'categories': Category.objects.filter(id__in=category_ids)[:5]
