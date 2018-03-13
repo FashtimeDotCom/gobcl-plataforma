@@ -35,7 +35,7 @@ nav.navbar.navbar-expand-a11y.navbar-light.fixed-top
       ul.navbar-nav
 
         li.nav-item
-          a.nav-link(href="https://chileatiende.digital.gob.cl/") {% trans 'Procedures and benefits' %}
+          a.nav-link(href="https://www.chileatiende.gob.cl/") {% trans 'Procedures and benefits' %}
         {% show_menu 0 1 100 100 "includes/menu.pug" %}
         li.nav-item
           a.nav-link(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
@@ -44,17 +44,16 @@ nav.navbar.navbar-expand-a11y.navbar-light.fixed-top
             i.ic-search.btn-search_icon
             i.ic-close.btn-search_icon
 
-        li.nav-item.dropdown.nav-item-desktop.lang
-          a#navbarDropdownMenuLang.nav-link.dropdown-toggle(
-            href="#",
-            data-toggle="dropdown",
-            aira-haspopup="true",
-            aria-expanded="false"
-          )
-            - get_current_language as current_language
-            {{ current_language|upper }}
-          .dropdown-menu(aria-labelledby="navbaºrDropdownMenuLang")
-            {% language_chooser "includes/menu_language.pug" %}
+        li.nav-item.nav-item-desktop.lang
+          - get_current_language as current_language
+          for language in languages
+            if current_language != language.0
+              a#navbarDropdownMenuLang.nav-link(
+                href="{% page_language_url language.0 %}",
+                title="{% trans 'Change to language:' %} {{ language.1 }}"
+                aria-expanded="false"
+              )
+                {{ language.0|upper }}
 
         if user.is_authenticated 
           li.nav-item.nav-item-access.dropdown

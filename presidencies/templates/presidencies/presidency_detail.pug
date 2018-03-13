@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load thumbnail
+- load cms_tags
 
 block content
   section.bg-light
@@ -18,7 +19,8 @@ block content
           span.profile_job {{ presidency.title }}
         .row
           .col-md-4
-            img.img-fluid.w-100.img-frame(src="{{ presidency.photo.url }}", alt="")
+            if presidency.photo
+              img.img-fluid.w-100.img-frame(src="{% thumbnail presidency.photo 700x1000 %}", alt="")
           .col-md-8
             .mt-1.mt-md-0 {{ presidency.description|linebreaks }}
             if presidency.twitter 
@@ -29,7 +31,17 @@ block content
             .row.d-sm-none.d-lg-flex
               .col-lg-6.mt-3
                 .overflowed-xs
-                  a(href="{{ presidency.url }}", target="blank").button.button--block {% trans 'Go to the presidency site' %}
+                  a(href="{{ presidency.url }}", target="blank").button.button--block 
+                    {% static_placeholder 'Go to the Presidency Press site' or %}
+                    {% trans 'Go to the Presidency Press site' %}
+                    {% endstatic_placeholder %}
+                  if perms.presidencies.change_presidency
+                    - get_current_language as current_language
+                    a.button.button--block(
+                      href="{% url 'admin:presidencies_presidency_change' presidency.id %}?language={{ current_language }}",
+                      target="blank"
+                    )
+                      | {% trans 'edit presidency'|capfirst %}
         .row.d-sm-none.d-none.d-sm-flex.d-lg-none
           .col-md-12.mt-3
             .overflowed-xs
@@ -40,7 +52,7 @@ block content
       .row
         for url in presidency.urls.all
           .col-sm-12.col-lg-4.a11y-tts
-            .card-small
+            .card-small.h-100
               h5.card-small_title
                 a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
                   i.icon-arrow-right-black.icon--right

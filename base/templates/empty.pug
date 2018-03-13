@@ -127,10 +127,7 @@ html(lang="es")
 
     // templates
 
-    {% compress js %}
-    script(type="text/pug", src="{% static 'templates/users/list.pug' %}")
     script(type="text/pug", src="{% static 'templates/users/detail.pug' %}")
-    {% endcompress %}
 
     block javascript_data
     {% render_block "js" %}

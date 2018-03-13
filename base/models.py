@@ -129,10 +129,20 @@ class BaseModel(models.Model):
         return 'https://{site}{path}'.format(site=site, path=absolute_url)
 
 
+def lastest_government_structure():
+    from government_structures.models import GovernmentStructure
+    government_structure = GovernmentStructure.objects.order_by(
+        'publication_date').last()
+    if government_structure:
+        return government_structure.pk
+    return
+
+
 class BaseGovernmentStructureModel(BaseModel):
     government_structure = models.ForeignKey(
         'government_structures.GovernmentStructure',
         verbose_name=_('government structure'),
+        default=lastest_government_structure,
     )
 
     objects = BaseGovernmentQuerySet.as_manager()

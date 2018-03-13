@@ -18,7 +18,7 @@
               a(href="{{ file.get_absolute_url }}").link.link--text-light.link--has-dot
                 {{ file.title }}
             .clearfix
-              a(href="https://chileatiende.digital.gob.cl/").more.more--right {% trans 'See more' %}
+              a(href="https://www.chileatiende.gob.cl/").more.more--right {% trans 'See more' %}
 
         .col-12.col-lg-4.a11y-tts-search
           h2.heading-label.heading-label--light {% trans 'News' %}
@@ -40,5 +40,5 @@
             .clearfix
               a(href="{% url 'institution_list' %}").more.more--right {% trans 'See more' %}
         .col-sm-12.col-md-12.text-xs-center.text-sm-center.a11y-tts-search
-          .site-search_button-results
+          .site-search_button-results.text-center
             a(href="{% url 'article_list' %}").button.button--clean.button--more {% trans 'See all results' %}

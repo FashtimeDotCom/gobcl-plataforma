@@ -6,9 +6,11 @@
 $django-cms-toolbar: 5px;
 $django-cms-toolbar-expanded: 49px;
 
+$primary: #FE6565;
+
 $imagesPath: "../@gobdigital-cl/gob.cl/dist/images/";
 $fontsPath: "../@gobdigital-cl/gob.cl/dist/fonts/";
 $iconsPath: "../@gobdigital-cl/gob.cl/dist/images/icons/";
 
-@import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/vairables";
+@import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/variables";
 @import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/functions";

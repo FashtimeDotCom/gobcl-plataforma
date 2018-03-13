@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from importlib import import_module
 import os
 import sys
 
@@ -22,64 +23,50 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # local settings
 if 'DOCKER' in os.environ:
-    from project.production.local_settings import ADMINS
-    from project.production.local_settings import DEBUG
-    from project.production.local_settings import ENABLE_EMAILS
-    from project.production.local_settings import LOCALLY_ALLOWED_HOSTS
-    from project.production.local_settings import LOCALLY_INSTALLED_APPS
-    from project.production.local_settings import STATICFILES_STORAGE
-    from project.production.local_settings import DEFAULT_FILE_STORAGE
-    from project.production.local_settings import COMPRESS_STORAGE
-    from project.production.local_settings import COMPRESS_URL
-    from project.production.local_settings import THUMBNAIL_DEFAULT_STORAGE
-    from project.production.local_settings import STATIC_URL
-    from project.production.local_settings import MEDIA_URL
+    local_settings = import_module('project.production.local_settings')
 elif 'STAGING' in os.environ:
-    from project.local_settings import ADMINS
-    from project.staging.local_settings import DEBUG
-    from project.staging.local_settings import ENABLE_EMAILS
-    from project.staging.local_settings import LOCALLY_ALLOWED_HOSTS
-    from project.staging.local_settings import LOCALLY_INSTALLED_APPS
-    from project.staging.local_settings import STATICFILES_STORAGE
-    from project.staging.local_settings import DEFAULT_FILE_STORAGE
-    from project.staging.local_settings import COMPRESS_STORAGE
-    from project.staging.local_settings import COMPRESS_URL
-    from project.staging.local_settings import THUMBNAIL_DEFAULT_STORAGE
-    from project.staging.local_settings import STATIC_URL
-    from project.staging.local_settings import MEDIA_URL
+    local_settings = import_module('project.staging.local_settings')
+elif 'TRAVIS' in os.environ:
+    local_settings = import_module('project.travis_settings')
 else:
-    if 'TRAVIS' in os.environ:
-        from project.travis_settings import DEBUG
-        from project.travis_settings import LOCALLY_INSTALLED_APPS
-        from project.travis_settings import ENABLE_EMAILS
-        from project.travis_settings import ADMINS
-        from project.travis_settings import LOCALLY_ALLOWED_HOSTS
-    else:
-        from project.local_settings import DEBUG
-        from project.local_settings import LOCALLY_INSTALLED_APPS
-        from project.local_settings import ENABLE_EMAILS
-        from project.local_settings import ADMINS
-        from project.local_settings import LOCALLY_ALLOWED_HOSTS
+    local_settings = import_module('project.local_settings')
 
-    STATIC_URL = os.getenv('STATIC_URL', '/static/')
-    MEDIA_URL = os.getenv('MEDIA_URL', '/uploads/')
-    COMPRESS_URL = os.getenv('COMPRESS_URL', '/static/')
-    THUMBNAIL_DEFAULT_STORAGE = os.getenv(
-        'THUMBNAIL_DEFAULT_STORAGE',
-        'easy_thumbnails.storage.ThumbnailFileSystemStorage'
-    )
-    STATICFILES_STORAGE = os.getenv(
-        'STATICFILES_STORAGE',
-        'django.contrib.staticfiles.storage.StaticFilesStorage'
-    )
-    DEFAULT_FILE_STORAGE = os.getenv(
-        'DEFAULT_FILE_STORAGE',
-        'django.core.files.storage.FileSystemStorage'
-    )
-    COMPRESS_STORAGE = os.getenv(
-        'COMPRESS_STORAGE',
-        'compressor.storage.CompressorFileStorage'
-    )
+
+def get_local_value(key, default_value):
+    try:
+        return getattr(local_settings, key)
+    except AttributeError:
+        return default_value
+
+
+ADMINS = local_settings.ADMINS
+DEBUG = local_settings.DEBUG
+ENABLE_EMAILS = local_settings.ENABLE_EMAILS
+LOCALLY_ALLOWED_HOSTS = local_settings.LOCALLY_ALLOWED_HOSTS
+LOCALLY_INSTALLED_APPS = local_settings.LOCALLY_INSTALLED_APPS
+
+STATIC_URL = get_local_value('STATIC_URL', '/static/')
+MEDIA_URL = get_local_value('MEDIA_URL', '/uploads/')
+COMPRESS_URL = get_local_value('COMPRESS_URL', '/static/')
+THUMBNAIL_DEFAULT_STORAGE = get_local_value(
+    'THUMBNAIL_DEFAULT_STORAGE',
+    'easy_thumbnails.storage.ThumbnailFileSystemStorage'
+)
+STATICFILES_STORAGE = get_local_value(
+    'STATICFILES_STORAGE',
+    'django.contrib.staticfiles.storage.StaticFilesStorage'
+)
+DEFAULT_FILE_STORAGE = get_local_value(
+    'DEFAULT_FILE_STORAGE',
+    'django.core.files.storage.FileSystemStorage'
+)
+COMPRESS_STORAGE = get_local_value(
+    'COMPRESS_STORAGE',
+    'compressor.storage.CompressorFileStorage'
+)
+
+CHILEATIENDE_ACCESS_TOKEN = get_local_value('CHILEATIENDE_ACCESS_TOKEN', '')
+
 
 if DEBUG:
     env = 'development'
@@ -88,6 +75,7 @@ else:
 
 # TEST should be true if we are running python tests
 TEST = 'test' in sys.argv
+TRAVIS = 'TRAVIS' in os.environ
 
 # People who get code error notifications.
 # In the format [
@@ -121,6 +109,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.redirects',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
 
@@ -139,6 +128,7 @@ INSTALLED_APPS = [
     'haystack',
     'modeltranslation',
     'django_cron',
+    'adminsortable2',
 
     # internal
     'base',
@@ -155,6 +145,7 @@ INSTALLED_APPS = [
     'services',
     'campaigns',
     'contingencies',
+    'streams',
 
     # django cms
     'cms',
@@ -168,6 +159,7 @@ INSTALLED_APPS = [
     'djangocms_snippet',
     'djangocms_style',
     'djangocms_file',
+    'bootstrap4_grid',
 
     'aldryn_apphooks_config',
     'aldryn_categories',
@@ -187,8 +179,8 @@ INSTALLED_APPS = [
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'no-reply@gob.cl'
-EMAIL_SENDER_NAME = 'GOB'
+DEFAULT_FROM_EMAIL = 'noreply@email.magnet.cl'
+EMAIL_SENDER_NAME = 'GOBCL'
 
 if DEBUG:
     INSTALLED_APPS += [
@@ -200,6 +192,7 @@ if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + LOCALLY_INSTALLED_APPS
 
 MIDDLEWARE = [
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -216,6 +209,7 @@ MIDDLEWARE = [
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     'users.middleware.font_size.FontSizeMiddleware',
+    'gobcl_cms.middleware.increase_article_visits.IncreaseArticleVisits',
 ]
 
 if DEBUG:
@@ -376,7 +370,6 @@ LIBSASS_PRECISION = 10
 NPM_FILE_PATTERNS = {
     'bootstrap': ['dist/js/bootstrap.min.js'],
     'jquery': ['dist/jquery.min.js'],
-    'moment': ['min/moment-with-locales.min.js'],
     'eonasdan-bootstrap-datetimepicker': [
         'build/js/bootstrap-datetimepicker.min.js',
         'build/css/bootstrap-datetimepicker.min.css'
@@ -393,6 +386,7 @@ NPM_FILE_PATTERNS = {
     ],
     'slick-carousel': [
         'slick/slick.js',
+        'slick/slick.min.js',
         'slick/slick.css',
         'slick/slick-theme.css',
         'slick/fonts/*',
@@ -404,7 +398,8 @@ NPM_FILE_PATTERNS = {
     ],
     'moment': [
         'moment.js',
-        'locale/es.js'
+        'locale/es.js',
+        'min/moment-with-locales.min.js',
     ]
 }
 
@@ -468,6 +463,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ]
@@ -490,6 +488,8 @@ THUMBNAIL_ALIASES = {
         'new_list_item': {'size': (495, 270), 'crop': True},
         'avatar': {'size': (328, 342), 'crop': True},
         'avatar_small': {'size': (218, 228), 'crop': True},
+        'og_image': {'size': (1200, 630), 'crop': False},
+        'image_home': {'size': (2500, 840), 'crop': True},
     },
 }
 
@@ -507,6 +507,7 @@ CMS_TEMPLATES = [
     ('base.pug', 'Home page template'),
     ('campaigns/campaign_detail.pug', _('Campaign template')),
     ('empty.pug', _('Empty template')),
+    ('streams/stream_detail.pug', _('Stream template')),
 ]
 
 DJANGOCMS_STYLE_CHOICES = [
@@ -541,13 +542,14 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 COMPRESS_AUTOPREFIXER_BINARY = 'node_modules/postcss-cli/bin/postcss'
 
-CHILEATIENDE_ACCESS_TOKEN = os.getenv('CHILEATIENDE_ACCESS_TOKEN', '')
-
-CLAVEUNICA_SECRET_KEY = os.getenv('CLAVEUNICA_SECRET_KEY', '')
+CLAVE_UNICA_SECRET_KEY = os.getenv('CLAVE_UNICA_SECRET_KEY', '')
 
 PARLER_LANGUAGES = {
     1: (
-        {'code': 'es'},
+        {
+            'code': 'es',
+            'fallbacks': ['en'],
+        },
         {'code': 'en'},
     ),
     'default': {
@@ -563,14 +565,16 @@ CRON_CLASSES = (
 )
 
 # Google Analytics API
-GA_KEY_FILE_LOCATION = os.getenv('KEY_FILE_LOCATION', '')
-GA_SERVICE_ACCOUNT_EMAIL = os.getenv('SERVICE_ACCOUNT_EMAIL', '')
+GA_KEY_FILE_LOCATION = os.getenv('GA_KEY_FILE_LOCATION', '')
+GA_SERVICE_ACCOUNT_EMAIL = os.getenv('GA_SERVICE_ACCOUNT_EMAIL', '')
 GA_VIEW_ID = os.getenv('GA_VIEW_ID', '')
 
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/django_cache',
+        'LOCATION': '{}{}'.format(BASE_DIR, '/tmp/django_cache'),
     }
 }
+
+COMPRESS_OFFLINE = not DEBUG

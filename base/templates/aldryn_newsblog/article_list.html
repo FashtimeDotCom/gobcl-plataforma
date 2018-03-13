@@ -1,13 +1,7 @@
 {% extends "aldryn_newsblog/base.html" %}
 
-{% load staticfiles %}
-
 {% block newsblog_content %}
 {% include 'aldryn_newsblog/article_list.pug' %}
-{% endblock %}
-
-{% block javascripts %}
-<script src="{% static 'js/load_more_articles.js' %}"></script>
 {% endblock %}
 
 {% block javascript_data %}

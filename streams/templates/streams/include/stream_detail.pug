@@ -1,0 +1,48 @@
+- load i18n
+
+section.sub-section
+  .row
+    .col-12
+      .row
+        .col-md-6.col-lg-7
+          if stream.url
+            width = 560
+            height = 315
+            if stream.is_youtube
+              iframe(
+                width=width,
+                height=height,
+                src="{{ stream.get_url }}",
+                frameborder="0",
+                allow="autoplay; encrypted-media",
+                allowfullscreen
+              )
+            elif stream.is_facebook
+              iframe(
+                src="{{ stream.get_url }}",
+                width=width,
+                height=height,
+                style="border:none;overflow:hidden",
+                scrolling="no",
+                frameborder="0",
+                allowTransparency="true",
+                allowFullScreen="true",
+              )
+            elif stream.is_mediastream
+              iframe(
+                src="{{ stream.get_url }}",
+                width=width,
+                height=height,
+                frameborder="0",
+                allowfullscreen="",
+                allowscriptaccess="always",
+                scrolling="no",
+              )
+          else
+            .embed-responsive.embed-responsive-16by9
+              {{ stream.iframe|safe }}
+        .col-md-6.col-lg-5
+          h2 {{ stream.title }}
+          p {{ stream.description }}
+          a(href="", style="display:none;").button.button--block.button--light.button--clean.button--space.a11y-tts
+            {% trans 'See more' %}

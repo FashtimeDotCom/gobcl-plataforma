@@ -1,7 +1,7 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
-  a.contingency-continue.button.button--block.button--yellow.a11y-tts(href="{% url 'home' %}")
+  a.contingency-continue.button.button--block.button--yellow.a11y-tts-contingency(href="{% url 'home' %}")
     | {% trans 'Breaking' %}: {{ contingency.name }}
   a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
@@ -26,6 +26,7 @@ section.contingency(data-active="{{ exists_contingency|lower }}")
                   .schedule
                     .schedule_left
                       time.schedule_time.schedule_time--has-dot {{ event.date_time|time:"H:i" }}
+                      time.schedule_date {{ event.date_time|date:"SHORT_DATE_FORMAT" }}
                     .schedule_right
                       if event.url
                         a(href="{{ event.get_absolute_url }}").schedule_link

@@ -8,6 +8,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.pagination import _positive_int
 from rest_framework.utils.urls import remove_query_param, replace_query_param
+from rest_framework.permissions import AllowAny
 
 from .serializers import ArticleSerializer
 from services.serializers import ChileAtiendeFileSerializer
@@ -80,6 +81,7 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
     model = Article
     serializer_class = ArticleSerializer
     pagination_class = LimitOffsetPagination
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
 
@@ -125,10 +127,10 @@ class ArticleSearchViewSet(ArticleViewSet):
                 Q(title__unaccent__icontains=self.query) |
                 Q(objective__unaccent__icontains=self.query)
             ).distinct()
-        
+
         queryset = list(itertools.chain(
-                queryset_file, queryset
-            )
+            queryset_file, queryset
+        )
         )
 
         return queryset

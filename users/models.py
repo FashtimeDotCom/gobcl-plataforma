@@ -145,6 +145,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         if self.email:
             self.email = self.email.lower()
 
+        if self.rut:
+            self.rut = format_rut(self.rut)
+
         super(User, self).save(*args, **kwargs)
 
     def send_example_email(self):

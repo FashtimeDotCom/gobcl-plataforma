@@ -1,0 +1,12 @@
+-load i18n
+
+audio(controls, style="width: 100%;")
+  source(src="{{instance.audio.url}}", type="audio/mpeg")
+    | 
+  {% trans 'Your browser does not support the audio element.' %}
+  .post-audio
+    a.post-audio_button(href="{{instance.audio.url}}")
+      i.ic-volume.post-audio_icon
+    p.post-audio_title {{instance.title}}
+    .post-audio_time
+      {{instance.audio_length}}

@@ -1,78 +1,79 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations for the project templates
+# Copyright (C) 
+# This file is distributed under the same license as the plataforma-gobcl package.
+# Ignacio Munizaga <muni@magnet.cl>, 2017.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-03 11:17-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"PO-Revision-Date: 2017-10-27 19:22-0300\n"
+"Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: settings.py:320
+#: settings.py:323
 msgid "Spanish"
 msgstr "Español"
 
-#: settings.py:321
+#: settings.py:324
 msgid "English"
 msgstr "Inglés"
 
-#: settings.py:508
+#: settings.py:512
 msgid "Campaign template"
 msgstr "Plantilla campaña"
 
-#: settings.py:509
+#: settings.py:513
 msgid "Empty template"
 msgstr "Plantilla vacía"
 
+#: settings.py:514
+msgid "Stream template"
+msgstr "Plantilla stream"
+
 #: urls.py:40
-msgid "^about/$"
-msgstr "^acerca-de/$"
-
-#: urls.py:41
-msgid "^about-interior/$"
-msgstr "^acerca-de-interior/$"
-
-#: urls.py:43
 msgid "^institutions/"
 msgstr "^instituciones/"
 
-#: urls.py:44
+#: urls.py:41
 msgid "^regions/"
-msgstr ""
+msgstr "^regiones/"
 
-#: urls.py:45
+#: urls.py:42
 msgid "^ministries/"
 msgstr "^ministerios/"
 
-#: urls.py:46
+#: urls.py:43
 msgid "^search/"
 msgstr "^buscar/"
 
-#: urls.py:47
+#: urls.py:44
 msgid "^procedures/"
-msgstr ""
+msgstr "^procedimientos/"
+
+#: urls.py:45
+msgid "^articles/"
+msgstr "^articulos/"
 
 #: urls.py:48
-msgid "^articles/"
-msgstr ""
-
-#: urls.py:51
 msgid "^"
 msgstr ""
+
+#~ msgid "^about/$"
+#~ msgstr "^acerca-de/$"
+
+#~ msgid "^about-interior/$"
+#~ msgstr "^acerca-de-interior/$"
 
 #~ msgid "^news/"
 #~ msgstr "^noticias/"
 
-#: aldryn_newsblog/urls.py:46
-msgid "^category/(?P<category>\\w[-\\w]*)/$"
-msgstr "^categoria/(?P<category>\\w[-\\w]*)/$"
+#~ msgid "^category/(?P<category>\\w[-\\w]*)/$"
+#~ msgstr "^categoria/(?P<category>\\w[-\\w]*)/$"

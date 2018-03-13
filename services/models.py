@@ -113,7 +113,7 @@ class ChileAtiendeFile(BaseModel):
 
     def featured_image(self):
         return ''
-    
+
     @property
     def featured_image_id(self):
         return ''
@@ -123,9 +123,9 @@ class ChileAtiendeFile(BaseModel):
 
     def get_absolute_url(self):
         url = '{}{}'.format(
-                'https://www.chileatiende.gob.cl/fichas/ver/',
-                self.code,
-            )
+            'https://www.chileatiende.gob.cl/fichas/ver/',
+            self.code,
+        )
         return url
 
     @classmethod

@@ -9,6 +9,7 @@ Replace this with more appropriate tests for your application.
 
 # django
 from django.contrib import admin
+from django.contrib.redirects.models import Redirect
 from django.core.urlresolvers import NoReverseMatch
 from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
@@ -29,6 +30,9 @@ from base.scenarios import create_presidency
 # Third-party app imports
 from model_mommy import mommy
 from model_mommy import random_gen
+
+# models
+from ministries.models import Ministry
 
 
 class BaseTestCase(TestCase, Mockup):
@@ -75,8 +79,11 @@ class IntegrityOnDeleteTestCase(BaseTestCase):
 
         for model in get_our_models():
             # ignore gobcl_cms
-            if (model._meta.app_label == 'gobcl_cms' or
-                    model.__name__.endswith('Translation')):
+            if (
+                model._meta.app_label == 'gobcl_cms' or
+                model.__name__.endswith('Translation') or
+                model._meta.app_label == 'bootstrap4_grid'
+            ):
                 continue
 
             obj, related_nullable_objects = self.create_full_object(model)
@@ -147,6 +154,12 @@ class UrlsTest(BaseTestCase):
             param_name = '{}_id'.format(model_name)
 
             if model_name.endswith('_translation'):
+                continue
+
+            if model._meta.app_label == 'bootstrap4_grid':
+                continue
+
+            if model._meta.app_label == 'gobcl_cms':
                 continue
 
             obj = getattr(self, method_name)()
@@ -230,3 +243,26 @@ class UrlsTest(BaseTestCase):
         for model, model_admin in admin.site._registry.items():
             patterns = model_admin.get_urls()
             test_url_patterns(patterns, namespace='admin')
+
+
+class TestRedirects(BaseTestCase):
+    def test_redirect(self):
+        Ministry.objects.all().delete()
+        old_path = '/a/'
+        new_path = '/'
+        Redirect.objects.create(
+            site_id=1,
+            old_path=old_path,
+            new_path=new_path,
+        )
+
+        response = self.client.get(old_path)
+        self.assertRedirects(
+            response,
+            new_path,
+            status_code=301,
+            target_status_code=200,
+            host=None,
+            msg_prefix='',
+            fetch_redirect_response=True
+        )

@@ -4,6 +4,17 @@ extends base.pug
 - load staticfiles
 - load thumbnail
 - load apphooks_config_tags
+- load cms_tags
+
+block top_content
+
+block stylesheets
+  style.
+    @media (min-width: 36em) {
+      .hero-background {
+          background-image: url({{ header_image.image|thumbnail_url:'image_home' }});
+      }
+    }
 
 block content
   section.section.bg-bluedark.hero-background
@@ -15,7 +26,10 @@ block content
         .col-12.col-lg-7
           article.article.article--dark.text-light
             h2.article_title.title--light.a11y-tts {% trans 'You are on Gob.cl' %}
-            p.a11y-tts {% trans 'Your portal to access information of the Government of Chile in a simple and fast way.' %}
+            p.a11y-tts
+              {% static_placeholder 'You are on Gob.cl lead in' or %}
+              {% trans 'Your portal to access information of the Government of Chile in a simple and fast way.' %}
+              {% endstatic_placeholder %}
             .search-form.search-form--large#searchHero
               .search-form_content
                 input(type="search" placeholder="{% trans 'Write here what you want to search'%}").search-form_input.toggle-search
@@ -27,7 +41,10 @@ block content
       .row
         .col-md-9.col-xl-10
           ul.list-ib
-            li.a11y-tts {% trans 'Most searched' %}:
+            li.a11y-tts
+              {% static_placeholder 'Most searched' or %}
+              {% trans 'Most searched' %}
+              {% endstatic_placeholder %}:
             for category in categories
               li
                 a.link.link--clean.text-white.a11y-tts(
@@ -35,13 +52,17 @@ block content
                 )
                   {{ category }}
         .col-md-3.col-xl-2.text-right
-          a.button.button-small(href="{% url 'about' %}")
+          a.button.button-small(href="{% page_url 'about' about_url %}{{about_url}}")
+            {% static_placeholder 'About Chile' or %}
             {% trans 'About Chile' %}
+            {% endstatic_placeholder %}
 
   {% include 'includes/social_small.pug' %}
 
   section
     .container
+      if stream
+        {% include 'streams/include/stream_detail.pug' %}
       if featured_campaigns
         section.sub-section
           {% include 'campaigns/includes/campaign_list.pug' with campaigns=featured_campaigns has_featured=True %}
@@ -50,10 +71,15 @@ block content
         .row
           .col-12.col-lg-8.col-xl-6
             article.card-new
-              h2.heading-medium.a11y-tts {% trans 'Procedures and benefits' %}
+              h2.heading-medium.a11y-tts
+                {% static_placeholder 'Procedures and benefits' or %}
+                {% trans 'Procedures and benefits' %}
+                {% endstatic_placeholder %}
               p.a11y-tts
+                {% static_placeholder 'Procedures and benefits lead in' or %}
                 {% trans 'Find out about the main benefits of the State, in addition to the procedures that are carried out in ChileAtiende.' %}
-              a(href="https://chileatiende.digital.gob.cl/").card-new_more.d-md-none
+                {% endstatic_placeholder %}
+              a(href="https://www.chileatiende.gob.cl/").card-new_more.d-md-none
                 | {% trans 'See more' %}
         .row.d-none.d-md-flex
           for file in chile_atiende_files
@@ -65,18 +91,21 @@ block content
         .row
           .col-lg-4.offset-lg-4.d-none.d-md-block
             a.button.button--block.button--light.button--clean.button--space.a11y-tts(
-              href="https://chileatiende.digital.gob.cl/"
+              href="https://www.chileatiende.gob.cl/"
             )
               {% trans 'See more' %}
 
       if articles
-        section.sub-section.d-none.d-md-block
-          h2.heading-medium.a11y-tts {% trans 'News' %}
+        section.sub-section
+          h2.heading-medium.a11y-tts.rs_preserve
+            {% static_placeholder 'News' or %}
+            {% trans 'News' %}
+            {% endstatic_placeholder %}
 
           {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
 
-          .col-12.col-lg-4.offset-lg-4.d-none.d-sm-block
-            a.button.button--block.button--light.button--clean.button--space.a11y-tts(
+          .col-12.col-lg-4.offset-lg-4
+            a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
               href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
             )
               {% trans 'See more' %}
@@ -85,51 +114,83 @@ block content
         section.sub-section
           .row
             .col-12.col-lg-7
-              h2.heading-medium.a11y-tts {% trans 'Institutions' %}
-              p.a11y-tts {% trans 'Know the main government entities and their authorities.' %}
+              h2.heading-medium.a11y-tts
+                {% static_placeholder 'Institutions' or %}
+                {% trans 'Institutions' %}
+                {% endstatic_placeholder %}
+              p.a11y-tts
+                {% static_placeholder 'Institutions lead in' or %}
+                {% trans 'Know the main government entities and their authorities.' %}
+                {% endstatic_placeholder %}
               br
             .col-12
               .row
                 .col-md-6.col-lg-3
                   a(href="{% url 'presidency_detail' %}").card-data.py-5.py-sm-auto.a11y-tts
-                    h2.card-data_title: span {% trans 'Presidency of the Republic' %}
+                    h2.card-data_title: span 
+                      {% static_placeholder 'Presidency of the Republic' or %}
+                      {% trans 'Presidency of the Republic' %}
+                      {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#ministries").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ ministries_count }}
-                      span.card-data_title-text {% trans 'Ministries' %}
+                      span.card-data_title-text 
+                        {% static_placeholder 'Ministries' or %}
+                        {% trans 'Ministries' %}
+                        {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#services").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ public_services_count }}
-                      span.card-data_title-text {% trans 'Public Services.' %}
+                      span.card-data_title-text 
+                        {% static_placeholder 'Public Services' or %}
+                        {% trans 'Public Services' %}
+                        {% endstatic_placeholder %}
                 .col-md-6.col-lg-3
-                  a(href="{% url 'institution_list' %}").card-data.py-5.py-sm-auto.a11y-tts
+                  a(href="{% url 'institution_list' %}#regions").card-data.py-5.py-sm-auto.a11y-tts
                     h3.card-data_title
                       span.card-data_number {{ regions_count }}
-                      span.card-data_title-text {% trans 'Regions and their Municipalities.' %}
+                      span.card-data_title-text 
+                        {% static_placeholder 'Regions and their Municipalities' or %}
+                        {% trans 'Regions and their Municipalities' %}
+                        {% endstatic_placeholder %}
 
       if campaigns
         section.sub-section
-          h2.heading-medium.a11y-tts {% trans 'Campaigns' %}
+          h2.heading-medium.a11y-tts
+            {% static_placeholder 'Campaigns' or %}
+            {% trans 'Campaigns' %}
+            {% endstatic_placeholder %}
           {% include 'campaigns/includes/campaign_list.pug' with campaign=campaigns has_featured=show_featured_on_normal %}
 
       section.sub-section
         .card-small.d-lg-none
           h5.card-small_title
-            a(href="{% url 'about' %}").card-small_link
-              | {% trans 'About Chile' %}
+            a(href="{% page_url 'about' about_url %}{{about_url}}").card-small_link
+              {% static_placeholder 'About Chile' or %}
+              {% trans 'About Chile' %}
+              {% endstatic_placeholder %}
               i.ic-arrow-right.icon--right
           .card-small_body
-            p {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
+            p 
+              {% static_placeholder 'About Chile lead in' or %}
+              {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
+              {% endstatic_placeholder %}
         .row.d-none.d-lg-flex
           .col-md-5.align-self-center
-              h5.heading-medium.a11y-tts {% trans 'About Chile' %}
-              p.a11y-tts {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
-              .row
-                .col-lg-10
-                  a(href="{% url 'about' %}").button.button--block.button--light.button--clean.button--space.a11y-tts
-                    {% trans 'See more' %}
+            h5.heading-medium.a11y-tts
+              {% static_placeholder 'About Chile' or %}
+              {% trans 'About Chile' %}
+              {% endstatic_placeholder %}
+            p.a11y-tts
+              {% static_placeholder 'About Chile lead in' or %}
+              {% trans 'Information for tourists, migrants and those who want to study or do business in Chile.' %}
+              {% endstatic_placeholder %}
+            .row
+              .col-lg-10
+                a(href="{% page_url 'about' about_url %}{{about_url}}").button.button--block.button--light.button--clean.button--space.a11y-tts
+                  {% trans 'See more' %}
           .col-md-1
           .col-md-6.align-self-center
             img.img-fluid.w-100.img-frame(src="{% static 'images/about-of.jpg' %}", alt="")

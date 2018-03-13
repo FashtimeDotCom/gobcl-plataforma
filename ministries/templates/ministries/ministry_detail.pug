@@ -2,6 +2,7 @@ extends base.pug
 
 - load i18n
 - load thumbnail
+- load cms_tags
 
 block meta_tags
   meta(name="description", content="{{ministry.description}}")
@@ -60,8 +61,19 @@ block content
               {% trans 'Go to the ministry site' %}
   
             if perms.ministries.change_ministry
-              a.button.button--block(href="{% url 'ministry_update' ministry.id %}", target="blank")
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:ministries_ministry_change' ministry.id %}?language={{ current_language }}",
+                target="blank"
+              )
                 | {% trans 'edit ministry'|capfirst %}
+            if perms.public_servants.change_publicservant
+              - get_current_language as current_language
+              a.button.button--block(
+                href="{% url 'admin:public_servants_publicservant_change' ministry.minister_id %}?language={{ current_language }}", 
+                target="blank"
+              )
+                | {% trans 'edit minister'|capfirst %}
 
             if perms.ministries.delete_ministry
               a.button.button--block(href="{% url 'ministry_delete' ministry.id %}", target="blank")
@@ -90,12 +102,26 @@ block content
                   li: span {% trans 'Phone' %}: {{ servant.phone }}
                 - if servant.email
                   li: span {% trans 'E-Mail' %}: {{ servant.email }}
+            if perms.public_servants.change_publicservant
+              - get_current_language as current_language
+              a.button.btn.btn-xs.pull-right(
+                href="{% url 'admin:public_servants_publicservant_change' servant.id %}?language={{ current_language }}", 
+                target="blank"
+              )
+                | {% trans 'edit'|capfirst %}
 
   section.section
     .container.a11y-tts
-      h2.heading-medium {% trans 'Institutions of' %} {{ ministry.name }}
+      h2.heading-medium 
+        {% static_placeholder 'Institutions of' or %} 
+        {% trans 'Institutions of' %} 
+        {% endstatic_placeholder %}
+        {{ ministry.name }}
       if ministry.publicenterprise_set.exists
-        h3.heading-sub {% trans 'Public Enterprises' %}
+        h3.heading-sub 
+          {% static_placeholder 'Public Enterprises' or %}
+          {% trans 'Public Enterprises' %}
+          {% endstatic_placeholder %}
         .row
           for public_enterprise in ministry.publicenterprise_set.all
             .col-12.col-md-4
@@ -107,7 +133,10 @@ block content
                   else
                     | {{ public_enterprise.name }}
       if ministry.publicservice_set.exists
-        h3.heading-sub {% trans 'Public Services' %}
+        h3.heading-sub 
+          {% static_placeholder 'Public Services' or %}
+          {% trans 'Public Services' %}
+          {% endstatic_placeholder %}
         .row
           for public_service in ministry.publicservice_set.all
             .col-12.col-md-4

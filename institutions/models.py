@@ -9,6 +9,8 @@ from django.utils.text import slugify
 
 # models
 from base.models import BaseGovernmentStructureModel
+from djangocms_text_ckeditor.fields import HTMLField
+from institutions.managers import InstitutionQuerySet
 
 # hitcount
 from hitcount.models import HitCountMixin
@@ -17,25 +19,22 @@ from hitcount.models import HitCountMixin
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 
-#
-from institutions.managers import InstitutionQuerySet
-
 
 institution_translations = TranslatedFields(
-        name=models.CharField(
-            _('name'),
-            max_length=255,
-        ),
-        description=models.TextField(
-            _('description'),
-        ),
-        slug=models.SlugField(
-            _('slug'),
-            blank=True,
-            max_length=255,
-            editable=False,
-        ),
-    )
+    name=models.CharField(
+        _('name'),
+        max_length=255,
+    ),
+    description=HTMLField(
+        _('description'),
+    ),
+    slug=models.SlugField(
+        _('slug'),
+        blank=True,
+        max_length=255,
+        editable=False,
+    ),
+)
 
 
 class Institution(

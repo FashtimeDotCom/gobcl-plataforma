@@ -112,3 +112,9 @@ gobcl-uploads/*
 gobcl.xlsx
 catastro.xlsx
 *.p12
+tmp/
+gobcl-posts-2.json
+gobcl-posts-3.json
+gobcl-posts-lang-2.json
+gobcl-posts-lang-3.json
+gobcl-posts-lang.json

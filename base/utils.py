@@ -10,6 +10,7 @@ import unicodedata
 
 # django
 from django.apps import apps
+from django.core.cache import caches
 from django.utils import timezone
 
 
@@ -87,3 +88,48 @@ def get_our_models():
 def can_loginas(request, target_user):
     """ This will only allow admins to log in as other users """
     return request.user.is_superuser and not target_user.is_superuser
+
+
+def get_or_set_cache(name, default_callback, ttl=1800):
+    """
+    get a value from the cache. If not set, use the default callcabk
+    Set it with a time to live that by default is ttl
+    """
+    cache = caches['default']
+    value = cache.get(name)
+
+    if value is None:
+        value = default_callback()
+        cache.set(name, value, ttl)
+
+    return value
+
+
+def keymap_replace(
+        string: str, 
+        mappings: dict,
+        lower_keys=False,
+        lower_values=False,
+        lower_string=False,
+    ) -> str:
+    """Replace parts of a string based on a dictionary.
+
+    This function takes a string a dictionary of
+    replacement mappings. For example, if I supplied
+    the string "Hello world.", and the mappings 
+    {"H": "J", ".": "!"}, it would return "Jello world!".
+
+    Keyword arguments:
+    string       -- The string to replace characters in.
+    mappings     -- A dictionary of replacement mappings.
+    lower_keys   -- Whether or not to lower the keys in mappings.
+    lower_values -- Whether or not to lower the values in mappings.
+    lower_string -- Whether or not to lower the input string.
+    """
+    replaced_string = string.lower() if lower_string else string
+    for character, replacement in mappings.items():
+        replaced_string = replaced_string.replace(
+            character.lower() if lower_keys else character,
+            replacement.lower() if lower_values else replacement
+        )
+    return replaced_string

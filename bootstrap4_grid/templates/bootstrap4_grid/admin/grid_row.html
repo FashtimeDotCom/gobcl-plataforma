@@ -1,0 +1,13 @@
+{% extends "bootstrap4_grid/admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static 'bootstrap4_grid/js/bundle.grid.js' %}"></script>
+{% endblock %}
+
+{% block field_sets %}
+    <div class="djangocms-bootstrap4 djangocms-bootstrap4-row" data-static="{% get_static_prefix %}">
+        {{ block.super }}
+    </div>
+{% endblock %}

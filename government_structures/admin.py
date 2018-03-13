@@ -24,6 +24,11 @@ class GovernmentStructureAdmin(admin.ModelAdmin):
         'copy_actions',
     )
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj and obj.archive_news:
+            return ('archive_news',)
+        return []
+
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
