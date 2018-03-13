@@ -16,7 +16,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         gtag('js', new Date());
         gtag('config', 'UA-48790041-1');
     meta(charset="utf-8")
-    title Gob.cl{% block title %}{% if title%}:{% endif %} {{title}} {%endblock%}
+    title Gob.cl{% block title %}{% if title%}:{% endif %} {{title|title}} {%endblock%}
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="author", content="https://magnet.cl")
 
@@ -32,7 +32,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     block meta_tags
       meta(itemprop='description', content='Gobierno de Chile')
       meta(itemprop='image', content="{% static 'favicon/ms-icon-310x310.png' %}")
-      meta(itemprop='name', content='Gob.cl: {{title}}')
+      meta(itemprop='name', content='Gob.cl: {{title|title}}')
 
     block newsblog_meta_tags
       meta(name="keywords", content="{% page_attribute 'meta_keywords' %}")

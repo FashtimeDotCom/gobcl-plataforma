@@ -4,6 +4,12 @@ extends base.pug
 - load thumbnail
 - load cms_tags
 
+block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      if presidency.photo
+        meta(itemprop='image', content="{% thumbnail presidency.photo 700x1000 %}")
+      meta(itemprop='name', content='Gob.cl: {{title|title}}')
+
 block content
   section.bg-light
     .container
