@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.urls import reverse
 from django.shortcuts import redirect
 
+from institutions.admin import GovernmentStructureFilter
+
 from adminsortable2.admin import SortableAdminMixin
 
 # models
@@ -15,7 +17,9 @@ from .models import FooterLink
 
 @admin.register(FooterLink)
 class FooterLinkAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_filter = ('government_structure',)
+    list_filter = (
+        ('government_structure', GovernmentStructureFilter),
+    )
     list_display = (
         'name',
         'url',

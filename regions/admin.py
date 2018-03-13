@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 from institutions.admin import InstitutionAdmin
+from institutions.admin import GovernmentStructureFilter
 
 # models
 from .models import Region, Commune
@@ -16,7 +17,6 @@ from public_servants.models import PublicServant
 
 @admin.register(Region)
 class RegionAdmin(InstitutionAdmin):
-    list_filter = ('government_structure',)
     list_display = (
         'name',
         'government_structure',
@@ -48,6 +48,9 @@ class RegionAdmin(InstitutionAdmin):
 
 @admin.register(Commune)
 class CommuneAdmin(admin.ModelAdmin):
+    list_filter = (
+        ('region__government_structure', GovernmentStructureFilter),
+    )
     search_fields = (
         'name',
     )
@@ -59,3 +62,13 @@ class CommuneAdmin(admin.ModelAdmin):
         'twitter',
         'url',
     )
+
+    def changelist_view(self, request, extra_content=None):
+        if not request.GET.get('region__government_structure__id__exact'):
+            return redirect(
+                reverse('admin:regions_commune_changelist') +
+                '?region__government_structure__id__exact=' +
+                str(request.government_structure.pk)
+            )
+        else:
+            return super().changelist_view(request, extra_content)

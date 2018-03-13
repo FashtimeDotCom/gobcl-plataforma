@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 from institutions.admin import InstitutionAdmin
+from institutions.admin import GovernmentStructureFilter
 
 # parler
 from parler.admin import TranslatableAdmin
@@ -22,9 +23,6 @@ from public_servants.models import PublicServant
 
 @admin.register(Ministry)
 class MinistryAdmin(InstitutionAdmin):
-    list_filter = (
-        'government_structure',
-    )
     list_display = (
         'name',
         'government_structure',
@@ -35,6 +33,14 @@ class MinistryAdmin(InstitutionAdmin):
     filter_horizontal = (
         'public_servants',
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.select_related().prefetch_related(
+            'translations',
+            'public_servants',
+        )
+        return qs
 
     def changelist_view(self, request, extra_content=None):
         if not request.GET.get('government_structure__id__exact'):
@@ -61,8 +67,27 @@ class MinistryAdmin(InstitutionAdmin):
 
 @admin.register(PublicService)
 class PublicServiceAdmin(AllTranslationsMixin, TranslatableAdmin):
+    list_filter = (
+        ('ministry__government_structure', GovernmentStructureFilter),
+    )
     list_display = (
         'name',
         'ministry',
         'url',
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.select_related().prefetch_related(
+            'translations', 'ministry__translations',)
+        return qs
+
+    def changelist_view(self, request, extra_content=None):
+        if not request.GET.get('ministry__government_structure__id__exact'):
+            return redirect(
+                reverse('admin:ministries_publicservice_changelist') +
+                '?ministry__government_structure__id__exact=' +
+                str(request.government_structure.pk)
+            )
+        else:
+            return super().changelist_view(request, extra_content)

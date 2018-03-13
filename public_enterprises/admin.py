@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.urls import reverse
 from django.shortcuts import redirect
 
+from institutions.admin import GovernmentStructureFilter
+
 # parler
 from parler.admin import TranslatableAdmin
 
@@ -19,7 +21,9 @@ from .models import PublicEnterprise
 
 @admin.register(PublicEnterprise)
 class PublicEnterpriseAdmin(AllTranslationsMixin, TranslatableAdmin):
-    list_filter = ('government_structure',)
+    list_filter = (
+        ('government_structure', GovernmentStructureFilter),
+    )
     list_display = (
         'name',
         'government_structure',

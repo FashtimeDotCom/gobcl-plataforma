@@ -10,6 +10,8 @@ from django.shortcuts import redirect
 # parler
 from parler.admin import TranslatableAdmin
 
+from institutions.admin import GovernmentStructureFilter
+
 # Aldryn
 from aldryn_translation_tools.admin import AllTranslationsMixin
 
@@ -19,7 +21,9 @@ from .models import PublicServant
 
 @admin.register(PublicServant)
 class PublicServantAdmin(AllTranslationsMixin, TranslatableAdmin):
-    list_filter = ('government_structure',)
+    list_filter = (
+        ('government_structure', GovernmentStructureFilter),
+    )
     list_display = (
         'name',
         'government_structure',
