@@ -127,10 +127,10 @@ class ArticleSearchViewSet(ArticleViewSet):
                 Q(title__unaccent__icontains=self.query) |
                 Q(objective__unaccent__icontains=self.query)
             ).distinct()
-        
+
         queryset = list(itertools.chain(
-                queryset_file, queryset
-            )
+            queryset_file, queryset
+        )
         )
 
         return queryset

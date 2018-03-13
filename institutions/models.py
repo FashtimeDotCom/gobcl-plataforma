@@ -21,20 +21,20 @@ from parler.models import TranslatedFields
 
 
 institution_translations = TranslatedFields(
-        name=models.CharField(
-            _('name'),
-            max_length=255,
-        ),
-        description=HTMLField(
-            _('description'),
-        ),
-        slug=models.SlugField(
-            _('slug'),
-            blank=True,
-            max_length=255,
-            editable=False,
-        ),
-    )
+    name=models.CharField(
+        _('name'),
+        max_length=255,
+    ),
+    description=HTMLField(
+        _('description'),
+    ),
+    slug=models.SlugField(
+        _('slug'),
+        blank=True,
+        max_length=255,
+        editable=False,
+    ),
+)
 
 
 class Institution(

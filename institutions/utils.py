@@ -45,7 +45,7 @@ def load_data_from_xlsx():
     }
 
     government_structure = GovernmentStructure.objects.get_or_none(
-            current_government=True)
+        current_government=True)
 
     for sheet_name in wb.get_sheet_names():
         sheet = wb.get_sheet_by_name(sheet_name)
