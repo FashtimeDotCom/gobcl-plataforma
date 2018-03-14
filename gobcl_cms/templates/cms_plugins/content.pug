@@ -3,10 +3,10 @@ section
   div.container
     section.sub-section
       article
-        h2.heading-medium {{ instance.title }}
+        h2.heading-medium.a11y-tts {{ instance.title }}
         .row
           .col-12.col-md-6
-            p {{ instance.description|linebreaksbr }}
+            p.a11y-tts {{ instance.description|linebreaksbr }}
             if instance.child_plugin_instances
               for plugin in instance.child_plugin_instances
                 {% render_plugin plugin %}

@@ -7,8 +7,9 @@ section.section--medium.bg-bluedark
         {% include 'includes/toolbar.pug' %}
       .col-xs-12.col-sm-12.col-md-7.col-lg-7
         article.text-light
-          h1.heading-large {{ instance.title}}
-          {{instance.description|linebreaks}}
+          h1.heading-large.a11y-tts {{ instance.title}}
+          .a11y-tts
+            {{instance.description|linebreaks}}
 
       .col-12.col-lg-5.col-xl-5
         .d-none.d-lg-block.pull-md-right
