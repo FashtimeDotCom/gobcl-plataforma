@@ -37,6 +37,7 @@ class Ministry(Institution):
         'public_servants.PublicServant',
         verbose_name=_('public servants'),
         related_name='ministries',
+        blank=True,
     )
 
     # required fields

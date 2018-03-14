@@ -39,6 +39,7 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         _('photo'),
         upload_to=file_path,
         null=True,
+        blank=True,
         max_length=255,
     )
     email = models.EmailField(
