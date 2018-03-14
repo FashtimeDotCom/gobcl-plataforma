@@ -30,13 +30,17 @@ def get_most_visited_urls(request):
     call most_visited_urls() and set it to the cache.
     """
     cache = caches['default']
-    most_visited_urls_cache = cache.get('most_visited_urls')
+    cache_key = '{}_{}'.format(
+        'most_visited_urls',
+        request.LANGUAGE_CODE,
+    )
+
+    most_visited_urls_cache = cache.get(cache_key)
     if most_visited_urls_cache is None:
         cache.set(
-            'most_visited_urls',
+            cache_key,
             most_visited_urls(),
             86400,
         )
-        most_visited_urls_cache = cache.get('most_visited_urls')
-
+        most_visited_urls_cache = cache.get(cache_key)
     return {'most_visited_urls': most_visited_urls_cache}
