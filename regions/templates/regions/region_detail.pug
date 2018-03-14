@@ -19,7 +19,7 @@ block content
   section.bg-light
     .container
       ol.breadcrumb
-        li: a.a11y-tts(href="/") Home
+        li: a.a11y-tts(href="{% url 'home' %}") Home
         li: a.a11y-tts(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
         li: a.a11y-tts(href="{{ region.region.get_absolute_url }}") {{ region.name }}
   section.section--medium.bg-bluedark

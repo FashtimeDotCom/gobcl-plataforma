@@ -77,6 +77,7 @@ class MinistryDetailView(TranslatableSlugMixin, HitCountDetailView):
             'publicenterprise_set',
             'publicservice_set',
             'public_servants',
+            'public_servants__translations',
         ).select_related(
             'minister',
         )

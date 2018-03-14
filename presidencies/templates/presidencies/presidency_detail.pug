@@ -14,7 +14,7 @@ block content
   section.bg-light
     .container
       ol.breadcrumb
-        li: a(href="/") {% trans 'Home' %}
+        li: a(href="{% url 'home' %}") {% trans 'Home' %}
         li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
 
   section.bg-bluedark
