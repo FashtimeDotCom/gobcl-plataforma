@@ -1,8 +1,8 @@
 /* globals $, document */
 
 $(function () {
-  if (document.app == undefined) {
-    return
+  if (document.app === undefined) {
+    return;
   } else {
     document.createInifiniteScroll(
       // a link for ajax request

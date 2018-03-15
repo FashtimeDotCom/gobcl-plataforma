@@ -55,17 +55,25 @@ document.createInifiniteScroll = function (
           success: function (response) {
             // Setting a link for a consequent request
             requestUrl = response.next || requestUrl;
+            currentLanguage = response.current_language;
 
             // transforming a publishing date to a readable format for all results
             var articles = response.results.map(function (article) {
-              article.publishing_date =  moment(article.publishing_date).format('LL');
+              var format;
+              if (currentLanguage == 'es') {
+                format = 'LL';
+              } else if (currentLanguage == 'en') {
+                format = 'll';
+              }
+              moment.locale(currentLanguage);
+              article.publishing_date =  moment(article.publishing_date).format(format);
               return article;
             });
 
             // Generating DOM using a pug-template
             var newContent = templates[templateName]({
               articles: articles,
-              currentLanguage: response.current_language
+              currentLanguage: currentLanguage
             });
 
             // Appending it to a current container
