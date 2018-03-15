@@ -211,7 +211,7 @@ class GovernmentStructure(BaseModel):
                 if child == 'presidency':
 
                     # Blank presidency
-                    new_obj.name = ''
+                    new_obj.name = 'Nuevo mandatario de la República'
                     new_obj.photo = None
                     new_obj.twitter = ''
                     new_obj.url = ''
