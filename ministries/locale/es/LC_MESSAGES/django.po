@@ -106,6 +106,10 @@ msgstr "editar ministerio"
 msgid "delete ministry"
 msgstr "borrar ministerio"
 
+#: templates/ministries/ministry_detail.pug:76
+msgid "edit minister"
+msgstr "editar ministro"
+
 #: templates/ministries/ministry_detail.pug:98
 msgid "Institutions of"
 msgstr "Instituciones del"
