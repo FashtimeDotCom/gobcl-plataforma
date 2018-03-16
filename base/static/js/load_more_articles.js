@@ -1,12 +1,12 @@
 /* globals $, document */
 
 $(function () {
-  if (document.app === undefined) {
+  if (App.infiniteScroll === undefined) {
     return;
   } else {
-    document.createInifiniteScroll(
+    GobCl.createInifiniteScroll(
       // a link for ajax request
-      document.app.url + '?offset=' + parseInt(document.app.offset, 10),
+      App.infiniteScroll.url + '?offset=' + parseInt(App.infiniteScroll.offset, 10),
       // a function that adds information about category to a requestUrl
       function (url) {
         var currentLocation = window.location.href;

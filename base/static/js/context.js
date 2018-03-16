@@ -12,6 +12,7 @@ $(function () {
    * set utils namespace.
    */
   $.extend(App, {
-    utils: {}
+    utils: {},
+    infiniteScroll: {}
   });
 });
