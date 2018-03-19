@@ -1,9 +1,9 @@
 /* global $, document */
 
 $(function () {
-  document.createInifiniteScroll(
+  GobCl.createInifiniteScroll(
     // a link for ajax request
-    '/api/1.0/search' + '?offset=' + parseInt(document.app.offset, 10),
+    '/api/1.0/search' + '?offset=' + parseInt(App.infiniteScroll.offset, 10),
     // a function that adds information about category and query string to a requestUrl
     function (url) {
       var currentLocation = window.location.href;

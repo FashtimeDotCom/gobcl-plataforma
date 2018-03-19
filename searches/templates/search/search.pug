@@ -6,6 +6,18 @@ block javascripts
   script(src="{% static 'js/search.js' %}")
   script(src="{% static 'js/load_more_found.js' %}")
 
+block javascript_context
+  script.
+    $(function () {
+      App.infiniteScroll = {
+        // - Temprorary solution until servr will get me this value
+        url: "{% url 'search-list' %}",
+        //- document.app.offset = "{{ article_list.count }}"
+        offset: "{{ count }}"
+      };
+    });
+
+
 block content
   section.section.bg-bluedark.text-light
     .container.result-search
@@ -38,13 +50,4 @@ block content
   section
     .container
       {% include 'includes/social.pug' %}
-      
-  script.
-    if (!document.app) {
-      document.app = {};
-    }
-    document.app.url = "{% url 'search-list' %}";
-    // - Temprorary solution until servr will get me this value
-    document.app.offset = {{ count }};
-    //- document.app.offset = "{{ article_list.count }}"
-    
+
