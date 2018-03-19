@@ -245,7 +245,7 @@ TEMPLATES = [
                 'searches.context_processors.get_featured_news',
                 'contingencies.context_processors.get_contingencies',
                 'services.context_processors.get_chile_atiende_files',
-                'project.context_processors.show_google_analytics',
+                'project.context_processors.show_analytics_config',
             ],
             'loaders': [
                 ('pypugjs.ext.django.Loader', (
@@ -581,3 +581,4 @@ CACHES = {
 COMPRESS_OFFLINE = not DEBUG
 
 SHOW_GOOGLE_ANALYTICS = get_local_value('SHOW_GOOGLE_ANALYTICS', False)
+SHOW_HOTJAR = get_local_value('SHOW_HOTJAR', False)
