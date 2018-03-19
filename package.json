@@ -4,7 +4,7 @@
   "repository": "https://github.com/magnet-cl/django-project-template-py3",
   "author": "Magnet S.P.A.",
   "dependencies": {
-    "@gobdigital-cl/gob.cl": "^1.3.8",
+    "@gobdigital-cl/gob.cl": "^1.3.9",
     "bootstrap": "^4.0.0-beta.2",
     "jquery": "^3.2.1",
     "magnific-popup": "^1.1.0",
