@@ -208,6 +208,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
 
     script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
 
+    block javascript_context
+
     {% compress js %}
     script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
@@ -222,7 +224,6 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         });
       });
 
-    block javascript_context
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")
