@@ -8,14 +8,12 @@ block javascripts
 
 block javascript_context
   script.
-    $(function () {
-      App.infiniteScroll = {
-        // - Temprorary solution until servr will get me this value
-        url: "{% url 'search-list' %}",
-        //- document.app.offset = "{{ article_list.count }}"
-        offset: "{{ count }}"
-      };
-    });
+    App.infiniteScroll = {
+      // - Temprorary solution until servr will get me this value
+      url: "{% url 'search-list' %}",
+      //- document.app.offset = "{{ article_list.count }}"
+      offset: "{{ count }}"
+    };
 
 
 block content

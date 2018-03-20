@@ -6,11 +6,9 @@
 
 {% block javascript_context %}
 <script type="text/javascript">
-    $(function () {
-      App.infiniteScroll = {
-        url: "{% url 'article-list' %}",
-        offset: "{{ article_list.count }}"
-      };
-    });
+  App.infiniteScroll = {
+    url: "{% url 'article-list' %}",
+    offset: "{{ article_list.count }}"
+  };
 </script>
 {% endblock %}
