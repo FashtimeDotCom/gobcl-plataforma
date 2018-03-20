@@ -3,16 +3,8 @@
  *
  * define the default context of application
  */
-$(function () {
-  'use strict';
 
-  window.App = {};
-
-  /**
-   * set utils namespace.
-   */
-  $.extend(App, {
-    utils: {},
-    infiniteScroll: {}
-  });
-});
+var App = {
+  utils: {},
+  infiniteScroll: {}
+};
