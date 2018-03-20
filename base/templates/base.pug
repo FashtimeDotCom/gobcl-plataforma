@@ -206,9 +206,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     block javascript_data
     {% render_block "js" %}
 
-    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
-
     {% compress js %}
+    script(src="{% static '@gobdigital-cl/gob.cl/dist/js/gob.cl.js' %}")
     script(src="{% static 'js/context.js' %}")
     script(type='text/javascript').
       $(function () {
