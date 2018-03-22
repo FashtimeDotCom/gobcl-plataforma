@@ -181,13 +181,6 @@ class HeaderImage(BaseModel):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        if self.is_active:
-            HeaderImage.objects.filter(
-                is_active=True
-            ).update(is_active=False)
-        return super(HeaderImage, self).save(*args, **kwargs)
-
 
 class SectionPlugin(CMSPlugin):
     title = models.CharField(

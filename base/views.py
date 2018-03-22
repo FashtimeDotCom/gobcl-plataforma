@@ -53,7 +53,7 @@ class IndexTemplateView(TemplateView):
         ).order_by('-publishing_date')[:4]
 
         stream = Stream.objects.active().first()
-        header_image = HeaderImage.objects.active().first()
+        header_image = HeaderImage.objects.active().order_by('?').first()
 
         gov_structure = self.request.government_structure
 
