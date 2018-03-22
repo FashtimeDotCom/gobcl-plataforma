@@ -215,12 +215,12 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         * Share django urls with javascript.
         */
         $.extend(App, {
+          version: '1.0.0',
           paths: {
             fontSize: "{% url 'user_font_size_change' %}"
           }
         });
       });
-
     script(src="{% static 'js/forms.js' %}")
     script(src="{% static 'js/toolbar.js' %}")
     script(src="{% static 'js/social.js' %}")
