@@ -53,6 +53,8 @@ from services.models import ChileAtiendeService
 from streams.models import Stream
 from streams.models import StreamEvent
 from users.models import User
+from sociocultural_departments.models import SocioculturalDepartment
+from sociocultural_departments.models import SocioculturalDepartmentURL
 
 
 class Mockup(object):
@@ -271,6 +273,12 @@ class Mockup(object):
         self.set_required_string(kwargs, 'description')
         self.set_required_datetime(kwargs, 'date_time')
         return StreamEvent.objects.create(**kwargs)
+
+    def create_sociocultural_department(self, **kwargs):
+        return SocioculturalDepartment.objects.create(**kwargs)
+
+    def create_sociocultural_department_url(self, **kwargs):
+        return SocioculturalDepartmentURL.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:
