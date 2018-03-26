@@ -1,26 +1,9 @@
 extends base.pug
 
 - load i18n
+- load thumbnail
+- load cms_tags
 
-block breadcrumbs
-  li
-    a(href="{% url 'sociocultural_department_list' %}")
-      | {{opts.verbose_name_plural|capfirst}}
+block meta_tags
 
 block content
-  .text-right
-    .btn-group
-      if perms.sociocultural_departments.change_sociocultural_department
-        a.btn.btn-primary(href="")
-          {% trans 'Update sociocultural department' %}
-          i.fa.fa-edit
-      if perms.sociocultural_departments.delete_sociocultural_department
-        a.btn.btn-danger(href="")
-          {% trans 'Delete sociocultural department' %}
-          i.fa.fa-times
-
-  table.table.table-bordered.table-hover
-    tbody
-      tr
-        th Id
-        td {{socioculturaldepartment.id}}

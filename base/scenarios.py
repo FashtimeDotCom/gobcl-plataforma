@@ -55,6 +55,13 @@ def create_presidency():
     m.create_presidency(government_structure=government_structure)
 
 
+def create_sociocultural_department():
+    m = Mockup()
+    government_structure = get_current_government_structure()
+    m.create_sociocultural_department(
+        government_structure=government_structure)
+
+
 def create_ministry(datetime=None, quantity=10):
     m = Mockup()
     government_structure = get_current_government_structure()
@@ -321,7 +328,7 @@ def create_news_from_json(json_name: str='gobcl-posts.json'):
     with open(settings.BASE_DIR + '/' + json_name) as news:
         json_news = json.loads(news.read())
 
-    # get basic data required by model Article (aldryn newsblog)   
+    # get basic data required by model Article (aldryn newsblog)
     app_config = NewsBlogConfig.objects.first()
     owner = User.objects.first()
     author = Person.objects.get_or_create()[0]
