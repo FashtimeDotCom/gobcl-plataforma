@@ -11,6 +11,7 @@ class EmailBackend(BaseEmailBackend):
     '''
     Backend email to send emails via gobcl api
     '''
+    access_token = ''
 
     def __init__(self, **kwargs):
         self.url_send_email = settings.GOBCL_EMAIL_URL_SEND_EMAIL
@@ -19,7 +20,6 @@ class EmailBackend(BaseEmailBackend):
         self.client_secret = settings.GOBCL_EMAIL_CLIENT_SECRET
         self.token_app = settings.GOBCL_EMAIL_TOKEN_APP
         self._lock = threading.RLock()
-        self.access_token = ''
 
     def get_access_token(self):
         '''
@@ -72,11 +72,11 @@ class EmailBackend(BaseEmailBackend):
 
                 if self.valid_status(status_code):
                     num_sent += 1
-                else:
+                elif status_code == 401:
                     self.new_access_token = self.get_access_token()
                     if (not self.new_access_token or
                             self.new_access_token == self.access_token):
-                        self.new_access_token = self.get_access_token()
+                        self.access_token = self.get_access_token()
                     status_code = self._send(message, self.access_token)
                     if self.valid_status(status_code):
                         num_sent += 1
