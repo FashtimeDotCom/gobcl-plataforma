@@ -275,6 +275,18 @@ class Mockup(object):
         return StreamEvent.objects.create(**kwargs)
 
     def create_sociocultural_department(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_string(kwargs, 'twitter')
+        self.set_required_url(kwargs, 'url')
+
+        if 'photo' not in kwargs:
+            test_root = os.path.realpath(os.path.dirname(__file__))
+            photo = open('{}/tests/gondola.jpg'.format(test_root), 'rb')
+            photo = get_thumbnailer(photo, relative_name='photos/gondola.jpg')
+            kwargs['photo'] = photo
         return SocioculturalDepartment.objects.create(**kwargs)
 
     def create_sociocultural_department_url(self, **kwargs):
