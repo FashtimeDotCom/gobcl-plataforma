@@ -585,3 +585,4 @@ COMPRESS_OFFLINE = not DEBUG
 
 SHOW_GOOGLE_ANALYTICS = get_local_value('SHOW_GOOGLE_ANALYTICS', False)
 SHOW_HOTJAR = get_local_value('SHOW_HOTJAR', False)
+SHOW_USABILLA = get_local_value('SHOW_USABILLA', False)
