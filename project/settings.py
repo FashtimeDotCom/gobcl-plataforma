@@ -179,7 +179,7 @@ INSTALLED_APPS = [
 
 # Default email address to use for various automated correspondence from
 # the site managers.
-DEFAULT_FROM_EMAIL = 'noreply@email.magnet.cl'
+DEFAULT_FROM_EMAIL = 'no-reply@digital.gob.cl'
 EMAIL_SENDER_NAME = 'GOBCL'
 
 if DEBUG:
@@ -280,7 +280,8 @@ DATABASES = {
 if DEBUG or not ENABLE_EMAILS:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
 
 
 # Password validation
@@ -586,3 +587,10 @@ COMPRESS_OFFLINE = not DEBUG
 SHOW_GOOGLE_ANALYTICS = get_local_value('SHOW_GOOGLE_ANALYTICS', False)
 SHOW_HOTJAR = get_local_value('SHOW_HOTJAR', False)
 SHOW_USABILLA = get_local_value('SHOW_USABILLA', False)
+
+
+GOBCL_EMAIL_URL_SEND_EMAIL = get_local_value('GOBCL_EMAIL_URL_SEND_EMAIL', '')
+GOBCL_EMAIL_ACCESS_URL = get_local_value('GOBCL_EMAIL_ACCESS_URL', '')
+GOBCL_EMAIL_CLIENT_ID = get_local_value('GOBCL_EMAIL_CLIENT_ID', '')
+GOBCL_EMAIL_CLIENT_SECRET = get_local_value('GOBCL_EMAIL_CLIENT_SECRET', '')
+GOBCL_EMAIL_TOKEN_APP = get_local_value('GOBCL_EMAIL_TOKEN_APP', '')
