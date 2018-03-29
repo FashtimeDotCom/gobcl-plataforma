@@ -17,11 +17,12 @@ class ThumbnailSerializer(serializers.ImageField):
 
 
 class TranslationField(TranslatedFieldsField):
-    
+
     def to_representation(self, value):
         if isinstance(value, dict):
             return value
         return super(TranslationField, self).to_representation(value)
+
 
 class ArticleSerializer(TranslatableModelSerializer):
 

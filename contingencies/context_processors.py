@@ -7,10 +7,10 @@ def get_contingencies(request):
     contingencies = Contingency.objects.active().prefetch_related(
         'events',
         'informations',
-    )
+    )[:3]
 
     context = {
-        'contingency': contingencies.first(),
+        'contingency': contingencies,
         'exists_contingency': contingencies.exists(),
     }
 

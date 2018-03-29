@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+from django.core.urlresolvers import reverse
 
 # models
 from base.models import BaseModel
@@ -49,8 +50,11 @@ class Contingency(BaseModel, TranslatableModel):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        return super(Contingency, self).save(*args, **kwargs)
+    def get_contingency_event_api_url(self):
+        return reverse('contingency-events', args=(self.pk,))
+
+    def get_contingency_information_api_url(self):
+        return reverse('contingency-informations', args=(self.pk,))
 
 
 class ContingencyEvent(BaseModel, TranslatableModel):
