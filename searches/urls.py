@@ -7,6 +7,6 @@ urlpatterns = [
     url(
         r'^$',
         views.ArticleListView.as_view(),
-        name='article_list'
+        name='search'
     ),
 ]

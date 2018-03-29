@@ -6,6 +6,13 @@ from django.db.models import Q
 from django.views.generic import ListView
 
 from aldryn_newsblog.models import Article
+from campaigns.models import Campaign
+from ministries.models import Ministry
+from ministries.models import PublicService
+from presidencies.models import Presidency
+from public_enterprises.models import PublicEnterprise
+from public_servants.models import PublicServant
+from regions.models import Region
 
 # chile atiende
 from services.chile_atiende_client import File
@@ -23,24 +30,159 @@ class ArticleListView(ListView):
 
         return super(ArticleListView, self).get(request)
 
-    def get_context_data(self, **kwargs):
-        context = super(ArticleListView, self).get_context_data(**kwargs)
+    def get_campaigns(self, **kwargs):
+        if self.query:
+            return Campaign.objects.active().translated(
+                title__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:10]
 
-        # obinta chile atiende files
+        return []
+
+    def get_chileatiende_files(self, **kwags):
         chile_atiende_file_client = File()
 
         # set the list as empty by default
-        context['chile_atiende_files_json'] = []
+        chileatiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
-                context['chile_atiende_files_json'] = (
+                chile_atiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
+        return chileatiende_files
+
+    def get_ministries(self, **kwargs):
+        if self.query:
+            ministries = Ministry.objects.by_government_structure(
+                self.request.government_structure
+            )
+            ministry_ids = ministries.translated(
+                name__unaccent__icontains=self.query
+            ) | ministries.filter(
+                minister__name__unaccent__icontains=self.query
+            ) | ministries.filter(
+                public_servants__name__unaccent__icontains=self.query
+            )
+
+            return Ministry.objects.filter(
+                id__in=ministry_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            ).select_related(
+                'minister'
+            )
+
+        return []
+
+    def get_presidents(self, **kwargs):
+        if self.query:
+            presidency = Presidency.objects.filter(
+                government_structure=self.request.government_structure
+            )
+
+            presidency_ids = presidency.filter(
+                name__unaccent__icontains=self.query
+            ) | presidency.translated (
+                title__unaccent__icontains=self.query
+            )
+
+            return Presidency.objects.filter(
+                id__in=presidency_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            )
+
+        return []
+
+    def get_public_enterprises(self, **kwargs):
+        if self.query:
+            return PublicEnterprise.objects.filter(
+                government_structure=self.request.government_structure
+            ).exclude(
+                url=None
+            ).translated(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:5]
+
+        return []
+
+    def get_public_servants(self, **kwargs):
+        if self.query:
+            return PublicServant.objects.filter(
+                government_structure=self.request.government_structure
+            ).filter(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:10]
+
+        return []
+
+    def get_public_services(self, **kwargs):
+        if self.query:
+            government_structure = self.request.government_structure
+            return PublicService.objects.filter(
+                ministry__government_structure=government_structure
+            ).exclude(
+                url=None
+            ).translated(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:5]
+
+        return []
+
+    def get_regions(self, **kwargs):
+        if self.query:
+            regions = Region.objects.by_government_structure(
+                self.request.government_structure
+            )
+            region_ids = regions.translated(
+                name__unaccent__icontains=self.query
+            ) | regions.filter(
+                governor__name__unaccent__icontains=self.query
+            ) | regions.filter(
+                commune__name__unaccent__icontains=self.query
+            )
+
+            return Region.objects.filter(
+                id__in=region_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            ).select_related(
+                'governor'
+            )
+
+
+        return []
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+
+        context['campaigns'] = self.get_campaigns()
+
+        # obtain chile atiende files
+        context['chile_atiende_files_json'] = self.get_chileatiende_files()
+
+        context['ministries'] = self.get_ministries()
+
+        context['public_enterprises'] = self.get_public_enterprises()
+
+        context['public_servants'] = self.get_public_servants()
+
+        context['public_services'] = self.get_public_services()
+
+        context['presidents'] = self.get_presidents()
+
+        context['regions'] = self.get_regions()
 
         # Count the total list of objects
         context['count'] = (
             context['object_list'].count() +
-            len(context['chile_atiende_files_json'])
+            len(context['campaigns']) +
+            len(context['chile_atiende_files_json']) +
+            len(context['ministries']) +
+            len(context['presidents']) +
+            len(context['public_enterprises']) +
+            len(context['public_servants']) +
+            len(context['public_services']) +
+            len(context['regions'])
         )
 
         context['query'] = self.query
