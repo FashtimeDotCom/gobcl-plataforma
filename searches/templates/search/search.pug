@@ -29,7 +29,7 @@ block content
           .col-12.col-md-10.col-lg-7
             for presidency in presidents
               .result.a11y-tts
-                a.result_link(href="{{ public_servant.get_absolute_url }}")
+                a.result_link(href="{{ presidency.get_absolute_url }}")
                   {{presidency.name}}
                 p.result_excerpt
                   {{ presidency.description|striptags|truncatechars:100  }}
