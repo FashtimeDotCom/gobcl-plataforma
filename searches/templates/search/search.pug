@@ -27,14 +27,63 @@ block content
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
-            for chile_atiende_file in chile_atiende_files_json
+            for presidency in presidents
               .result.a11y-tts
-                a.result_link(href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}")
-                  {{ chile_atiende_file.titulo }}
+                a.result_link(href="{{ presidency.get_absolute_url }}")
+                  {{ presidency.name }}
                 p.result_excerpt
-                  {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
-                span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
-                  |  {{chile_atiende_file.servicio}}
+                  {{ presidency.description|striptags|truncatechars:100  }}
+                span.result_date {{ presidency.title }}
+
+            for public_servant in public_servants
+              {% with url=public_servant.get_absolute_url %}
+              if url
+                .result.a11y-tts
+                  hashtag = '#'
+                  a.result_link(href="{{ url }}{{ hashtag }}{{ public_servant.name|slugify }}")
+                    {{ public_servant.name }}
+                  p.result_excerpt
+                    {{ public_servant.description|striptags|truncatechars:100  }}
+                  span.result_date {{ public_servant.charge }}
+              {% endwith %}
+
+            for ministry in ministries
+              .result.a11y-tts
+                a.result_link(href="{{ ministry.get_absolute_url }}")
+                  {{ministry.name}}
+                p.result_excerpt
+                  {{ ministry.description|striptags|truncatechars:100  }}
+                span.result_date {% trans 'minister'|capfirst %}: {{ ministry.minister }}
+
+            for region in regions
+              .result.a11y-tts
+                a.result_link(href="{{ region.get_absolute_url }}")
+                  {{region.name}}
+                p.result_excerpt
+                  {{ region.description|striptags|truncatechars:100  }}
+                span.result_date {% trans 'region manager'|capfirst %}: {{ region.governor }}
+
+            for campaign in campaigns
+              .result.a11y-tts
+                a.result_link(href="{{ campaign.get_absolute_url }}")
+                  {{campaign.title}}
+                p.result_excerpt
+                  {{ campaign.description|truncatechars:100 }}
+                if campaign.external_url
+                  span.result_date {{ campaign.external_url }}
+
+            for public_service in public_services
+              .result.a11y-tts
+                a.result_link(href="{{ url }}")
+                  {{public_service.name}}
+                span.result_date {{ public_service.url }}
+
+            for public_enterprise in public_enterprises
+              .result.a11y-tts
+                a.result_link(href="{{ url }}")
+                  {{public_enterprise.name}}
+                span.result_date {{ public_enterprise.url }}
+
             for article in object_list
               .result.a11y-tts
                 a.result_link(href="{{ article.get_absolute_url }}")
@@ -42,6 +91,16 @@ block content
                 p.result_excerpt
                   {{ article.lead_in|striptags|truncatechars:100 }}
                 span.result_date {{ article.publishing_date|date }}
+            for chile_atiende_file in chile_atiende_files_json
+              .result.a11y-tts
+                a.result_link(
+                  href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}"
+                )
+                  {{ chile_atiende_file.titulo }}
+                p.result_excerpt
+                  {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
+                span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
+                  |  {{chile_atiende_file.servicio}}
 
         .row
           {% include 'includes/loading-indicator.pug' %}

@@ -40,13 +40,13 @@ block content
               if ministry.minister.photo
                 img.img-fluid.w-100.img-frame(src="{{ ministry.minister.photo|thumbnail_url:'avatar' }}", alt="")
             .profile_header
-              h3.profile_title {{ ministry.minister.name }}
+              h3(id="{{ ministry.minister.name|slugify }}").profile_title {{ ministry.minister.name }}
               if ministry.minister.charge 
                 span.profile_job {{ ministry.minister.charge }}
 
             div
               p {{ ministry.minister.description|linebreaks }}
-            if ministry.minister.twitter 
+            if ministry.minister.twitter
               p
                 a.profile_twitter(href="https://twitter.com/{{ ministry.minister.twitter }}", target="blank")
                   | @{{ ministry.minister.twitter }}
@@ -89,11 +89,11 @@ block content
                 if servant.photo
                   img.img-fluid.w-100.img-frame(src="{{ servant.photo|thumbnail_url:'avatar_small' }}", alt="")
               .profile_header
-                h3.profile_title {{ servant.name }}
+                h3(id="{{ servant.name|slugify }}").profile_title {{ servant.name }}
                 span.profile_job {{ servant.charge|default_if_none:"" }}
 
               p {{ servant.description|linebreaks }}
-              if servant.twitter 
+              if servant.twitter
                 p
                   a(href="https://twitter.com/{{ servant.twitter }}", target="blank").profile_twitter
                     | @{{ servant.twitter }}
