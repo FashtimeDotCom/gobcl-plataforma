@@ -30,7 +30,7 @@ block content
             for presidency in presidents
               .result.a11y-tts
                 a.result_link(href="{{ presidency.get_absolute_url }}")
-                  {{presidency.name}}
+                  {{ presidency.name }}
                 p.result_excerpt
                   {{ presidency.description|striptags|truncatechars:100  }}
                 span.result_date {{ presidency.title }}
@@ -39,8 +39,9 @@ block content
               {% with url=public_servant.get_absolute_url %}
               if url
                 .result.a11y-tts
-                  a.result_link(href="{{ url }}")
-                    {{public_servant.name}}
+                  hashtag = '#'
+                  a.result_link(href="{{ url }}{{ hashtag }}{{ public_servant.name|slugify }}")
+                    {{ public_servant.name }}
                   p.result_excerpt
                     {{ public_servant.description|striptags|truncatechars:100  }}
                   span.result_date {{ public_servant.charge }}

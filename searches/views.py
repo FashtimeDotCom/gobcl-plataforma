@@ -81,7 +81,7 @@ class ArticleListView(ListView):
 
             presidency_ids = presidency.filter(
                 name__unaccent__icontains=self.query
-            ) | presidency.translated (
+            ) | presidency.translated(
                 title__unaccent__icontains=self.query
             )
 
@@ -148,7 +148,6 @@ class ArticleListView(ListView):
             ).select_related(
                 'governor'
             )
-
 
         return []
 
