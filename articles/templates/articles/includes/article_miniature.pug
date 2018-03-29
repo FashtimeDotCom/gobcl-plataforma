@@ -1,0 +1,21 @@
+- load i18n staticfiles cms_tags thumbnail
+
+article.new.new--mobile.a11y-tts
+  time.new_date
+    {{ article.publishing_date|date }}
+  figure.new_figure-mobile
+    if article.image_id
+      img.img-fluid.w-100.img-frame(
+        src="{{ article.image|thumbnail_url:'new_list_item' }}",
+        alt="{{ article.image.alt }}"
+      )
+    else
+      img.img-fluid.w-100.img-frame(
+        src="{% static 'images/default-news.png' %}",
+        alt="{{ article.featured_image.alt }}"
+      )
+  h2.new_title
+    a.link.link--text-dark.visited(
+      href="{{ article.get_absolute_url }}"
+    )
+      {% render_model article "title" %}
