@@ -12,6 +12,8 @@ from .models import Article
 from base.views import BaseDetailView
 from parler.views import TranslatableSlugMixin
 
+from cms.api import add_plugin
+
 
 class ArticleListView(ListView):
     """
@@ -33,3 +35,10 @@ class ArticleDetailView(TranslatableSlugMixin, BaseDetailView):
     model = Article
     template_name = 'articles/article_detail.pug'
     permission_required = 'campaigns.view_campaign'
+
+
+def add_text_plugin_to_article(article_id, language='es', content='Doble click para editar el texto',
+                               position='last-child'):
+    a = Article.objects.get(id=article_id)
+
+    add_plugin(a.content, 'TextPlugin', language, body=content, position=position)
