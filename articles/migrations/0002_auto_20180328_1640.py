@@ -12,7 +12,6 @@ import djangocms_text_ckeditor.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0017_auto_20180327_1616'),
         ('articles', '0001_initial'),
     ]
 
