@@ -8,9 +8,14 @@ def footer_links(request):
     structure government in the context
     """
 
+    try:
+        government_structure = request.government_structure
+    except:
+        return {}
+
     context = {
         'footer_links': FooterLink.objects.by_government_structure(
-            request.government_structure
+            government_structure
         )
     }
 
