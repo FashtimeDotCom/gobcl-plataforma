@@ -26,6 +26,7 @@ block content
         .col-12.col-lg.col-xl.bg-lightgray.top
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
+              span.d-none.d-md-block &nbsp;
               small.a11y-tts
                 {% static_placeholder 'Presidency' or %}
                 {% trans 'Presidency' %}
@@ -39,6 +40,7 @@ block content
         .col-12.col-lg.col-xl.bg-light
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
+              span.d-none.d-md-block &nbsp;
               small.a11y-tts
                 {% static_placeholder 'Sociocultural departments' or %}
                 {% trans 'Sociocultural Department' %}
@@ -50,7 +52,7 @@ block content
             .align-self-end
               a.pull-right.a11y-tts(href="{% url 'sociocultural_department_detail' %}") {% trans 'See more.' %}
         .col-12.col-lg.col-xl.bg-light
-          .card-data-small
+          .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ ministry_list|length }}
               small.a11y-tts
@@ -61,10 +63,10 @@ block content
               {% static_placeholder "Ministries lead in" or %}
               {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               {% endstatic_placeholder %}
-            .clearfix.d-md-none
+            .align-self-end
               a.pull-right(href="#ministries") {% trans 'See more.' %}
         .col-12.col-lg.col-xl.bg-light
-          .card-data-small
+          .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ public_service_list|length }}
               small.a11y-tts
@@ -75,10 +77,10 @@ block content
               {% static_placeholder "Services lead in" or %}
               {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               {% endstatic_placeholder %}
-            .clearfix.d-md-none
+            .align-self-end
               a.pull-right(href="#services") {% trans 'See more.' %}
         .col-12.col-lg.col-xl.bg-light
-          .card-data-small
+          .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ region_list|length }}
               small.a11y-tts
@@ -89,7 +91,7 @@ block content
               {% static_placeholder "Municipalities lead in" or %}
               {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
               {% endstatic_placeholder %}
-            .clearfix.d-md-none
+            .align-self-end
               a.pull-right(href="#regions") {% trans 'See more.' %}
   section.section--medium.nopadding-top
     .container
