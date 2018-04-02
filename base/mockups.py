@@ -53,6 +53,8 @@ from services.models import ChileAtiendeService
 from streams.models import Stream
 from streams.models import StreamEvent
 from users.models import User
+from sociocultural_departments.models import SocioculturalDepartment
+from sociocultural_departments.models import SocioculturalDepartmentURL
 
 
 class Mockup(object):
@@ -271,6 +273,24 @@ class Mockup(object):
         self.set_required_string(kwargs, 'description')
         self.set_required_datetime(kwargs, 'date_time')
         return StreamEvent.objects.create(**kwargs)
+
+    def create_sociocultural_department(self, **kwargs):
+        self.set_required_foreign_key(kwargs, 'government_structure')
+        self.set_required_string(kwargs, 'name')
+        self.set_required_string(kwargs, 'title')
+        self.set_required_string(kwargs, 'description')
+        self.set_required_string(kwargs, 'twitter')
+        self.set_required_url(kwargs, 'url')
+
+        if 'photo' not in kwargs:
+            test_root = os.path.realpath(os.path.dirname(__file__))
+            photo = open('{}/tests/gondola.jpg'.format(test_root), 'rb')
+            photo = get_thumbnailer(photo, relative_name='photos/gondola.jpg')
+            kwargs['photo'] = photo
+        return SocioculturalDepartment.objects.create(**kwargs)
+
+    def create_sociocultural_department_url(self, **kwargs):
+        return SocioculturalDepartmentURL.objects.create(**kwargs)
 
     def get_or_create_page(self, **kwargs):
         try:
