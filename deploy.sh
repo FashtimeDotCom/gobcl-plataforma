@@ -33,14 +33,4 @@ git push origin staging
 
 fab config.set:staging project.update project.restart
 
-git checkout beta
-git pull origin beta
-git merge staging
-git push origin beta
-
-git checkout master
-git pull origin master
-git merge beta
-git push origin master
-
 git checkout development
