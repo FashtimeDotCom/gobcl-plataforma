@@ -38,10 +38,9 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
         has actually passed.
         """
         return self.filter(
-            is_published=True,
             publishing_date__lte=now(),
             is_draft=False,
-        )
+        ).translated(is_published=True)
 
 
 class RelatedManager(ManagerMixin, TranslatableManager):
