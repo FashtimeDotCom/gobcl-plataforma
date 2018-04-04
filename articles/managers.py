@@ -20,6 +20,18 @@ from taggit.models import Tag, TaggedItem
 
 
 class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
+    def draft(self):
+        """
+        Returns articles that are drafts
+        """
+        return self.filter(is_draft=True)
+
+    def not_draft(self):
+        """
+        Returns articles that are not drafts
+        """
+        return self.filter(is_draft=False)
+
     def published(self):
         """
         Returns articles that are published AND have a publishing_date that
