@@ -14,6 +14,7 @@ block content
   section.section
     .container
       h3.heading-medium.search-results-counts.a11y-tts {{ count }} {% trans 'Results' %}
+      .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
             for object in object_list
@@ -36,12 +37,12 @@ block content
                   elif object.objetivo
                     {{ object.objetivo|striptags|truncatechars:100 }}
                 span.result_date
-                  if object.charge
+                  if object.publishing_date
+                    {{ object.publishing_date|date }}
+                  elif object.charge
                     {{ object.charge }}
                   elif object.title
                     {{ object.title }}
-                  elif object.publishing_date
-                    {{ object.publishing_date|date }}
                   elif object.minister
                     {% trans 'minister'|capfirst %}: {{ object.minister }}
                   elif object.governor
