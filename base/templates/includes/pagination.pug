@@ -4,15 +4,15 @@ nav
   ul.pagination.justify-content-center
     if page_obj.has_previous
       li.page-item
-        a.link.link--text-dark.hover(href="?p={{ page_obj.previous_page_number }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+        a.link.link--text-dark.hover(href="?p={{ page_obj.previous_page_number }}&{{clean_query_string}}")
           i.fa.fa-caret-left
     if page_obj.number|add:'-4' > 1
       if not page_obj.number|add:'-5' == 1
         li.page-item
-          a.link.link--text-dark.hover(href="?p=1&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+          a.link.link--text-dark.hover(href="?p=1&{{clean_query_string}}")
             | 1
       li.page-item
-        a(href="?p={{ page_obj.number|add:'-5' }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}").link.link--text-dark.hover
+        a(href="?p={{ page_obj.number|add:'-5' }}&{{clean_query_string}}").link.link--text-dark.hover
           if not page_obj.number|add:'-5' == 1
             | ...
           else
@@ -20,24 +20,24 @@ nav
     for page in page_obj.paginator.page_range
       if page == page_obj.number
         li
-          a.link.link--text-dark.hover.active(href="?p={{ page }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+          a.link.link--text-dark.hover.active(href="?p={{ page }}&{{clean_query_string}}")
             {{ page }}
       elif page > page_obj.number|add:'-5' and page < page_obj.number|add:'5'
         li
-          a.link.link--text-dark.hover(href="?p={{ page }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+          a.link.link--text-dark.hover(href="?p={{ page }}&{{clean_query_string}}")
             {{ page }}
     if page_obj.paginator.num_pages > page_obj.number|add:'4'
       li.page-item
-        a(href="?p={{ page_obj.number|add:'5' }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}").link.link--text-dark.hover
+        a(href="?p={{ page_obj.number|add:'5' }}&{{clean_query_string}}").link.link--text-dark.hover
           if not page_obj.number|add:'5' == page_obj.paginator.num_pages
             | ...
           else
             {{ page_obj.paginator.num_pages }}
       if not page_obj.number|add:'5' == page_obj.paginator.num_pages
         li.page-item
-          a.link.link--text-dark.hover(href="?p={{ page_obj.paginator.num_pages }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+          a.link.link--text-dark.hover(href="?p={{ page_obj.paginator.num_pages }}&{{clean_query_string}}")
             | {{ page_obj.paginator.num_pages }}
     if page_obj.has_next
       li.page-item
-        a.link.link--text-dark.hover(href="?p={{ page_obj.next_page_number }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
+        a.link.link--text-dark.hover(href="?p={{ page_obj.next_page_number }}&{{clean_query_string}}")
           i.fa.fa-caret-right
