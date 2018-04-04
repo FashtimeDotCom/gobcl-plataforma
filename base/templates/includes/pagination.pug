@@ -13,7 +13,10 @@ nav
             | 1
       li.page-item
         a(href="?p={{ page_obj.number|add:'-5' }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}").link.link--text-dark.hover
-          | ...
+          if not page_obj.number|add:'-5' == 1
+            | ...
+          else
+            | 1
     for page in page_obj.paginator.page_range
       if page == page_obj.number
         li
@@ -26,7 +29,10 @@ nav
     if page_obj.paginator.num_pages > page_obj.number|add:'4'
       li.page-item
         a(href="?p={{ page_obj.number|add:'5' }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}").link.link--text-dark.hover
-          | ...
+          if not page_obj.number|add:'5' == page_obj.paginator.num_pages
+            | ...
+          else
+            {{ page_obj.paginator.num_pages }}
       if not page_obj.number|add:'5' == page_obj.paginator.num_pages
         li.page-item
           a.link.link--text-dark.hover(href="?p={{ page_obj.paginator.num_pages }}&{% get_order_by_querytring ordering=ordering %}&{{clean_query_string}}")
