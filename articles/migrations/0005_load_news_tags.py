@@ -17,7 +17,13 @@ def load_tags(apps, schema_editor):
 
 
 def unload_tags(apps, schema_editor):
-    pass
+    # copy tags
+    from aldryn_newsblog.models import Article as OldArticle
+    from articles.models import Article as Article
+
+    for old_article in OldArticle.objects.all():
+        article = Article.objects.get(content_id=old_article.content_id)
+        article.tags.clear()
 
 
 class Migration(migrations.Migration):

@@ -25,7 +25,7 @@ class ArticleListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super(ArticleListView, self).get_queryset()
-        return queryset.exclude(is_featured=True)
+        return queryset.translated(is_featured=False)
 
 
 class ArticleDetailView(TranslatableSlugMixin, BaseDetailView):

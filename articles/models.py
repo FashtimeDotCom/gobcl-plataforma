@@ -71,7 +71,8 @@ class Article(BaseModel, TranslatableModel):
             blank=True,
             help_text=_(
                 'Used in the URL. If changed, the URL will change. '
-                'Clear it to have it re-created automatically.'),
+                'Clear it to have it re-created automatically.'
+            ),
         ),
         lead_in=HTMLField(
             verbose_name=_('lead'), default='',
@@ -83,13 +84,37 @@ class Article(BaseModel, TranslatableModel):
             blank=True,
         ),
         meta_title=models.CharField(
-            max_length=255, verbose_name=_('meta title'),
-            blank=True, default=''),
+            max_length=255,
+            verbose_name=_('meta title'),
+            blank=True,
+            default=''
+        ),
         meta_description=models.TextField(
-            verbose_name=_('meta description'), blank=True, default=''),
+            verbose_name=_('meta description'),
+            blank=True,
+            default=''
+        ),
         meta_keywords=models.TextField(
-            verbose_name=_('meta keywords'), blank=True, default=''),
-        meta={'unique_together': (('language_code', 'slug', ), )},
+            verbose_name=_('meta keywords'),
+            blank=True,
+            default=''
+        ),
+        is_published=models.BooleanField(
+            _('is published'),
+            default=False,
+            db_index=True
+        ),
+        is_featured=models.BooleanField(
+            _('is featured'),
+            default=False,
+            db_index=True
+        ),
+        draft = models.BooleanField(
+            default=True,
+            editable=False,
+            db_index=True,
+        ),
+        meta={'unique_together': (('language_code', 'slug', 'draft'), )},
 
         search_data=models.TextField(blank=True, editable=False)
     )
@@ -107,10 +132,6 @@ class Article(BaseModel, TranslatableModel):
     )
     publishing_date = models.DateTimeField(_('publishing date'),
                                            default=timezone.now)
-    is_published = models.BooleanField(_('is published'), default=False,
-                                       db_index=True)
-    is_featured = models.BooleanField(_('is featured'), default=False,
-                                      db_index=True)
     featured_image = FilerImageField(
         verbose_name=_('featured image'),
         null=True,
@@ -132,14 +153,18 @@ class Article(BaseModel, TranslatableModel):
     # which in the end causes to add reversed releted-to entry as well:
     #
     # https://github.com/django/django/blob/1.8.4/django/db/models/fields/related.py#L977
-    related = SortedManyToManyField('self', verbose_name=_('related articles'),
-                                    blank=True, symmetrical=False)
-
+    related = SortedManyToManyField(
+        'self',
+        verbose_name=_('related articles'),
+        blank=True,
+        symmetrical=False
+    )
     is_draft = models.BooleanField(
         default=True,
         editable=False,
         db_index=True,
     )
+
     public = models.OneToOneField(
         'self',
         related_name='draft',
@@ -163,23 +188,59 @@ class Article(BaseModel, TranslatableModel):
     def __str__(self):
         return self.title
 
-    def _copy_attributes(self, target, clean=False):
+    def _copy_attributes(self, target, language):
         """
         Copy all page data to the target. This excludes parent and other values
         that are specific to an exact instance.
         :param target: The Article to copy the attributes to
         """
-        if not clean:
-            target.publishing_date = self.publishing_date
+        translation = self.translations.get(language_code=language)
 
-        target.title = self.title
-        target.slug = self.slug
-        target.description = self.description
-        target.image = self.image
+        # copy translations
+        try:
+            print()
+            print(language, translation.slug)
+            new_translation = ArticleTranslation.objects.get(
+                master_id=target.pk,
+                language_code=language,
+            )
+        except ArticleTranslation.DoesNotExist:
+            ArticleTranslation.objects.create(
+                master_id=target.pk,
+                language_code=language,
+                title=translation.title,
+                slug=translation.slug,
+                lead_in=translation.lead_in,
+                meta_title=translation.meta_title,
+                meta_description=translation.meta_description,
+                meta_keywords=translation.meta_keywords,
+                search_data=translation.search_data,
+                draft=False,
+                is_published=translation.is_published,
+                is_featured=translation.is_featured,
+            )
+        else:
+            new_translation.title = translation.title,
+            new_translation.draft = False
+            new_translation.slug = translation.slug
+            new_translation.lead_in = translation.lead_in
+            new_translation.meta_title = translation.meta_title
+            new_translation.meta_description = translation.meta_description
+            new_translation.meta_keywords = translation.meta_keywords
+            new_translation.search_data = translation.search_data
+            new_translation.is_published = translation.is_published
+            new_translation.is_featured = translation.is_featured
+            new_translation.save()
+
+        target.featured_image = self.featured_image
+        target.publishing_date = self.publishing_date
         target.is_featured = self.is_featured
         target.is_draft = self.is_draft
 
-        target.content = self.content
+        target.tags.clear()
+
+        for tag in self.tags.all():
+            target.tags.add(tag.name)
 
     def _copy_contents(self, target, language):
         """
@@ -196,32 +257,22 @@ class Article(BaseModel, TranslatableModel):
         ).order_by('-depth')
 
         for plugin in plugins:
-            inst, cls = plugin.get_plugin_instance()
-            if inst and getattr(inst, 'cmsplugin_ptr_id', False):
-                inst.cmsplugin_ptr = plugin
-                inst.cmsplugin_ptr._no_reorder = True
-                inst.delete(no_mp=True)
+            instance, cls = plugin.get_plugin_instance()
+            if instance and getattr(instance, 'cmsplugin_ptr_id', False):
+                instance.cmsplugin_ptr = plugin
+                instance.cmsplugin_ptr._no_reorder = True
+                instance.delete(no_mp=True)
             else:
                 plugin._no_reorder = True
                 plugin.delete(no_mp=True)
 
-        new_phs = []
-        target_phs = target.placeholders.all()
-
         plugins = self.content.get_plugins_list(language)
-        found = False
 
         # update the page copy
         if plugins:
             copy_plugins_to(plugins, target.content)
 
     # django methods
-    def save(self, *args, **kwargs):
-        language = get_current_language()
-        activate(language=language)
-        self.slug = slugify(self.title)
-        return super(Article, self).save(*args, **kwargs)
-
     def get_absolute_url(self):
         return reverse('articles:article_detail', args=(self.slug,), )
 
@@ -251,13 +302,13 @@ class Article(BaseModel, TranslatableModel):
         if not self.publishing_date:
             self.publishing_date = timezone.now()
 
-        self._copy_attributes(public_article)
-
         # we need to set relate this new public copy to its draft page (self)
         public_article.public = self
         public_article.is_draft = False
 
         public_article.save()
+
+        self._copy_attributes(public_article, language)
 
         # The target page now has a pk, so can be used as a target
         self._copy_contents(public_article, language)

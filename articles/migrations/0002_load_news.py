@@ -15,10 +15,8 @@ def load_articles(apps, schema_editor):
         article = Article()
 
         article.created_by = old_article.owner
-        article.is_featured = old_article.is_featured
         article.publishing_date = old_article.publishing_date
         article.content = old_article.content
-        article.is_published = old_article.is_published
         article.featured_image = old_article.featured_image
         article.is_draft = True
 

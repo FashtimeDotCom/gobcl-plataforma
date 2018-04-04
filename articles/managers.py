@@ -25,7 +25,11 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
         Returns articles that are published AND have a publishing_date that
         has actually passed.
         """
-        return self.filter(is_published=True, publishing_date__lte=now())
+        return self.filter(
+            is_published=True,
+            publishing_date__lte=now(),
+            is_draft=False,
+        )
 
 
 class RelatedManager(ManagerMixin, TranslatableManager):

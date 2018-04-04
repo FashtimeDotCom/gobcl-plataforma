@@ -25,6 +25,8 @@ def load_translations(apps, schema_editor):
                 meta_description=translation.meta_description,
                 meta_keywords=translation.meta_keywords,
                 search_data=translation.search_data,
+                is_featured=old_article.is_featured,
+                is_published=old_article.is_published,
             )
 
 
@@ -35,7 +37,7 @@ def unload_translations(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('articles', '0003_auto_20180404_1507'),
+        ('articles', '0003_auto_20180404_1640'),
     ]
 
     operations = [
