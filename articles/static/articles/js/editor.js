@@ -4,6 +4,17 @@
 
     $('.cms-plugin').on('dblclick', function (e) {
       var data = $(this).data('cms')[0];
+      var currentPlugin = data.plugin_id;
+
+      var $plugins = $('.cms-plugin-' + currentPlugin);
+
+      var height = $plugins.map(function (index, plugin) {
+        return $(plugin).height();
+      })
+        .toArray()
+        .reduce(function (current, next) {
+          return current + next;
+        }, 0);
 
       if (data.plugin_type === 'TextPlugin') {
         e.stopPropagation();
@@ -16,10 +27,12 @@
             tabindex: 0,
             src: data.urls.edit_plugin,
             class: 'w-100',
-            frameborder: 0,
-            style: 'height: 400px'
-          });
-
+            frameborder: 0
+          })
+            .css({
+              height: height,
+              minHeight: 400
+            });
 
         $iFrame.on('load', function () {
 
@@ -33,11 +46,30 @@
           })
             .html(CMS.config.lang.cancel);
 
-          console.log($iFrame.contents().find('head'));
 
-          console.log($('#gobStyle'));
+          if ($iFrame[0].contentWindow && $iFrame[0].contentWindow.CMS && $iFrame[0].contentWindow.CMS.CKEditor) {
+            $($iFrame[0].contentWindow.document).ready(function() {
+              setTimeout(function() {
+                var editor = $iFrame[0].contentWindow.CMS.CKEditor.editor;
 
-          $iFrame.contents().find('head').append($('#gobStyle').clone());
+                if (editor) {
+                  editor.on('instanceReady', function(e) {
+                    var $ckEditorIframe = $(e.editor.container.$).find('iframe');
+
+                    $ckEditorIframe
+                      .contents()
+                      .find('head')
+                      .append($('#gobstyle').children('link').clone());
+
+                    $ckEditorIframe
+                      .contents()
+                      .find('body')
+                      .addClass('main-post');
+                  });
+                }
+              }, 100);
+            });
+          }
 
           $form.on('submit', function () {
             // TODO: hide iframe and reload view or show content.
@@ -143,8 +175,10 @@
         });
 
         $container.append($iFrame);
-        $(this).append($container);
 
+        $container.insertBefore($plugins[0]);
+
+        $plugins.addClass('d-none');
       }
     })
   });

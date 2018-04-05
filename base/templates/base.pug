@@ -96,13 +96,13 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
 
     link(href="{% static 'select2/dist/css/select2.min.css' %}", rel="stylesheet")
 
-    {% compress css %}
-    link(
-      type="text/x-scss", rel="stylesheet", href="{% static 'css/gob.cl.scss' %}",
-      charset="utf-8",
-      id="gobStyle"
-    )
-    {% endcompress %}
+    #gobstyle
+      {% compress css %}
+      link(
+        type="text/x-scss", rel="stylesheet", href="{% static 'css/gob.cl.scss' %}",
+        charset="utf-8"
+      )
+      {% endcompress %}
 
     {% compress css %}
     link(
