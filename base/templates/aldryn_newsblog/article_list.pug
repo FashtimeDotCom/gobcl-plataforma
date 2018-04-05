@@ -31,7 +31,7 @@ section.section
     if not article_list
       h3 {% trans 'There are no news in this category' %}
 
-    {% include 'includes/loading-indicator.pug' %}
+  {% include 'includes/pagination.pug' %}
 section
   .container
     {% include 'includes/social.pug' %}

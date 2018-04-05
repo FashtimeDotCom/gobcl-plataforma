@@ -1,5 +1,6 @@
 # standard library
-#
+from itertools import chain
+
 # django
 from django.conf import settings
 from django.db.models import Q
@@ -14,6 +15,8 @@ from public_enterprises.models import PublicEnterprise
 from public_servants.models import PublicServant
 from regions.models import Region
 
+from base.view_utils import clean_query_string
+
 # chile atiende
 from services.chile_atiende_client import File
 
@@ -22,6 +25,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'search/search.pug'
     paginate_by = 25
+    page_kwarg = 'p'
 
     def get(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
@@ -154,36 +158,9 @@ class ArticleListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
 
-        context['campaigns'] = self.get_campaigns()
-
-        # obtain chile atiende files
-        context['chile_atiende_files_json'] = self.get_chileatiende_files()
-
-        context['ministries'] = self.get_ministries()
-
-        context['public_enterprises'] = self.get_public_enterprises()
-
-        context['public_servants'] = self.get_public_servants()
-
-        context['public_services'] = self.get_public_services()
-
-        context['presidents'] = self.get_presidents()
-
-        context['regions'] = self.get_regions()
-
+        context['clean_query_string'] = clean_query_string(self.request)
         # Count the total list of objects
-        context['count'] = (
-            context['object_list'].count() +
-            len(context['campaigns']) +
-            len(context['chile_atiende_files_json']) +
-            len(context['ministries']) +
-            len(context['presidents']) +
-            len(context['public_enterprises']) +
-            len(context['public_servants']) +
-            len(context['public_services']) +
-            len(context['regions'])
-        )
-
+        context['count'] = self.count
         context['query'] = self.query
 
         return context
@@ -202,5 +179,21 @@ class ArticleListView(ListView):
             queryset = queryset.filter(
                 categories__translations__slug__icontains=self.category_slug
             ).distinct()
+
+        queryset = list(
+            chain(
+                self.get_presidents(),
+                self.get_public_servants(),
+                self.get_ministries(),
+                self.get_regions(),
+                self.get_campaigns(),
+                self.get_public_services(),
+                self.get_public_enterprises(),
+                queryset,
+                self.get_chileatiende_files(),
+            )
+        )
+
+        self.count = len(queryset)
 
         return queryset
