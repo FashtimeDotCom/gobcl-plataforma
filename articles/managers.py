@@ -48,6 +48,9 @@ class RelatedManager(ManagerMixin, TranslatableManager):
         qs = ArticleQuerySet(self.model, using=self.db)
         return qs.select_related('featured_image')
 
+    def draft(self):
+        return self.get_queryset().draft()
+
     def published(self):
         return self.get_queryset().published()
 
@@ -90,20 +93,6 @@ class RelatedManager(ManagerMixin, TranslatableManager):
              'num_articles': date_counter[(year, month)]}
             for year, month in dates]
         return months
-
-    def get_authors(self, namespace):
-        """
-        Get authors with articles count for given namespace string.
-
-        Return Person queryset annotated with and ordered by 'num_articles'.
-        """
-
-        # This methods relies on the fact that Article.app_config.namespace
-        # is effectively unique for Article models
-        return Person.objects.filter(
-            article__app_config__namespace=namespace,
-            article__is_published=True).annotate(
-                num_articles=models.Count('article')).order_by('-num_articles')
 
     def get_tags(self, request, namespace):
         """

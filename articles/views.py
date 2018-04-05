@@ -3,14 +3,17 @@
 # standard library
 
 # django
-from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
 from django.utils import translation
+from django.views.generic import ListView
+from django.views.generic.detail import SingleObjectMixin
 
 # models
 from .models import Article
 
 # views
 from base.views import BaseDetailView
+from base.views import BaseRedirectView
 from parler.views import TranslatableSlugMixin
 
 
@@ -83,3 +86,22 @@ def add_text_plugin_to_article(article_id, language='es', content='Doble click p
     a = Article.objects.get(id=article_id)
 
     add_plugin(a.content, 'TextPlugin', language, body=content, position=position)
+
+
+class ArticlePublishView(TranslatableSlugMixin, SingleObjectMixin, BaseRedirectView):
+    permanent = False
+    permission_required = 'articles.change_article'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return Article.objects.draft()
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        language = translation.get_language()
+        self.object.publish(language)
+
+        return super(ArticlePublishView, self).get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.object.get_absolute_url() + '?edit_off'

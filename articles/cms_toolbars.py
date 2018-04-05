@@ -24,6 +24,37 @@ class ArticleToolbar(CMSToolbar):
                 '{0}:article-list'.format(article.app_config.namespace))
         return url
 
+    def add_article_detail_buttons(self, menu, article):
+        publisher = self.toolbar.add_button_list(
+            'Article publisher',
+            side=self.toolbar.RIGHT,
+        )
+
+        url = reverse(
+            'admin:articles_article_change',
+            args=(article.pk, )
+        )
+        menu.add_modal_item(_('Edit this article'), url=url,
+                            active=True)
+
+        classes = []
+
+        public = article.public
+
+        if not public or public.updated_at < article.updated_at:
+            classes.append('cms-btn-action')
+
+        publish_url = reverse('articles:article_publish', args=(article.slug,),)
+
+        if self.toolbar.edit_mode:
+            button = publisher.add_button(
+                _('Publish'),
+                url=publish_url,
+                active=False,
+                disabled=False,
+                extra_classes=classes,
+            )
+
     def populate(self):
         user = getattr(self.request, 'user', None)
         try:
@@ -33,9 +64,17 @@ class ArticleToolbar(CMSToolbar):
 
         if user and view_name:
             # If we're on an Article detail page, then get the article
-            if view_name == 'articles:article_detail':
+            if view_name == 'article_detail':
                 kwargs = self.request.resolver_match.kwargs
-                article = Article.objects.get(slug=kwargs['slug'])
+                article = Article.objects.translated(
+                    slug=kwargs['slug']
+                )
+
+                if self.toolbar.edit_mode:
+                    article = article.get(is_draft=True)
+                else:
+                    article = article.get(is_draft=False)
+
             else:
                 article = None
 
@@ -59,12 +98,7 @@ class ArticleToolbar(CMSToolbar):
                 menu.add_modal_item(_('Add new article'), url=url)
 
             if change_article_perm and article:
-                url = reverse(
-                    'admin:articles_article_change',
-                    args=(article.pk, )
-                )
-                menu.add_modal_item(_('Edit this article'), url=url,
-                                    active=True)
+                self.add_article_detail_buttons(menu, article)
 
             if delete_article_perm and article:
                 url = reverse(
