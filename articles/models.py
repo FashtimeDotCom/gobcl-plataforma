@@ -167,7 +167,7 @@ class Article(BaseModel, TranslatableModel):
 
     public = models.OneToOneField(
         'self',
-        related_name='draft',
+        related_name='draft_article',
         null=True,
         editable=False
     )
@@ -198,8 +198,6 @@ class Article(BaseModel, TranslatableModel):
 
         # copy translations
         try:
-            print()
-            print(language, translation.slug)
             new_translation = ArticleTranslation.objects.get(
                 master_id=target.pk,
                 language_code=language,
@@ -220,7 +218,7 @@ class Article(BaseModel, TranslatableModel):
                 is_featured=translation.is_featured,
             )
         else:
-            new_translation.title = translation.title,
+            new_translation.title = translation.title
             new_translation.draft = False
             new_translation.slug = translation.slug
             new_translation.lead_in = translation.lead_in
@@ -235,7 +233,6 @@ class Article(BaseModel, TranslatableModel):
         target.featured_image = self.featured_image
         target.publishing_date = self.publishing_date
         target.is_featured = self.is_featured
-        target.is_draft = self.is_draft
 
         target.tags.clear()
 
@@ -308,12 +305,15 @@ class Article(BaseModel, TranslatableModel):
 
         public_article.save()
 
+        # store the relationship between draft and public
+        self.public = public_article
+        self.save()
+
         self._copy_attributes(public_article, language)
+
+        public_article.save()
 
         # The target page now has a pk, so can be used as a target
         self._copy_contents(public_article, language)
-
-        self.public = public_article
-        self.save()
 
         return public_article

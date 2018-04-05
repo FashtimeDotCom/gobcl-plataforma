@@ -17,6 +17,7 @@ def publish_news(apps, schema_editor):
 
 
 def unpublish_news(apps, schema_editor):
+    from articles.models import Article as Article
     Article.objects.filter(is_draft=False).delete()
 
 

@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('content', articles.models.PlaceholderField(editable=False, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', slotname='article_content', to='cms.Placeholder')),
                 ('created_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to=settings.AUTH_USER_MODEL, verbose_name='created by')),
                 ('featured_image', filer.fields.image.FilerImageField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to=settings.FILER_IMAGE_MODEL, verbose_name='featured image')),
-                ('public', models.OneToOneField(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='draft', to='articles.Article')),
+                ('public', models.OneToOneField(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='draft_article', to='articles.Article')),
                 ('related', sortedm2m.fields.SortedManyToManyField(blank=True, help_text=None, to='articles.Article', verbose_name='related articles')),
                 ('tags', taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags')),
             ],
