@@ -1,3 +1,6 @@
+/**
+ * Enable inline edition in articles.
+ */
 (function ($) {
 
   $(function () {
@@ -119,6 +122,7 @@
 
                 if ($item.hasClass('default') || $item.hasClass('deletelink')) {
                   // TODO: hide iframe and reload view or show content.
+                  console.log('delete');
                 }
 
                 if ($item.is('input') || $item.is('button')) {
@@ -158,7 +162,8 @@
 
           $cancel.on('click.cms.modal', function (e) {
             e.preventDefault();
-            // TODO: hide iframe and reload view or show content.
+            $container.remove();
+            $plugins.removeClass('d-none');
           });
 
           $cancel.wrap($group);
