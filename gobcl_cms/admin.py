@@ -46,6 +46,9 @@ class ArticleAdmin(BaseArticleAdmin):
     """
     form = ArticleAdminForm
     list_display = ('title', 'publishing_date', 'is_featured', 'is_published')
+    search_fields = (
+        'translations__title',
+    )
 
     fieldsets = (
         (None, {

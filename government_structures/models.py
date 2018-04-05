@@ -8,6 +8,7 @@ from threading import Thread
 # django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate
 
 # models
 from base.models import BaseModel
@@ -68,17 +69,51 @@ class GovernmentStructure(BaseModel):
         from aldryn_newsblog.models import Article
         from taggit.models import Tag
 
-        articles = Article.objects.language('es').all()
+        try:
+            next_government_structure = self.get_next_by_publication_date()
+        except:
+            pass
+
         tag = Tag.objects.get_or_create(name='archivo')[0]
+
+        activate('es')
+        articles = Article.objects.exclude(tags=tag).filter(
+            publishing_date__gte=self.publication_date,
+        ).translated(
+            title__isnull=False,
+        )
+        if next_government_structure:
+            articles = articles.filter(
+                publishing_date__lte=next_government_structure.publication_date
+            )
+        print(articles.count())
         for article in articles:
+            if article.title.startswith('[ARCHIVO]'):
+                print('se saltó')
+                continue
+
             article.title = '[ARCHIVO] ' + article.title
             article.tags.add(tag)
             article.save()
             print(article.title)
 
-        articles = Article.objects.language('en').all()
         tag = Tag.objects.get_or_create(name='archive')[0]
+        activate('en')
+        articles = Article.objects.exclude(tags=tag).filter(
+            publishing_date__gte=self.publication_date,
+        ).translated(
+            title__isnull=False,
+        )
+        if next_government_structure:
+            articles = articles.filter(
+                publishing_date__lte=next_government_structure.publication_date
+            )
+        print(articles.count())
         for article in articles:
+            if article.title.startswith('[ARCHIVE]') or article.title.startswith('[ARCHIVO]'):
+                print('se saltó')
+                continue
+
             article.title = '[ARCHIVE] ' + article.title
             article.tags.add(tag)
             article.save()
