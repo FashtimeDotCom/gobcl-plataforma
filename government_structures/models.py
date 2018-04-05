@@ -86,16 +86,13 @@ class GovernmentStructure(BaseModel):
             articles = articles.filter(
                 publishing_date__lte=next_government_structure.publication_date
             )
-        print(articles.count())
         for article in articles:
             if article.title.startswith('[ARCHIVO]'):
-                print('se saltó')
                 continue
 
             article.title = '[ARCHIVO] ' + article.title
             article.tags.add(tag)
             article.save()
-            print(article.title)
 
         tag = Tag.objects.get_or_create(name='archive')[0]
         activate('en')
@@ -108,16 +105,13 @@ class GovernmentStructure(BaseModel):
             articles = articles.filter(
                 publishing_date__lte=next_government_structure.publication_date
             )
-        print(articles.count())
         for article in articles:
             if article.title.startswith('[ARCHIVE]') or article.title.startswith('[ARCHIVO]'):
-                print('se saltó')
                 continue
 
             article.title = '[ARCHIVE] ' + article.title
             article.tags.add(tag)
             article.save()
-            print(article.title)
 
     def duplicate(self, date, with_public_servants=True):
         from ministries.models import Ministry

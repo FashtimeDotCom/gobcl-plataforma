@@ -29,15 +29,15 @@ block content
               img.img-fluid.w-100.img-frame(src="{% thumbnail socioculturaldepartment.photo 700x1000 %}", alt="")
           .col-md-8
             .mt-1.mt-md-0 {{ socioculturaldepartment.description|linebreaks }}
-            if socioculturaldepartment.twitter 
+            if socioculturaldepartment.twitter
               ul.profile_body
                 li
-                  a(href="https://twitter.com/{{ socioculturaldepartment.twitter }}").profile_twitter 
+                  a(href="https://twitter.com/{{ socioculturaldepartment.twitter }}").profile_twitter
                     | @{{ socioculturaldepartment.twitter }}
             .row.d-sm-none.d-lg-flex
               .col-lg-6.mt-3
                 .overflowed-xs
-                  a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block 
+                  a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block
                     {% static_placeholder 'Go to the socioculturaldepartment Press site' or %}
                     {% trans 'Go to the socioculturaldepartment Press site' %}
                     {% endstatic_placeholder %}
