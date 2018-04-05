@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 @apphook_pool.register
 class ArticleApp(CMSApp):
     app_name = 'articles'
-    name = _('articles')
+    name = _('Articles')
 
     def get_urls(self, page=None, language=None, **kwargs):
         return ['articles.urls']
