@@ -207,7 +207,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       script(src="{% static 'lodash/lodash.js' %}")
       {% endcompress %}
 
-    script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")
+    if not debug
+      script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")
     // templates
 
     {% compress js %}
