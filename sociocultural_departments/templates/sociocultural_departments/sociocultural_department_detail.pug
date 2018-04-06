@@ -64,7 +64,7 @@ block content
         for url in socioculturaldepartment.urls.all
           .col-12.col-md-4
             .list-links
-              li
+              li(id="{{ url.name|slugify }}")
                 if url.get_absolute_url
                   a(href="{{ url.get_absolute_url }}", target="blank").link
                     | {{ url.name }}

@@ -14,6 +14,7 @@ from presidencies.models import Presidency
 from public_enterprises.models import PublicEnterprise
 from public_servants.models import PublicServant
 from regions.models import Region
+from sociocultural_departments.models import SocioculturalDepartment
 
 from base.view_utils import clean_query_string
 
@@ -128,7 +129,7 @@ class ArticleListView(ListView):
                 url=None
             ).translated(
                 name__unaccent__icontains=self.query
-            ).prefetch_related('translations')[:5]
+            ).prefetch_related('translations')
 
         return []
 
@@ -152,6 +153,43 @@ class ArticleListView(ListView):
             ).select_related(
                 'governor'
             )
+
+        return []
+
+    def get_sociocultural_department(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            )
+
+            sociocultural_department_ids = sociocultural_department.filter(
+                name__unaccent__icontains=self.query
+            ) | sociocultural_department.translated(
+                title__unaccent__icontains=self.query
+            )
+
+            return SocioculturalDepartment.objects.filter(
+                id__in=sociocultural_department_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            )
+
+        return []
+
+    def get_foundations(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            ).first()
+
+            urls = sociocultural_department.urls.all()
+
+            foundations = urls.filter(
+                url=self.query,
+            ) | urls.translated(
+                name__unaccent__icontains=self.query,
+            )
+            return foundations
 
         return []
 
@@ -183,8 +221,10 @@ class ArticleListView(ListView):
         queryset = list(
             chain(
                 self.get_presidents(),
+                self.get_sociocultural_department(),
                 self.get_public_servants(),
                 self.get_ministries(),
+                self.get_foundations(),
                 self.get_regions(),
                 self.get_campaigns(),
                 self.get_public_services(),
