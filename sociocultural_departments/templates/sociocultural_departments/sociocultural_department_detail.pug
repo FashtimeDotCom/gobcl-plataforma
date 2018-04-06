@@ -55,12 +55,18 @@ block content
 
   section.section
     .container
+      if socioculturaldepartment.urls.exists
+        h2.heading-medium
+          {% static_placeholder 'Foundations' or %}
+          {% trans 'Foundations' %}
+          {% endstatic_placeholder %}
       .row
         for url in socioculturaldepartment.urls.all
-          .col-sm-12.col-lg-4.a11y-tts
-            .card-small.h-100
-              h5.card-small_title
-                a(href="{{ url.url }}", target="blank").card-small_link {{ url.name }}
-                  i.icon-arrow-right-black.icon--right
-              .card-small_body
-                p.card-small_text {{ url.description }}
+          .col-12.col-md-4
+            .list-links
+              li
+                if url.get_absolute_url
+                  a(href="{{ url.get_absolute_url }}", target="blank").link
+                    | {{ url.name }}
+                else
+                  | {{ url.name }}

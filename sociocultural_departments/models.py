@@ -55,6 +55,9 @@ class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
                 'Can view sociocultural department url')),
         )
 
+    def get_absolute_url(self):
+        return self.url
+
 
 class SocioculturalDepartment(BaseModel, TranslatableModel):
     government_structure = models.OneToOneField(
