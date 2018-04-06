@@ -27,6 +27,7 @@ def load_translations(apps, schema_editor):
                 search_data=translation.search_data,
                 is_featured=old_article.is_featured,
                 is_published=old_article.is_published,
+                is_dirty=not old_article.is_published,
             )
 
 

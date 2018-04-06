@@ -27,6 +27,7 @@ class Migration(migrations.Migration):
                 ('meta_keywords', models.TextField(blank=True, default='', verbose_name='meta keywords')),
                 ('is_published', models.BooleanField(db_index=True, default=False, verbose_name='is published')),
                 ('is_featured', models.BooleanField(db_index=True, default=False, verbose_name='is featured')),
+                ('is_dirty', models.BooleanField(default=False, editable=False)),
                 ('draft', models.BooleanField(db_index=True, default=True, editable=False)),
                 ('search_data', models.TextField(blank=True, editable=False)),
                 ('master', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='translations', to='articles.Article')),

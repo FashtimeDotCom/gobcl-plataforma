@@ -109,6 +109,10 @@ class Article(BaseModel, TranslatableModel):
             default=False,
             db_index=True
         ),
+        is_dirty = models.BooleanField(
+            default=False,
+            editable=False,
+        ),
         draft = models.BooleanField(
             default=True,
             editable=False,
