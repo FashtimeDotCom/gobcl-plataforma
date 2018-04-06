@@ -17,6 +17,9 @@ from base.models import BaseModel
 from base.models import file_path
 from base.models import lastest_government_structure
 
+from .managers import SocioculturalDepartmentQueryset
+from .managers import SocioculturalDepartmentURLQueryset
+
 
 class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
     translations = TranslatedFields(
@@ -37,6 +40,11 @@ class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
         _('order'),
         default=0,
     )
+
+    objects = SocioculturalDepartmentURLQueryset.as_manager()
+
+    def __str__(self):
+        return self.url
 
     class Meta:
         ordering = ('order',)
@@ -83,6 +91,8 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
         SocioculturalDepartmentURL,
         verbose_name=_('urls'),
     )
+
+    objects = SocioculturalDepartmentQueryset.as_manager()
 
     class Meta:
         verbose_name = _('sociocultural department')
