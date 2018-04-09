@@ -1,11 +1,28 @@
 /* global $, document */
 
-$(function () {
+$(function() {
+
+  function isMobileDevice() {
+
+    // Data from bootstrap mobile devices
+    if (screen.width <= 991) {
+      return true;
+    }
+
+    return false;
+  }
+
+  if (!isMobileDevice()) {
+    return;
+  }
+
   GobCl.createInifiniteScroll(
+
     // a link for ajax request
     '/api/1.0/search' + '?offset=' + parseInt(App.infiniteScroll.offset, 10),
     // a function that adds information about category and query string to a requestUrl
     function (url) {
+
       var currentLocation = window.location.href;
       var qMatch = currentLocation.match(/q=([^&]+)/);
       var result = url;

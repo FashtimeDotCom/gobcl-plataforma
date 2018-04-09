@@ -4,6 +4,16 @@ extends base.pug
 
 block javascripts
   script(src="{% static 'js/search.js' %}")
+  script(src="{% static 'js/load_more_found.js' %}")
+
+block javascript_context
+  script.
+    App.infiniteScroll = {
+      // - Temprorary solution until servr will get me this value
+      url: "{% url 'search-list' %}",
+      //- document.app.offset = "{{ object_list.count }}"
+      offset: "{{ count }}"
+    };
 
 
 block content
@@ -52,8 +62,9 @@ block content
                   elif object.url
                     {{ object.url }}
                   elif object.fecha
-                    {{ object.fecha|slice:":10" }}  
-      {% include 'includes/pagination.pug' %}
+                    {{ object.fecha|slice:":10" }}
+        {% include 'includes/pagination.pug' %}
+        {% include 'includes/loading-indicator.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
