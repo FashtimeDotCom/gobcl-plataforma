@@ -405,7 +405,7 @@ NPM_FILE_PATTERNS = {
         'locale/es.js',
         'min/moment-with-locales.min.js',
     ],
-    'nprogress': ['nprogres.js'],
+    'nprogress': ['nprogress.js'],
     'lodash': ['lodash.js']
 }
 
