@@ -180,6 +180,16 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         integrity="sha256-FJuLxhiJiX+5Qgs0c2JYLIyJ5i0o4ccg6DQ6zgitCYY="
         crossorigin="anonymous"
       )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.js"
+        integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64="
+        crossorigin="anonymous"
+      )
+      script(
+        src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"
+        integrity="sha256-YFhaeQSVBgAFNN5z4I9YRB2jCuqc2nvypz0Q2eQzcx8="
+        crossorigin="anonymous"
+      )
 
     block uncompressible_javascripts
 
@@ -193,6 +203,8 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
       script(src="{% static 'moment/moment.js' %}")
       script(src="{% static 'moment/locale/es.js' %}")
       script(src="{% static 'select2/dist/js/select2.full.js' %}")
+      script(src="{% static 'nprogress/nprogress.js' %}")
+      script(src="{% static 'lodash/lodash.js' %}")
       {% endcompress %}
 
     script(src="//f1-na.readspeaker.com/script/9676/ReadSpeaker.js?pids=embhl")

@@ -403,7 +403,9 @@ NPM_FILE_PATTERNS = {
         'moment.js',
         'locale/es.js',
         'min/moment-with-locales.min.js',
-    ]
+    ],
+    'nprogress': ['nprogres.js'],
+    'lodash': ['lodash.js']
 }
 
 # default keys, replace with somethign your own
