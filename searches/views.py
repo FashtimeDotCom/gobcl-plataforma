@@ -193,6 +193,37 @@ class ArticleListView(ListView):
 
         return []
 
+    def get_custom_results(self, **kwargs):
+        if self.query:
+            migration_keywords = [
+                'migracion',
+                'migración',
+                'migrante',
+                'amnistia',
+                'amnistía',
+                'extranjero',
+                'extranjería',
+                'extranjeria',
+                'perdonazo',
+                'migran',
+                'etranje',
+            ]
+
+            has_migration = any(n in self.query for n in migration_keywords)
+
+            if has_migration:
+                return [{
+                    'get_absolute_url': 'https://www.gob.cl/nuevaleydemigracion/',
+                    'name': 'Nueva Ley de Migración',
+                    'description': (
+                        'Conoce los fundamentos de la nueva reforma para '
+                        'lograr una migración segura, ordenada y regular.'
+                    ),
+                    'title': 'https://www.gob.cl/nuevaleydemigracion/',
+                }]
+
+        return []
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
 
@@ -220,6 +251,7 @@ class ArticleListView(ListView):
 
         queryset = list(
             chain(
+                self.get_custom_results(),
                 self.get_presidents(),
                 self.get_sociocultural_department(),
                 self.get_public_servants(),
