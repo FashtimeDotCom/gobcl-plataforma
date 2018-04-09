@@ -23,7 +23,7 @@ block content
   section.section.pv-0-until-md
     .container
       .row
-        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-lightgray.top
+        .col-12.col-lg.col-xl.bg-lightgray.top
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.d-none.d-md-block &nbsp;
@@ -37,7 +37,21 @@ block content
               {% endstatic_placeholder %}
             .align-self-end
               a.pull-right.a11y-tts(href="{% url 'presidency_detail' %}") {% trans 'See more.' %}
-        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+        .col-12.col-lg.col-xl.bg-light
+          .card-data-small.d-flex.h-100.flex-column.justify-content-between
+            h1.card-data-small_title
+              span.d-none.d-md-block &nbsp;
+              small.a11y-tts
+                {% static_placeholder 'Sociocultural departments' or %}
+                {% trans 'Sociocultural Department' %}
+                {% endstatic_placeholder %}
+            p.card-data-small_text.a11y-tts
+              {% static_placeholder "Sociocultural departments lead in" or %}
+              {% trans "Your citizen guide for simple and fast access to services and information of Chile's government." %}
+              {% endstatic_placeholder %}
+            .align-self-end
+              a.pull-right.a11y-tts(href="{% url 'sociocultural_department_detail' %}") {% trans 'See more.' %}
+        .col-12.col-lg.col-xl.bg-light
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ ministry_list|length }}
@@ -51,7 +65,7 @@ block content
               {% endstatic_placeholder %}
             .align-self-end
               a.pull-right(href="#ministries") {% trans 'See more.' %}
-        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+        .col-12.col-lg.col-xl.bg-light
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ public_service_list|length }}
@@ -65,7 +79,7 @@ block content
               {% endstatic_placeholder %}
             .align-self-end
               a.pull-right(href="#services") {% trans 'See more.' %}
-        .col-sm-12.col-md-12.col-lg-3.col-xl-3.bg-light
+        .col-12.col-lg.col-xl.bg-light
           .card-data-small.d-flex.h-100.flex-column.justify-content-between
             h1.card-data-small_title
               span.a11y-tts {{ region_list|length }}
@@ -89,7 +103,7 @@ block content
           )
             input.search-form_input(
               type="search",
-              placeholder="{% trans 'Write here what you want search.' %}"
+              placeholder="{% trans 'Write here what institution you want search.' %}"
             )
             button.search-form_button.search-form_button--submit(type="submit")
               i.ic-filter

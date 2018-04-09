@@ -133,7 +133,7 @@ block content
                   else
                     | {{ public_enterprise.name }}
       if ministry.publicservice_set.exists
-        h3.heading-sub 
+        h3.heading-sub
           {% static_placeholder 'Public Services' or %}
           {% trans 'Public Services' %}
           {% endstatic_placeholder %}
@@ -141,7 +141,7 @@ block content
           for public_service in ministry.publicservice_set.all
             .col-12.col-md-4
               .list-links
-                li
+                li(id="{{ public_service.name|slugify }}")
                   if public_service.get_absolute_url
                     a(href="{{ public_service.get_absolute_url }}", target="blank").link
                       | {{ public_service.name }}

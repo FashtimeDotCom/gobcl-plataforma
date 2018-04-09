@@ -146,6 +146,7 @@ INSTALLED_APPS = [
     'campaigns',
     'contingencies',
     'streams',
+    'sociocultural_departments',
     'articles',
 
     # django cms

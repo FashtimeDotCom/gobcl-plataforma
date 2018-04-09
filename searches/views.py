@@ -1,5 +1,6 @@
 # standard library
-#
+from itertools import chain
+
 # django
 from django.conf import settings
 from django.db.models import Q
@@ -13,6 +14,9 @@ from presidencies.models import Presidency
 from public_enterprises.models import PublicEnterprise
 from public_servants.models import PublicServant
 from regions.models import Region
+from sociocultural_departments.models import SocioculturalDepartment
+
+from base.view_utils import clean_query_string
 
 # chile atiende
 from services.chile_atiende_client import File
@@ -22,6 +26,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'search/search.pug'
     paginate_by = 25
+    page_kwarg = 'p'
 
     def get(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
@@ -124,7 +129,7 @@ class ArticleListView(ListView):
                 url=None
             ).translated(
                 name__unaccent__icontains=self.query
-            ).prefetch_related('translations')[:5]
+            ).prefetch_related('translations')
 
         return []
 
@@ -151,39 +156,49 @@ class ArticleListView(ListView):
 
         return []
 
+    def get_sociocultural_department(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            )
+
+            sociocultural_department_ids = sociocultural_department.filter(
+                name__unaccent__icontains=self.query
+            ) | sociocultural_department.translated(
+                title__unaccent__icontains=self.query
+            )
+
+            return SocioculturalDepartment.objects.filter(
+                id__in=sociocultural_department_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            )
+
+        return []
+
+    def get_foundations(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            ).first()
+
+            urls = sociocultural_department.urls.all()
+
+            foundations = urls.filter(
+                url=self.query,
+            ) | urls.translated(
+                name__unaccent__icontains=self.query,
+            )
+            return foundations
+
+        return []
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
 
-        context['campaigns'] = self.get_campaigns()
-
-        # obtain chile atiende files
-        context['chile_atiende_files_json'] = self.get_chileatiende_files()
-
-        context['ministries'] = self.get_ministries()
-
-        context['public_enterprises'] = self.get_public_enterprises()
-
-        context['public_servants'] = self.get_public_servants()
-
-        context['public_services'] = self.get_public_services()
-
-        context['presidents'] = self.get_presidents()
-
-        context['regions'] = self.get_regions()
-
+        context['clean_query_string'] = clean_query_string(self.request)
         # Count the total list of objects
-        context['count'] = (
-            context['object_list'].count() +
-            len(context['campaigns']) +
-            len(context['chile_atiende_files_json']) +
-            len(context['ministries']) +
-            len(context['presidents']) +
-            len(context['public_enterprises']) +
-            len(context['public_servants']) +
-            len(context['public_services']) +
-            len(context['regions'])
-        )
-
+        context['count'] = self.count
         context['query'] = self.query
 
         return context
@@ -202,5 +217,23 @@ class ArticleListView(ListView):
             queryset = queryset.filter(
                 categories__translations__slug__icontains=self.category_slug
             ).distinct()
+
+        queryset = list(
+            chain(
+                self.get_presidents(),
+                self.get_sociocultural_department(),
+                self.get_public_servants(),
+                self.get_ministries(),
+                self.get_foundations(),
+                self.get_regions(),
+                self.get_campaigns(),
+                self.get_public_services(),
+                self.get_public_enterprises(),
+                queryset,
+                self.get_chileatiende_files(),
+            )
+        )
+
+        self.count = len(queryset)
 
         return queryset

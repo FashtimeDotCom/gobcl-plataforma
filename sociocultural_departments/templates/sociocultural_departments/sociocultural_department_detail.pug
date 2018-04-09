@@ -1,0 +1,72 @@
+extends base.pug
+
+- load i18n
+- load thumbnail
+- load cms_tags
+
+block meta_tags
+      meta(itemprop='description', content='Gobierno de Chile')
+      if socioculturaldepartment.photo
+        meta(itemprop='image', content="{% thumbnail socioculturaldepartment.photo 700x1000 %}")
+      meta(itemprop='name', content='Gob.cl: {{title|title}}')
+
+block content
+  section.bg-light
+    .container
+      ol.breadcrumb
+        li: a(href="{% url 'home' %}") {% trans 'Home' %}
+        li: a(href="{% url 'institution_list' %}") {% trans 'Institutions' %}
+
+  section.bg-bluedark
+    .container
+      .profile.profile--bluedark.text-light.a11y-tts
+        .profile_header
+          h2.heading-large {{ socioculturaldepartment.name }}
+          span.profile_job {{ socioculturaldepartment.title }}
+        .row
+          .col-md-4
+            if socioculturaldepartment.photo
+              img.img-fluid.w-100.img-frame(src="{% thumbnail socioculturaldepartment.photo 700x1000 %}", alt="")
+          .col-md-8
+            .mt-1.mt-md-0 {{ socioculturaldepartment.description|linebreaks }}
+            if socioculturaldepartment.twitter
+              ul.profile_body
+                li
+                  a(href="https://twitter.com/{{ socioculturaldepartment.twitter }}").profile_twitter
+                    | @{{ socioculturaldepartment.twitter }}
+            .row.d-sm-none.d-lg-flex
+              .col-lg-6.mt-3
+                .overflowed-xs
+                  a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block
+                    {% static_placeholder 'Go to the socioculturaldepartment Press site' or %}
+                    {% trans 'Go to the sociocultural department site' %}
+                    {% endstatic_placeholder %}
+                  if perms.presidencies.change_socioculturaldepartments
+                    - get_current_language as current_language
+                    a.button.button--block(
+                      href="{% url 'admin:sociocultural_departments_socioculturaldepartment_change' socioculturaldepartment.id %}?language={{ current_language }}",
+                      target="blank"
+                    )
+                      | {% trans 'edit sociocultural department'|capfirst %}
+        .row.d-sm-none.d-none.d-sm-flex.d-lg-none
+          .col-md-12.mt-3
+            .overflowed-xs
+              a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block {% trans 'Go to the sociocultural department site' %}
+
+  section.section
+    .container
+      if socioculturaldepartment.urls.exists
+        h2.heading-medium
+          {% static_placeholder 'Foundations' or %}
+          {% trans 'Foundations' %}
+          {% endstatic_placeholder %}
+      .row
+        for url in socioculturaldepartment.urls.all
+          .col-12.col-md-4
+            .list-links
+              li(id="{{ url.name|slugify }}")
+                if url.get_absolute_url
+                  a(href="{{ url.get_absolute_url }}", target="blank").link
+                    | {{ url.name }}
+                else
+                  | {{ url.name }}
