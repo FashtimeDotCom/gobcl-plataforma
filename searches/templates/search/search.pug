@@ -27,6 +27,14 @@ block content
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
+            for custom_result in custom_results
+              .result.a11y-tts
+                a.result_link(href="{{custom_result.url}}")
+                  {{custom_result.name}}
+                p.result_excerpt
+                  {{ custom_result.description|truncatechars:100  }}
+                span.result_date {{ custom_result.url }}
+
             for presidency in presidents
               .result.a11y-tts
                 a.result_link(href="{{ presidency.get_absolute_url }}")

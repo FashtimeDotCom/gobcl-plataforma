@@ -73,6 +73,36 @@ class ArticleListView(ListView):
 
         return []
 
+    def get_custom_results(self, **kwargs):
+        if self.query:
+            migration_keywords = [
+                'migracion',
+                'migración',
+                'migrante',
+                'amnistia',
+                'amnistía',
+                'extranjero',
+                'extranjería',
+                'extranjeria',
+                'perdonazo',
+                'migran',
+                'etranje',
+            ]
+
+            has_migration = any(n in self.query for n in migration_keywords)
+
+            if has_migration:
+                return [{
+                    'url': 'https://www.gob.cl/nuevaleydemigracion/',
+                    'name': 'Nueva Ley de Migración',
+                    'description': (
+                        'Conoce los fundamentos de la nueva reforma para '
+                        'lograr una migración segura, ordenada y regular.'
+                    ),
+                }]
+
+        return []
+
     def get_presidents(self, **kwargs):
         if self.query:
             presidency = Presidency.objects.filter(
@@ -168,6 +198,8 @@ class ArticleListView(ListView):
 
         context['public_services'] = self.get_public_services()
 
+        context['custom_results'] = self.get_custom_results()
+
         context['presidents'] = self.get_presidents()
 
         context['regions'] = self.get_regions()
@@ -177,6 +209,7 @@ class ArticleListView(ListView):
             context['object_list'].count() +
             len(context['campaigns']) +
             len(context['chile_atiende_files_json']) +
+            len(context['custom_results']) +
             len(context['ministries']) +
             len(context['presidents']) +
             len(context['public_enterprises']) +
