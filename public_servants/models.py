@@ -71,5 +71,13 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
+        if self.ministry_set.exists():
+            return self.ministry_set.first().get_absolute_url()
 
-        return reverse('public_servant_detail', args=(self.pk,))
+        if self.ministries.exists():
+            return self.ministries.first().get_absolute_url()
+
+        if self.region_set.exists():
+            return self.region_set.first().get_absolute_url()
+
+        return ''

@@ -52,6 +52,7 @@ def get_queryset(self):
 
 
 ArticleList.get_queryset = get_queryset
+ArticleList.page_kwarg = 'p'
 
 
 class ArticleRelatedUpdateView(PermissionRequiredMixin, FormView):

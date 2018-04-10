@@ -1,11 +1,23 @@
 # standard library
-#
+from itertools import chain
+
 # django
 from django.conf import settings
 from django.db.models import Q
 from django.views.generic import ListView
 
 from aldryn_newsblog.models import Article
+from campaigns.models import Campaign
+from ministries.models import Ministry
+from ministries.models import PublicService
+from presidencies.models import Presidency
+from public_enterprises.models import PublicEnterprise
+from public_servants.models import PublicServant
+from regions.models import Region
+from sociocultural_departments.models import SocioculturalDepartment
+from links.models import FooterLink
+
+from base.view_utils import clean_query_string
 
 # chile atiende
 from services.chile_atiende_client import File
@@ -15,6 +27,7 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'search/search.pug'
     paginate_by = 25
+    page_kwarg = 'p'
 
     def get(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
@@ -23,26 +36,212 @@ class ArticleListView(ListView):
 
         return super(ArticleListView, self).get(request)
 
-    def get_context_data(self, **kwargs):
-        context = super(ArticleListView, self).get_context_data(**kwargs)
+    def get_campaigns(self, **kwargs):
+        if self.query:
+            return Campaign.objects.active().translated(
+                title__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:10]
 
-        # obinta chile atiende files
+        return []
+
+    def get_chileatiende_files(self, **kwags):
         chile_atiende_file_client = File()
 
         # set the list as empty by default
-        context['chile_atiende_files_json'] = []
+        chileatiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
-                context['chile_atiende_files_json'] = (
+                chile_atiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
+        return chileatiende_files
 
+    def get_ministries(self, **kwargs):
+        if self.query:
+            ministries = Ministry.objects.by_government_structure(
+                self.request.government_structure
+            )
+            ministry_ids = ministries.translated(
+                name__unaccent__icontains=self.query
+            ) | ministries.filter(
+                minister__name__unaccent__icontains=self.query
+            ) | ministries.filter(
+                public_servants__name__unaccent__icontains=self.query
+            )
+
+            return Ministry.objects.filter(
+                id__in=ministry_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            ).select_related(
+                'minister'
+            )
+
+        return []
+
+    def get_footer_links(self, **kwargs):
+        if self.query and len(self.query) > 3:
+            return FooterLink.objects.by_government_structure(
+                self.request.government_structure
+            ).filter(
+                name__unaccent__icontains=self.query
+            )
+
+        return []
+
+    def get_presidents(self, **kwargs):
+        if self.query:
+            presidency = Presidency.objects.filter(
+                government_structure=self.request.government_structure
+            )
+
+            presidency_ids = presidency.filter(
+                name__unaccent__icontains=self.query
+            ) | presidency.translated(
+                title__unaccent__icontains=self.query
+            )
+
+            return Presidency.objects.filter(
+                id__in=presidency_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            )
+
+        return []
+
+    def get_public_enterprises(self, **kwargs):
+        if self.query:
+            return PublicEnterprise.objects.filter(
+                government_structure=self.request.government_structure
+            ).exclude(
+                url=None
+            ).translated(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:5]
+
+        return []
+
+    def get_public_servants(self, **kwargs):
+        if self.query:
+            return PublicServant.objects.filter(
+                government_structure=self.request.government_structure
+            ).filter(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')[:10]
+
+        return []
+
+    def get_public_services(self, **kwargs):
+        if self.query:
+            government_structure = self.request.government_structure
+            return PublicService.objects.filter(
+                ministry__government_structure=government_structure
+            ).exclude(
+                url=None
+            ).translated(
+                name__unaccent__icontains=self.query
+            ).prefetch_related('translations')
+
+        return []
+
+    def get_regions(self, **kwargs):
+        if self.query:
+            regions = Region.objects.by_government_structure(
+                self.request.government_structure
+            )
+            region_ids = regions.translated(
+                name__unaccent__icontains=self.query
+            ) | regions.filter(
+                governor__name__unaccent__icontains=self.query
+            ) | regions.filter(
+                commune__name__unaccent__icontains=self.query
+            )
+
+            return Region.objects.filter(
+                id__in=region_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            ).select_related(
+                'governor'
+            )
+
+        return []
+
+    def get_sociocultural_department(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            )
+
+            sociocultural_department_ids = sociocultural_department.filter(
+                name__unaccent__icontains=self.query
+            ) | sociocultural_department.translated(
+                title__unaccent__icontains=self.query
+            )
+
+            return SocioculturalDepartment.objects.filter(
+                id__in=sociocultural_department_ids.values('id')
+            ).prefetch_related(
+                'translations'
+            )
+
+        return []
+
+    def get_foundations(self, **kwargs):
+        if self.query:
+            sociocultural_department = SocioculturalDepartment.objects.filter(
+                government_structure=self.request.government_structure
+            ).first()
+
+            urls = sociocultural_department.urls.all()
+
+            foundations = urls.filter(
+                url=self.query,
+            ) | urls.translated(
+                name__unaccent__icontains=self.query,
+            )
+            return foundations
+
+        return []
+
+    def get_custom_results(self, **kwargs):
+        if self.query:
+            migration_keywords = [
+                'migracion',
+                'migración',
+                'migrante',
+                'amnistia',
+                'amnistía',
+                'extranjero',
+                'extranjería',
+                'extranjeria',
+                'perdonazo',
+                'migran',
+                'migrar',
+                'etranje',
+            ]
+
+            has_migration = any(n in self.query for n in migration_keywords)
+
+            if has_migration:
+                return [{
+                    'get_absolute_url': 'https://www.gob.cl/nuevaleydemigracion/',
+                    'name': 'Nueva Ley de Migración',
+                    'description': (
+                        'Conoce los fundamentos de la nueva reforma para '
+                        'lograr una migración segura, ordenada y regular.'
+                    ),
+                    'title': 'https://www.gob.cl/nuevaleydemigracion/',
+                }]
+
+        return []
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+
+        context['clean_query_string'] = clean_query_string(self.request)
         # Count the total list of objects
-        context['count'] = (
-            context['object_list'].count() +
-            len(context['chile_atiende_files_json'])
-        )
-
+        context['count'] = self.count
         context['query'] = self.query
 
         return context
@@ -61,5 +260,25 @@ class ArticleListView(ListView):
             queryset = queryset.filter(
                 categories__translations__slug__icontains=self.category_slug
             ).distinct()
+
+        queryset = list(
+            chain(
+                self.get_custom_results(),
+                self.get_presidents(),
+                self.get_sociocultural_department(),
+                self.get_public_servants(),
+                self.get_footer_links(),
+                self.get_ministries(),
+                self.get_foundations(),
+                self.get_regions(),
+                self.get_campaigns(),
+                self.get_public_services(),
+                self.get_public_enterprises(),
+                queryset,
+                self.get_chileatiende_files(),
+            )
+        )
+
+        self.count = len(queryset)
 
         return queryset

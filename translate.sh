@@ -93,4 +93,5 @@ else
     translate "regions"
     translate "searches"
     translate "users"
+    translate "sociocultural_departments"
 fi
