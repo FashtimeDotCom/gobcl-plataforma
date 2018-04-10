@@ -15,8 +15,6 @@ from .serializers import ArticleSerializer
 from aldryn_newsblog.models import Article
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
-from services.models import ChileAtiendeFile
-
 
 class LimitOffsetPagination(LimitOffsetPagination):
 
@@ -114,7 +112,15 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+class LimitOffsetPaginationSearch(LimitOffsetPagination):
+    limit = 25
+
+    def get_limit(self, request):
+        return self.limit
+
+
 class ArticleSearchViewSet(ArticleViewSet):
+    pagination_class = LimitOffsetPaginationSearch
 
     def get_queryset(self):
         queryset = super(ArticleSearchViewSet, self).get_queryset()
