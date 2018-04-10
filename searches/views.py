@@ -15,6 +15,7 @@ from public_enterprises.models import PublicEnterprise
 from public_servants.models import PublicServant
 from regions.models import Region
 from sociocultural_departments.models import SocioculturalDepartment
+from links.models import FooterLink
 
 from base.view_utils import clean_query_string
 
@@ -74,6 +75,16 @@ class ArticleListView(ListView):
                 'translations'
             ).select_related(
                 'minister'
+            )
+
+        return []
+
+    def get_footer_links(self, **kwargs):
+        if self.query and len(self.query) > 3:
+            return FooterLink.objects.by_government_structure(
+                self.request.government_structure
+            ).filter(
+                name__unaccent__icontains=self.query
             )
 
         return []
@@ -193,6 +204,38 @@ class ArticleListView(ListView):
 
         return []
 
+    def get_custom_results(self, **kwargs):
+        if self.query:
+            migration_keywords = [
+                'migracion',
+                'migración',
+                'migrante',
+                'amnistia',
+                'amnistía',
+                'extranjero',
+                'extranjería',
+                'extranjeria',
+                'perdonazo',
+                'migran',
+                'migrar',
+                'etranje',
+            ]
+
+            has_migration = any(n in self.query for n in migration_keywords)
+
+            if has_migration:
+                return [{
+                    'get_absolute_url': 'https://www.gob.cl/nuevaleydemigracion/',
+                    'name': 'Nueva Ley de Migración',
+                    'description': (
+                        'Conoce los fundamentos de la nueva reforma para '
+                        'lograr una migración segura, ordenada y regular.'
+                    ),
+                    'title': 'https://www.gob.cl/nuevaleydemigracion/',
+                }]
+
+        return []
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
 
@@ -220,9 +263,11 @@ class ArticleListView(ListView):
 
         queryset = list(
             chain(
+                self.get_custom_results(),
                 self.get_presidents(),
                 self.get_sociocultural_department(),
                 self.get_public_servants(),
+                self.get_footer_links(),
                 self.get_ministries(),
                 self.get_foundations(),
                 self.get_regions(),
