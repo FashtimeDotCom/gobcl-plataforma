@@ -15,6 +15,7 @@ from public_enterprises.models import PublicEnterprise
 from public_servants.models import PublicServant
 from regions.models import Region
 from sociocultural_departments.models import SocioculturalDepartment
+from links.models import FooterLink
 
 from base.view_utils import clean_query_string
 
@@ -74,6 +75,16 @@ class ArticleListView(ListView):
                 'translations'
             ).select_related(
                 'minister'
+            )
+
+        return []
+
+    def get_footer_links(self, **kwargs):
+        if self.query and len(self.query) > 3:
+            return FooterLink.objects.by_government_structure(
+                self.request.government_structure
+            ).filter(
+                name__unaccent__icontains=self.query
             )
 
         return []
@@ -206,6 +217,7 @@ class ArticleListView(ListView):
                 'extranjeria',
                 'perdonazo',
                 'migran',
+                'migrar',
                 'etranje',
             ]
 
@@ -255,6 +267,7 @@ class ArticleListView(ListView):
                 self.get_presidents(),
                 self.get_sociocultural_department(),
                 self.get_public_servants(),
+                self.get_footer_links(),
                 self.get_ministries(),
                 self.get_foundations(),
                 self.get_regions(),

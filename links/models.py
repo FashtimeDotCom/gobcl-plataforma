@@ -32,6 +32,9 @@ class FooterLink(BaseGovernmentStructureModel):
             ('view_link', _('Can view link')),
         )
 
+    def get_absolute_url(self):
+        return self.url
+
     def _sum_order(self):
         '''
         When add a FooterLink object, order
