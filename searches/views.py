@@ -51,7 +51,7 @@ class ArticleListView(ListView):
         chileatiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
-                chile_atiende_files = (
+                chileatiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
         return chileatiende_files
@@ -173,6 +173,9 @@ class ArticleListView(ListView):
                 government_structure=self.request.government_structure
             )
 
+            if not sociocultural_department.exists():
+                return []
+
             sociocultural_department_ids = sociocultural_department.filter(
                 name__unaccent__icontains=self.query
             ) | sociocultural_department.translated(
@@ -275,8 +278,8 @@ class ArticleListView(ListView):
                 self.get_campaigns(),
                 self.get_public_services(),
                 self.get_public_enterprises(),
-                queryset,
                 self.get_chileatiende_files(),
+                queryset,
             )
         )
 

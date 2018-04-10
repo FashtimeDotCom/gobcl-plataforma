@@ -34,7 +34,14 @@ block content
                   a.result_link(href="{{ object.get_absolute_url }}{{ hashtag }}{{ object.name|slugify }}")
                     {{ object.name }}
                 else
-                  a.result_link(href="{{ object.get_absolute_url }}")
+                  if object.get_absolute_url
+                    url = object.get_absolute_url
+                    target = '_self'
+                  else
+                    url = object['permalink']
+                    target = '_blank'
+
+                  a.result_link(href="{{ url }}", target="{{ target }}")
                     if object.title
                       {{ object.title }}
                     elif object.titulo
@@ -47,7 +54,9 @@ block content
                   elif object.objetivo
                     {{ object.objetivo|striptags|truncatechars:100 }}
                 span.result_date
-                  if object.publishing_date
+                  if object.servicio
+                    {{ object.servicio }}
+                  elif object.publishing_date
                     {{ object.publishing_date|date }}
                   elif object.charge
                     {{ object.charge }}
