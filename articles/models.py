@@ -6,6 +6,8 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import activate
@@ -14,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseModel
 from cms.models.fields import PlaceholderField as OriginalPlaceholderField
+from cms.models.placeholdermodel import Placeholder
 from djangocms_text_ckeditor.fields import HTMLField
 
 # external
@@ -30,6 +33,8 @@ from cms.utils.i18n import get_current_language
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+
+from cms.signals import pre_save_plugins
 
 
 class PlaceholderField(OriginalPlaceholderField):
@@ -257,7 +262,7 @@ class Article(BaseModel, TranslatableModel):
 
         plugin_pool.set_plugin_meta()
         plugins = CMSPlugin.objects.filter(
-            placeholder=self.content,
+            placeholder=target.content,
             language=language
         ).order_by('-depth')
 
@@ -325,3 +330,18 @@ class Article(BaseModel, TranslatableModel):
         self._copy_contents(public_article, language)
 
         return public_article
+
+
+# Replace the mark as dirty method of placeholders to mark articles as dirty
+old_mark_as_dirty = Placeholder.mark_as_dirty
+
+def new_mark_as_dirty(self, language, clear_cache=True):
+    old_mark_as_dirty(self, language, clear_cache=True)
+    attached_model = self._get_attached_model()
+    if attached_model is Article:
+        article = Article.objects.get(content=self)
+        article.is_dirty = True
+        article.save()
+
+Placeholder.mark_as_dirty = new_mark_as_dirty
+# end replacing
