@@ -21,7 +21,7 @@ $(function() {
     // a link for ajax request
     '/api/1.0/search' + '?offset=' + parseInt(App.infiniteScroll.offset, 10),
     // a function that adds information about category and query string to a requestUrl
-    function (url) {
+    function(url) {
 
       var currentLocation = window.location.href;
       var qMatch = currentLocation.match(/q=([^&]+)/);
@@ -37,16 +37,19 @@ $(function() {
 
       return result;
     },
+
     // a pug template which will be used to render results from server
     'search/list',
+
     // a selector to an existing container
     '.row-results',
+
     // postLoadingTransformation
-    function () {
+    function() {
       // Changing the displayed number of total results
-      var $searchResultCounts = $('.search-results-counts');
-      var headerText = $searchResultCounts.text().replace(/\d+/, $('.result').length);
-      $searchResultCounts.text(headerText);
+      // var $searchResultCounts = $('.search-results-counts');
+      // var headerText = $searchResultCounts.text().replace(/\d+/, $('.result').length);
+      // $searchResultCounts.text(headerText);
     }
   )();
 });

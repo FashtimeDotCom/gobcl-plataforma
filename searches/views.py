@@ -243,6 +243,7 @@ class ArticleListView(ListView):
         # Count the total list of objects
         context['count'] = self.count
         context['query'] = self.query
+        context['offset'] = self.paginate_by
 
         return context
 
