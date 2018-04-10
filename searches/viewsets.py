@@ -118,18 +118,4 @@ class ArticleSearchViewSet(ArticleViewSet):
 
     def get_queryset(self):
         queryset = super(ArticleSearchViewSet, self).get_queryset()
-        queryset_file = ChileAtiendeFile.objects.all()
-
-        if self.query:
-            queryset_file = queryset_file.filter(
-                Q(service__name__unaccent__icontains=self.query) |
-                Q(title__unaccent__icontains=self.query) |
-                Q(objective__unaccent__icontains=self.query)
-            ).distinct().none()
-
-        queryset = list(itertools.chain(
-            queryset_file, queryset
-        )
-        )
-
         return queryset
