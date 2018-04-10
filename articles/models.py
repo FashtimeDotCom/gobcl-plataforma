@@ -178,6 +178,10 @@ class Article(BaseModel, TranslatableModel):
 
     objects = RelatedManager()
 
+    exclude_on_on_delete_test = (
+        'public',
+    )
+
     class Meta:
         verbose_name = _('article')
         verbose_name_plural = _('articles')

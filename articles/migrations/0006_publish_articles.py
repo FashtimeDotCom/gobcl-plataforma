@@ -10,9 +10,11 @@ def publish_news(apps, schema_editor):
     from django.utils.translation import activate
     activate('es')
 
-    for article in Article.objects.filter(is_draft=True):
+    for article in Article.objects.filter(is_draft=True, public=None).filter(id__gte=3298):
         if article.is_published:
             for translation in article.translations.all():
+                activate(translation.language_code)
+                article.refresh_from_db()
                 article.publish(translation.language_code)
 
 
