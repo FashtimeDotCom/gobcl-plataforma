@@ -94,7 +94,7 @@ class EmailBackend(BaseEmailBackend):
             for addr in email_message.recipients()
         ]
         subject = base64.b64encode(email_message.subject.encode('UTF-8'))
-        message = email_message.message().as_string()
+        message = email_message.message().as_string(linesep='<br>')
 
         headers = {
             'User-Agent': 'Mozilla/5.0',
@@ -102,7 +102,6 @@ class EmailBackend(BaseEmailBackend):
         }
 
         body = base64.b64encode(message.encode('UTF-8'))
-
         payload = {
             'from': 'no-reply@digital.gob.cl',
             'to': recipients,

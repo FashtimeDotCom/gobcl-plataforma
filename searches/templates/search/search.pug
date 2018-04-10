@@ -4,16 +4,6 @@ extends base.pug
 
 block javascripts
   script(src="{% static 'js/search.js' %}")
-  script(src="{% static 'js/load_more_found.js' %}")
-
-block javascript_context
-  script.
-    App.infiniteScroll = {
-      // - Temprorary solution until servr will get me this value
-      url: "{% url 'search-list' %}",
-      //- document.app.offset = "{{ article_list.count }}"
-      offset: "{{ count }}"
-    };
 
 
 block content
@@ -27,91 +17,43 @@ block content
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
-            for custom_result in custom_results
+            for object in object_list
               .result.a11y-tts
-                a.result_link(href="{{custom_result.url}}")
-                  {{custom_result.name}}
+                if object.name
+                  hashtag = '#'
+                  a.result_link(href="{{ object.get_absolute_url }}{{ hashtag }}{{ object.name|slugify }}")
+                    {{ object.name }}
+                else
+                  a.result_link(href="{{ object.get_absolute_url }}")
+                    if object.title
+                      {{ object.title }}
+                    elif object.titulo
+                      {{ object.titulo }}
                 p.result_excerpt
-                  {{ custom_result.description|truncatechars:100  }}
-                span.result_date {{ custom_result.url }}
-
-            for presidency in presidents
-              .result.a11y-tts
-                a.result_link(href="{{ presidency.get_absolute_url }}")
-                  {{presidency.name}}
-                p.result_excerpt
-                  {{ presidency.description|striptags|truncatechars:100  }}
-                span.result_date {{ presidency.title }}
-
-            for public_servant in public_servants
-              {% with url=public_servant.get_absolute_url %}
-              if url
-                .result.a11y-tts
-                  a.result_link(href="{{ url }}")
-                    {{public_servant.name}}
-                  p.result_excerpt
-                    {{ public_servant.description|striptags|truncatechars:100  }}
-                  span.result_date {{ public_servant.charge }}
-              {% endwith %}
-
-            for ministry in ministries
-              .result.a11y-tts
-                a.result_link(href="{{ ministry.get_absolute_url }}")
-                  {{ministry.name}}
-                p.result_excerpt
-                  {{ ministry.description|striptags|truncatechars:100  }}
-                span.result_date {% trans 'minister'|capfirst %}: {{ ministry.minister }}
-
-            for region in regions
-              .result.a11y-tts
-                a.result_link(href="{{ region.get_absolute_url }}")
-                  {{region.name}}
-                p.result_excerpt
-                  {{ region.description|striptags|truncatechars:100  }}
-                span.result_date {% trans 'region manager'|capfirst %}: {{ region.governor }}
-
-            for campaign in campaigns
-              .result.a11y-tts
-                a.result_link(href="{{ campaign.get_absolute_url }}")
-                  {{campaign.title}}
-                p.result_excerpt
-                  {{ campaign.description|truncatechars:100 }}
-                if campaign.external_url
-                  span.result_date {{ campaign.external_url }}
-
-            for public_service in public_services
-              .result.a11y-tts
-                a.result_link(href="{{ url }}")
-                  {{public_service.name}}
-                span.result_date {{ public_service.url }}
-
-            for public_enterprise in public_enterprises
-              .result.a11y-tts
-                a.result_link(href="{{ url }}")
-                  {{public_enterprise.name}}
-                span.result_date {{ public_enterprise.url }}
-
-            for article in object_list
-              .result.a11y-tts
-                a.result_link(href="{{ article.get_absolute_url }}")
-                  {% render_model article "title" %}
-                p.result_excerpt
-                  {{ article.lead_in|striptags|truncatechars:100 }}
-                span.result_date {{ article.publishing_date|date }}
-            for chile_atiende_file in chile_atiende_files_json
-              .result.a11y-tts
-                a.result_link(
-                  href="https://www.chileatiende.gob.cl/fichas/ver/{{chile_atiende_file.id}}"
-                )
-                  {{ chile_atiende_file.titulo }}
-                p.result_excerpt
-                  {{ chile_atiende_file.objetivo|striptags|truncatechars:100 }}
-                span.result_date {{ chile_atiende_file.fecha|slice:":10" }}
-                  |  {{chile_atiende_file.servicio}}
-
-        .row
-          {% include 'includes/loading-indicator.pug' %}
+                  if object.description
+                    {{ object.description|striptags|truncatechars:100 }}
+                  elif object.lead_in
+                    {{ object.lead_in|striptags|truncatechars:100 }}
+                  elif object.objetivo
+                    {{ object.objetivo|striptags|truncatechars:100 }}
+                span.result_date
+                  if object.publishing_date
+                    {{ object.publishing_date|date }}
+                  elif object.charge
+                    {{ object.charge }}
+                  elif object.title
+                    {{ object.title }}
+                  elif object.minister
+                    {% trans 'minister'|capfirst %}: {{ object.minister }}
+                  elif object.governor
+                    {% trans 'region manager'|capfirst %}: {{ object.governor }}
+                  elif object.external_url
+                    {{ object.external_url }}
+                  elif object.url
+                    {{ object.url }}
+                  elif object.fecha
+                    {{ object.fecha|slice:":10" }}  
+      {% include 'includes/pagination.pug' %}
   section
     .container
       {% include 'includes/social.pug' %}
-

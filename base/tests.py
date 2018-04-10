@@ -26,6 +26,7 @@ from base.utils import get_our_models
 from base.mockups import Mockup
 from base.scenarios import get_current_government_structure
 from base.scenarios import create_presidency
+from base.scenarios import create_sociocultural_department
 
 # Third-party app imports
 from model_mommy import mommy
@@ -134,6 +135,7 @@ class UrlsTest(BaseTestCase):
         # active government_structure and presidency.
         get_current_government_structure()
         create_presidency()
+        create_sociocultural_department()
 
         # we are going to send parameters, so one thing we'll do is to send
         # tie id 1

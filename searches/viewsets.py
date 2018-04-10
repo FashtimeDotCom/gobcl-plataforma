@@ -11,7 +11,6 @@ from rest_framework.utils.urls import remove_query_param, replace_query_param
 from rest_framework.permissions import AllowAny
 
 from .serializers import ArticleSerializer
-from services.serializers import ChileAtiendeFileSerializer
 
 from aldryn_newsblog.models import Article
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
