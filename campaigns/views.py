@@ -28,9 +28,6 @@ class CampaignListView(ListView):
     template_name = 'campaigns/campaign_list.pug'
     paginate_by = 25
 
-    def get_queryset(self):
-        return super(CampaignListView).get_queryset()
-
 
 class CampaignCreateView(BaseCreateView):
     """
