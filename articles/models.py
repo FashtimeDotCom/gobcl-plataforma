@@ -284,7 +284,14 @@ class Article(BaseModel, TranslatableModel):
 
     # django methods
     def get_absolute_url(self):
+        if not self.slug:
+            self.save()
         return reverse('articles:article_detail', args=(self.slug,), )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super(Article, self).save(*args, **kwargs)
 
     # custom methods
     def publish(self, language):
