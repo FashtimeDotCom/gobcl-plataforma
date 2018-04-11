@@ -2,7 +2,6 @@
 """ Administration classes for the articles application. """
 # standard lirary
 #
-from aldryn_apphooks_config.admin import BaseAppHookConfig, ModelAppHookConfig
 from aldryn_translation_tools.admin import AllTranslationsMixin
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from django.contrib import admin
@@ -81,12 +80,11 @@ class ArticleAdmin(
     AllTranslationsMixin,
     PlaceholderAdminMixin,
     FrontendEditableAdminMixin,
-    ModelAppHookConfig,
     TranslatableAdmin
 ):
     form = ArticleAdminForm
     list_display = ('title', 'slug', 'is_featured',
-                    'is_published')
+                    'is_published', 'created_by')
     list_filter = [
         'categories',
     ]
