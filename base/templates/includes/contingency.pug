@@ -1,56 +1,60 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
-  a.contingency-continue.button.button--block.button--yellow.a11y-tts-contingency(href="{% url 'home' %}")
-    | {% trans 'Breaking' %}: {{ contingency.name }}
+  .contingency-continue.bg-yellow.a11y-tts-contingency
+    .container.text-left
+      span.pr-4 {% trans 'Breaking' %}:
+      - for contingency in contingencies
+        a.px-4.contingency-link(href="#contingency-{{contingency.id}}") {{ contingency.name }}
   a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
-  .container
-    .row
-      .col-12.col-md-7.col-xl-6.top.bg-yellow.expand-yellow-left
-        article.article-contingency
-          .row
-            .col-12.col-lg-10
-              {% include 'includes/toolbar.pug' with dark=True custom_class="a11y-tts-contingency" %}
-              h2.heading-large.a11y-tts-contingency {{ contingency.name }}
-              h3.heading-sub.a11y-tts-contingency
-                {{ contingency.lead|linebreaksbr }}
-              p.a11y-tts-contingency
-                {{ contingency.description|linebreaksbr }}
-      .col-12.col-md-5.col-xl-6.top.bg-bluedark.article--dark.expand-bluedark-right
-        .article-schedule
-          .row
-            .col-12.col-lg-10.col-xl-10.a11y-tts-contingency
-              if contingency.events.exists
-                for event in contingency.events.all
-                  .schedule
-                    .schedule_left
-                      time.schedule_time.schedule_time--has-dot {{ event.date_time|time:"H:i" }}
-                      time.schedule_date {{ event.date_time|date:"SHORT_DATE_FORMAT" }}
-                    .schedule_right
-                      if event.url
-                        a(href="{{ event.get_absolute_url }}").schedule_link
-                          {{ event.title }}
-                      else
-                        {{ event.title }}
-
-    if contingency.informations.exists
-      h3.heading-medium.pt-2.a11y-tts-contingency {% trans 'Find more information on:' %}
+  - for contingency in contingencies
+    .container.contingency-container(id="contingency-{{contingency.id}}")
       .row
-        for information in contingency.informations.all
-          .col-lg-6.a11y-tts-contingency
-            .card-small
-              h5.card-small_title
-                if information.url
-                  a.card-small_link(href="{{information.url}}")
+        .col-12.col-md-7.col-xl-6.top.bg-yellow.expand-yellow-left
+          article.article-contingency
+            .row
+              .col-12.col-lg-10
+                {% include 'includes/toolbar.pug' with dark=True custom_class="a11y-tts-contingency" %}
+                h2.heading-large.a11y-tts-contingency {{ contingency.name }}
+                h3.heading-sub.a11y-tts-contingency
+                  {{ contingency.lead|linebreaksbr }}
+                p.a11y-tts-contingency
+                  {{ contingency.description|linebreaksbr }}
+        .col-12.col-md-5.col-xl-6.top.bg-bluedark.article--dark.expand-bluedark-right
+          .article-schedule
+            .row
+              .col-12.col-lg-10.col-xl-10.a11y-tts-contingency
+                if contingency.events.exists
+                  for event in contingency.events.all
+                    .schedule
+                      .schedule_left
+                        time.schedule_time.schedule_time--has-dot {{ event.date_time|time:"H:i" }}
+                        time.schedule_date {{ event.date_time|date:"SHORT_DATE_FORMAT" }}
+                      .schedule_right
+                        if event.url
+                          a(href="{{ event.get_absolute_url }}").schedule_link
+                            {{ event.title }}
+                        else
+                          {{ event.title }}
+
+      if contingency.informations.exists
+        h3.heading-medium.pt-2.a11y-tts-contingency {% trans 'Find more information on:' %}
+        .row
+          for information in contingency.informations.all
+            .col-lg-6.a11y-tts-contingency
+              .card-small
+                h5.card-small_title
+                  if information.url
+                    a.card-small_link(href="{{information.url}}")
+                      | {{ information.title }}
+                      i.ic-arrow-right.icon--right
+                  else
                     | {{ information.title }}
                     i.ic-arrow-right.icon--right
-                else
-                  | {{ information.title }}
-                  i.ic-arrow-right.icon--right
-              .card-small_body
-                .row
-                  .col-12.col-lg-7
-                    p.card-small_text
-                      {{ information.description }}
-    {% include 'includes/social.pug' %}
+                .card-small_body
+                  .row
+                    .col-12.col-lg-7
+                      p.card-small_text
+                        {{ information.description }}
+      {% include 'includes/social.pug' %}

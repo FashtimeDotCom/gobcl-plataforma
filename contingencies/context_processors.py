@@ -10,7 +10,7 @@ def get_contingencies(request):
     )[:3]
 
     context = {
-        'contingency': contingencies,
+        'contingencies': contingencies,
         'exists_contingency': contingencies.exists(),
     }
 
