@@ -79,7 +79,8 @@
         tabindex: 0,
         src: opts.url,
         class: 'w-100',
-        frameborder: 0
+        frameborder: 0,
+        zIndex: 'unset'
       })
         .css({
           height: this._calculateHeight(),
@@ -118,6 +119,7 @@
           $($iFrame[0].contentWindow.document).ready(function() {
             var editor = $iFrame[0].contentWindow.CMS.CKEditor.editor;
 
+            console.log(editor);
             if (editor) {
               editor.on('instanceReady', function(e) {
                 var $ckEditorIframe = $(e.editor.container.$).find('iframe');
@@ -394,12 +396,15 @@
     Editor.prototype._calculateHeight = function () {
 
       return this.ui.$plugins.map(function (index, plugin) {
-        return $(plugin).height();
+        return $(plugin).height() + parseInt($(plugin).css('margin-bottom'), 10);
       })
         .toArray()
         .reduce(function (current, next) {
           return current + next;
-        }, 0);
+        }, 0)
+        + 141 // ckeditor controls heights
+        + 46 // ckeditor options
+        + 44; // blockquote margin bottom.
     };
 
     Editor.options = {
