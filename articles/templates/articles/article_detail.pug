@@ -14,7 +14,7 @@ block content
             time.main-post_date {{ article.publishing_date|date }}
             h1.main-post_title {% render_model article "title" %}
             .main-post_subtitle
-              {{ article.description }}
+              {{ article.lead_in }}
 
             {% placeholder "top_content" %}
 

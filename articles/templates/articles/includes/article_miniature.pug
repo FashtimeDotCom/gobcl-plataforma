@@ -4,10 +4,10 @@ article.new.new--mobile.a11y-tts
   time.new_date
     {{ article.publishing_date|date }}
   figure.new_figure-mobile
-    if article.image_id
+    if article.featured_image_id
       img.img-fluid.w-100.img-frame(
-        src="{{ article.image|thumbnail_url:'new_list_item' }}",
-        alt="{{ article.image.alt }}"
+        src="{{ article.featured_image|thumbnail_url:'new_list_item' }}",
+        alt="{{ article.featured_image.alt }}"
       )
     else
       img.img-fluid.w-100.img-frame(

@@ -59,7 +59,7 @@ class PreviewModeMixin(EditModeMixin):
         return qs
 
 
-class ArticleListView(ListView):
+class ArticleListView(PreviewModeMixin, ListView):
     """
     View for displaying a list of articles.
     """
@@ -67,10 +67,44 @@ class ArticleListView(ListView):
     template_name = 'articles/article_list.pug'
     paginate_by = 25
 
-    def get_queryset(self, *args, **kwargs):
-        queryset = super(ArticleListView, self).get_queryset()
-        return queryset.published().translated(is_featured=False)
+    def get_pagination_options(self):
+        # Django does not handle negative numbers well
+        # when using variables.
+        # So we perform the conversion here.
+        options = {
+            'pages_start': 10,
+            'pages_visible': 4,
+        }
 
+        pages_visible_negative = -options['pages_visible']
+        options['pages_visible_negative'] = pages_visible_negative
+        options['pages_visible_total'] = options['pages_visible'] + 1
+        options['pages_visible_total_negative'] = pages_visible_negative - 1
+        return options
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        context['pagination'] = self.get_pagination_options()
+
+        featured_qs = Article.objects.all().translated(is_featured=True)
+
+        context['featured_article'] = featured_qs.first()
+
+        return context
+
+    def get_queryset(self):
+        qs = super(ArticleListView, self).get_queryset()
+
+        featured_qs = Article.objects.all().translated(is_featured=True)
+
+        if not self.edit_mode:
+            featured_qs = featured_qs.published()
+
+        # exclude 1 featured article
+        exclude_featured = featured_qs[:1].values_list('pk')
+        qs = qs.exclude(pk__in=exclude_featured)
+
+        return qs
 
 class ArticleDetailView(PreviewModeMixin, TranslatableSlugMixin,
                         BaseDetailView):
