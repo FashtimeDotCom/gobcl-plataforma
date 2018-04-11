@@ -85,6 +85,7 @@
         .css({
           height: this._calculateHeight(),
           minHeight: 260,
+          maxHeight: document.documentElement.clientHeight - 180,
           visibility: 'hidden'
         });
 
