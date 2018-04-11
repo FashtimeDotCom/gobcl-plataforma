@@ -99,6 +99,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
             ('view_user', _('Can view user')),
         )
 
+    def __str__(self):
+        return self.get_full_name()
+
     def clean(self):
         super(User, self).clean()
         self.email = self.__class__.objects.normalize_email(self.email)
