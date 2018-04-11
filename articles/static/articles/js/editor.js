@@ -117,25 +117,27 @@
 
         if ($iFrame[0].contentWindow && $iFrame[0].contentWindow.CMS && $iFrame[0].contentWindow.CMS.CKEditor) {
           $($iFrame[0].contentWindow.document).ready(function() {
-            var editor = $iFrame[0].contentWindow.CMS.CKEditor.editor;
 
-            console.log(editor);
-            if (editor) {
-              editor.on('instanceReady', function(e) {
-                var $ckEditorIframe = $(e.editor.container.$).find('iframe');
+            setTimeout(function () {
+              var editor = $iFrame[0].contentWindow.CMS.CKEditor.editor;
 
-                $ckEditorIframe
-                  .contents()
-                  .find('head')
-                  .append($('#gobstyle').children('link').clone());
+              if (editor) {
+                editor.on('instanceReady', function(e) {
+                  var $ckEditorIframe = $(e.editor.container.$).find('iframe');
 
-                $ckEditorIframe
-                  .contents()
-                  .find('body')
-                  .addClass('main-post');
+                  $ckEditorIframe
+                    .contents()
+                    .find('head')
+                    .append($('#gobstyle').children('link').clone());
 
-              });
-            }
+                  $ckEditorIframe
+                    .contents()
+                    .find('body')
+                    .addClass('main-post');
+
+                });
+              }
+            }, 100);
 
           });
         }
