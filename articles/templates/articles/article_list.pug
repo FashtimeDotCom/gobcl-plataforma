@@ -21,3 +21,11 @@ block content
         each article in article_list
           .col-12.col-lg-6
             {% include 'articles/includes/article_miniature.pug' %}
+
+      if not article_list
+        h3 {% trans 'There are no news in this category' %}
+
+    {% include 'includes/pagination.pug' %}
+  section
+    .container
+      {% include 'includes/social.pug' %}
