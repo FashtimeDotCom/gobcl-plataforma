@@ -73,7 +73,10 @@ class ArticleToolbar(CMSToolbar):
                 if self.toolbar.edit_mode:
                     article = article.get(is_draft=True)
                 else:
-                    article = article.get(is_draft=False)
+                    if article.filter(is_draft=False).exists():
+                        article = article.get(is_draft=False)
+                    else:
+                        article = article.get(is_draft=True)
 
             else:
                 article = None

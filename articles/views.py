@@ -49,10 +49,14 @@ class PreviewModeMixin(EditModeMixin):
         if self.edit_mode and user_can_edit:
             qs = qs.draft()
         else:
-            qs = qs.not_draft()
+            if user_can_edit and not qs.not_draft().exists():
+                qs = qs.draft()
+            else:
+                qs = qs.not_draft()
 
         if not (self.edit_mode or user_can_edit):
-            qs = qs.published()
+            if not user_can_edit and qs.published().exists():
+                qs = qs.published()
 
         language = translation.get_language()
         qs = qs.active_translations(language)
