@@ -133,5 +133,10 @@ class ArticleAdmin(
         request.GET = data
         return super(ArticleAdmin, self).add_view(request, *args, **kwargs)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        return qs.filter(is_draft=True)
+
 
 admin.site.register(models.Article, ArticleAdmin)
