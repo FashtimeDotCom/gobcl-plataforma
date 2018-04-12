@@ -83,8 +83,14 @@ class ArticleAdmin(
     TranslatableAdmin
 ):
     form = ArticleAdminForm
-    list_display = ('title', 'slug', 'is_featured',
-                    'is_published', 'created_by')
+    list_display = (
+        'title',
+        'slug',
+        'is_featured',
+        'is_published',
+        'is_dirty',
+        'created_by',
+    )
     list_filter = [
         'categories',
     ]
