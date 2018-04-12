@@ -38,6 +38,7 @@ class PreviewModeMixin(EditModeMixin):
     If content editor is logged-in, show all articles. Otherwise, only the
     published articles should be returned.
     """
+
     def get_queryset(self):
         qs = super(PreviewModeMixin, self).get_queryset()
         # check if user can see unpublished items. this will allow to switch
@@ -69,7 +70,8 @@ class ArticleListView(PreviewModeMixin, ListView):
     """
     model = Article
     template_name = 'articles/article_list.pug'
-    paginate_by = 25
+    paginate_by = 8
+    page_kwarg = 'p'
 
     def get_pagination_options(self):
         # Django does not handle negative numbers well
@@ -110,6 +112,7 @@ class ArticleListView(PreviewModeMixin, ListView):
 
         return qs
 
+
 class ArticleDetailView(PreviewModeMixin, TranslatableSlugMixin,
                         BaseDetailView):
     """
@@ -123,7 +126,8 @@ def add_text_plugin_to_article(article_id, language='es', content='Doble click p
                                position='last-child'):
     a = Article.objects.get(id=article_id)
 
-    add_plugin(a.content, 'TextPlugin', language, body=content, position=position)
+    add_plugin(a.content, 'TextPlugin', language,
+               body=content, position=position)
 
 
 class ArticlePublishView(TranslatableSlugMixin, SingleObjectMixin, BaseRedirectView):
