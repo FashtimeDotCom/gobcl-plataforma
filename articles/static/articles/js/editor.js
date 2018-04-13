@@ -78,15 +78,15 @@
       var $iFrame = $('<iframe/>', {
         tabindex: 0,
         src: opts.url,
-        class: 'w-100',
-        frameborder: 0,
-        zIndex: 'unset'
+        frameborder: 0
       })
         .css({
           height: this._calculateHeight(),
           minHeight: 260,
           maxHeight: document.documentElement.clientHeight - 180,
-          visibility: 'hidden'
+          visibility: 'hidden',
+          minWidth: '100%',
+          width: 'calc(100% + ' + (window.innerWidth-$(window).width()) + 'px)'
         });
 
       $holder.css('visibility', 'hidden');
