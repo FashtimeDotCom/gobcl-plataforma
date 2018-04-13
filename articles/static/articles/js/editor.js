@@ -136,6 +136,8 @@
                     .find('body')
                     .addClass('main-post');
 
+                  that._styleVideoPlugins($ckEditorIframe);
+
                 });
               }
             }, 100);
@@ -408,6 +410,15 @@
         + 141 // ckeditor controls heights
         + 46 // ckeditor options
         + 44; // blockquote margin bottom.
+    };
+
+    Editor.prototype._styleVideoPlugins = function ($frame) {
+      $frame.contents().find('.post-video iframe').each(function (index, videoFrame) {
+        $(videoFrame).css({
+          width: '100%',
+          height: $frame.width() / 1.77777777778 // 1920x1080 aspect ratio.
+        });
+      });
     };
 
     Editor.options = {
