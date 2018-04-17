@@ -428,10 +428,8 @@
     return Editor;
   })();
 
-
-
   $(function () {
-    $('.cms-plugin').on('dblclick', function (e) {
+    $('.editor-zone .cms-plugin').on('dblclick', function (e) {
       var data = $(this).data('cms')[0];
 
       if (data.plugin_type === 'TextPlugin') {

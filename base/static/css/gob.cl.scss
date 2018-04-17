@@ -16,6 +16,47 @@
   }
 }
 
-.frame.cms {
-  z-index: 1;
+.editor-zone {
+
+  .plugin-block {
+
+    .plugin-block-actions {
+      display: none;
+
+      .btn-group {
+
+        .btn {
+          background-color: get-color('white');
+          border: 1px solid rgba(get-color('dark'), .1);
+
+          &:active,
+          &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(get-color('dark'), .05);
+          }
+
+          i {
+            color: rgba(get-color('dark'), .6);
+          }
+
+          &:first-child {
+            border-radius: 4px 0 0 4px;
+          }
+
+          &:last-child {
+            border-radius: 0 4px 4px 0;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .plugin-block-actions {
+        display: block;
+      }
+    }
+
+    .frame.cms {
+      z-index: 1;
+    }
+  }
 }
