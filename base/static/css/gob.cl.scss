@@ -19,6 +19,23 @@
 .editor-zone {
 
   .plugin-block {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 40px;
+      width: 100%
+    }
+
+    &:before {
+      top: -20px;
+    }
+
+    &:after {
+      bottom: -20px;
+    }
 
     .plugin-block-actions {
       display: none;
@@ -27,15 +44,15 @@
 
         .btn {
           background-color: get-color('white');
-          border: 1px solid rgba(get-color('dark'), .1);
+          border: 1px solid rgba(get-color('gray'), .1);
 
           &:active,
           &:focus {
-            box-shadow: 0 0 0 0.2rem rgba(get-color('dark'), .05);
+            box-shadow: 0 0 0 0.2rem rgba(get-color('gray'), .05);
           }
 
           i {
-            color: rgba(get-color('dark'), .6);
+            color: rgba(get-color('gray'), .6);
           }
 
           &:first-child {
@@ -49,7 +66,7 @@
       }
     }
 
-    &:hover {
+    &:not(.editor-active):hover {
       .plugin-block-actions {
         display: block;
       }

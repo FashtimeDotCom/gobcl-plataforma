@@ -48,7 +48,7 @@
   };
 
   Plugin.prototype._makeToolBox = function () {
-    return $('<div/>', { class: 'plugin-block-actions text-center my-3'}).append(
+    return $('<div/>', { class: 'plugin-block-actions text-center py-3'}).append(
       $('<div/>', { class: 'btn-group' }).append(
         $('<button/>', { type: 'button', class: 'btn btn-white'})
           .append($('<i/>', { class: 'fa fa-picture-o' })),

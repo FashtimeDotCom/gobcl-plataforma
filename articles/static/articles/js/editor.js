@@ -51,6 +51,9 @@
         $actions: $('<div/>', { class: 'frame-actions clearfix w-100'})
       };
 
+      this.ui.$plugins.closest('.plugin-block')
+        .addClass('editor-active');
+
       this.ui.$container.append(this.ui.$frame, this.ui.$actions);
       this.ui.$container.insertBefore(this.ui.$plugins[0]);
     };
