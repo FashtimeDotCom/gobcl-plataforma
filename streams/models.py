@@ -53,23 +53,6 @@ class Stream(BaseModel, TranslatableModel):
             ('view_stream', _('Can view stream')),
         )
 
-    def clean(self):
-        if not self.url and not self.iframe:
-            message = _('This field is required.')
-
-            raise ValidationError({
-                'url': ValidationError(message, code='required'),
-                'iframe': ValidationError(message, code='required'),
-            })
-
-        if self.url and self.iframe:
-            message = _('You can only choose one of these fields')
-
-            raise ValidationError({
-                'url': ValidationError(message),
-                'iframe': ValidationError(message),
-            })
-
     def __str__(self):
         return self.title
 

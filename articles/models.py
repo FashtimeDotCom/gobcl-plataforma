@@ -20,11 +20,11 @@ from cms.models.placeholdermodel import Placeholder
 from djangocms_text_ckeditor.fields import HTMLField
 
 # external
-from sortedm2m.fields import SortedManyToManyField
 from .managers import RelatedManager
-from taggit.managers import TaggableManager
 from aldryn_apphooks_config.fields import AppHookConfigField
 from aldryn_categories.fields import CategoryManyToManyField
+from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
+from aldryn_translation_tools.models import TranslationHelperMixin
 from cms.exceptions import PublicIsUnmodifiable
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
@@ -33,6 +33,8 @@ from cms.utils.i18n import get_current_language
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
+from sortedm2m.fields import SortedManyToManyField
+from taggit.managers import TaggableManager
 
 from cms.signals import pre_save_plugins
 
@@ -52,7 +54,14 @@ class PlaceholderField(OriginalPlaceholderField):
         return super(PlaceholderField, self).pre_save(model_instance, add)
 
 
-class Article(BaseModel, TranslatableModel):
+class Article(TranslatedAutoSlugifyMixin,
+              TranslationHelperMixin,
+              BaseModel,
+              TranslatableModel):
+    # TranslatedAutoSlugifyMixin options
+    slug_source_field_name = 'title'
+    slug_default = _('untitled-article')
+
     update_search_on_save = getattr(
         settings,
         'ALDRYN_NEWSBLOG_UPDATE_SEARCH_DATA_ON_SAVE',
@@ -287,11 +296,6 @@ class Article(BaseModel, TranslatableModel):
         if not self.slug:
             self.save()
         return reverse('articles:article_detail', args=(self.slug,), )
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        return super(Article, self).save(*args, **kwargs)
 
     # custom methods
     def publish(self, language):
