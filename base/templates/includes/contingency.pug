@@ -1,13 +1,13 @@
 - load i18n
 
 section.contingency(data-active="{{ exists_contingency|lower }}")
+  a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
+    | {% trans 'Continue browsing on Gob.cl' %}
   .contingency-continue.bg-yellow.a11y-tts-contingency
     .container.text-left
       span.pr-4 {% trans 'Breaking' %}:
       - for contingency in contingencies
-        a.px-4.contingency-link(href="#contingency-{{contingency.id}}") {{ contingency.name }}
-  a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
-    | {% trans 'Continue browsing on Gob.cl' %}
+        a.px-lg-4.contingency-link.not-smooth(href="#contingency-{{contingency.id}}") {{ contingency.name }}
   - for contingency in contingencies
     .container.contingency-container(id="contingency-{{contingency.id}}")
       .row
