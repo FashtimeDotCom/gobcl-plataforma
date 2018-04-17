@@ -147,6 +147,7 @@ INSTALLED_APPS = [
     'contingencies',
     'streams',
     'sociocultural_departments',
+    'articles',
 
     # django cms
     'cms',
@@ -403,7 +404,9 @@ NPM_FILE_PATTERNS = {
         'moment.js',
         'locale/es.js',
         'min/moment-with-locales.min.js',
-    ]
+    ],
+    'nprogress': ['nprogress.js'],
+    'lodash': ['lodash.js']
 }
 
 # default keys, replace with somethign your own

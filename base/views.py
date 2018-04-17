@@ -111,7 +111,8 @@ class BaseDetailView(DetailView, PermissionRequiredMixin):
 
     def get_title(self):
         verbose_name = self.model._meta.verbose_name
-        return '{}: {}'.format(verbose_name, self.object).capitalize()
+        obj = self.object
+        return '{}: {}'.format(verbose_name, obj).capitalize()
 
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)

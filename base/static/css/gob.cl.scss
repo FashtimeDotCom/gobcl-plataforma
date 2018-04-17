@@ -5,3 +5,17 @@
 @import "_variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "../../../node_modules/@gobdigital-cl/gob.cl/src/scss/gob.cl";
+
+.cke_editable {
+  &.main-post {
+    padding-bottom: 0;
+
+    &:after {
+      content: '';
+    }
+  }
+}
+
+.frame.cms {
+  z-index: 1;
+}
