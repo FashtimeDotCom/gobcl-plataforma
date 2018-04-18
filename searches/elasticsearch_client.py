@@ -53,4 +53,4 @@ class ElasticSearchClient:
         )
 
     def execute(self):
-        return self.search().execute()
+        return self.search()[:10000].execute()
