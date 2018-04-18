@@ -140,6 +140,21 @@
                     .addClass('main-post');
 
                   that._styleVideoPlugins($ckEditorIframe);
+                  that._setupPluginsButtonCallback($iFrame);
+
+                  console.log($ckEditorIframe.contents().find('.post-video iframe'));
+
+                  $($contents).on('click', '.cke_dialog_ui_button.cke_dialog_ui_button_ok', function () {
+                    if (that.options.listenOkModal) {
+
+                      setTimeout(function () {
+                        console.log($ckEditorIframe.contents().find('.post-video iframe'));
+                        that._styleVideoPlugins($ckEditorIframe);
+                      }, 100);
+
+                      that.options.listenOkModal = false;
+                    }
+                  });
 
                 });
               }
@@ -424,8 +439,24 @@
       });
     };
 
+    Editor.prototype._setupPluginsButtonCallback = function ($frame) {
+      var that = this;
+      $frame.contents().find('.cke_button.cke_button__cmsplugins')
+        .on('click', function () {
+          var $dropdown = $frame.contents().find('.cke_panel.cke_panelbutton__cmsplugins_panel iframe');
+
+          $dropdown.on('load', function () {
+            $dropdown.contents().find('a[rel="VideoPlayerPlugin"]')
+              .on('click', function () {
+                that.options.listenOkModal = true;
+              });
+          });
+        });
+    };
+
     Editor.options = {
-      transitionDuration: 200
+      transitionDuration: 200,
+      listenOkModal: false
     };
 
     return Editor;
