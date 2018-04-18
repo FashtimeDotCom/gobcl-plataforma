@@ -142,19 +142,29 @@
                   that._styleVideoPlugins($ckEditorIframe);
                   that._setupPluginsButtonCallback($iFrame);
 
-                  console.log($ckEditorIframe.contents().find('.post-video iframe'));
+                  $ckEditorIframe.contents().on('DOMNodeInserted', _.debounce(function () {
+                    if (that.options.fireStyleVideoPlugins) {
+                      console.log('fire');
+                      that._styleVideoPlugins($ckEditorIframe);
+                      that.options.fireStyleVideoPlugins = false;
+                    }
+                  }, 200, {
+                    leading: false,
+                    trailing: true
+                  }));
 
                   $($contents).on('click', '.cke_dialog_ui_button.cke_dialog_ui_button_ok', function () {
                     if (that.options.listenOkModal) {
-
-                      setTimeout(function () {
-                        console.log($ckEditorIframe.contents().find('.post-video iframe'));
-                        that._styleVideoPlugins($ckEditorIframe);
-                      }, 100);
-
+                      that.options.fireStyleVideoPlugins = true;
                       that.options.listenOkModal = false;
                     }
                   });
+
+                  $($contents).on(
+                    'click',
+                    '.cke_dialog_close_button, .cke_dialog_ui_button.cke_dialog_ui_button_cancel', function () {
+                      that.options.listenOkModal = false;
+                    });
 
                 });
               }
@@ -456,7 +466,8 @@
 
     Editor.options = {
       transitionDuration: 200,
-      listenOkModal: false
+      listenOkModal: false,
+      fireStyleVideoPlugins: false
     };
 
     return Editor;
