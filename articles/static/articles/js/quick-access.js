@@ -22,6 +22,14 @@
   Plugin.prototype.init = function () {
     var that = this;
 
+    $(this.$element).on('click', '.plugin-block-actions .btn', function () {
+      that.options.onToolClick(
+        $(this).data('tool'),
+        $(this).closest('.plugin-block').data('cms'),
+        $(this).closest('.plugin-block-actions').data('before')
+      )
+    });
+
     this.plugins = this.$element
       .find('.cms-plugin')
       .map(function (index, plugin) {
@@ -34,32 +42,37 @@
       }, {});
 
     Object.keys(this.plugins).forEach(function (id, index) {
-      var block = $('<div/>', { class: 'plugin-block plugin-block-' + id });
+      var block = $('<div/>', { class: 'plugin-block plugin-block-' + id })
+        .data('cms', that.plugins[id]);
 
       if (index === 0) {
-        block.append(that._makeToolBox());
+        block.append(that._makeToolBox(true));
       }
 
       $('.cms-plugin-' + id).appendTo(block);
 
-      block.append(that._makeToolBox());
+      block.append(that._makeToolBox(false));
       that.$element.append(block);
     });
   };
 
-  Plugin.prototype._makeToolBox = function () {
+  Plugin.prototype._makeToolBox = function (before) {
     return $('<div/>', { class: 'plugin-block-actions text-center py-3'}).append(
       $('<div/>', { class: 'btn-group' }).append(
         $('<button/>', { type: 'button', class: 'btn btn-white'})
-          .append($('<i/>', { class: 'fa fa-picture-o' })),
+          .append($('<i/>', { class: 'fa fa-picture-o' }))
+          .data('tool', 'picture'),
         $('<button/>', { type: 'button', class: 'btn btn-white'})
-          .append($('<i/>', { class: 'fa fa-font' })),
+          .append($('<i/>', { class: 'fa fa-font' }))
+          .data('tool', 'text'),
         $('<button/>', { type: 'button', class: 'btn btn-white'})
-          .append($('<i/>', { class: 'fa fa-link' })),
+          .append($('<i/>', { class: 'fa fa-link' }))
+          .data('tool', 'link'),
         $('<button/>', { type: 'button', class: 'btn btn-white'})
           .append($('<i/>', { class: 'fa fa-video-camera' }))
+          .data('tool', 'video')
       )
-    );
+    ).data('before', before);
   };
 
   Plugin.prototype.update = function () {
@@ -82,7 +95,13 @@
   };
 
   $(function () {
-    $('.editor-zone').quickAccess();
+    $('.editor-zone').quickAccess({
+      onToolClick: function (toolType, plugin, before) {
+        console.log(toolType);
+        console.log(plugin);
+        console.log(before);
+      }
+    });
   });
 
 })(CMS.$);
