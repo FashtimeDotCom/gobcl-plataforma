@@ -23,7 +23,6 @@ from djangocms_text_ckeditor.fields import HTMLField
 from .managers import RelatedManager
 from aldryn_apphooks_config.fields import AppHookConfigField
 from aldryn_categories.fields import CategoryManyToManyField
-from aldryn_translation_tools.models import TranslatedAutoSlugifyMixin
 from aldryn_translation_tools.models import TranslationHelperMixin
 from cms.exceptions import PublicIsUnmodifiable
 from cms.models.pluginmodel import CMSPlugin
@@ -54,8 +53,7 @@ class PlaceholderField(OriginalPlaceholderField):
         return super(PlaceholderField, self).pre_save(model_instance, add)
 
 
-class Article(TranslatedAutoSlugifyMixin,
-              TranslationHelperMixin,
+class Article(TranslationHelperMixin,
               BaseModel,
               TranslatableModel):
     # TranslatedAutoSlugifyMixin options
@@ -293,9 +291,17 @@ class Article(TranslatedAutoSlugifyMixin,
 
     # django methods
     def get_absolute_url(self):
-        if not self.slug:
-            self.save()
-        return reverse('articles:article_detail', args=(self.slug,), )
+        url = reverse('articles:article_detail', args=(self.slug,))
+        if self.is_draft:
+            return url + '?edit'
+        else:
+            return url
+
+    def save(self):
+        if self.is_draft:
+            if not self.slug:
+                self.slug = slugify(self.title)
+        super().save()
 
     # custom methods
     def publish(self, language):

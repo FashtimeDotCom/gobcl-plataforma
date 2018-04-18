@@ -83,8 +83,14 @@ class ArticleAdmin(
     TranslatableAdmin
 ):
     form = ArticleAdminForm
-    list_display = ('title', 'slug', 'is_featured',
-                    'is_published', 'created_by')
+    list_display = (
+        'title',
+        'slug',
+        'is_featured',
+        'is_published',
+        'is_dirty',
+        'created_by',
+    )
     list_filter = [
         'categories',
     ]
@@ -132,6 +138,11 @@ class ArticleAdmin(
         data['created_by'] = request.user.pk
         request.GET = data
         return super(ArticleAdmin, self).add_view(request, *args, **kwargs)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        return qs.filter(is_draft=True)
 
 
 admin.site.register(models.Article, ArticleAdmin)
