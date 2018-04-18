@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import Count
 from django.core.exceptions import MultipleObjectsReturned
 from parler.managers import TranslatableQuerySet as BaseTranslatableQuerySet
+from parler.managers import TranslatableManager as BaseTranslatableManager
 
 # standard library
 import json
@@ -57,6 +58,10 @@ class BaseManager(models.Manager):
             return self.get_queryset().get(**fields)
         except (self.model.DoesNotExist, MultipleObjectsReturned):
             return None
+
+
+class TranslatableManager(BaseTranslatableManager, BaseManager):
+    pass
 
 
 class BaseGovernmentQuerySet(TranslatableQuerySet):

@@ -1,5 +1,5 @@
 from base.managers import TranslatableQuerySet
-from base.managers import BaseManager
+from base.managers import TranslatableManager
 from django.utils import timezone
 
 
@@ -12,7 +12,7 @@ class CampaignQueryset(TranslatableQuerySet):
         )
 
 
-class CampaignManager(BaseManager):
+class CampaignManager(TranslatableManager):
 
     def get_queryset(self):
         """

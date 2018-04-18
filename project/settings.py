@@ -567,6 +567,11 @@ PARLER_LANGUAGES = {
     }
 }
 
+ELASTICSEARCH_DSL = {
+    'HOST': get_local_value('ELASTICSEARCH_DSL_HOST', '127.0.0.1'),
+    'PORT': get_local_value('ELASTICSEARCH_DSL_PORT', '9200'),
+}
+
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
 
 CRON_CLASSES = (
