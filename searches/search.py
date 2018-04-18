@@ -212,7 +212,7 @@ class SearchIndex(DocType):
                 title__isnull=False,
             ).filter(
                 is_draft=False,
-            )[:10]
+            )
             for article in articles:
                 search_index = ISearch(article)
                 search_index.indexing()
