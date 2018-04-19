@@ -225,7 +225,13 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
         * Share django urls with javascript.
         */
         $.extend(App, {
-          version: '1.0.0',
+          version: '1.0.1',
+          csrftoken: '{{csrf_token}}',
+          {% get_current_language as current_language %}
+          currentLanguage: '{{ current_language }}',
+          {% if article %}
+          placeholderId: {{article.content_id}},
+          {% endif %}
           paths: {
             fontSize: "{% url 'user_font_size_change' %}"
           }
