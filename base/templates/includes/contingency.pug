@@ -3,11 +3,17 @@
 section.contingency(data-active="{{ exists_contingency|lower }}")
   a.contingency-navigate.button.button--block.a11y-tts-contingency(href="#")
     | {% trans 'Continue browsing on Gob.cl' %}
-  .contingency-continue.bg-yellow.a11y-tts-contingency
-    .container.text-left
-      span.pr-4 {% trans 'Breaking' %}:
-      - for contingency in contingencies
-        a.px-lg-4.contingency-link.not-smooth(href="#contingency-{{contingency.id}}") {{ contingency.name }}
+  .contingency-continue.bg-yellow.a11y-tts-contingency.show
+    .container
+      for contingency in contingencies
+        .contingency-option
+          if forloop.first
+            .contingency-hint {% trans 'Breaking' %}
+          a.px-4.contingency-link.not-smooth(href="#contingency-{{contingency.id}}") {{ contingency.name }}
+          if forloop.first
+            a.contingency-list(href="#")
+              i.fa.fa-angle-down
+              i.fa.fa-angle-up
   - for contingency in contingencies
     .container.contingency-container(id="contingency-{{contingency.id}}")
       .row
