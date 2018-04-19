@@ -55,3 +55,4 @@ django-parler-rest==1.4.2
 aldryn-reversion==1.1.0
 gevent==1.2.2
 django-admin-sortable2==0.6.19
+elasticsearch-dsl==6.1.0
