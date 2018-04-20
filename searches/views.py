@@ -21,6 +21,7 @@ from base.view_utils import clean_query_string
 
 # chile atiende
 from services.chile_atiende_client import File
+from .elasticsearch_client import ElasticSearchClient
 
 
 class ArticleListView(ListView):
@@ -282,3 +283,34 @@ class ArticleListView(ListView):
         self.count = len(queryset)
 
         return queryset
+
+
+class SearchTemplateView(ListView):
+    template_name = 'search/search.pug'
+    paginate_by = 25
+    page_kwarg = 'p'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.query = request.GET.get('q', '')
+
+        self.category_slug = request.GET.get('category_slug', '')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['clean_query_string'] = clean_query_string(self.request)
+        context['query'] = self.query
+        context['count'] = self.count
+        return context
+
+    def get_queryset(self):
+        elastic_search_client = ElasticSearchClient(
+            self.query,
+            self.request.LANGUAGE_CODE
+        )
+        response = elastic_search_client.execute()
+
+        self.count = response.hits.total
+
+        return response

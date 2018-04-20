@@ -121,11 +121,11 @@ class Article(TranslationHelperMixin,
             default=False,
             db_index=True
         ),
-        is_dirty = models.BooleanField(
+        is_dirty=models.BooleanField(
             default=False,
             editable=False,
         ),
-        draft = models.BooleanField(
+        draft=models.BooleanField(
             default=True,
             editable=False,
             db_index=True,
@@ -352,6 +352,7 @@ class Article(TranslationHelperMixin,
 # Replace the mark as dirty method of placeholders to mark articles as dirty
 old_mark_as_dirty = Placeholder.mark_as_dirty
 
+
 def new_mark_as_dirty(self, language, clear_cache=True):
     old_mark_as_dirty(self, language, clear_cache=True)
     attached_model = self._get_attached_model()
@@ -359,6 +360,7 @@ def new_mark_as_dirty(self, language, clear_cache=True):
         article = Article.objects.get(content=self)
         article.is_dirty = True
         article.save()
+
 
 Placeholder.mark_as_dirty = new_mark_as_dirty
 # end replacing
