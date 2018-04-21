@@ -23,15 +23,15 @@ class ElasticSearchClient:
                 'multi_match',
                 query=self.query,
                 fields=(
-                    'name^99',
-                    'title^99',
+                    'name^4',
+                    'title^4',
                     'description',
-                    'url^98',
-                    'lead_in^90',
+                    'url^3',
+                    'lead_in^2',
                     'detail',
-                    'tags^97',
-                    'categories^96',
-                    'categories_slug^96',
+                    'tags^2',
+                    'categories^2',
+                    'categories_slug^2',
                 ),
                 fuzziness='AUTO',
             )
@@ -42,15 +42,38 @@ class ElasticSearchClient:
             Q('match', language_code='ALL')
         )
 
-        return search.query(
+        search_obj = search.query(
             function_score_query
         ).query(
             filter_by_language
+        ).highlight(
+            fields='_all',
+            pre_tags='<strong>',
+            post_tags='</strong>',
         ).suggest(
-            'suggestions',
+            'suggestion_name',
             self.query,
-            term={'field': 'name'}
+            term={
+                'field': 'name'
+            }
+        ).suggest(
+            'suggestion_title',
+            self.query,
+            term={
+                'field': 'title'
+            }
+        ).highlight(
+            'name',
+            'title',
+            'detail',
+            'description',
+            'lead_in'
+            'detail',
+            pre_tags='<strong>',
+            post_tags='</strong>',
         )
+
+        return search_obj
 
     def execute(self):
         return self.search()[:10000].execute()

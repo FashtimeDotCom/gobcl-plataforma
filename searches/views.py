@@ -21,7 +21,7 @@ from base.view_utils import clean_query_string
 
 # chile atiende
 from services.chile_atiende_client import File
-from .elasticsearch_client import ElasticSearchClient
+from .elasticsearch.elasticsearch_client import ElasticSearchClient
 
 
 class ArticleListView(ListView):
@@ -302,7 +302,25 @@ class SearchTemplateView(ListView):
         context['clean_query_string'] = clean_query_string(self.request)
         context['query'] = self.query
         context['count'] = self.count
+        context['suggest_text'] = self.suggest_text
         return context
+
+    def get_suggest_text(self, response):
+        self.suggest_text = None
+        try:
+            suggestions = response.suggest
+            suggestion_list = []
+            for suggest in suggestions:
+                suggestion_list.append(
+                    (
+                        suggestions[suggest][0]['options'][0]['text'],
+                        suggestions[suggest][0]['options'][0]['score']
+                    )
+                )
+
+            self.suggest_text = max(suggestion_list)[0]
+        except (IndexError, KeyError, AttributeError):
+            pass
 
     def get_queryset(self):
         elastic_search_client = ElasticSearchClient(
@@ -310,7 +328,6 @@ class SearchTemplateView(ListView):
             self.request.LANGUAGE_CODE
         )
         response = elastic_search_client.execute()
-
         self.count = response.hits.total
-
+        self.get_suggest_text(response)
         return response
