@@ -134,6 +134,7 @@ class SearchIndex(DocType):
             activate(language)
             articles = Article.objects.translated(
                 title__isnull=False,
+                is_published=True,
             ).filter(
                 publishing_date__lte=now(),
                 is_draft=False,
