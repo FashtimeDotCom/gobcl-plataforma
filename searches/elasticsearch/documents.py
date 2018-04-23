@@ -48,7 +48,7 @@ class SearchIndex(DocType):
         store=True
     )
     language_code = Text()
-    url = Text()
+    url = Keyword()
     lead_in = Text(
         analyzer=html_strip,
         fields={'raw': Keyword()},
@@ -95,7 +95,7 @@ class SearchIndex(DocType):
             ).filter(
                 publishing_date__lte=now(),
                 is_draft=False,
-            )
+            )[:5]
             for article in articles:
                 print(article.title, article.pk)
                 search_index = ISearchObj(article, cls)

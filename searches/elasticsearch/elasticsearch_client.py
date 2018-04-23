@@ -75,8 +75,13 @@ class ElasticSearchClient:
             fragment_size=100,
             no_match_size=100,
             number_of_fragments=1,
+        ).update_from_dict(
+            {
+                'collapse': {
+                    'field': 'url'
+                }
+            }
         )
-
         return search_obj
 
     def execute(self):

@@ -25,13 +25,13 @@ block content
               .result.a11y-tts
                 if object.name
                   hashtag = '#'
-                  a.result_link(href="{{ object.url }}{{ hashtag }}{{ object.name|slugify }}")
+                  a.result_link(href="{{ object.url.0 }}{{ hashtag }}{{ object.name|slugify }}")
                     if object.meta.highlight.name
                       {{ object.meta.highlight.name.0|safe }}
                     else
                       {{ object.name }}
                 elif object.title
-                  a.result_link(href="{{ object.url }}")
+                  a.result_link(href="{{ object.url.0 }}")
                     if object.meta.highlight.title
                       {{ object.meta.highlight.title.0|safe }}
                     else
