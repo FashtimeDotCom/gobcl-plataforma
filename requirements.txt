@@ -2,7 +2,7 @@ Django==1.11.11
 Fabric3==1.13.1.post1
 aldryn-search==0.4.1
 boto3==1.4.7
-git+https://github.com/magnet-cl/django-cms.git@release/3.4.x
+django-cms==3.5.2
 django-compressor-autoprefixer==0.1.0
 django-compressor==2.2
 django-debug-toolbar==1.8
@@ -24,7 +24,7 @@ djangocms-file==2.0.2
 djangocms-googlemap==1.1.1
 djangocms-link==2.1.2
 djangocms-picture==2.0.6
-djangocms-snippet==1.9.2
+djangocms-snippet==2.0.0
 djangocms-style==2.0.2
 djangocms-text-ckeditor==3.5.1
 djangocms-video==2.0.4
