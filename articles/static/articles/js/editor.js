@@ -51,6 +51,9 @@
         $actions: $('<div/>', { class: 'frame-actions clearfix w-100'})
       };
 
+      this.ui.$plugins.closest('.plugin-block')
+        .addClass('editor-active');
+
       this.ui.$container.append(this.ui.$frame, this.ui.$actions);
       this.ui.$container.insertBefore(this.ui.$plugins[0]);
     };
@@ -78,15 +81,15 @@
       var $iFrame = $('<iframe/>', {
         tabindex: 0,
         src: opts.url,
-        class: 'w-100',
-        frameborder: 0,
-        zIndex: 'unset'
+        frameborder: 0
       })
         .css({
           height: this._calculateHeight(),
           minHeight: 260,
           maxHeight: document.documentElement.clientHeight - 180,
-          visibility: 'hidden'
+          visibility: 'hidden',
+          minWidth: '100%',
+          width: 'calc(100% + ' + (window.innerWidth-$(window).width()) + 'px)'
         });
 
       $holder.css('visibility', 'hidden');
@@ -135,6 +138,33 @@
                     .contents()
                     .find('body')
                     .addClass('main-post');
+
+                  that._styleVideoPlugins($ckEditorIframe);
+                  that._setupPluginsButtonCallback($iFrame);
+
+                  $ckEditorIframe.contents().on('DOMNodeInserted', _.debounce(function () {
+                    if (that.options.fireStyleVideoPlugins) {
+                      console.log('fire');
+                      that._styleVideoPlugins($ckEditorIframe);
+                      that.options.fireStyleVideoPlugins = false;
+                    }
+                  }, 200, {
+                    leading: false,
+                    trailing: true
+                  }));
+
+                  $($contents).on('click', '.cke_dialog_ui_button.cke_dialog_ui_button_ok', function () {
+                    if (that.options.listenOkModal) {
+                      that.options.fireStyleVideoPlugins = true;
+                      that.options.listenOkModal = false;
+                    }
+                  });
+
+                  $($contents).on(
+                    'click',
+                    '.cke_dialog_close_button, .cke_dialog_ui_button.cke_dialog_ui_button_cancel', function () {
+                      that.options.listenOkModal = false;
+                    });
 
                 });
               }
@@ -410,17 +440,41 @@
         + 44; // blockquote margin bottom.
     };
 
+    Editor.prototype._styleVideoPlugins = function ($frame) {
+      $frame.contents().find('.post-video iframe').each(function (index, videoFrame) {
+        $(videoFrame).css({
+          width: '100%',
+          height: $frame.width() / 1.77777777778 // 1920x1080 aspect ratio.
+        });
+      });
+    };
+
+    Editor.prototype._setupPluginsButtonCallback = function ($frame) {
+      var that = this;
+      $frame.contents().find('.cke_button.cke_button__cmsplugins')
+        .on('click', function () {
+          var $dropdown = $frame.contents().find('.cke_panel.cke_panelbutton__cmsplugins_panel iframe');
+
+          $dropdown.on('load', function () {
+            $dropdown.contents().find('a[rel="VideoPlayerPlugin"]')
+              .on('click', function () {
+                that.options.listenOkModal = true;
+              });
+          });
+        });
+    };
+
     Editor.options = {
-      transitionDuration: 200
+      transitionDuration: 200,
+      listenOkModal: false,
+      fireStyleVideoPlugins: false
     };
 
     return Editor;
   })();
 
-
-
   $(function () {
-    $('.cms-plugin').on('dblclick', function (e) {
+    $('.editor-zone .cms-plugin').on('dblclick', function (e) {
       var data = $(this).data('cms')[0];
 
       if (data.plugin_type === 'TextPlugin') {
