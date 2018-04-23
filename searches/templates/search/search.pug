@@ -15,7 +15,7 @@ block content
     .container
       h3.heading-medium.search-results-counts.a11y-tts {{ count }} {% trans 'Results' %}
       if suggest_text
-        h5 Quizás quisiste decir:&nbsp;
+        h5 {% trans 'Maybe you wanted to say' %}:&nbsp;
           a(href="{% url 'search' %}?q={{ suggest_text }}")
             {{ suggest_text|title }}
       .results
