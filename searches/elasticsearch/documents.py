@@ -1,4 +1,6 @@
 from django.utils.translation import activate
+from django.utils.timezone import now
+
 from .elasticsearch_config import get_elasticsearch_url
 
 from elasticsearch.exceptions import NotFoundError
@@ -91,8 +93,9 @@ class SearchIndex(DocType):
             articles = Article.objects.translated(
                 title__isnull=False,
             ).filter(
+                publishing_date__lte=now(),
                 is_draft=False,
-            )[:4]
+            )
             for article in articles:
                 print(article.title, article.pk)
                 search_index = ISearchObj(article, cls)
@@ -126,9 +129,6 @@ class SearchIndex(DocType):
     @classmethod
     def bulk_indexing(cls):
         cls.init()
-        # m = Mapping('searchaaa')
-        # m.meta('_all', enabled=True, store=True)
-        # m.save('searches')
 
         cls.index_articles()
         activate('es')
