@@ -38,15 +38,15 @@ block content
                       {{ object.title }}
                 p.result_excerpt
                   if object.description
-                    //- if object.meta.highlight.description
-                    //-   {{ object.meta.highlight.description.0|safe|striptags|truncatechars:100 }}
-                    //- else
-                    {{ object.description|safe|striptags|truncatechars:100 }}
+                    if object.meta.highlight.description
+                      {{ object.meta.highlight.description.0|safe|truncatechars:150 }}
+                    else
+                      {{ object.description|safe|truncatechars:150 }}
                   elif object.lead_in
-                    //- if object.meta.highlight.lead_in
-                    //-   {{ object.meta.highlight.lead_in.0|safe|striptags|truncatechars:100 }}
-                    //- else
-                    {{ object.lead_in|safe|striptags|truncatechars:100 }}
+                    if object.meta.highlight.lead_in
+                      {{ object.meta.highlight.lead_in.0|safe|truncatechars:150 }}
+                    else
+                      {{ object.lead_in|safe|truncatechars:150 }}
                 span.result_date
                   if object.meta.highlight.detail
                     {{ object.meta.highlight.detail.0|safe }}

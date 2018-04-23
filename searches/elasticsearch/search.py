@@ -1,8 +1,15 @@
+import re
+
 from abc import ABCMeta, abstractmethod
 
 from django.utils.formats import date_format
 
 from elasticsearch_dsl import IndexTemplate
+
+
+def remove_tags(text):
+    TAG_RE = re.compile(r'<[^>]+>')
+    return TAG_RE.sub('', text)
 
 
 class ISearchMixin(metaclass=ABCMeta):
@@ -42,9 +49,9 @@ class ISearchMixin(metaclass=ABCMeta):
 
     def get_description(self):
         if hasattr(self.obj, 'description'):
-            return self.obj.description
+            return remove_tags(self.obj.description)
         elif hasattr(self.obj, 'lead_in'):
-            return self.obj.lead_in
+            return remove_tags(self.obj.lead_in)
         else:
             return ''
 
@@ -56,7 +63,7 @@ class ISearchMixin(metaclass=ABCMeta):
 
     def get_lead_in(self):
         if hasattr(self.obj, 'lead_in'):
-            return self.obj.lead_in
+            return remove_tags(self.obj.lead_in)
         else:
             return ''
 

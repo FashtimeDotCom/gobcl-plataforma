@@ -9,7 +9,6 @@ from elasticsearch_dsl import Index
 from elasticsearch_dsl import connections
 from elasticsearch_dsl import analyzer
 from elasticsearch_dsl import Keyword
-from elasticsearch_dsl import Mapping
 
 # models
 from government_structures.models import GovernmentStructure
@@ -34,7 +33,7 @@ government_structure = GovernmentStructure.get_government()
 html_strip = analyzer(
     'html_strip',
     tokenizer='standard',
-    filter=['standard', 'lowercase', 'stop', 'snowball'],
+    # filter=['standard', 'lowercase', 'stop', 'snowball'],
     char_filter=['html_strip']
 )
 
@@ -42,7 +41,10 @@ html_strip = analyzer(
 class SearchIndex(DocType):
     name = Text(store=True)
     title = Text(store=True)
-    description = Text(store=True)
+    description = Text(
+        analyzer=html_strip,
+        store=True
+    )
     language_code = Text()
     url = Text()
     lead_in = Text(
