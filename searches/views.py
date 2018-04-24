@@ -328,6 +328,6 @@ class SearchTemplateView(ListView):
             self.request.LANGUAGE_CODE
         )
         response = elastic_search_client.execute()
-        self.count = len(response.hits)
+        self.count = len(response)
         self.get_suggest_text(response)
         return response

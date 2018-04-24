@@ -1,4 +1,5 @@
 from elasticsearch import Elasticsearch
+from elasticsearch.exceptions import TransportError
 
 from .elasticsearch_config import get_elasticsearch_url
 
@@ -85,4 +86,7 @@ class ElasticSearchClient:
         return search_obj
 
     def execute(self):
-        return self.search()[:10000].execute()
+        try:
+            return self.search()[:10000].execute()
+        except TransportError:
+            return []
