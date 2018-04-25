@@ -118,6 +118,9 @@ class ISearchMixin(metaclass=ABCMeta):
 
         return searches
 
+    def get_boost(self):
+        return self.boost
+
     def index_obj(self):
         obj = self.document(
             name=self.get_name(),
@@ -130,15 +133,17 @@ class ISearchMixin(metaclass=ABCMeta):
             tags=self.get_tags(),
             categories=self.get_categories(),
             categories_slug=self.get_categories_slug(),
+            boost=self.get_boost(),
         )
         obj.save()
 
 
 class ISearchObj(ISearchMixin):
 
-    def __init__(self, obj, document, *args, **kwargs):
+    def __init__(self, obj, document, boost=0, *args, **kwargs):
         self.obj = obj
         self.document = document
+        self.boost = boost
 
     def indexing(self):
         self.index_obj()
@@ -146,9 +151,10 @@ class ISearchObj(ISearchMixin):
 
 class ISearch(ISearchMixin):
 
-    def __init__(self, queryset, document, *args, **kwargs):
+    def __init__(self, queryset, document, boost=0, *args, **kwargs):
         self.queryset = queryset
         self.document = document
+        self.boost = boost
 
     def index_queryset(self):
         for obj in self.queryset:

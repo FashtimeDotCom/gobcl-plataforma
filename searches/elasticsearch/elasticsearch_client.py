@@ -4,6 +4,7 @@ from elasticsearch.exceptions import TransportError
 from .elasticsearch_config import get_elasticsearch_url
 
 from elasticsearch_dsl import Search
+from elasticsearch_dsl.query import MultiMatch
 from elasticsearch_dsl import Q
 
 
@@ -18,24 +19,28 @@ class ElasticSearchClient:
         client = Elasticsearch(get_elasticsearch_url())
         search = Search(using=client, index=self.index)
 
-        function_score_query = Q(
-            'function_score',
-            query=Q(
-                'multi_match',
-                query=self.query,
-                fields=(
-                    'name^4',
-                    'title^4',
-                    'description',
-                    'url^3',
-                    'lead_in^2',
-                    'detail',
-                    'tags^2',
-                    'categories^2',
-                    'categories_slug^2',
-                ),
-                fuzziness='AUTO',
-            )
+        function_score = {
+            'function_score': {
+                'field_value_factor': {
+                    'field': 'boost',
+                }
+            }
+        }
+
+        multi_match = MultiMatch(
+            query=self.query,
+            fields=(
+                'name^4',
+                'title^4',
+                'description',
+                'url^3',
+                'lead_in^2',
+                'detail',
+                'tags^2',
+                'categories^2',
+                'categories_slug^2',
+            ),
+            fuzziness='AUTO',
         )
 
         filter_by_language = (
@@ -44,13 +49,11 @@ class ElasticSearchClient:
         )
 
         search_obj = search.query(
-            function_score_query
+            multi_match
         ).query(
             filter_by_language
-        ).highlight(
-            fields='_all',
-            pre_tags='<strong>',
-            post_tags='</strong>',
+        ).query(
+            function_score
         ).suggest(
             'suggestion_name',
             self.query,
