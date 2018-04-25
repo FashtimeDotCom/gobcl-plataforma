@@ -16,6 +16,57 @@
   }
 }
 
-.frame.cms {
-  z-index: 1;
+.editor-zone {
+
+  .plugin-block {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 40px;
+      width: 100%
+    }
+
+    &:before {
+      top: -20px;
+    }
+
+    &:after {
+      bottom: -20px;
+    }
+
+    .frame.cms {
+      z-index: 1;
+    }
+  }
+
+  .plugin-block-actions {
+    display: none; // TODO: remove this. hide toolbar for release.
+    .btn-group {
+
+      .btn {
+        background-color: get-color('white');
+        border: 1px solid rgba(get-color('gray'), .1);
+
+        &:active,
+        &:focus {
+          box-shadow: 0 0 0 0.2rem rgba(get-color('gray'), .05);
+        }
+
+        i {
+          color: rgba(get-color('gray'), .6);
+        }
+
+        &:first-child {
+          border-radius: 4px 0 0 4px;
+        }
+
+        &:last-child {
+          border-radius: 0 4px 4px 0;
+        }
+      }
+    }
+  }
 }
