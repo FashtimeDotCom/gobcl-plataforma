@@ -75,7 +75,7 @@ class ElasticSearchClient:
             'detail',
             pre_tags='<strong>',
             post_tags='</strong>',
-            type='plain',
+            type='unified',
             fragment_size=100,
             no_match_size=100,
             number_of_fragments=1,

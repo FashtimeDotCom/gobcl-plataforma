@@ -181,15 +181,15 @@ class SearchIndex(DocType):
 
         activate('es')
         print('presidency')
-        cls.index_presidencies(100)
+        cls.index_presidencies(10)
         print('sociocultural department',)
-        cls.index_sociocultural_department(99)
+        cls.index_sociocultural_department(9)
         print('public enterprises')
         cls.index_public_enterprise()
         print('regions')
         cls.index_region()
         print('public servant')
-        cls.index_public_servant(50)
+        cls.index_public_servant(5)
         print('public public services')
         cls.index_public_services()
         print('campaigns')
@@ -197,7 +197,7 @@ class SearchIndex(DocType):
         print('foote rlinks')
         cls.index_footer_link()
         print('ministries')
-        cls.index_ministries(40)
+        cls.index_ministries(4)
 
     @classmethod
     def delete(cls):
