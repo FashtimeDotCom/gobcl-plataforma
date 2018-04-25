@@ -8,11 +8,18 @@ from elasticsearch_dsl import IndexTemplate
 
 
 def remove_tags(text):
+    '''
+    Function to remove HTML tags
+    '''
     TAG_RE = re.compile(r'<[^>]+>')
     return TAG_RE.sub('', text)
 
 
 class ISearchMixin(metaclass=ABCMeta):
+    '''
+    Mixin Interface class to define which fields index 
+    '''
+
     languages = ('es', 'en',)
 
     @abstractmethod
@@ -139,6 +146,9 @@ class ISearchMixin(metaclass=ABCMeta):
 
 
 class ISearchObj(ISearchMixin):
+    '''
+    Interface class to index object depends Document
+    '''
 
     def __init__(self, obj, document, boost=0, *args, **kwargs):
         self.obj = obj
@@ -150,6 +160,9 @@ class ISearchObj(ISearchMixin):
 
 
 class ISearch(ISearchMixin):
+    '''
+    Interface class to index queryset depends Document
+    '''
 
     def __init__(self, queryset, document, boost=0, *args, **kwargs):
         self.queryset = queryset
