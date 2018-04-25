@@ -140,7 +140,7 @@ class SearchIndex(DocType):
             ).filter(
                 publishing_date__lte=now(),
                 is_draft=False,
-            )[:5]
+            )
             for article in articles:
                 print(article.title, article.pk)
                 search_index = ISearchObj(article, cls, boost)
