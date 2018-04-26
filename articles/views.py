@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Views for the articles application. """
 # standard library
+import json
 
 # django
 from django.shortcuts import get_object_or_404
@@ -120,6 +121,11 @@ class ArticleDetailView(PreviewModeMixin, TranslatableSlugMixin,
     """
     model = Article
     template_name = 'articles/article_detail.pug'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context['edit_mode'] = json.dumps(self.edit_mode)
+        return context
 
 
 def add_text_plugin_to_article(article_id, language='es', content='Doble click para editar el texto',
