@@ -39,14 +39,14 @@ block content
                 p.result_excerpt
                   if object.description
                     if object.meta.highlight.description
-                      {{ object.meta.highlight.description.0|safe|truncatechars:150 }}
+                      {{ object.meta.highlight.description.0|safe|truncatechars:200 }}
                     else
-                      {{ object.description|safe|truncatechars:150 }}
+                      {{ object.description|safe|truncatechars:200 }}
                   elif object.lead_in
                     if object.meta.highlight.lead_in
-                      {{ object.meta.highlight.lead_in.0|safe|truncatechars:150 }}
+                      {{ object.meta.highlight.lead_in.0|safe|truncatechars:200 }}
                     else
-                      {{ object.lead_in|safe|truncatechars:150 }}
+                      {{ object.lead_in|safe|truncatechars:200 }}
                 span.result_date
                   if object.meta.highlight.detail
                     {{ object.meta.highlight.detail.0|safe }}

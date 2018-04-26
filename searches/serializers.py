@@ -17,11 +17,12 @@ class ThumbnailSerializer(serializers.ImageField):
 
 
 class TranslationField(TranslatedFieldsField):
-    
+
     def to_representation(self, value):
         if isinstance(value, dict):
             return value
         return super(TranslationField, self).to_representation(value)
+
 
 class ArticleSerializer(TranslatableModelSerializer):
 
@@ -50,3 +51,29 @@ class ArticleSerializer(TranslatableModelSerializer):
 
         alt_text = obj.featured_image.default_alt_text
         return alt_text or ''
+
+
+class SearchSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    title = serializers.CharField()
+    description = serializers.CharField()
+    language_code = serializers.CharField()
+    url = serializers.SerializerMethodField()
+    lead_in = serializers.CharField()
+    detail = serializers.SerializerMethodField()
+    tags = serializers.CharField()
+    categories = serializers.CharField()
+    categories_slug = serializers.CharField()
+    boost = serializers.IntegerField()
+
+    def get_url(self, obj):
+        if not hasattr(obj, 'url'):
+            return ''
+
+        return obj.url[0]
+
+    def get_detail(self, obj):
+        if not hasattr(obj, 'detail'):
+            return ''
+
+        return obj.detail

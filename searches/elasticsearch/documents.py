@@ -7,6 +7,7 @@ from elasticsearch.exceptions import NotFoundError
 
 from elasticsearch_dsl import DocType
 from elasticsearch_dsl import Text
+from elasticsearch_dsl import Integer
 from elasticsearch_dsl import Index
 from elasticsearch_dsl import connections
 from elasticsearch_dsl import analyzer
@@ -39,12 +40,15 @@ government_structure = GovernmentStructure.get_government()
 html_strip = analyzer(
     'html_strip',
     tokenizer='standard',
-    # filter=['standard', 'lowercase', 'stop', 'snowball'],
     char_filter=['html_strip']
 )
 
 
 class SearchIndex(DocType):
+    '''
+    Generic Document to index GOBCL
+    '''
+
     name = Text(store=True)
     title = Text(store=True)
     description = Text(
@@ -62,35 +66,48 @@ class SearchIndex(DocType):
     tags = Text()
     categories = Text()
     categories_slug = Text()
+    boost = Integer()
 
     class Meta:
+        # Name of index
         index = 'searches'
 
     @classmethod
-    def index_ministries(cls):
+    def index_ministries(cls, boost=0):
+        '''
+        Index ministries with an optional boost
+        '''
         ministries = Ministry.objects.translated(
             name__isnull=False,
         ).by_government_structure(
             government_structure
         )
-        ISearch(ministries, cls).indexing()
+        ISearch(ministries, cls, boost).indexing()
 
     @classmethod
-    def index_footer_link(cls):
+    def index_footer_link(cls, boost=0):
+        '''
+        Index footer links with an optional boost
+        '''
+
         footer_links = FooterLink.objects.by_government_structure(
             government_structure
         )
-        ISearch(footer_links, cls).indexing()
+        ISearch(footer_links, cls, boost).indexing()
 
     @classmethod
-    def index_region(cls):
+    def index_region(cls, boost=0):
+        '''
+        Index region with an optional boost
+        '''
+
         regions = Region.objects.by_government_structure(
             government_structure
         )
-        ISearch(regions, cls).indexing()
+        ISearch(regions, cls, boost).indexing()
 
     @classmethod
-    def index_page(cls):
+    def index_page(cls, boost=0):
         languages = ('es', 'en')
         for language in languages:
             activate(language)
@@ -103,32 +120,48 @@ class SearchIndex(DocType):
                 import ipdb
                 ipdb.set_trace()
                 print(page.title, page.pk)
-                search_index = ISearchObj(page, cls)
+                search_index = ISearchObj(page, cls, boost)
                 search_index.indexing()
 
     @classmethod
-    def index_sociocultural_department(cls):
+    def index_sociocultural_department(cls, boost=0):
+        '''
+        Index sociocultural department with an optional boost
+        '''
+
         sociocultural_department = SocioculturalDepartment.objects.filter(
             government_structure=government_structure
         )
-        ISearch(sociocultural_department, cls).indexing()
+        ISearch(sociocultural_department, cls, boost).indexing()
 
     @classmethod
-    def index_public_enterprise(cls):
+    def index_public_enterprise(cls, boost=0):
+        '''
+        Index public enterprises with an optional boost
+        '''
+
         public_enterprises = PublicEnterprise.objects.filter(
             government_structure=government_structure
         )
-        ISearch(public_enterprises, cls).indexing()
+        ISearch(public_enterprises, cls, boost).indexing()
 
     @classmethod
-    def index_presidencies(cls):
+    def index_presidencies(cls, boost=0):
+        '''
+        Index presidency with an optional boost
+        '''
+
         presidencies = Presidency.objects.filter(
             government_structure=government_structure
         )
-        ISearch(presidencies, cls).indexing()
+        ISearch(presidencies, cls, boost).indexing()
 
     @classmethod
-    def index_articles(cls):
+    def index_articles(cls, boost=0):
+        '''
+        Index articles with an optional boost
+        '''
+
         languages = ('es', 'en')
         for language in languages:
             activate(language)
@@ -141,53 +174,69 @@ class SearchIndex(DocType):
             )
             for article in articles:
                 print(article.title, article.pk)
-                search_index = ISearchObj(article, cls)
+                search_index = ISearchObj(article, cls, boost)
                 search_index.indexing()
 
     @classmethod
-    def index_campaigns(cls):
+    def index_campaigns(cls, boost=0):
+        '''
+        Index campaign with an optional boost
+        '''
+
         campaigns = Campaign.objects.translated(
             title__isnull=False,
         )
-        ISearch(campaigns, cls).indexing()
+        ISearch(campaigns, cls, boost).indexing()
 
     @classmethod
-    def index_public_services(cls):
+    def index_public_services(cls, boost=0):
+        '''
+        Index public services with an optional boost
+        '''
+
         public_services = PublicService.objects.translated(
             name__isnull=False,
         ).filter(
             ministry__government_structure=government_structure,
         )
-        ISearch(public_services, cls).indexing()
+        ISearch(public_services, cls, boost).indexing()
 
     @classmethod
-    def index_public_servant(cls):
+    def index_public_servant(cls, boost=0):
+        '''
+        Index public servant with an optional boost
+        '''
+
         public_servants = PublicServant.objects.filter(
             government_structure=government_structure
         ).translated(
             charge__isnull=False,
         )
-        ISearch(public_servants, cls).indexing()
+        ISearch(public_servants, cls, boost).indexing()
 
     @classmethod
     def bulk_indexing(cls):
+        '''
+        Class method to Index GOBCL
+        '''
+
+        # create the mappings in elasticsearch
         cls.init()
-        # print('pages')
-        # cls.index_page()
+
         print('public articles')
         cls.index_articles()
 
         activate('es')
-        print('sociocultural department')
-        cls.index_sociocultural_department()
+        print('presidency')
+        cls.index_presidencies(0)
+        print('sociocultural department',)
+        cls.index_sociocultural_department(0)
         print('public enterprises')
         cls.index_public_enterprise()
         print('regions')
         cls.index_region()
         print('public servant')
-        cls.index_public_servant()
-        print('public presidency')
-        cls.index_presidencies()
+        cls.index_public_servant(0)
         print('public public services')
         cls.index_public_services()
         print('campaigns')
@@ -195,10 +244,13 @@ class SearchIndex(DocType):
         print('foote rlinks')
         cls.index_footer_link()
         print('ministries')
-        cls.index_ministries()
+        cls.index_ministries(0)
 
     @classmethod
     def delete(cls):
+        '''
+        Class method to delete Index
+        '''
         try:
             return Index('searches').delete()
         except NotFoundError:
@@ -206,5 +258,8 @@ class SearchIndex(DocType):
 
     @classmethod
     def rebuild(cls):
+        '''
+        Class method to delete and Index GOBCL
+        '''
         cls.delete()
         cls.bulk_indexing()
