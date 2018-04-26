@@ -264,10 +264,10 @@ class Article(TranslationHelperMixin,
         Copy all the plugins to a new article.
         :param target: The page where the new content should be stored
         """
-        # TODO: Make this into a "graceful" copy instead of deleting and overwriting
-        # copy the placeholders (and plugins on those placeholders!)
+        # TODO: Make this into a "graceful" copy instead of deleting and
+        # overwriting copy the placeholders
+        # (and plugins on those placeholders!)
 
-        plugin_pool.set_plugin_meta()
         plugins = CMSPlugin.objects.filter(
             placeholder=target.content,
             language=language

@@ -5,14 +5,14 @@ import copy
 from django.core.cache import caches
 
 # models
-from aldryn_newsblog.models import Article
+from articles.models import Article
 
 
 def featured_news():
     """
     Returns a list of the 3 featured articles.
     """
-    articles = Article.objects.filter(
+    articles = Article.objects.translated(
         is_featured=True
     ).published().prefetch_related(
         'categories'
