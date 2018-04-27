@@ -8,63 +8,14 @@
   var pluginName = 'quickAccess';
   var pluginDataKey = 'quickAccessInstance';
 
-  var pluginsData = [{
-    icon: 'fa-table',
-    defaults: {
-      description: 'Descripción galería'
-    },
-    pluginType: 'GalleryCMSPlugin'
-  }, {
-    icon: 'fa-twitter',
-    defaults: {
-      html: '<p>Colocar iframe acá</p>'
-    },
-    pluginType: 'HtmlCMSPlugin'
-
-  }, {
-    icon: 'fa-picture-o',
-    defaults: {
-      external_picture: 'http://www.lacronicavirtual.com/blogs/viajealosandes/wp-content/uploads/DSCF1559.jpg',
-      '_popup': '1',
-      template: 'default',
-      initialatributes: '{}',
-      link_page_0: '1',
-      initiallik_attributes: '{}',
-      use_automatic_scaling: 'on'
-    },
-    pluginType: 'PicturePlugin'
-
-  }, {
-    icon: 'fa-link',
-    defaults: {
-      '_popup': '1',
-      external_link: 'https://prensa.presidencia.cl/',
-      internal_link_0: '1',
-      name: 'Link',
-      template: 'default'
-    },
-    pluginType: 'LinkPlugin'
-
-  }, {
-    icon: 'fa-font',
-    defaults: {
-      '_popup': '1',
-      body: '<p>Hola que tal</p>\r\n'
-    },
-    pluginType: 'TextPlugin',
-    url: '/admin/cms/page/add-plugin/'
-
-  }, {
-    icon: 'fa-video-camera',
-    defaults: {
-      '_popup': '1',
-      template: 'default',
-      label: '',
-      embed_link: 'https://www.youtube.com/watch?v=DXzAHhfytoo&feature=youtu.be',
-      poster: ''
-    },
-    pluginType: 'VideoPlayerPlugin'
-  }];
+  var pluginsData = [
+    { icon: 'fa-table', pluginType: 'GalleryCMSPlugin' },
+    { icon: 'fa-twitter', pluginType: 'HtmlCMSPlugin' },
+    { icon: 'fa-picture-o', pluginType: 'PicturePlugin' },
+    { icon: 'fa-link', pluginType: 'LinkPlugin' },
+    { icon: 'fa-font', pluginType: 'TextPlugin' },
+    { icon: 'fa-video-camera', pluginType: 'VideoPlayerPlugin' }
+  ];
 
   var defaults = {};
 
@@ -72,6 +23,7 @@
     this.$element = $(element);
 
     this.options = $.extend({}, defaults, options, this.$element.data());
+    this.$toolbox = this._makeToolBox();
 
     this.init();
   }
@@ -79,23 +31,26 @@
   Plugin.prototype.init = function () {
     var that = this;
 
-    $(this.$element).on('click', '.plugin-block-actions .btn', function () {
-      var $pluginBlock = $(this).closest('.plugin-block');
+    this._addToolBoxListener();
+    this.plugins = this._getPluginsMap();
 
-      var position = $pluginBlock.index();
+    if ($('.editor-zone').length) {
+      that.$element.append(that.$toolbox.clone(true).data('before', true));
+    }
 
-      if (position < 0) {
-        position = 0;
-      }
+    Object.keys(this.plugins).forEach(function (id, index) {
+      var block = $('<div/>', { class: 'plugin-block plugin-block-' + id })
+        .data('cms', that.plugins[id]);
 
-      that.options.onToolClick(
-        pluginsData[parseInt($(this).data('index'))],
-        $(this).closest('.plugin-block').data('cms'),
-        position
-      )
+      $('.cms-plugin-' + id).appendTo(block);
+
+      block.append(that.$toolbox.clone(true).data('before', false));
+      that.$element.append(block);
     });
+  };
 
-    this.plugins = this.$element
+  Plugin.prototype._getPluginsMap = function () {
+    return this.$element
       .find('.cms-plugin')
       .map(function (index, plugin) {
         return $(plugin).data('cms')[0];
@@ -105,38 +60,41 @@
         current[data.plugin_id] = data;
         return current;
       }, {});
+  };
 
-    if ($('.editor-zone').length) {
-      that.$element.append(that._makeToolBox(true));
-    }
+  Plugin.prototype._addToolBoxListener = function () {
+    var that = this;
 
-    Object.keys(this.plugins).forEach(function (id, index) {
-      var block = $('<div/>', { class: 'plugin-block plugin-block-' + id })
-        .data('cms', that.plugins[id]);
+    $(this.$element).on('click', '.plugin-block-actions .btn', function () {
+      var $pluginBlock = $(this).closest('.plugin-block');
 
-      $('.cms-plugin-' + id).appendTo(block);
+      var position = $pluginBlock.index();
 
-      block.append(that._makeToolBox(false));
-      that.$element.append(block);
+      that.options.onToolClick(
+        pluginsData[parseInt($(this).data('index'))],
+        that.$element.children('.cms-placeholder').data('cms'),
+        position < 0 ? 0 : position
+      )
     });
   };
 
-  Plugin.prototype._makeToolBox = function (before) {
-    var $div = $('<div/>', { class: 'plugin-block-actions text-center py-3'});
+  Plugin.prototype._makeToolBox = function () {
+    var $actions = $('<div/>', { class: 'plugin-block-actions text-center py-3'});
+
+    var $group = $('<div/>', { class: 'btn-group' });
 
     for (var i = 0; i < pluginsData.length; i += 1) {
       var pluginData = pluginsData[i];
-
-      $div.append($('<div/>', { class: 'btn-group' }).append(
+      $group.append(
         $('<button/>', { type: 'button', class: 'btn btn-white'})
           .append($('<i/>', { class: 'fa ' + pluginData.icon }))
-          .data('tool', pluginData.pluginType)
           .data('index', i)
-      ))
+      );
     }
 
-    $div.data('before', before);
-    return $div;
+    $actions.append($group);
+
+    return $actions;
   };
 
   Plugin.prototype.update = function () {
@@ -159,40 +117,16 @@
   };
 
   $(function () {
+    console.log('aca');
     $('.editor-zone').quickAccess({
-      onToolClick: function (pluginData, parentPlugin, position) {
-        var url;
-        var placeholderId;
+      onToolClick: function (pluginData, placeholderData, position) {
 
-        if (pluginData.url) {
-          url = pluginData.url;
-        } else {
-          url = '/admin/articles/article/add-plugin/';
-        }
-
-        if (parentPlugin) {
-          placeholderId = parentPlugin.placeholder_id;
-        } else {
-          placeholderId = App.placeholderId;
-        }
-        var params = {
-          cms_path: location.pathname,
-          placeholder_id: placeholderId,
-          plugin_language: App.currentLanguage,
-          plugin_type: pluginData.pluginType,
-          plugin_position: position
-        };
-
-        url = url + '?' +  $.param(params);
-
-        var data = $.extend(
-          {csrfmiddlewaretoken: App.csrftoken, plugin_position: position},
-          pluginData.defaults
+        var plugin = new CMS.Plugin(
+          placeholderData.placeholder_id,
+          placeholderData
         );
 
-        $.post(url, data, function(data, textStatus, jqXHR) {
-          window.location.reload();
-        });
+        plugin.addPlugin(pluginData.pluginType, 'New Plugin');
       }
     });
   });
