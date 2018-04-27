@@ -158,7 +158,7 @@
     });
   };
 
-  $(function () {
+  function setup() {
     $('.editor-zone').quickAccess({
       onToolClick: function (pluginData, parentPlugin, position) {
         var url;
@@ -195,7 +195,16 @@
         });
       }
     });
+  }
+
+  $(function () {
+    setup()
   });
+
+  $(window).on('cms-content-refresh', function () {
+    setup();
+  });
+
 
 })(CMS.$);
 
