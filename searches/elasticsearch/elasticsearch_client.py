@@ -22,15 +22,6 @@ class ElasticSearchClient:
         client = Elasticsearch(get_elasticsearch_url())
         search = Search(using=client, index=self.index)
 
-        # Change priority in results depends boost document
-        function_score = {
-            'function_score': {
-                'field_value_factor': {
-                    'field': 'boost',
-                }
-            }
-        }
-
         # Search query and change boost by field
         multi_match = MultiMatch(
             query=self.query,
@@ -48,6 +39,17 @@ class ElasticSearchClient:
             fuzziness='AUTO',
         )
 
+        # Change priority in results depends boost document
+        function_score = {
+            'function_score': {
+                'field_value_factor': {
+                    'field': 'boost',
+                },
+                'boost_mode': 'multiply',
+                'query': multi_match
+            }
+        }
+
         # Filter depends language code
         filter_by_language = (
             Q('match', language_code=self.language) |
@@ -55,11 +57,9 @@ class ElasticSearchClient:
         )
 
         search_obj = search.query(
-            multi_match
+            function_score
         ).query(
             filter_by_language
-        ).query(
-            function_score
         ).suggest(
             'suggestion_name',
             self.query,
