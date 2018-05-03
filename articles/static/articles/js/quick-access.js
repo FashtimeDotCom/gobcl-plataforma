@@ -198,11 +198,11 @@
   }
 
   $(function () {
-    setup()
+    //setup();
   });
 
   $(window).on('cms-content-refresh', function () {
-    setup();
+    //setup();
   });
 
 
