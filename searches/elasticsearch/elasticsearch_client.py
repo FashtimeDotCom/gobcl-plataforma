@@ -35,8 +35,7 @@ class ElasticSearchClient:
                 'tags^2',
                 'categories^2',
                 'categories_slug^2',
-            ),
-            fuzziness='AUTO',
+            )
         )
 
         # Change priority in results depends boost document
@@ -64,13 +63,15 @@ class ElasticSearchClient:
             'suggestion_name',
             self.query,
             term={
-                'field': 'name'
+                'field': 'name',
+                'size': 1
             }
         ).suggest(
             'suggestion_title',
             self.query,
             term={
-                'field': 'title'
+                'field': 'title',
+                'size': 1
             }
         ).highlight(
             # Add highlight to fields

@@ -292,7 +292,7 @@ class SearchTemplateView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
-
+        self.replace_query = request.GET.get('replace') != 'keep'
         self.category_slug = request.GET.get('category_slug', '')
 
         return super().dispatch(request, *args, **kwargs)
@@ -303,6 +303,7 @@ class SearchTemplateView(ListView):
         context['query'] = self.query
         context['count'] = self.count
         context['suggest_text'] = self.suggest_text
+        context['replace_query'] = self.replace_query
         return context
 
     def get_suggest_text(self, response):
@@ -318,16 +319,26 @@ class SearchTemplateView(ListView):
                     )
                 )
 
-            self.suggest_text = max(suggestion_list)[0]
+            self.suggest_text = max(suggestion_list, key=lambda x: x[1])[0]
         except (IndexError, KeyError, AttributeError):
             pass
 
-    def get_queryset(self):
+    def get_search_response(self, query):
         elastic_search_client = ElasticSearchClient(
-            self.query,
+            query,
             self.request.LANGUAGE_CODE
         )
         response = elastic_search_client.execute()
         self.count = len(response)
+
+        return response
+
+    def get_queryset(self):
+        response = self.get_search_response(self.query)
         self.get_suggest_text(response)
+
+        if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None and self.replace_query:
+            # self.query = self.suggest_text
+            response = self.get_search_response(self.suggest_text)
+
         return response
