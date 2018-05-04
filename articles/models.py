@@ -75,7 +75,11 @@ class Article(TranslationHelperMixin,
         related_name='articles',
     )
     translations = TranslatedFields(
-        title=models.CharField(_('title'), max_length=234),
+        title=models.CharField(
+            _('title'),
+            max_length=234,
+            unique=True,
+        ),
         slug=models.SlugField(
             verbose_name=_('slug'),
             max_length=255,
