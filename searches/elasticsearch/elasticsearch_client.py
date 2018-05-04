@@ -73,6 +73,13 @@ class ElasticSearchClient:
                 'field': 'title',
                 'size': 1
             }
+        ).suggest(
+            'suggestion_detail',
+            self.query,
+            term={
+                'field': 'detail',
+                'size': 1
+            }
         ).highlight(
             # Add highlight to fields
             'name',

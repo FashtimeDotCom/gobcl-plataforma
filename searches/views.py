@@ -311,16 +311,22 @@ class SearchTemplateView(ListView):
         try:
             suggestions = response.suggest
             suggestion_list = []
-            for suggest in suggestions:
-                suggestion_list.append(
-                    (
-                        suggestions[suggest][0]['options'][0]['text'],
-                        suggestions[suggest][0]['options'][0]['score']
-                    )
-                )
 
-            self.suggest_text = max(suggestion_list, key=lambda x: x[1])[0]
-        except (IndexError, KeyError, AttributeError):
+            for suggest in suggestions:
+                try:
+                    suggestion_list.append(
+                        (
+                            suggestions[suggest][0]['options'][0]['text'],
+                            suggestions[suggest][0]['options'][0]['score']
+                        )
+                    )
+                except (IndexError, KeyError):
+                    pass
+
+            if len(suggestion_list) > 0:
+                self.suggest_text = max(suggestion_list, key=lambda x: x[1])[0]
+
+        except AttributeError:
             pass
 
     def get_search_response(self, query):
