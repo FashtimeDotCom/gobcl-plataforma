@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.views.generic import ListView
 
+# models
 from aldryn_newsblog.models import Article
 from campaigns.models import Campaign
 from ministries.models import Ministry
@@ -49,13 +50,13 @@ class ArticleListView(ListView):
         chile_atiende_file_client = File()
 
         # set the list as empty by default
-        chileatiende_files = []
+        chile_atiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
                 chile_atiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
-        return chileatiende_files
+        return chile_atiende_files
 
     def get_ministries(self, **kwargs):
         if self.query:
@@ -294,6 +295,8 @@ class SearchTemplateView(ListView):
         self.query = request.GET.get('q', '')
         self.replace_query = request.GET.get('replace') != 'keep'
         self.category_slug = request.GET.get('category_slug', '')
+        # search in chile atiende
+        self.chile_atiende_results = self.get_chileatiende_files()
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -304,6 +307,8 @@ class SearchTemplateView(ListView):
         context['count'] = self.count
         context['suggest_text'] = self.suggest_text
         context['replace_query'] = self.replace_query
+        context['chile_atiende_results'] = self.chile_atiende_results
+
         return context
 
     def get_suggest_text(self, response):
@@ -329,6 +334,17 @@ class SearchTemplateView(ListView):
         except AttributeError:
             pass
 
+    def get_chileatiende_files(self, **kwags):
+        chile_atiende_file_client = File()
+
+        # set the list as empty by default
+        chile_atiende_files = []
+        if settings.CHILEATIENDE_ACCESS_TOKEN:
+            chile_atiende_files = (
+                chile_atiende_file_client.parsed_list(query=self.query)
+            )
+        return chile_atiende_files[:3]
+
     def get_search_response(self, query):
         elastic_search_client = ElasticSearchClient(
             query,
@@ -340,6 +356,7 @@ class SearchTemplateView(ListView):
         return response
 
     def get_queryset(self):
+        # search in database
         response = self.get_search_response(self.query)
         self.get_suggest_text(response)
 

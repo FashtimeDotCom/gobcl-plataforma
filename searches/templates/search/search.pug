@@ -29,6 +29,12 @@ block content
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
+            for object in chile_atiende_results
+              .result.a11y-tts
+                a.result_link(href="{{ object.permalink }}")
+                  {{ object.titulo }}
+                p.result_excerpt
+                  {{ object.servicio }}
             for object in object_list
               .result.a11y-tts
                 if object.name
