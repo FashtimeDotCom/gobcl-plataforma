@@ -30,7 +30,7 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
         """
         Returns articles that are not drafts
         """
-        return self.filter(is_draft=False)
+        return self.exclude(is_draft=False)
 
     def published(self):
         """

@@ -51,6 +51,8 @@ class PreviewModeMixin(EditModeMixin):
         if self.edit_mode and user_can_edit:
             qs = qs.draft()
         else:
+            # if the user can edit, but there is no published version,
+            # then show the draft as a preview
             if user_can_edit and not qs.not_draft().exists():
                 qs = qs.draft()
             else:
