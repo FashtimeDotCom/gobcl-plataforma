@@ -58,12 +58,12 @@ class PreviewModeMixin(EditModeMixin):
 
                 if hasattr(self, 'slug_url_kwarg'):
                     slug = self.kwargs.get(self.slug_url_kwarg)
-                    if not qs.not_draft().translated(slug=slug).exists():
+                    if not qs.published().translated(slug=slug).exists():
                         not_draft_exists = False
                         qs = qs.draft()
 
                 if not_draft_exists:
-                    qs = qs.not_draft()
+                    qs = qs.published()
 
         language = translation.get_language()
         qs = qs.active_translations(language)
