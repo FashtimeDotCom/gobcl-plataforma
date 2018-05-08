@@ -360,8 +360,10 @@ class SearchTemplateView(ListView):
         response = self.get_search_response(self.query)
         self.get_suggest_text(response)
 
-        if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None and self.replace_query:
-            # self.query = self.suggest_text
-            response = self.get_search_response(self.suggest_text)
+        if self.replace_query:
+            if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
+                response = self.get_search_response(self.suggest_text)
+            else:
+                self.suggest_text = None
 
         return response
