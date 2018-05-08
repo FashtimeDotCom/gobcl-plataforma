@@ -11,6 +11,7 @@ from elasticsearch_dsl import Integer
 from elasticsearch_dsl import Index
 from elasticsearch_dsl import connections
 from elasticsearch_dsl import analyzer
+from elasticsearch_dsl import token_filter
 from elasticsearch_dsl import Keyword
 
 # models
@@ -222,6 +223,31 @@ class SearchIndex(DocType):
 
         # create the mappings in elasticsearch
         cls.init()
+
+        # set the analyzers for the available languages
+        # TODO: languages and languages_stopwords should be in settings
+        languages = ('es', 'en')
+        languages_stopwords = {
+            'en': '_english_',
+            'es': '_spanish_',
+        }
+        languages_analyzers = {}
+        for language in languages:
+            languages_analyzers[language] = analyzer(
+                language + '_analyzer',
+                tokenizer='standard',
+                char_filter=['html_strip'],
+                type='standard',
+                stopwords=languages_stopwords[language]
+            )
+
+        # Add analyzers, the index has to be closed before any configuration
+        searches_index = Index('searches')
+        searches_index.close()
+        for language in languages:
+            searches_index.analyzer(languages_analyzers[language])
+        searches_index.save()
+        searches_index.open()
 
         # index models and assign boost for them
         print('public articles')

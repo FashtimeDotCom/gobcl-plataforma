@@ -35,7 +35,8 @@ class ElasticSearchClient:
                 'tags^2',
                 'categories^2',
                 'categories_slug^2',
-            )
+            ),
+            analyzer=self.language + '_analyzer'
         )
 
         # Change priority in results depends boost document
