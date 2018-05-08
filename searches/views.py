@@ -295,8 +295,6 @@ class SearchTemplateView(ListView):
         self.query = request.GET.get('q', '')
         self.replace_query = request.GET.get('replace') != 'keep'
         self.category_slug = request.GET.get('category_slug', '')
-        # search in chile atiende
-        self.chile_atiende_results = self.get_chileatiende_files()
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -307,7 +305,6 @@ class SearchTemplateView(ListView):
         context['count'] = self.count
         context['suggest_text'] = self.suggest_text
         context['replace_query'] = self.replace_query
-        context['chile_atiende_results'] = self.chile_atiende_results
 
         return context
 
@@ -343,7 +340,18 @@ class SearchTemplateView(ListView):
             chile_atiende_files = (
                 chile_atiende_file_client.parsed_list(query=self.query)
             )
-        return chile_atiende_files[:3]
+        chile_atiende_files = chile_atiende_files[:3]
+        return_results = []
+        for result in chile_atiende_files:
+            return_results.append({
+                '_source': {
+                    'name': result['titulo'],
+                    'url': result['permalink'],
+                    'description': result['servicio']
+                }
+            })
+
+        return return_results
 
     def get_search_response(self, query):
         elastic_search_client = ElasticSearchClient(
@@ -366,4 +374,7 @@ class SearchTemplateView(ListView):
             else:
                 self.suggest_text = None
 
-        return response
+        chile_atiende_results = self.get_chileatiende_files()
+        self.count += len(chile_atiende_results)
+
+        return chile_atiende_results + response.hits.hits

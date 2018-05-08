@@ -1,6 +1,6 @@
 extends base.pug
 
-- load i18n cms_tags staticfiles
+- load i18n cms_tags staticfiles search_utils
 
 block javascripts
   script(src="{% static 'js/search.js' %}")
@@ -29,43 +29,39 @@ block content
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
-            for object in chile_atiende_results
-              .result.a11y-tts
-                a.result_link(href="{{ object.permalink }}")
-                  {{ object.titulo }}
-                p.result_excerpt
-                  {{ object.servicio }}
             for object in object_list
               .result.a11y-tts
-                if object.name
+                {% with obj_source=object|get_from_key:'_source' %}
+                if obj_source.name
                   hashtag = '#'
-                  a.result_link(href="{{ object.url.0 }}{{ hashtag }}{{ object.name|slugify }}")
-                    if object.meta.highlight.name
-                      {{ object.meta.highlight.name.0|safe }}
+                  a.result_link(href="{{ obj_source.url.0 }}{{ hashtag }}{{ obj_source.name|slugify }}")
+                    if object.highlight.name
+                      {{ object.highlight.name.0|safe }}
                     else
-                      {{ object.name }}
-                elif object.title
-                  a.result_link(href="{{ object.url.0 }}")
-                    if object.meta.highlight.title
-                      {{ object.meta.highlight.title.0|safe }}
+                      {{ obj_source.name }}
+                elif obj_source.title
+                  a.result_link(href="{{ obj_source.url.0 }}")
+                    if object.highlight.title
+                      {{ object.highlight.title.0|safe }}
                     else
-                      {{ object.title }}
+                      {{ obj_source.title }}
                 p.result_excerpt
-                  if object.description
-                    if object.meta.highlight.description
-                      {{ object.meta.highlight.description.0|safe|truncatechars:200 }}
+                  if obj_source.description
+                    if object.highlight.description
+                      {{ object.highlight.description.0|safe|truncatechars:200 }}
                     else
-                      {{ object.description|safe|truncatechars:200 }}
-                  elif object.lead_in
-                    if object.meta.highlight.lead_in
-                      {{ object.meta.highlight.lead_in.0|safe|truncatechars:200 }}
+                      {{ obj_source.description|safe|truncatechars:200 }}
+                  elif obj_source.lead_in
+                    if object.highlight.lead_in
+                      {{ object.highlight.lead_in.0|safe|truncatechars:200 }}
                     else
-                      {{ object.lead_in|safe|truncatechars:200 }}
+                      {{ object_source.lead_in|safe|truncatechars:200 }}
                 span.result_date
-                  if object.meta.highlight.detail
-                    {{ object.meta.highlight.detail.0|safe }}
+                  if object.highlight.detail
+                    {{ object.highlight.detail.0|safe }}
                   else
-                    {{ object.detail }}
+                    {{ obj_source.detail }}
+                {% endwith %}
 
       {% include 'includes/pagination.pug' %}
   section
