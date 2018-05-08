@@ -4,7 +4,6 @@
 import json
 
 # django
-from django.shortcuts import get_object_or_404
 from django.utils import translation
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
@@ -48,19 +47,23 @@ class PreviewModeMixin(EditModeMixin):
         user = self.request.user
         user_can_edit = user.is_staff or user.is_superuser
 
-        if self.edit_mode and user_can_edit:
-            qs = qs.draft()
+        if not user_can_edit:
+            qs = qs.published()
         else:
-            # if the user can edit, but there is no published version,
-            # then show the draft as a preview
-            if user_can_edit and not qs.not_draft().exists():
+            # user can edit
+            if self.edit_mode:
                 qs = qs.draft()
             else:
-                qs = qs.not_draft()
+                not_draft_exists = True
 
-        if not (self.edit_mode or user_can_edit):
-            if not user_can_edit and qs.published().exists():
-                qs = qs.published()
+                if hasattr(self, 'slug_url_kwarg'):
+                    slug = self.kwargs.get(self.slug_url_kwarg)
+                    if not qs.not_draft().translated(slug=slug).exists():
+                        not_draft_exists = False
+                        qs = qs.draft()
+
+                if not_draft_exists:
+                    qs = qs.not_draft()
 
         language = translation.get_language()
         qs = qs.active_translations(language)
@@ -130,15 +133,23 @@ class ArticleDetailView(PreviewModeMixin, TranslatableSlugMixin,
         return context
 
 
-def add_text_plugin_to_article(article_id, language='es', content='Doble click para editar el texto',
-                               position='last-child'):
+def add_text_plugin_to_article(
+    article_id,
+    language='es',
+    content='Doble click para editar el texto',
+    position='last-child'
+):
     a = Article.objects.get(id=article_id)
 
     add_plugin(a.content, 'TextPlugin', language,
                body=content, position=position)
 
 
-class ArticlePublishView(TranslatableSlugMixin, SingleObjectMixin, BaseRedirectView):
+class ArticlePublishView(
+    TranslatableSlugMixin,
+    SingleObjectMixin,
+    BaseRedirectView
+):
     permanent = False
     permission_required = 'articles.change_article'
     slug_url_kwarg = 'slug'

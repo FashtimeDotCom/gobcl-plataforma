@@ -14,7 +14,6 @@ from django.db import models
 from django.utils.timezone import now
 
 from aldryn_apphooks_config.managers.base import ManagerMixin, QuerySetMixin
-from aldryn_people.models import Person
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from taggit.models import Tag, TaggedItem
 
@@ -30,7 +29,7 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
         """
         Returns articles that are not drafts
         """
-        return self.exclude(is_draft=False)
+        return self.filter(is_draft=False)
 
     def published(self):
         """
