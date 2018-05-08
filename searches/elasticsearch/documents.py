@@ -38,12 +38,6 @@ connections.create_connection(
 
 government_structure = GovernmentStructure.get_government()
 
-html_strip = analyzer(
-    'html_strip',
-    tokenizer='standard',
-    char_filter=['html_strip']
-)
-
 
 class SearchIndex(DocType):
     '''
@@ -53,13 +47,11 @@ class SearchIndex(DocType):
     name = Text(store=True)
     title = Text(store=True)
     description = Text(
-        analyzer=html_strip,
         store=True
     )
     language_code = Text()
     url = Keyword()
     lead_in = Text(
-        analyzer=html_strip,
         fields={'raw': Keyword()},
         store=True
     )
@@ -224,6 +216,14 @@ class SearchIndex(DocType):
         # create the mappings in elasticsearch
         cls.init()
 
+        # default analyzer
+        default_analyzer = analyzer(
+            'default',
+            tokenizer='standard',
+            char_filter=['html_strip'],
+            filter=['lowercase', 'asciifolding']
+        )
+
         # set the analyzers for the available languages
         # TODO: languages and languages_stopwords should be in settings
         languages = ('es', 'en')
@@ -232,18 +232,26 @@ class SearchIndex(DocType):
             'es': '_spanish_',
         }
         languages_analyzers = {}
+        languages_filters = {}
         for language in languages:
+            languages_filters[language] = token_filter(
+                language + '_filter',
+                type='stop',
+                stopwords=languages_stopwords[language],
+            )
             languages_analyzers[language] = analyzer(
                 language + '_analyzer',
                 tokenizer='standard',
                 char_filter=['html_strip'],
-                type='standard',
-                stopwords=languages_stopwords[language]
+                filter=['lowercase', 'asciifolding', languages_filters[language]]
             )
 
         # Add analyzers, the index has to be closed before any configuration
         searches_index = Index('searches')
         searches_index.close()
+        # default analyzer
+        searches_index.analyzer(default_analyzer)
+        # languages search analyzers
         for language in languages:
             searches_index.analyzer(languages_analyzers[language])
         searches_index.save()
