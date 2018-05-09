@@ -473,7 +473,7 @@
     return Editor;
   })();
 
-  $(function () {
+  function setup() {
     $('.editor-zone .cms-plugin').on('dblclick', function (e) {
       var data = $(this).data('cms')[0];
 
@@ -483,7 +483,16 @@
 
         new Editor(data).open();
       }
-    })
+    });
+  }
+
+
+  $(function () {
+    setup();
+  });
+
+  $(window).on('cms-content-refresh', function () {
+    setup();
   });
 
 })(CMS.$);
