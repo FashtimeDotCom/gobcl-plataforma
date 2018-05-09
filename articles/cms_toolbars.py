@@ -64,7 +64,7 @@ class ArticleToolbar(CMSToolbar):
 
         if user and view_name:
             # If we're on an Article detail page, then get the article
-            if view_name == 'article_detail':
+            if view_name.endswith('article_detail'):
                 kwargs = self.request.resolver_match.kwargs
                 article = Article.objects.translated(
                     slug=kwargs['slug']

@@ -229,6 +229,7 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
           csrftoken: '{{csrf_token}}',
           {% get_current_language as current_language %}
           currentLanguage: '{{ current_language }}',
+          editMode: {{ edit_mode|default:'false' }},
           {% if article %}
           placeholderId: {{article.content_id}},
           {% endif %}

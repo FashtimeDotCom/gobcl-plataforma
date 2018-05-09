@@ -607,3 +607,7 @@ GOBCL_EMAIL_TOKEN_APP = get_local_value('GOBCL_EMAIL_TOKEN_APP', '')
 # searching
 
 MIN_LENGTH_REPLACE_SEARCH = 5
+
+CKEDITOR_SETTINGS = {
+    'removeButtons': 'cmsplugins'
+}
