@@ -4,6 +4,7 @@ from collections import OrderedDict
 from django.db.models import Q
 
 from rest_framework import viewsets
+from rest_framework import views
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.pagination import _positive_int
@@ -11,11 +12,13 @@ from rest_framework.utils.urls import remove_query_param, replace_query_param
 from rest_framework.permissions import AllowAny
 
 from .serializers import ArticleSerializer
+from .serializers import SearchSerializer
 
 from aldryn_newsblog.models import Article
 from aldryn_newsblog.cms_appconfig import NewsBlogConfig
 
 from services.models import ChileAtiendeFile
+from .elasticsearch.elasticsearch_client import ElasticSearchClient
 
 
 class LimitOffsetPagination(LimitOffsetPagination):
@@ -74,6 +77,26 @@ class LimitOffsetPagination(LimitOffsetPagination):
             ('current_language', self.get_current_language()),
             ('results', data),
         ]))
+
+
+class SearchList(viewsets.ReadOnlyModelViewSet):
+    serializer_class = SearchSerializer
+    pagination_class = LimitOffsetPagination
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        self.query = self.request.GET.get('q', None)
+
+        if self.query:
+            elastic_search_client = ElasticSearchClient(
+                self.query,
+                self.request.LANGUAGE_CODE
+            )
+            return elastic_search_client.execute()
+        return []
+
+    def get(self, request, format=None):
+        return Response({})
 
 
 class ArticleViewSet(viewsets.ReadOnlyModelViewSet):

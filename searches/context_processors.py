@@ -3,6 +3,7 @@ import copy
 
 # django
 from django.core.cache import caches
+from django.urls.exceptions import NoReverseMatch
 
 # models
 from articles.models import Article
@@ -23,9 +24,14 @@ def featured_news():
     for article in articles:
         base_dict = article.__dict__
         article_dict = copy.copy(base_dict)
+
+        try:
+            article_dict['get_absolute_url'] = article.get_absolute_url()
+        except NoReverseMatch:
+            continue
+
         article_dict['title'] = article.title
         article_dict['categories'] = article.categories.all()
-        article_dict['get_absolute_url'] = article.get_absolute_url()
         featured_news_list.append(article_dict)
 
     return featured_news_list
