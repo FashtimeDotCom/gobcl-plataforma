@@ -318,7 +318,10 @@ class SearchTemplateView(ListView):
                 try:
                     suggestion_list.append(
                         (
-                            suggestions[suggest][0]['options'][0]['text'],
+                            {
+                                'text': suggestions[suggest][0]['options'][0]['text'],
+                                'highlighted': suggestions[suggest][0]['options'][0]['highlighted']
+                            },
                             suggestions[suggest][0]['options'][0]['score']
                         )
                     )
@@ -370,7 +373,7 @@ class SearchTemplateView(ListView):
 
         if self.replace_query:
             if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
-                response = self.get_search_response(self.suggest_text)
+                response = self.get_search_response(self.suggest_text['text'])
             else:
                 self.suggest_text = None
 

@@ -16,12 +16,12 @@ block content
       h3.heading-medium.search-results-counts.a11y-tts {{ count }} {% trans 'Results' %}
       if not replace_query
         h5 {% trans 'Did you mean:' %}&nbsp;
-          a(href="{% url 'search' %}?q={{ suggest_text }}")
-            {{ suggest_text|title }}
+          a(href="{% url 'search' %}?q={{ suggest_text.text }}")
+            {{ suggest_text.highlighted|title|safe }}
       elif suggest_text
         h5 {% trans 'Showing results for' %}&nbsp;
-          a(href="{% url 'search' %}?q={{ suggest_text }}")
-            {{ suggest_text|title }}
+          a(href="{% url 'search' %}?q={{ suggest_text.text }}")
+            {{ suggest_text.highlighted|title|safe }}
         h6 {% trans 'Search instead for' %}&nbsp;
           a(href="{% url 'search' %}?q={{ query }}&replace=keep")
             {{ query|title }}
