@@ -604,6 +604,10 @@ GOBCL_EMAIL_CLIENT_ID = get_local_value('GOBCL_EMAIL_CLIENT_ID', '')
 GOBCL_EMAIL_CLIENT_SECRET = get_local_value('GOBCL_EMAIL_CLIENT_SECRET', '')
 GOBCL_EMAIL_TOKEN_APP = get_local_value('GOBCL_EMAIL_TOKEN_APP', '')
 
+# searching
+
+MIN_LENGTH_REPLACE_SEARCH = 5
+
 CKEDITOR_SETTINGS = {
     'removeButtons': 'cmsplugins'
 }

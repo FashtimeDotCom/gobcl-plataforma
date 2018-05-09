@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.views.generic import ListView
 
+# models
 from aldryn_newsblog.models import Article
 from campaigns.models import Campaign
 from ministries.models import Ministry
@@ -49,13 +50,13 @@ class ArticleListView(ListView):
         chile_atiende_file_client = File()
 
         # set the list as empty by default
-        chileatiende_files = []
+        chile_atiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
                 chile_atiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
-        return chileatiende_files
+        return chile_atiende_files
 
     def get_ministries(self, **kwargs):
         if self.query:
@@ -292,7 +293,7 @@ class SearchTemplateView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         self.query = request.GET.get('q', '')
-
+        self.replace_query = request.GET.get('replace') != 'keep'
         self.category_slug = request.GET.get('category_slug', '')
 
         return super().dispatch(request, *args, **kwargs)
@@ -303,6 +304,8 @@ class SearchTemplateView(ListView):
         context['query'] = self.query
         context['count'] = self.count
         context['suggest_text'] = self.suggest_text
+        context['replace_query'] = self.replace_query
+
         return context
 
     def get_suggest_text(self, response):
@@ -310,24 +313,72 @@ class SearchTemplateView(ListView):
         try:
             suggestions = response.suggest
             suggestion_list = []
-            for suggest in suggestions:
-                suggestion_list.append(
-                    (
-                        suggestions[suggest][0]['options'][0]['text'],
-                        suggestions[suggest][0]['options'][0]['score']
-                    )
-                )
 
-            self.suggest_text = max(suggestion_list)[0]
-        except (IndexError, KeyError, AttributeError):
+            for suggest in suggestions:
+                try:
+                    suggestion_list.append(
+                        (
+                            suggestions[suggest][0]['options'][0]['text'],
+                            suggestions[suggest][0]['options'][0]['score']
+                        )
+                    )
+                except (IndexError, KeyError):
+                    pass
+
+            if len(suggestion_list) > 0:
+                self.suggest_text = max(suggestion_list, key=lambda x: x[1])[0]
+
+        except AttributeError:
             pass
 
-    def get_queryset(self):
+    def get_chileatiende_files(self, **kwags):
+        chile_atiende_file_client = File()
+
+        # set the list as empty by default
+        chile_atiende_files = []
+        if settings.CHILEATIENDE_ACCESS_TOKEN:
+            chile_atiende_files = (
+                chile_atiende_file_client.parsed_list(query=self.query)
+            )
+        chile_atiende_files = chile_atiende_files[:3]
+        return_results = []
+        for result in chile_atiende_files:
+            return_results.append({
+                '_source': {
+                    'title': result['titulo'],
+                    'url': [result['permalink']],
+                    'description': result['servicio']
+                }
+            })
+
+        return return_results
+
+    def get_search_response(self, query):
         elastic_search_client = ElasticSearchClient(
-            self.query,
+            query,
             self.request.LANGUAGE_CODE
         )
         response = elastic_search_client.execute()
         self.count = len(response)
-        self.get_suggest_text(response)
+
         return response
+
+    def get_queryset(self):
+        # search in database
+        response = self.get_search_response(self.query)
+        self.get_suggest_text(response)
+
+        if self.replace_query:
+            if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
+                response = self.get_search_response(self.suggest_text)
+            else:
+                self.suggest_text = None
+
+        chile_atiende_results = self.get_chileatiende_files()
+        self.count += len(chile_atiende_results)
+
+        response_hits = []
+        if len(response) > 0:
+            response_hits = response.hits.hits
+
+        return chile_atiende_results + response_hits

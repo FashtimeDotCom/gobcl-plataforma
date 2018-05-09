@@ -301,11 +301,11 @@ class Article(TranslationHelperMixin,
         else:
             return url
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if self.is_draft:
             if not self.slug:
                 self.slug = slugify(self.title)
-        super().save()
+        return super(Article, self).save(*args, **kwargs)
 
     # custom methods
     def publish(self, language):

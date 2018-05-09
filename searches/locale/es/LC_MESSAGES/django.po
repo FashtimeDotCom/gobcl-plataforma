@@ -1,5 +1,5 @@
 # Translations for the searches app
-# Copyright (C) 
+# Copyright (C)
 # This file is distributed under the same license as the plataforma-gobcl package.
 # Ignacio Munizaga <muni@magnet.cl>, 2017.
 #
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"POT-Creation-Date: 2018-05-04 17:44-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -21,3 +21,15 @@ msgstr ""
 #: templates/search/search.pug:16
 msgid "Results"
 msgstr "Resultados"
+
+#: templates/search/search.pug:18
+msgid "Did you mean:"
+msgstr "Quizás quisiste decir:"
+
+#: templates/search/search.pug:22
+msgid "Showing results for"
+msgstr "Se muestran resultados de"
+
+#: templates/search/search.pug:25
+msgid "Search instead for"
+msgstr "Buscar, en cambio,"
