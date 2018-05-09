@@ -377,4 +377,8 @@ class SearchTemplateView(ListView):
         chile_atiende_results = self.get_chileatiende_files()
         self.count += len(chile_atiende_results)
 
-        return chile_atiende_results + response.hits.hits
+        response_hits = []
+        if len(response) > 0:
+            response_hits = response.hits.hits
+
+        return chile_atiende_results + response_hits
