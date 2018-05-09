@@ -217,17 +217,11 @@ class SearchIndex(DocType):
         cls.init()
 
         # default analyzer
-        shingle_filter = token_filter(
-            'shingle_filter',
-            type='shingle',
-            min_shingle_size=2,
-            max_shingle_size=3,
-        )
         default_analyzer = analyzer(
             'default',
             tokenizer='standard',
             char_filter=['html_strip'],
-            filter=['lowercase', 'asciifolding', shingle_filter]
+            filter=['lowercase', 'asciifolding']
         )
 
         # set the analyzers for the available languages
