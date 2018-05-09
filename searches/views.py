@@ -345,8 +345,8 @@ class SearchTemplateView(ListView):
         for result in chile_atiende_files:
             return_results.append({
                 '_source': {
-                    'name': result['titulo'],
-                    'url': result['permalink'],
+                    'title': result['titulo'],
+                    'url': [result['permalink']],
                     'description': result['servicio']
                 }
             })
