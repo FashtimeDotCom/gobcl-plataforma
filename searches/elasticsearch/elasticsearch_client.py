@@ -63,23 +63,50 @@ class ElasticSearchClient:
         ).suggest(
             'suggestion_name',
             self.query,
-            term={
+            phrase={
                 'field': 'name',
-                'size': 1
+                'size': 1,
+                'gram_size': 3,
+                'highlight': {
+                  'pre_tag': '<strong>',
+                  'post_tag': '</strong>'
+                },
+                'direct_generator': [{
+                    'field': 'name',
+                    'suggest_mode': 'always'
+                }]
             }
         ).suggest(
             'suggestion_title',
             self.query,
-            term={
+            phrase={
                 'field': 'title',
-                'size': 1
+                'size': 1,
+                'gram_size': 3,
+                'highlight': {
+                  'pre_tag': '<strong>',
+                  'post_tag': '</strong>'
+                },
+                'direct_generator': [{
+                    'field': 'title',
+                    'suggest_mode': 'always'
+                }]
             }
         ).suggest(
             'suggestion_detail',
             self.query,
-            term={
+            phrase={
                 'field': 'detail',
-                'size': 1
+                'size': 1,
+                'gram_size': 3,
+                'highlight': {
+                  'pre_tag': '<strong>',
+                  'post_tag': '</strong>'
+                },
+                'direct_generator': [{
+                    'field': 'detail',
+                    'suggest_mode': 'always'
+                }]
             }
         ).highlight(
             # Add highlight to fields
