@@ -372,10 +372,11 @@ class SearchTemplateView(ListView):
         self.get_suggest_text(response)
 
         if self.replace_query:
-            if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
+            #if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
+            if self.suggest_text is not None:
                 response = self.get_search_response(self.suggest_text['text'])
-            else:
-                self.suggest_text = None
+            #else:
+                #self.suggest_text = None
 
         chile_atiende_results = self.get_chileatiende_files()
         self.count += len(chile_atiende_results)

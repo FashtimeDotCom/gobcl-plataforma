@@ -61,51 +61,20 @@ class ElasticSearchClient:
         ).query(
             filter_by_language
         ).suggest(
-            'suggestion_name',
+            'suggestion',
             self.query,
             phrase={
-                'field': 'name',
+                'field': 'suggest_field',
                 'size': 1,
                 'gram_size': 3,
+                'max_errors': 2,
                 'highlight': {
                   'pre_tag': '<strong>',
                   'post_tag': '</strong>'
                 },
                 'direct_generator': [{
-                    'field': 'name',
-                    'suggest_mode': 'always'
-                }]
-            }
-        ).suggest(
-            'suggestion_title',
-            self.query,
-            phrase={
-                'field': 'title',
-                'size': 1,
-                'gram_size': 3,
-                'highlight': {
-                  'pre_tag': '<strong>',
-                  'post_tag': '</strong>'
-                },
-                'direct_generator': [{
-                    'field': 'title',
-                    'suggest_mode': 'always'
-                }]
-            }
-        ).suggest(
-            'suggestion_detail',
-            self.query,
-            phrase={
-                'field': 'detail',
-                'size': 1,
-                'gram_size': 3,
-                'highlight': {
-                  'pre_tag': '<strong>',
-                  'post_tag': '</strong>'
-                },
-                'direct_generator': [{
-                    'field': 'detail',
-                    'suggest_mode': 'always'
+                    'field': 'suggest_field',
+                    'suggest_mode': 'missing'
                 }]
             }
         ).highlight(

@@ -44,8 +44,14 @@ class SearchIndex(DocType):
     Generic Document to index GOBCL
     '''
 
-    name = Text(store=True)
-    title = Text(store=True)
+    name = Text(
+        store=True,
+        copy_to='suggest_field'
+    )
+    title = Text(
+        store=True,
+        copy_to='suggest_field'
+    )
     description = Text(
         store=True
     )
@@ -55,11 +61,15 @@ class SearchIndex(DocType):
         fields={'raw': Keyword()},
         store=True
     )
-    detail = Text(store=True)
+    detail = Text(
+        store=True,
+        copy_to='suggest_field'
+    )
     tags = Text()
     categories = Text()
     categories_slug = Text()
     boost = Integer()
+    suggest_field = Text()
 
     class Meta:
         # Name of index
