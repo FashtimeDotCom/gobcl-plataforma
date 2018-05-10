@@ -311,27 +311,14 @@ class SearchTemplateView(ListView):
     def get_suggest_text(self, response):
         self.suggest_text = None
         try:
-            suggestions = response.suggest
-            suggestion_list = []
+            suggest_options = response.suggest['suggestion'][0]['options'][0]
+            if suggest_options is not None:
+                self.suggest_text = {
+                    'text': suggest_options['text'],
+                    'highlighted': suggest_options['highlighted']
+                }
 
-            for suggest in suggestions:
-                try:
-                    suggestion_list.append(
-                        (
-                            {
-                                'text': suggestions[suggest][0]['options'][0]['text'],
-                                'highlighted': suggestions[suggest][0]['options'][0]['highlighted']
-                            },
-                            suggestions[suggest][0]['options'][0]['score']
-                        )
-                    )
-                except (IndexError, KeyError):
-                    pass
-
-            if len(suggestion_list) > 0:
-                self.suggest_text = max(suggestion_list, key=lambda x: x[1])[0]
-
-        except AttributeError:
+        except (AttributeError, IndexError, KeyError):
             pass
 
     def get_chileatiende_files(self, **kwags):
