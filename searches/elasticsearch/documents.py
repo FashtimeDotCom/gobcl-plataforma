@@ -218,6 +218,11 @@ class SearchIndex(DocType):
         ISearch(public_servants, cls, boost).indexing()
 
     @classmethod
+    def index_object(cls, obj, boost=1):
+        search_index = ISearchObj(obj, cls, boost)
+        search_index.indexing()
+
+    @classmethod
     def bulk_indexing(cls):
         '''
         Class method to Index GOBCL

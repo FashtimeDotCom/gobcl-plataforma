@@ -16,6 +16,9 @@ from base.views import BaseDetailView
 from base.views import BaseRedirectView
 from parler.views import TranslatableSlugMixin
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
 
 from cms.api import add_plugin
 
@@ -161,6 +164,7 @@ class ArticlePublishView(
         self.object = self.get_object()
         language = translation.get_language()
         self.object.publish(language)
+        SearchIndex.index_object(self.object)
 
         return super(ArticlePublishView, self).get(request, *args, **kwargs)
 

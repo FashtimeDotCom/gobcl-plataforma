@@ -10,6 +10,9 @@ from .models import Campaign
 # parler
 from parler.forms import TranslatableModelForm
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
 
 class CampaignForm(TranslatableModelForm):
     """
@@ -49,3 +52,9 @@ class CampaignForm(TranslatableModelForm):
             'filer/js/addons/widget.js',
             'admin/js/related-widget-wrapper.js',
         )
+
+    def save(self, commit=True):
+        campaign = super(CampaignForm, self).save()
+        SearchIndex.index_object(campaign)
+
+        return campaign
