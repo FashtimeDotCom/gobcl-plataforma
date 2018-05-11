@@ -158,6 +158,18 @@ class Campaign(BaseModel, TranslatableModel):
         language = get_current_language()
         activate(language=language)
         self.slug = slugify(self.title)
+
+        # TODO: check if index exists
+        if self.is_active():
+            self.index_in_elasticsearch()
+        else:
+            # TODO: unindex
+            pass
+
+        return super(Campaign, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # TODO: unindex
         return super(Campaign, self).save(*args, **kwargs)
 
     def is_active(self):

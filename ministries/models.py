@@ -126,6 +126,11 @@ class Ministry(Institution):
     def save(self, *args, **kwargs):
         if not self.pk:
             self._sum_importance()
+            self.index_in_elasticsearch()
+        return super(Ministry, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # TODO: unindex
         return super(Ministry, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -172,6 +177,16 @@ class PublicService(TranslatableModel, BaseModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.index_in_elasticsearch()
+
+        return super(PublicService, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # TODO: unindex
+        return super(PublicService, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return self.url

@@ -312,6 +312,18 @@ class Article(TranslationHelperMixin,
         if self.is_draft:
             if not self.slug:
                 self.slug = slugify(self.title)
+
+        # TODO: check if index exists
+        if self.is_published:
+            self.index_in_elasticsearch()
+        else:
+            # TODO: unindex
+            pass
+
+        return super(Article, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # TODO: unindex
         return super(Article, self).save(*args, **kwargs)
 
     # custom methods
@@ -359,7 +371,7 @@ class Article(TranslationHelperMixin,
 
         return public_article
 
-    def index_in_elasticsearch(self, boost):
+    def index_in_elasticsearch(self, boost=1):
         tags = self.tags.values_list('name', flat=True)
         categories = self.categories.values_list(
             'translations__name',
