@@ -17,8 +17,14 @@ from base.models import BaseModel
 from base.models import file_path
 from base.models import lastest_government_structure
 
-from .managers import SocioculturalDepartmentQueryset
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+from .managers import SocioculturalDepartmentManager
 from .managers import SocioculturalDepartmentURLQueryset
+
+# utils
+from base.utils import remove_tags
 
 
 class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
@@ -95,7 +101,7 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
         verbose_name=_('urls'),
     )
 
-    objects = SocioculturalDepartmentQueryset.as_manager()
+    objects = SocioculturalDepartmentManager()
 
     class Meta:
         verbose_name = _('sociocultural department')
@@ -110,3 +116,15 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
 
     def get_absolute_url(self):
         return reverse('sociocultural_department_detail')
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            title=self.title,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.title,
+            boost=boost
+        )
+        doc.save()

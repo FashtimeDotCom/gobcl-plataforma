@@ -12,6 +12,7 @@ from operator import attrgetter
 
 from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import activate
 
 from aldryn_apphooks_config.managers.base import ManagerMixin, QuerySetMixin
 from parler.managers import TranslatableManager, TranslatableQuerySet
@@ -121,3 +122,18 @@ class RelatedManager(ManagerMixin, TranslatableManager):
         for tag in tags:
             tag.num_articles = counted_tags[tag.pk]
         return sorted(tags, key=attrgetter('num_articles'), reverse=True)
+
+    def bulk_index(self, boost=1):
+        languages = ('es', 'en')
+        for language in languages:
+            activate(language)
+            articles = self.get_queryset().translated(
+                title__isnull=False,
+                is_published=True,
+            ).filter(
+                publishing_date__lte=now(),
+                is_draft=False,
+            )
+            for article in articles:
+                # TODO: pass index class??
+                article.index_in_elasticsearch(boost)

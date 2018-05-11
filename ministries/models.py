@@ -19,8 +19,17 @@ from parler.models import TranslatedFields
 # models
 from base.models import BaseModel
 from institutions.models import Institution
-from ministries.managers import PublicServiceQuerySet
 from institutions.models import institution_translations
+
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+# managers
+from .managers import PublicServiceManager
+from .managers import MinistryManager
+
+# utils
+from base.utils import remove_tags
 
 
 class Ministry(Institution):
@@ -60,6 +69,8 @@ class Ministry(Institution):
         _('importance'),
         default=0,
     )
+
+    objects = MinistryManager()
 
     class Meta:
         ordering = ('importance',)
@@ -121,6 +132,17 @@ class Ministry(Institution):
         """ Returns the canonical URL for the ministry object """
         return reverse('ministry_detail', args=(self.slug,))
 
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.minister.name,
+            boost=boost
+        )
+        doc.save()
+
 
 class PublicService(TranslatableModel, BaseModel):
     translations = TranslatedFields(
@@ -146,7 +168,7 @@ class PublicService(TranslatableModel, BaseModel):
         default=0,
     )
 
-    objects = PublicServiceQuerySet.as_manager()
+    objects = PublicServiceManager()
 
     def __str__(self):
         return self.name
@@ -158,3 +180,13 @@ class PublicService(TranslatableModel, BaseModel):
         ordering = ('importance',)
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.url,
+            boost=boost
+        )
+        doc.save()

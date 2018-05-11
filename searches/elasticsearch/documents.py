@@ -14,21 +14,6 @@ from elasticsearch_dsl import analyzer
 from elasticsearch_dsl import token_filter
 from elasticsearch_dsl import Keyword
 
-# models
-from government_structures.models import GovernmentStructure
-from ministries.models import Ministry
-from links.models import FooterLink
-from campaigns.models import Campaign
-from ministries.models import PublicService
-from presidencies.models import Presidency
-from articles.models import Article
-from public_servants.models import PublicServant
-from regions.models import Region
-from sociocultural_departments.models import SocioculturalDepartment
-from public_enterprises.models import PublicEnterprise
-from cms.models.pagemodel import Page
-
-from .search import ISearch, ISearchObj
 
 connections.create_connection(
     hosts=[get_elasticsearch_url()],
@@ -36,7 +21,7 @@ connections.create_connection(
 )
 
 
-government_structure = GovernmentStructure.get_government()
+# government_structure = GovernmentStructure.get_government()
 
 
 class SearchIndex(DocType):
@@ -75,6 +60,7 @@ class SearchIndex(DocType):
         # Name of index
         index = 'searches'
 
+    """
     @classmethod
     def index_ministries(cls, boost=1):
         '''
@@ -301,6 +287,62 @@ class SearchIndex(DocType):
         cls.index_footer_link(1.2)
         print('ministries')
         cls.index_ministries(2)
+    """
+
+    @classmethod
+    def init_index(cls):
+        '''
+        Class method to init index
+        '''
+        # create the mappings in elasticsearch
+        cls.init()
+
+        # default analyzer
+        shingle_filter = token_filter(
+            'shingle_filter',
+            type='shingle',
+            min_shingle_size=2,
+            max_shingle_size=3,
+        )
+        default_analyzer = analyzer(
+            'default',
+            tokenizer='standard',
+            char_filter=['html_strip'],
+            filter=['lowercase', 'asciifolding', shingle_filter]
+        )
+
+        # set the analyzers for the available languages
+        # TODO: languages and languages_stopwords should be in settings
+        languages = ('es', 'en')
+        languages_stopwords = {
+            'en': '_english_',
+            'es': '_spanish_',
+        }
+        languages_analyzers = {}
+        languages_filters = {}
+        for language in languages:
+            languages_filters[language] = token_filter(
+                language + '_filter',
+                type='stop',
+                stopwords=languages_stopwords[language],
+            )
+            languages_analyzers[language] = analyzer(
+                language + '_analyzer',
+                tokenizer='standard',
+                char_filter=['html_strip'],
+                filter=['lowercase', 'asciifolding', languages_filters[language]]
+            )
+
+        # Add analyzers, the index has to be closed before any configuration
+        searches_index = Index('searches')
+        searches_index.close()
+        # default analyzer
+        searches_index.analyzer(default_analyzer)
+        # languages search analyzers
+        for language in languages:
+            searches_index.analyzer(languages_analyzers[language])
+        searches_index.save()
+        searches_index.open()
 
     @classmethod
     def delete(cls):
@@ -312,6 +354,7 @@ class SearchIndex(DocType):
         except NotFoundError:
             pass
 
+    """
     @classmethod
     def rebuild(cls):
         '''
@@ -319,3 +362,4 @@ class SearchIndex(DocType):
         '''
         cls.delete()
         cls.bulk_indexing()
+    """

@@ -1,16 +1,15 @@
 from base.managers import BaseGovernmentQuerySet
-from base.managers import TranslatableQuerySet
 from aldryn_apphooks_config.managers.base import ManagerMixin
 from parler.managers import TranslatableManager
 
 
-class PresidencyQueryset(BaseGovernmentQuerySet):
+class PublicServantQueryset(BaseGovernmentQuerySet):
     pass
 
 
-class PresidencyManager(ManagerMixin, TranslatableManager):
+class PublicServantManager(ManagerMixin, TranslatableManager):
     def get_queryset(self):
-        return PresidencyQueryset(self.model, using=self.db)
+        return PublicServantQueryset(self.model, using=self.db)
 
     def by_government_structure(self, government_structure):
         return self.get_queryset().by_government_structure(government_structure)
@@ -18,6 +17,8 @@ class PresidencyManager(ManagerMixin, TranslatableManager):
     def bulk_index(self, boost=1, government_structure=None):
         queryset = self.get_queryset().by_government_structure(
             government_structure
+        ).translated(
+            charge__isnull=False,
         )
 
         languages = ('es', 'en')
@@ -25,7 +26,3 @@ class PresidencyManager(ManagerMixin, TranslatableManager):
             queryset = queryset.language(language)
             for obj in queryset:
                 obj.index_in_elasticsearch(boost)
-
-
-class PresidencyURLQueryset(TranslatableQuerySet):
-    pass

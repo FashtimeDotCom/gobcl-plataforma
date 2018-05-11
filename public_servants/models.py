@@ -18,6 +18,15 @@ from djangocms_text_ckeditor.fields import HTMLField
 from base.models import BaseGovernmentStructureModel
 from base.models import file_path
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+# managers
+from .managers import PublicServantManager
+
+# utils
+from base.utils import remove_tags
+
 
 class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
     name = models.CharField(
@@ -56,6 +65,8 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         blank=True,
     )
 
+    objects = PublicServantManager()
+
     exclude_on_on_delete_test = ('translations')
 
     class Meta:
@@ -81,3 +92,14 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
             return self.region_set.first().get_absolute_url()
 
         return ''
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.charge,
+            boost=boost
+        )
+        doc.save()

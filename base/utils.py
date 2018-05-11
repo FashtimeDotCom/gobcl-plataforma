@@ -106,7 +106,7 @@ def get_or_set_cache(name, default_callback, ttl=1800):
 
 
 def keymap_replace(
-        string: str, 
+        string: str,
         mappings: dict,
         lower_keys=False,
         lower_values=False,
@@ -116,7 +116,7 @@ def keymap_replace(
 
     This function takes a string a dictionary of
     replacement mappings. For example, if I supplied
-    the string "Hello world.", and the mappings 
+    the string "Hello world.", and the mappings
     {"H": "J", ".": "!"}, it would return "Jello world!".
 
     Keyword arguments:
@@ -133,3 +133,11 @@ def keymap_replace(
             replacement.lower() if lower_values else replacement
         )
     return replaced_string
+
+
+def remove_tags(text):
+    '''
+    Function to remove HTML tags
+    '''
+    TAG_RE = re.compile(r'<[^>]+>')
+    return TAG_RE.sub('', text)

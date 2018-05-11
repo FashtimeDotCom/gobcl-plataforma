@@ -12,6 +12,10 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import activate
 from django.utils.translation import ugettext_lazy as _
+from django.utils.formats import date_format
+
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
 
 # models
 from base.models import BaseModel
@@ -36,6 +40,9 @@ from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
 
 from cms.signals import pre_save_plugins
+
+# utils
+from base.utils import remove_tags
 
 
 class PlaceholderField(OriginalPlaceholderField):
@@ -351,6 +358,31 @@ class Article(TranslationHelperMixin,
         self._copy_contents(public_article, language)
 
         return public_article
+
+    def index_in_elasticsearch(self, boost):
+        tags = self.tags.values_list('name', flat=True)
+        categories = self.categories.values_list(
+            'translations__name',
+            flat=True
+        )
+        categories_slug = self.categories.values_list(
+            'translations__slug',
+            flat=True
+        )
+        # TODO: maybe recieve the class instead of just using SearchIndex
+        doc = SearchIndex(
+            title=self.title,
+            description=remove_tags(self.lead_in),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            lead_in=remove_tags(self.lead_in),
+            detail=date_format(self.publishing_date),
+            tags=', '.join(tags),
+            categories=', '.join(categories),
+            categories_slug=', '.join(categories_slug),
+            boost=boost
+        )
+        doc.save()
 
 
 # Replace the mark as dirty method of placeholders to mark articles as dirty

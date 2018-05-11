@@ -9,6 +9,12 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseGovernmentStructureModel
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+# managers
+from .managers import FooterLinkManager
+
 
 class FooterLink(BaseGovernmentStructureModel):
     name = models.CharField(
@@ -23,6 +29,8 @@ class FooterLink(BaseGovernmentStructureModel):
         _('order'),
         default=0,
     )
+
+    objects = FooterLinkManager()
 
     class Meta:
         verbose_name = _('footer link')
@@ -62,3 +70,13 @@ class FooterLink(BaseGovernmentStructureModel):
         if not self.pk:
             self._sum_order()
         return super(FooterLink, self).save(*args, **kwargs)
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            language_code='ALL',
+            url=self.get_absolute_url(),
+            detail=self.url,
+            boost=boost
+        )
+        doc.save()

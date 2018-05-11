@@ -16,8 +16,14 @@ from parler.models import TranslatedFields
 from base.models import BaseModel
 from base.models import file_path
 
-from .managers import PresidencyQueryset
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+from .managers import PresidencyManager
 from .managers import PresidencyURLQueryset
+
+# utils
+from base.utils import remove_tags
 
 
 class PresidencyURL(BaseModel, TranslatableModel):
@@ -92,7 +98,7 @@ class Presidency(BaseModel, TranslatableModel):
         verbose_name=_('urls'),
     )
 
-    objects = PresidencyQueryset.as_manager()
+    objects = PresidencyManager()
 
     class Meta:
         verbose_name = _('presidency')
@@ -108,3 +114,15 @@ class Presidency(BaseModel, TranslatableModel):
         """ Returns the canonical URL for the Presidency object """
 
         return reverse('presidency_detail')
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            title=self.title,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.title,
+            boost=boost
+        )
+        doc.save()
