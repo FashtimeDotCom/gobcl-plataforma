@@ -69,12 +69,12 @@ class FooterLink(BaseGovernmentStructureModel):
     def save(self, *args, **kwargs):
         if self.pk is None:
             self._sum_order()
-            self.index_in_elasticsearch()
-        return super(FooterLink, self).save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(FooterLink, self).save(*args, **kwargs)
+        return_value = super(FooterLink, self).save(*args, **kwargs)
+
+        self.reindex_in_elasticsearch()
+
+        return return_value
 
     def index_in_elasticsearch(self, boost):
         doc = SearchIndex(
@@ -84,4 +84,4 @@ class FooterLink(BaseGovernmentStructureModel):
             detail=self.url,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

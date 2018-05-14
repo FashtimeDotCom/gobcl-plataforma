@@ -111,14 +111,11 @@ class Presidency(BaseModel, TranslatableModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.index_in_elasticsearch()
+        return_value = super(Presidency, self).save(*args, **kwargs)
 
-        return super(Presidency, self).save(*args, **kwargs)
+        self.reindex_in_elasticsearch()
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(Presidency, self).save(*args, **kwargs)
+        return return_value
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the Presidency object """
@@ -126,6 +123,7 @@ class Presidency(BaseModel, TranslatableModel):
         return reverse('presidency_detail')
 
     def index_in_elasticsearch(self, boost):
+        print('index presidency: id={id}, lan={lan}'.format(id=self.id, lan=self.language_code))
         doc = SearchIndex(
             name=self.name,
             title=self.title,
@@ -135,4 +133,4 @@ class Presidency(BaseModel, TranslatableModel):
             detail=self.title,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

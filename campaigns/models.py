@@ -159,18 +159,13 @@ class Campaign(BaseModel, TranslatableModel):
         activate(language=language)
         self.slug = slugify(self.title)
 
-        # TODO: check if index exists
+        return_value = super(Campaign, self).save(*args, **kwargs)
+
+        self.deindex_in_elasticsearch()
         if self.is_active():
             self.index_in_elasticsearch()
-        else:
-            # TODO: unindex
-            pass
 
-        return super(Campaign, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(Campaign, self).save(*args, **kwargs)
+        return return_value
 
     def is_active(self):
         now = timezone.now()
@@ -186,4 +181,4 @@ class Campaign(BaseModel, TranslatableModel):
             detail=self.title,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

@@ -313,18 +313,16 @@ class Article(TranslationHelperMixin,
             if not self.slug:
                 self.slug = slugify(self.title)
 
-        # TODO: check if index exists
+        return_value = super(Article, self).save(*args, **kwargs)
+
+        # Delete previous document (if it exists), and index it again only if
+        # it's published
+        # Called after saving because the id is needed
+        self.deindex_in_elasticsearch()
         if self.is_published:
             self.index_in_elasticsearch()
-        else:
-            # TODO: unindex
-            pass
 
-        return super(Article, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(Article, self).save(*args, **kwargs)
+        return return_value
 
     # custom methods
     def publish(self, language):
@@ -394,7 +392,7 @@ class Article(TranslationHelperMixin,
             categories_slug=', '.join(categories_slug),
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)
 
 
 # Replace the mark as dirty method of placeholders to mark articles as dirty

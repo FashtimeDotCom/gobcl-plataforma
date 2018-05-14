@@ -52,14 +52,11 @@ class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.index_in_elasticsearch()
+        return_value = super(PublicEnterprise, self).save(*args, **kwargs)
 
-        return super(PublicEnterprise, self).save(*args, **kwargs)
+        self.reindex_in_elasticsearch()
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(PublicEnterprise, self).save(*args, **kwargs)
+        return return_value
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the PublicEnterprise object """
@@ -73,4 +70,4 @@ class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
             detail=self.url,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

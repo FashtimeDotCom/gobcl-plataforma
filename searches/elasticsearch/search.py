@@ -35,7 +35,7 @@ def remove_tags(text):
 def bulk_index():
     index_class = SearchIndex
 
-    index_class.delete()
+    index_class.delete_all()
     index_class.init_index()
 
     # index models and assign boost for them

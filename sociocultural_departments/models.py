@@ -115,14 +115,11 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.index_in_elasticsearch()
+        return_value = super(SocioculturalDepartment, self).save(*args, **kwargs)
 
-        return super(SocioculturalDepartment, self).save(*args, **kwargs)
+        self.reindex_in_elasticsearch()
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(SocioculturalDepartment, self).save(*args, **kwargs)
+        return return_value
 
     def get_absolute_url(self):
         return reverse('sociocultural_department_detail')
@@ -137,4 +134,4 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
             detail=self.title,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

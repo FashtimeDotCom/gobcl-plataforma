@@ -81,14 +81,11 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.index_in_elasticsearch()
+        return_value = super(PublicServant, self).save(*args, **kwargs)
 
-        return super(PublicServant, self).save(*args, **kwargs)
+        self.reindex_in_elasticsearch()
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(PublicServant, self).save(*args, **kwargs)
+        return return_value
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the public_servant object """
@@ -112,4 +109,4 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
             detail=self.charge,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)

@@ -126,12 +126,12 @@ class Ministry(Institution):
     def save(self, *args, **kwargs):
         if not self.pk:
             self._sum_importance()
-            self.index_in_elasticsearch()
-        return super(Ministry, self).save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(Ministry, self).save(*args, **kwargs)
+        return_value = super(Ministry, self).save(*args, **kwargs)
+
+        self.reindex_in_elasticsearch()
+
+        return return_value
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the ministry object """
@@ -146,7 +146,7 @@ class Ministry(Institution):
             detail=self.minister.name,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)
 
 
 class PublicService(TranslatableModel, BaseModel):
@@ -179,14 +179,11 @@ class PublicService(TranslatableModel, BaseModel):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.index_in_elasticsearch()
+        return_value = super(PublicService, self).save(*args, **kwargs)
 
-        return super(PublicService, self).save(*args, **kwargs)
+        self.reindex_in_elasticsearch()
 
-    def delete(self, *args, **kwargs):
-        # TODO: unindex
-        return super(PublicService, self).save(*args, **kwargs)
+        return return_value
 
     def get_absolute_url(self):
         return self.url
@@ -204,4 +201,4 @@ class PublicService(TranslatableModel, BaseModel):
             detail=self.url,
             boost=boost
         )
-        doc.save()
+        doc.save(obj=self)
