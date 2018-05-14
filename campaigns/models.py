@@ -163,7 +163,7 @@ class Campaign(BaseModel, TranslatableModel):
 
         self.deindex_in_elasticsearch()
         if self.is_active():
-            self.index_in_elasticsearch()
+            self.index_in_elasticsearch(1)
 
         return return_value
 
