@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"POT-Creation-Date: 2018-05-07 14:48-0300\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,51 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: settings.py:323
+#: settings.py:318
 msgid "Spanish"
 msgstr "Español"
 
-#: settings.py:324
+#: settings.py:319
 msgid "English"
 msgstr "Inglés"
 
-#: settings.py:512
+#: settings.py:514
 msgid "Campaign template"
 msgstr "Plantilla campaña"
 
-#: settings.py:513
+#: settings.py:515
 msgid "Empty template"
 msgstr "Plantilla vacía"
 
-#: settings.py:514
+#: settings.py:516
 msgid "Stream template"
 msgstr "Plantilla stream"
 
-#: urls.py:40
-msgid "^institutions/"
-msgstr "^instituciones/"
-
-#: urls.py:41
-msgid "^regions/"
-msgstr "^regiones/"
-
-#: urls.py:42
-msgid "^ministries/"
-msgstr "^ministerios/"
-
-#: urls.py:43
-msgid "^search/"
-msgstr "^buscar/"
-
-#: urls.py:44
-msgid "^procedures/"
-msgstr "^procedimientos/"
-
-#: urls.py:45
+#: urls.py:34 urls.py:48
 msgid "^articles/"
 msgstr "^articulos/"
 
-#: urls.py:48
+#: urls.py:35
+msgid "^news/"
+msgstr "^noticias/"
+
+#: urls.py:43
+msgid "^institutions/"
+msgstr "^instituciones/"
+
+#: urls.py:44
+msgid "^regions/"
+msgstr "^regiones/"
+
+#: urls.py:45
+msgid "^ministries/"
+msgstr "^ministerios/"
+
+#: urls.py:46
+msgid "^search/"
+msgstr "^buscar/"
+
+#: urls.py:47
+msgid "^procedures/"
+msgstr "^procedimientos/"
+
+#: urls.py:49
 msgid "^"
 msgstr ""
 
@@ -71,9 +75,6 @@ msgstr ""
 
 #~ msgid "^about-interior/$"
 #~ msgstr "^acerca-de-interior/$"
-
-#~ msgid "^news/"
-#~ msgstr "^noticias/"
 
 #~ msgid "^category/(?P<category>\\w[-\\w]*)/$"
 #~ msgstr "^categoria/(?P<category>\\w[-\\w]*)/$"

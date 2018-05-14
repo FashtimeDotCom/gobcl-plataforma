@@ -11,6 +11,7 @@ from elasticsearch_dsl import Integer
 from elasticsearch_dsl import Index
 from elasticsearch_dsl import connections
 from elasticsearch_dsl import analyzer
+from elasticsearch_dsl import token_filter
 from elasticsearch_dsl import Keyword
 
 # models
@@ -37,12 +38,6 @@ connections.create_connection(
 
 government_structure = GovernmentStructure.get_government()
 
-html_strip = analyzer(
-    'html_strip',
-    tokenizer='standard',
-    char_filter=['html_strip']
-)
-
 
 class SearchIndex(DocType):
     '''
@@ -52,13 +47,11 @@ class SearchIndex(DocType):
     name = Text(store=True)
     title = Text(store=True)
     description = Text(
-        analyzer=html_strip,
         store=True
     )
     language_code = Text()
     url = Keyword()
     lead_in = Text(
-        analyzer=html_strip,
         fields={'raw': Keyword()},
         store=True
     )
@@ -73,7 +66,7 @@ class SearchIndex(DocType):
         index = 'searches'
 
     @classmethod
-    def index_ministries(cls, boost=0):
+    def index_ministries(cls, boost=1):
         '''
         Index ministries with an optional boost
         '''
@@ -85,7 +78,7 @@ class SearchIndex(DocType):
         ISearch(ministries, cls, boost).indexing()
 
     @classmethod
-    def index_footer_link(cls, boost=0):
+    def index_footer_link(cls, boost=1):
         '''
         Index footer links with an optional boost
         '''
@@ -96,7 +89,7 @@ class SearchIndex(DocType):
         ISearch(footer_links, cls, boost).indexing()
 
     @classmethod
-    def index_region(cls, boost=0):
+    def index_region(cls, boost=1):
         '''
         Index region with an optional boost
         '''
@@ -107,7 +100,7 @@ class SearchIndex(DocType):
         ISearch(regions, cls, boost).indexing()
 
     @classmethod
-    def index_page(cls, boost=0):
+    def index_page(cls, boost=1):
         languages = ('es', 'en')
         for language in languages:
             activate(language)
@@ -124,7 +117,7 @@ class SearchIndex(DocType):
                 search_index.indexing()
 
     @classmethod
-    def index_sociocultural_department(cls, boost=0):
+    def index_sociocultural_department(cls, boost=1):
         '''
         Index sociocultural department with an optional boost
         '''
@@ -135,7 +128,7 @@ class SearchIndex(DocType):
         ISearch(sociocultural_department, cls, boost).indexing()
 
     @classmethod
-    def index_public_enterprise(cls, boost=0):
+    def index_public_enterprise(cls, boost=1):
         '''
         Index public enterprises with an optional boost
         '''
@@ -146,7 +139,7 @@ class SearchIndex(DocType):
         ISearch(public_enterprises, cls, boost).indexing()
 
     @classmethod
-    def index_presidencies(cls, boost=0):
+    def index_presidencies(cls, boost=1):
         '''
         Index presidency with an optional boost
         '''
@@ -157,7 +150,7 @@ class SearchIndex(DocType):
         ISearch(presidencies, cls, boost).indexing()
 
     @classmethod
-    def index_articles(cls, boost=0):
+    def index_articles(cls, boost=1):
         '''
         Index articles with an optional boost
         '''
@@ -178,7 +171,7 @@ class SearchIndex(DocType):
                 search_index.indexing()
 
     @classmethod
-    def index_campaigns(cls, boost=0):
+    def index_campaigns(cls, boost=1):
         '''
         Index campaign with an optional boost
         '''
@@ -189,7 +182,7 @@ class SearchIndex(DocType):
         ISearch(campaigns, cls, boost).indexing()
 
     @classmethod
-    def index_public_services(cls, boost=0):
+    def index_public_services(cls, boost=1):
         '''
         Index public services with an optional boost
         '''
@@ -202,7 +195,7 @@ class SearchIndex(DocType):
         ISearch(public_services, cls, boost).indexing()
 
     @classmethod
-    def index_public_servant(cls, boost=0):
+    def index_public_servant(cls, boost=1):
         '''
         Index public servant with an optional boost
         '''
@@ -223,28 +216,70 @@ class SearchIndex(DocType):
         # create the mappings in elasticsearch
         cls.init()
 
+        # default analyzer
+        default_analyzer = analyzer(
+            'default',
+            tokenizer='standard',
+            char_filter=['html_strip'],
+            filter=['lowercase', 'asciifolding']
+        )
+
+        # set the analyzers for the available languages
+        # TODO: languages and languages_stopwords should be in settings
+        languages = ('es', 'en')
+        languages_stopwords = {
+            'en': '_english_',
+            'es': '_spanish_',
+        }
+        languages_analyzers = {}
+        languages_filters = {}
+        for language in languages:
+            languages_filters[language] = token_filter(
+                language + '_filter',
+                type='stop',
+                stopwords=languages_stopwords[language],
+            )
+            languages_analyzers[language] = analyzer(
+                language + '_analyzer',
+                tokenizer='standard',
+                char_filter=['html_strip'],
+                filter=['lowercase', 'asciifolding', languages_filters[language]]
+            )
+
+        # Add analyzers, the index has to be closed before any configuration
+        searches_index = Index('searches')
+        searches_index.close()
+        # default analyzer
+        searches_index.analyzer(default_analyzer)
+        # languages search analyzers
+        for language in languages:
+            searches_index.analyzer(languages_analyzers[language])
+        searches_index.save()
+        searches_index.open()
+
+        # index models and assign boost for them
         print('public articles')
         cls.index_articles()
 
         activate('es')
         print('presidency')
-        cls.index_presidencies(0)
+        cls.index_presidencies(4)
         print('sociocultural department',)
-        cls.index_sociocultural_department(0)
+        cls.index_sociocultural_department(2)
         print('public enterprises')
-        cls.index_public_enterprise()
+        cls.index_public_enterprise(1.5)
         print('regions')
-        cls.index_region()
+        cls.index_region(1.3)
         print('public servant')
-        cls.index_public_servant(0)
+        cls.index_public_servant(3)
         print('public public services')
-        cls.index_public_services()
+        cls.index_public_services(1.5)
         print('campaigns')
         cls.index_campaigns()
-        print('foote rlinks')
-        cls.index_footer_link()
+        print('footer links')
+        cls.index_footer_link(1.2)
         print('ministries')
-        cls.index_ministries(0)
+        cls.index_ministries(2)
 
     @classmethod
     def delete(cls):
