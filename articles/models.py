@@ -308,6 +308,9 @@ class Article(TranslationHelperMixin,
         else:
             return url
 
+    def get_index_url(self):
+        return reverse('articles:article_detail', args=(self.slug,))
+
     def save(self, *args, **kwargs):
         if self.is_draft:
             if not self.slug:
@@ -384,7 +387,7 @@ class Article(TranslationHelperMixin,
             title=self.title,
             description=remove_tags(self.lead_in),
             language_code=self.language_code,
-            url=self.get_absolute_url(),
+            url=self.get_index_url(),
             lead_in=remove_tags(self.lead_in),
             detail=date_format(self.publishing_date),
             tags=', '.join(tags),
