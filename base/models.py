@@ -131,23 +131,24 @@ class BaseModel(models.Model):
         site = Site.objects.get_current().domain
         return 'https://{site}{path}'.format(site=site, path=absolute_url)
 
-    def get_elasticsearch_id(self):
-        language_code = 'ALL'
-        if hasattr(self, 'language_code'):
-            language_code = self.language_code
+    def get_elasticsearch_id(self, language_code=None):
+        if language_code is None:
+            language_code = 'ALL'
+            if hasattr(self, 'language_code'):
+                language_code = self.language_code
         return (
             str(type(self).__name__) + '-' +
             str(self.id) + '-' +
             language_code
         )
 
-    def get_elasticsearch_doc(self):
+    def get_elasticsearch_doc(self, language_code=None):
         """
         Returns the elasticsearch index corresponding to that document, returns
         None if it doesn't exist
         """
         return SearchIndex.get(
-            id=self.get_elasticsearch_id(),
+            id=self.get_elasticsearch_id(language_code=language_code),
             ignore=404
         )
 
@@ -155,10 +156,12 @@ class BaseModel(models.Model):
         """
         Deletes the elasticsearch document related to this object if it exists
         """
-        doc = self.get_elasticsearch_doc()
+        languages = ('es', 'en', 'ALL')
+        for language in languages:
+            doc = self.get_elasticsearch_doc(language_code=language)
 
-        if doc is not None:
-            doc.delete()
+            if doc is not None:
+                doc.delete()
 
     def reindex_in_elasticsearch(self):
         """

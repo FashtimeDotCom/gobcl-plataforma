@@ -397,6 +397,15 @@ class Article(TranslationHelperMixin,
         )
         doc.save(obj=self)
 
+    def delete(self, *args, **kwargs):
+        """
+        Override this method to delete the corresponding elasticsearch document
+        when deleting the object
+        """
+        self.deindex_in_elasticsearch()
+        self.public.deindex_in_elasticsearch()
+        super(BaseModel, self).delete(*args, **kwargs)
+
 
 # Replace the mark as dirty method of placeholders to mark articles as dirty
 old_mark_as_dirty = Placeholder.mark_as_dirty
