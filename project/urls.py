@@ -31,7 +31,7 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url(_(r'^articles/'), include('articles.urls'), name='articles'),
+    url(_(r'^news/'), include('articles.urls'), name='articles'),
     url(_(r'^news/'), include('gobcl_cms.news_urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
