@@ -322,7 +322,7 @@ class Article(TranslationHelperMixin,
         # it's published
         # Called after saving because the id is needed
         self.deindex_in_elasticsearch()
-        if self.is_published:
+        if self.is_published and not self.is_draft:
             self.index_in_elasticsearch(1)
 
         return return_value
