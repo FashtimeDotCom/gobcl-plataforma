@@ -3,10 +3,12 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.utils.translation import activate
 from django.utils.translation import ugettext as _, override
 
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
+from cms.utils import get_language_from_request
 
 from .models import Article
 
@@ -80,6 +82,8 @@ class ArticleToolbar(CMSToolbar):
 
                 kwargs = self.request.resolver_match.kwargs
 
+                language = get_language_from_request(self.request)
+                activate(language)
                 article = Article.objects.all().translated(
                     slug=kwargs['slug']
                 )
