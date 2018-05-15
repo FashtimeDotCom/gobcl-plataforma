@@ -77,18 +77,23 @@ class ArticleToolbar(CMSToolbar):
         if user and view_name:
             # If we're on an Article detail page, then get the article
             if view_name.endswith('article_detail'):
+
                 kwargs = self.request.resolver_match.kwargs
-                article = Article.objects.translated(
+
+                article = Article.objects.all().translated(
                     slug=kwargs['slug']
                 )
 
-                if self.toolbar.edit_mode:
-                    article = article.get(is_draft=True)
-                else:
-                    if article.filter(is_draft=False).exists():
-                        article = article.get(is_draft=False)
-                    else:
+                try:
+                    if self.toolbar.edit_mode:
                         article = article.get(is_draft=True)
+                    else:
+                        if article.filter(is_draft=False).exists():
+                            article = article.get(is_draft=False)
+                        else:
+                            article = article.get(is_draft=True)
+                except Article.DoesNotExist:
+                    article = None
 
             else:
                 article = None
