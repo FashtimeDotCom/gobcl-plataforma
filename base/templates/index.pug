@@ -102,11 +102,11 @@ block content
             {% trans 'News' %}
             {% endstatic_placeholder %}
 
-          {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
+          {% include 'articles/includes/article_miniature_list.pug' with articles=articles %}
 
           .col-12.col-lg-4.offset-lg-4
             a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
-              href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+              href="{% namespace_url 'article_list' namespace='articles' default=''%}"
             )
               {% trans 'See more' %}
 
