@@ -173,6 +173,32 @@ class ArticlePublishView(
         return url.replace('?edit', '') + '?edit_off'
 
 
+class ArticleUnpublishView(
+    TranslatableSlugMixin,
+    SingleObjectMixin,
+    BaseRedirectView
+):
+    permanent = False
+    permission_required = 'articles.change_article'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return Article.objects.published()
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        language = translation.get_language()
+        self.object.unpublish(language)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        url = self.object.get_absolute_url()
+
+        # remove ?edit_off string from url
+        return url.replace('?edit_off', '') + '?edit'
+
+
 class CategoryArticleList(ArticleListView):
     """A list of articles filtered by categories."""
     def get_queryset(self):
