@@ -123,7 +123,6 @@ class Presidency(BaseModel, TranslatableModel):
         return reverse('presidency_detail')
 
     def index_in_elasticsearch(self, boost):
-        print('index presidency: id={id}, lan={lan}'.format(id=self.id, lan=self.language_code))
         doc = SearchIndex(
             name=self.name,
             title=self.title,

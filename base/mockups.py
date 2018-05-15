@@ -23,8 +23,10 @@ from inflection import underscore
 
 # models
 from articles.models import Article
+from articles.models import ArticleTranslation
 from aldryn_people.models import Person
 from campaigns.models import Campaign
+from campaigns.models import CampaignTranslation
 from cms.models.placeholdermodel import Placeholder
 from contingencies.models import Contingency
 from contingencies.models import ContingencyEvent
@@ -42,19 +44,26 @@ from gobcl_cms.models import SectionPlugin
 from government_structures.models import GovernmentStructure
 from links.models import FooterLink
 from ministries.models import Ministry
+from ministries.models import MinistryTranslation
 from ministries.models import PublicService
+from ministries.models import PublicServiceTranslation
 from presidencies.models import Presidency
+from presidencies.models import PresidencyTranslation
 from presidencies.models import PresidencyURL
 from public_enterprises.models import PublicEnterprise
+from public_enterprises.models import PublicEnterpriseTranslation
 from public_servants.models import PublicServant
+from public_servants.models import PublicServantTranslation
 from regions.models import Commune
 from regions.models import Region
+from regions.models import RegionTranslation
 from services.models import ChileAtiendeFile
 from services.models import ChileAtiendeService
 from streams.models import Stream
 from streams.models import StreamEvent
 from users.models import User
 from sociocultural_departments.models import SocioculturalDepartment
+from sociocultural_departments.models import SocioculturalDepartmentTranslation
 from sociocultural_departments.models import SocioculturalDepartmentURL
 
 
@@ -78,7 +87,13 @@ class Mockup(object):
         self.set_required_string(kwargs, 'description')
         self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
-        return Ministry.objects.create(**kwargs)
+
+        kwargs['description'] = 'test'
+        obj = Ministry(**kwargs)
+        obj.set_current_language('en')
+        obj.save()
+        return obj
+        #return Ministry.objects.create(**kwargs)
 
     def create_page(self, **kwargs):
         title = kwargs['reverse_id']
@@ -125,7 +140,12 @@ class Mockup(object):
     def create_public_servant(self, **kwargs):
         self.set_required_string(kwargs, 'name')
         self.set_required_foreign_key(kwargs, 'government_structure')
-        return PublicServant.objects.create(**kwargs)
+        kwargs['description'] = 'test'
+        obj = PublicServant(**kwargs)
+        obj.set_current_language('en')
+        obj.save()
+        return obj
+        #return PublicServant.objects.create(**kwargs)
 
     def create_presidency(self, **kwargs):
         self.set_required_foreign_key(kwargs, 'government_structure')
@@ -166,7 +186,12 @@ class Mockup(object):
         self.set_required_slug(kwargs, 'slug')
         self.set_required_url(kwargs, 'url')
         self.set_required_foreign_key(kwargs, 'government_structure')
-        return Region.objects.create(**kwargs)
+        kwargs['description'] = 'test'
+        obj = Region(**kwargs)
+        obj.set_current_language('es')
+        obj.save()
+        return obj
+        #return Region.objects.create(**kwargs)
 
     def create_campaign(self, **kwargs):
         self.set_required_string(kwargs, 'title')

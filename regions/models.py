@@ -84,12 +84,18 @@ class Region(Institution):
         return reverse('region_detail', args=(self.slug,))
 
     def index_in_elasticsearch(self, boost):
+        detail = ''
+        if self.governor:
+            detail = self.governor.name
+        name = ''
+        if hasattr(self, 'name'):
+            name = self.name
         doc = SearchIndex(
-            name=self.name,
+            name=name,
             description=remove_tags(self.description),
             language_code=self.language_code,
             url=self.get_absolute_url(),
-            detail=self.governor.name,
+            detail=detail,
             boost=boost
         )
         doc.save(obj=self)
