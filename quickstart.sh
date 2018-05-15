@@ -101,6 +101,9 @@ if  $INSTALL_SYSTEM_DEPENDENCIES ; then
 
         print_green "Installing virtualenv"
         pip install virtualenv
+
+        brew cask install caskroom/versions/java8
+        brew services start elasticsearch
     else
         print_green "Installing aptitude dependencies"
 
