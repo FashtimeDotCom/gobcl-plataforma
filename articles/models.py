@@ -322,14 +322,18 @@ class Article(TranslationHelperMixin,
             if not self.slug:
                 self.slug = slugify(self.title)
 
+        new = not self.id
+
         return_value = super(Article, self).save(*args, **kwargs)
 
         # Delete previous document (if it exists), and index it again only if
         # it's published
         # Called after saving because the id is needed
         self.deindex_in_elasticsearch()
-        if self.is_published and not self.is_draft:
-            self.index_in_elasticsearch(1)
+
+        if not new:
+            if self.is_published and not self.is_draft:
+                self.index_in_elasticsearch(1)
 
         return return_value
 
