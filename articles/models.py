@@ -423,7 +423,10 @@ class Article(TranslationHelperMixin,
         when deleting the object
         """
         self.deindex_in_elasticsearch()
-        self.public.deindex_in_elasticsearch()
+
+        if self.public:
+            self.public.deindex_in_elasticsearch()
+
         super(BaseModel, self).delete(*args, **kwargs)
 
 
