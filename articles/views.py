@@ -167,7 +167,10 @@ class ArticlePublishView(
         return super(ArticlePublishView, self).get(request, *args, **kwargs)
 
     def get_redirect_url(self, *args, **kwargs):
-        return self.object.get_absolute_url() + '?edit_off'
+        url = self.object.get_absolute_url()
+
+        # remove ?edit string from url
+        return url.replace('?edit', '') + '?edit_off'
 
 
 class CategoryArticleList(ArticleListView):
