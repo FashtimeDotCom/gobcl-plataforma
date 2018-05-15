@@ -44,12 +44,24 @@ class ArticleToolbar(CMSToolbar):
         if not public or public.updated_at < article.updated_at:
             classes.append('cms-btn-action')
 
-        publish_url = reverse('articles:article_publish', args=(article.slug,),)
-
         if self.toolbar.edit_mode:
-            button = publisher.add_button(
+            publish_url = reverse(
+                'articles:article_publish', args=(article.slug,),
+            )
+            publisher.add_button(
                 _('Publish'),
                 url=publish_url,
+                active=False,
+                disabled=False,
+                extra_classes=classes,
+            )
+        elif article.is_published:
+            unpublish_url = reverse(
+                'articles:article_unpublish', args=(article.slug,),
+            )
+            publisher.add_button(
+                _('Unpublish'),
+                url=unpublish_url,
                 active=False,
                 disabled=False,
                 extra_classes=classes,

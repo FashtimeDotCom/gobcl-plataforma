@@ -24,5 +24,5 @@
 
     p.a11y-tts
       {{ article.lead_in|striptags }}
-    a.text-red.a11y-tts(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
+    a.text-red.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace=namespace default='' %}")
       {% trans 'See complete news' %}
