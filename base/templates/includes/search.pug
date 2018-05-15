@@ -30,7 +30,10 @@
                 h2.new_title: a(href="{{ news.get_absolute_url }}").link.link--text-light
                   {{ news.title }}
             .clearfix
-              a(href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default='' %}").more.more--right {% trans 'See more' %}
+              a.more.more--right(
+                href="{% namespace_url 'article_list' namespace='articles' default='' %}"
+              )
+                | {% trans 'See more' %}
 
         .col-12.col-lg-4.a11y-tts-search
           h2.heading-label.heading-label--light {% trans 'Institutions' %}
