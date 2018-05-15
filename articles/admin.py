@@ -103,7 +103,6 @@ class ArticleAdmin(
             'fields': (
                 'title',
                 'publishing_date',
-                'is_published',
                 'is_featured',
                 'featured_image',
                 'lead_in',
