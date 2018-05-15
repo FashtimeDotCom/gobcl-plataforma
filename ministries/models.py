@@ -135,15 +135,24 @@ class Ministry(Institution):
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the ministry object """
-        return reverse('ministry_detail', args=(self.slug,))
+        if self.slug:
+            return reverse('ministry_detail', args=(self.slug,))
+        else:
+            return None
 
     def index_in_elasticsearch(self, boost):
+        detail = ''
+        if self.minister:
+            detail = self.minister.name
+        name = ''
+        if hasattr(self, 'name'):
+            name = self.name
         doc = SearchIndex(
-            name=self.name,
+            name=name,
             description=remove_tags(self.description),
             language_code=self.language_code,
             url=self.get_absolute_url(),
-            detail=self.minister.name,
+            detail=detail,
             boost=boost
         )
         doc.save(obj=self)

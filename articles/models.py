@@ -139,7 +139,7 @@ class Article(TranslationHelperMixin,
     )
     content = PlaceholderField(
         'article_content',
-        on_delete=models.SET_NULL,
+        null=False,
         related_name='articles',
     )
 
@@ -194,7 +194,7 @@ class Article(TranslationHelperMixin,
     objects = RelatedManager()
 
     exclude_on_on_delete_test = (
-        'public',
+        'public', 'content'
     )
 
     class Meta:
@@ -426,6 +426,8 @@ class Article(TranslationHelperMixin,
 
         if self.public:
             self.public.deindex_in_elasticsearch()
+
+        #import pdb; pdb.set_trace()
 
         super(BaseModel, self).delete(*args, **kwargs)
 
