@@ -32,7 +32,7 @@ class ArticleToolbar(CMSToolbar):
 
         url = reverse(
             'admin:articles_article_change',
-            args=(article.pk, )
+            args=(article.draft_pk, )
         )
         menu.add_modal_item(_('Edit this article'), url=url,
                             active=True)

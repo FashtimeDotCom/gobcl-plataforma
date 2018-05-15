@@ -6,11 +6,8 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
-from django.utils.translation import activate
 from django.utils.translation import ugettext_lazy as _
 from django.utils.formats import date_format
 
@@ -25,21 +22,16 @@ from djangocms_text_ckeditor.fields import HTMLField
 
 # external
 from .managers import RelatedManager
-from aldryn_apphooks_config.fields import AppHookConfigField
 from aldryn_categories.fields import CategoryManyToManyField
 from aldryn_translation_tools.models import TranslationHelperMixin
 from cms.exceptions import PublicIsUnmodifiable
 from cms.models.pluginmodel import CMSPlugin
-from cms.plugin_pool import plugin_pool
 from cms.utils.copy_plugins import copy_plugins_to
-from cms.utils.i18n import get_current_language
 from filer.fields.image import FilerImageField
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
-
-from cms.signals import pre_save_plugins
 
 # utils
 from base.utils import remove_tags
@@ -245,7 +237,6 @@ class Article(TranslationHelperMixin,
                 meta_keywords=translation.meta_keywords,
                 search_data=translation.search_data,
                 draft=False,
-                is_published=translation.is_published,
                 is_featured=translation.is_featured,
             )
         else:
@@ -257,7 +248,6 @@ class Article(TranslationHelperMixin,
             new_translation.meta_description = translation.meta_description
             new_translation.meta_keywords = translation.meta_keywords
             new_translation.search_data = translation.search_data
-            new_translation.is_published = translation.is_published
             new_translation.is_featured = translation.is_featured
             new_translation.save()
 
@@ -328,6 +318,15 @@ class Article(TranslationHelperMixin,
         return return_value
 
     # custom methods
+    @property
+    def draft_pk(self):
+        if self.is_draft:
+            return self.pk
+
+        # the 'public' field is badly defined, since it's the draft when the
+        # article is public
+        return self.public_id
+
     def publish(self, language):
         """
         :returns: the publicated Article.
@@ -365,6 +364,7 @@ class Article(TranslationHelperMixin,
 
         self._copy_attributes(public_article, language)
 
+        public_article.is_published = True
         public_article.save()
 
         # The target page now has a pk, so can be used as a target
