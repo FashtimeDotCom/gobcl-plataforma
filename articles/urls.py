@@ -1,4 +1,6 @@
+# django
 from django.conf.urls import url
+from django.utils.translation import ugettext_lazy as _
 
 from . import views
 
@@ -17,5 +19,10 @@ urlpatterns = [
         r'^(?P<slug>[\w-]+)/publish/$',
         views.ArticlePublishView.as_view(),
         name='article_publish'
+    ),
+    url(
+        _(r'^category/(?P<category>\w[-\w]*)/$'),
+        views.CategoryArticleList.as_view(),
+        name='article-list-by-category'
     ),
 ]

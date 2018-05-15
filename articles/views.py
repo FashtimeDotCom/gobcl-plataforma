@@ -4,12 +4,14 @@
 import json
 
 # django
+from django.shortcuts import get_object_or_404
 from django.utils import translation
 from django.views.generic import ListView
 from django.views.generic.detail import SingleObjectMixin
 
 # models
 from .models import Article
+from aldryn_categories.models import Category
 
 # views
 from base.views import BaseDetailView
@@ -166,3 +168,22 @@ class ArticlePublishView(
 
     def get_redirect_url(self, *args, **kwargs):
         return self.object.get_absolute_url() + '?edit_off'
+
+
+class CategoryArticleList(ArticleListView):
+    """A list of articles filtered by categories."""
+    def get_queryset(self):
+        return super(CategoryArticleList, self).get_queryset().filter(
+            categories=self.category
+        )
+
+    def get(self, request, category):
+        self.category = get_object_or_404(
+            Category, translations__slug=category)
+        return super(CategoryArticleList, self).get(request)
+
+    def get_context_data(self, **kwargs):
+        kwargs['newsblog_category'] = self.category
+        ctx = super(CategoryArticleList, self).get_context_data(**kwargs)
+        ctx['newsblog_category'] = self.category
+        return ctx
