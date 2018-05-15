@@ -4,7 +4,6 @@
 # standard library
 
 # external library
-from aldryn_newsblog.models import Article
 
 # django
 from django.contrib.auth.decorators import login_required
@@ -35,11 +34,12 @@ from inflection import underscore
 from base.utils import get_or_set_cache
 
 # models
+from articles.models import Article
+from gobcl_cms.models import HeaderImage
 from ministries.models import Ministry
 from ministries.models import PublicService
 from regions.models import Region
 from streams.models import Stream
-from gobcl_cms.models import HeaderImage
 
 
 class IndexTemplateView(TemplateView):
@@ -48,9 +48,7 @@ class IndexTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         """ view that renders a default home"""
 
-        articles = Article.objects.filter(
-            is_published=True,
-        ).order_by('-publishing_date')[:4]
+        articles = Article.objects.published().order_by('-publishing_date')[:4]
 
         stream = Stream.objects.active().first()
         header_image = HeaderImage.objects.active().order_by('?').first()
