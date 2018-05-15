@@ -11,6 +11,7 @@ import datetime
 from operator import attrgetter
 
 from django.db import models
+from django.db.models import Q
 from django.utils.timezone import now
 from django.utils.translation import activate
 
@@ -20,6 +21,9 @@ from taggit.models import Tag, TaggedItem
 
 
 class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
+    def exclude_article(self, article):
+        return self.exclude(Q(id=article.id) | Q(id=article.public_id))
+
     def draft(self):
         """
         Returns articles that are drafts
@@ -48,6 +52,9 @@ class RelatedManager(ManagerMixin, TranslatableManager):
         qs = ArticleQuerySet(self.model, using=self.db)
         return qs.select_related('featured_image')
 
+    def exclude_article(self, article):
+        return self.get_queryset().exclude_article(article)
+
     def draft(self):
         return self.get_queryset().draft()
 
@@ -56,8 +63,8 @@ class RelatedManager(ManagerMixin, TranslatableManager):
 
     def get_months(self, request, namespace):
         """
-        Get months and years with articles count for given request and namespace
-        string. This means how many articles there are in each month.
+        Get months and years with articles count for given request and
+        namespace string. This means how many articles there are in each month.
 
         The request is required, because logged-in content managers may get
         different counts.

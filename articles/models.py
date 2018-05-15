@@ -4,12 +4,13 @@
 
 # django
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.formats import date_format
 
 # elasticsearch
 from searches.elasticsearch.documents import SearchIndex
@@ -77,7 +78,6 @@ class Article(TranslationHelperMixin,
         title=models.CharField(
             _('title'),
             max_length=234,
-            unique=True,
         ),
         slug=models.SlugField(
             verbose_name=_('slug'),
@@ -291,6 +291,22 @@ class Article(TranslationHelperMixin,
             copy_plugins_to(plugins, target.content)
 
     # django methods
+    def clean(self):
+        values = super().clean()
+
+        # check for existing slugs
+        if not self.slug:
+            self.slug = slugify(self.title)
+
+        not_this_article_list = Article.objects.exclude_article(self)
+
+        if not_this_article_list.translated(slug=self.slug).exists():
+            raise ValidationError({
+                'slug': _('Slug "%s" is repeated') % self.slug,
+            })
+
+        return values
+
     def get_absolute_url(self):
         url = reverse('articles:article_detail', args=(self.slug,))
         if self.is_draft:

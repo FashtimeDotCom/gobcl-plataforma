@@ -11,7 +11,6 @@ from .models import Article
 from parler.forms import TranslatableModelForm
 
 
-
 class ArticleForm(TranslatableModelForm):
     """
     Form Article model.
@@ -21,6 +20,7 @@ class ArticleForm(TranslatableModelForm):
         model = Article
         fields = (
             'title',
+            'slug',
             'lead_in',
             'featured_image',
             'publishing_date',
