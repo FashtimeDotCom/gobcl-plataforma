@@ -11,7 +11,7 @@ def publish_news(apps, schema_editor):
     activate('es')
 
     articles = Article.objects.filter(is_draft=True, public=None)
-    for article in articles.iterator(chunk_size=200):
+    for article in articles.iterator():
         if article.is_published:
             for translation in article.translations.all():
                 activate(translation.language_code)
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('articles', '0005_load_news_tags'),
     ]
-
+uc
     operations = [
         migrations.RunPython(publish_news, unpublish_news),
     ]
