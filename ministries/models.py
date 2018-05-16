@@ -135,27 +135,17 @@ class Ministry(Institution):
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the ministry object """
-        if self.slug:
+        if hasattr(self, 'slug') and self.slug:
             return reverse('ministry_detail', args=(self.slug,))
         else:
             return None
 
-    def index_in_elasticsearch(self, boost):
-        detail = ''
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Ministry, self).get_elasticsearch_kwargs()
         if self.minister:
-            detail = self.minister.name
-        name = ''
-        if hasattr(self, 'name'):
-            name = self.name
-        doc = SearchIndex(
-            name=name,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=detail,
-            boost=boost
-        )
-        doc.save(obj=self)
+            kwargs['detail'] = self.minister.name
+
+        return kwargs
 
 
 class PublicService(TranslatableModel, BaseModel):
@@ -202,12 +192,8 @@ class PublicService(TranslatableModel, BaseModel):
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.url,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(PublicService, self).get_elasticsearch_kwargs()
+        kwargs['detail'] = self.get_absolute_url()
+
+        return kwargs

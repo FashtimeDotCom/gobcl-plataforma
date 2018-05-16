@@ -172,13 +172,9 @@ class Campaign(BaseModel, TranslatableModel):
         return (self.activation_datetime <= now and
                 self.deactivation_datetime >= now)
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            title=self.title,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.title,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Campaign, self).get_elasticsearch_kwargs()
+        if hasattr(self, 'title'):
+            kwargs['detail'] = self.title
+
+        return kwargs
