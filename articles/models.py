@@ -139,7 +139,7 @@ class Article(TranslationHelperMixin,
     )
     content = PlaceholderField(
         'article_content',
-        null=False,
+        on_delete=models.SET_NULL,
         related_name='articles',
     )
 
@@ -392,30 +392,30 @@ class Article(TranslationHelperMixin,
 
         return public_article
 
-    def index_in_elasticsearch(self, boost=1):
-        tags = self.tags.values_list('name', flat=True)
-        categories = self.categories.values_list(
-            'translations__name',
-            flat=True
-        )
-        categories_slug = self.categories.values_list(
-            'translations__slug',
-            flat=True
-        )
-        # TODO: maybe recieve the class instead of just using SearchIndex
-        doc = SearchIndex(
-            title=self.title,
-            description=remove_tags(self.lead_in),
-            language_code=self.language_code,
-            url=self.get_index_url(),
-            lead_in=remove_tags(self.lead_in),
-            detail=date_format(self.publishing_date),
-            tags=', '.join(tags),
-            categories=', '.join(categories),
-            categories_slug=', '.join(categories_slug),
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Article, self).get_elasticsearch_kwargs()
+
+        if hasattr(self, 'lead_in'):
+            kwargs['description'] = self.lead_in
+            kwargs['lead_in'] = self.lead_in
+        kwargs['url'] = self.get_index_url()
+        kwargs['detail'] = date_format(self.publishing_date)
+        if self.tags:
+            tags = self.tags.values_list('name', flat=True)
+            kwargs['tags'] = ', '.join(tags),
+        if self.categories:
+            categories = self.categories.values_list(
+                'translations__name',
+                flat=True
+            )
+            categories_slug = self.categories.values_list(
+                'translations__slug',
+                flat=True
+            )
+            kwargs['categories'] = ', '.join(categories),
+            kwargs['categories_slug'] = ', '.join(categories_slug)
+
+        return kwargs
 
     def unpublish(self, language):
         # Unpublish only be called on non draft articles
@@ -436,8 +436,6 @@ class Article(TranslationHelperMixin,
 
         if self.public:
             self.public.deindex_in_elasticsearch()
-
-        #import pdb; pdb.set_trace()
 
         super(BaseModel, self).delete(*args, **kwargs)
 

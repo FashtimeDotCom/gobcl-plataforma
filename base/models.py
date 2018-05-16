@@ -12,8 +12,6 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 
 # elasticsearch
 from searches.elasticsearch.documents import SearchIndex
@@ -22,6 +20,9 @@ from searches.elasticsearch.documents import SearchIndex
 from base import utils
 from base.managers import BaseManager, BaseGovernmentQuerySet
 from base.serializers import ModelEncoder
+
+# utils
+from base.utils import remove_tags
 
 
 # public methods
@@ -154,6 +155,41 @@ class BaseModel(models.Model):
             ignore=404
         )
 
+    def get_elasticsearch_kwargs(self):
+        """
+        Returns the arguments that should be pass when creating the
+        elasticearch document
+        """
+        kwargs = {}
+        if hasattr(self, 'name'):
+            kwargs['name'] = self.name
+        if hasattr(self, 'title'):
+            kwargs['title'] = self.title
+        if hasattr(self, 'description'):
+            kwargs['description'] = remove_tags(self.description)
+        if hasattr(self, 'language_code'):
+            kwargs['language_code'] = self.language_code
+        else:
+            kwargs['language_code'] = 'ALL'
+        kwargs['url'] = self.get_absolute_url()
+
+        # Every model that calls this method should have boost, but this can be
+        # called from every model, so it's validated for robustness
+        if hasattr(self, 'boost'):
+            kwargs['boost'] = self.boost
+        else:
+            kwargs['boost'] = 1
+
+        return kwargs
+
+    def index_in_elasticsearch(self):
+        """
+        Indexes a document in elasticearch with the info of this object
+        """
+        kwargs = self.get_elasticsearch_kwargs()
+        doc = SearchIndex(**kwargs)
+        doc.save(obj=self)
+
     def deindex_in_elasticsearch(self):
         """
         Deletes the elasticsearch document related to this object if it exists
@@ -173,18 +209,6 @@ class BaseModel(models.Model):
         # TODO: fix boosts
         self.deindex_in_elasticsearch()
         self.index_in_elasticsearch(1)
-
-    # TODO: Abstract index_in_elasticsearch method???
-
-
-@receiver(pre_delete)
-def delete_handler(sender, instance, **kwargs):
-    """
-    Signal that detects everytime an object is going to be deleted.
-    It deindexes the corresponding document from the elasticsearch index.
-    """
-    if isinstance(instance, BaseModel):
-        instance.deindex_in_elasticsearch()
 
 
 def lastest_government_structure():
