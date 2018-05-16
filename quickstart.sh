@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function print_green(){
     echo -e "\033[32m$1\033[39m"
