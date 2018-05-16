@@ -7,7 +7,7 @@ block content
     .btn-group
       if perms.sociocultural_departments.add_socioculturaldepartment
         a.btn.btn-primary(href="{% url 'sociocultural_department_create' %}")
-          {% trans 'Add sociocultural department' %}
+          {% trans 'Add Socio Cultural Department' %}
           i.fa.fa-plus
 
   table.table.table-bordered.table-hover
@@ -31,12 +31,12 @@ block content
           if perms.sociocultural_departments.change_socioculturaldepartment
             td
               a.btn.btn-primary(href="{% url 'sociocultural_department_update' sociocultural_department.id %}")
-                {% trans 'Update sociocultural department' %}
+                {% trans 'Update Socio Cultural Department' %}
                 i.fa.fa-edit
           if perms.sociocultural_departments.delete_socioculturaldepartment
             td
               a.btn.btn-danger(href="{% url 'sociocultural_department_delete' sociocultural_department.id %}")
-                {% trans 'Delete sociocultural department' %}
+                {% trans 'Delete Socio Cultural Department' %}
                 i.fa.fa-times
 
   {% include 'includes/pagination.pug' %}

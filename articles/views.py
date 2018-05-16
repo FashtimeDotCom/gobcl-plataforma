@@ -42,7 +42,7 @@ class PreviewModeMixin(EditModeMixin):
     """
 
     def get_queryset(self):
-        qs = super(PreviewModeMixin, self).get_queryset()
+        qs = super(PreviewModeMixin, self).get_queryset().translated()
         # check if user can see unpublished items. this will allow to switch
         # to edit mode instead of 404 on article detail page. CMS handles the
         # permissions.
@@ -167,7 +167,36 @@ class ArticlePublishView(
         return super(ArticlePublishView, self).get(request, *args, **kwargs)
 
     def get_redirect_url(self, *args, **kwargs):
-        return self.object.get_absolute_url() + '?edit_off'
+        url = self.object.get_absolute_url()
+
+        # remove ?edit string from url
+        return url.replace('?edit', '') + '?edit_off'
+
+
+class ArticleUnpublishView(
+    TranslatableSlugMixin,
+    SingleObjectMixin,
+    BaseRedirectView
+):
+    permanent = False
+    permission_required = 'articles.change_article'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return Article.objects.published()
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        language = translation.get_language()
+        self.object.unpublish(language)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        url = self.object.get_absolute_url()
+
+        # remove ?edit_off string from url
+        return url.replace('?edit_off', '') + '?edit'
 
 
 class CategoryArticleList(ArticleListView):

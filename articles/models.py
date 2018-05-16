@@ -351,7 +351,7 @@ class Article(TranslationHelperMixin,
         """
         :returns: the publicated Article.
         """
-        # Publish only be called on draft pages
+        # Publish only be called on draft articles
         if not self.is_draft:
             raise PublicIsUnmodifiable(
                 'The public instance cannot be published. Use draft.'
@@ -416,6 +416,16 @@ class Article(TranslationHelperMixin,
             kwargs['categories_slug'] = ', '.join(categories_slug)
 
         return kwargs
+
+    def unpublish(self, language):
+        # Unpublish only be called on non draft articles
+        if self.is_draft:
+            raise PublicIsUnmodifiable(
+                'The draft instance cannot be published. Use public.'
+            )
+
+        self.is_published = False
+        self.save()
 
     def delete(self, *args, **kwargs):
         """

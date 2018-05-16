@@ -21,6 +21,11 @@ urlpatterns = [
         name='article_publish'
     ),
     url(
+        r'^(?P<slug>[\w-]+)/unpublish/$',
+        views.ArticleUnpublishView.as_view(),
+        name='article_unpublish'
+    ),
+    url(
         _(r'^category/(?P<category>\w[-\w]*)/$'),
         views.CategoryArticleList.as_view(),
         name='article-list-by-category'

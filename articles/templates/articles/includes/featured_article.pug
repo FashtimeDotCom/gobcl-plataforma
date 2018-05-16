@@ -19,10 +19,10 @@
     time.article-hero_date.a11y-tts
       {{ article.publishing_date|date }}
     h2.article-hero_main-title
-      a.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace=namespace default='' %}")
+      a.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace='articles' default='' %}")
         {% render_model article "title" %}
 
     p.a11y-tts
       {{ article.lead_in|striptags }}
-    a.text-red.a11y-tts(href="{% namespace_url 'article-detail' article.slug namespace=namespace default='' %}")
+    a.text-red.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace='articles' default='' %}")
       {% trans 'See complete news' %}

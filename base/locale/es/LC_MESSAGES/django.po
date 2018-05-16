@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"POT-Creation-Date: 2018-05-16 08:17-0400\n"
 "PO-Revision-Date: 2018-01-25 08:35-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -54,23 +54,23 @@ msgstr "Abajo centro"
 msgid "Bottom right"
 msgstr "Abajo derecha"
 
-#: models.py:42
+#: models.py:45
 msgid "No"
 msgstr "No"
 
-#: models.py:42
+#: models.py:45
 msgid "Yes"
 msgstr "Si"
 
-#: models.py:46
+#: models.py:49
 msgid "creation date"
 msgstr "Fecha de creación"
 
-#: models.py:50
+#: models.py:53
 msgid "edition date"
 msgstr "Fecha de edición"
 
-#: models.py:135
+#: models.py:198
 msgid "government structure"
 msgstr "Estructura de gobierno"
 
@@ -142,16 +142,16 @@ msgstr "Estudios"
 msgid "Learn Chile"
 msgstr "Learn Chile"
 
-#: templates/aldryn_newsblog/article_detail.pug:21
+#: templates/aldryn_newsblog/article_detail.pug:24
 msgid "Share this news through your social networks"
 msgstr "Comparte esta noticia a través de tus redes sociales"
 
-#: templates/aldryn_newsblog/article_detail.pug:47
+#: templates/aldryn_newsblog/article_detail.pug:50
 msgid "Related news"
 msgstr "Noticias relacionadas"
 
 #: templates/aldryn_newsblog/article_list.pug:12
-#: templates/includes/search.pug:24 templates/index.pug:94
+#: templates/includes/search.pug:24 templates/index.pug:102
 msgid "News"
 msgstr "Noticias"
 
@@ -177,13 +177,21 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Siguiente"
 
-#: templates/base.pug:19 templates/empty.pug:19
+#: templates/base.pug:43 templates/empty.pug:19
 msgid "government of Chile"
 msgstr "gobierno de Chile"
 
 #: templates/djangocms_video/default/video_player.html:22
 msgid "Your browser doesn't support this video format."
 msgstr "Tu navegador no soporta este formato de video"
+
+#: templates/exceptions/400.pug:7
+msgid "Bad request"
+msgstr "Solicitud incorrecta"
+
+#: templates/exceptions/403.pug:7
+msgid "Forbidden"
+msgstr "Prohibido"
 
 #: templates/exceptions/404.pug:7
 msgid "Page not found"
@@ -231,7 +239,7 @@ msgid "or use a search bar below"
 msgstr "o buscar nuevamente acá abajo"
 
 #: templates/includes/exception_content.pug:21
-#: templates/includes/search_bar.pug:13 templates/index.pug:27
+#: templates/includes/search_bar.pug:13 templates/index.pug:35
 msgid "Write here what you want to search"
 msgstr "Escribe aquí lo que deseas buscar"
 
@@ -243,36 +251,32 @@ msgstr "te sugerimos:"
 msgid "go home"
 msgstr "ir al inicio"
 
-#: templates/includes/exception_content.pug:35
-msgid "check help"
-msgstr "Revisar el centro de ayuda "
-
-#: templates/includes/exception_content.pug:37
-msgid "feedback"
-msgstr "contactarnos"
-
 #: templates/includes/field.pug:19
 msgid "optional"
 msgstr "opcional"
 
-#: templates/includes/footer.pug:18
+#: templates/includes/footer.pug:24
 msgid "Visits to the La Moneda palace"
 msgstr "Visitas a La Moneda"
 
-#: templates/includes/menu_language.pug:6
+#: templates/includes/loading-indicator.pug:7
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: templates/includes/menu_language.pug:6 templates/includes/navbar.pug:53
 msgid "Change to language:"
 msgstr "Escoge un idioma:"
 
-#: templates/includes/navbar.pug:38 templates/index.pug:68
+#: templates/includes/navbar.pug:38 templates/index.pug:76
 msgid "Procedures and benefits"
 msgstr "Trámites y beneficios"
 
-#: templates/includes/navbar.pug:41 templates/includes/search.pug:36
-#: templates/index.pug:111
+#: templates/includes/navbar.pug:41 templates/includes/search.pug:39
+#: templates/index.pug:119
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/includes/navbar.pug:77
+#: templates/includes/navbar.pug:76
 msgid "Log in"
 msgstr "Ingresar"
 
@@ -284,13 +288,13 @@ msgstr "Volver"
 msgid "Procedures"
 msgstr "Trámites"
 
-#: templates/includes/search.pug:21 templates/includes/search.pug:33
-#: templates/includes/search.pug:41 templates/index.pug:75
-#: templates/index.pug:88 templates/index.pug:103 templates/index.pug:185
+#: templates/includes/search.pug:21 templates/includes/search.pug:36
+#: templates/includes/search.pug:44 templates/index.pug:83
+#: templates/index.pug:96 templates/index.pug:111 templates/index.pug:199
 msgid "See more"
 msgstr "Ver más"
 
-#: templates/includes/search.pug:44
+#: templates/includes/search.pug:47
 msgid "See all results"
 msgstr "Ver todos los resultados"
 
@@ -306,11 +310,11 @@ msgstr "Síguenos a través de redes sociales:"
 msgid "Listen"
 msgstr "Escuchar"
 
-#: templates/index.pug:20
+#: templates/index.pug:28
 msgid "You are on Gob.cl"
 msgstr "Estás en Gob.cl"
 
-#: templates/index.pug:23
+#: templates/index.pug:31
 msgid ""
 "Your portal to access information of the Government of Chile in a simple and "
 "fast way."
@@ -318,15 +322,15 @@ msgstr ""
 "Tu portal para acceder de manera simple y rápida a información del Gobierno "
 "de Chile."
 
-#: templates/index.pug:38
+#: templates/index.pug:46
 msgid "Most searched"
 msgstr "Lo más buscado"
 
-#: templates/index.pug:49 templates/index.pug:164 templates/index.pug:176
+#: templates/index.pug:57 templates/index.pug:178 templates/index.pug:190
 msgid "About Chile"
 msgstr "Acerca de Chile"
 
-#: templates/index.pug:72
+#: templates/index.pug:80
 msgid ""
 "Find out about the main benefits of the State, in addition to the procedures "
 "that are carried out in ChileAtiende."
@@ -334,31 +338,35 @@ msgstr ""
 "Infórmate sobre los principales beneficios del Estado, además de los "
 "trámites que se realizan en ChileAtiende."
 
-#: templates/index.pug:115
+#: templates/index.pug:123
 msgid "Know the main government entities and their authorities."
 msgstr "Conoce las principales entidades de Gobierno y sus autoridades."
 
-#: templates/index.pug:124
+#: templates/index.pug:132
 msgid "Presidency of the Republic"
 msgstr "Presidencia de la República"
 
-#: templates/index.pug:132
+#: templates/index.pug:138
+msgid "First Lady"
+msgstr "Primera Dama"
+
+#: templates/index.pug:146
 msgid "Ministries"
 msgstr "Ministerios"
 
-#: templates/index.pug:140
+#: templates/index.pug:154
 msgid "Public Services"
 msgstr "Servicios Públicos"
 
-#: templates/index.pug:148
+#: templates/index.pug:162
 msgid "Regions and their Municipalities"
 msgstr "Regiones y sus Municipios"
 
-#: templates/index.pug:155
+#: templates/index.pug:169
 msgid "Campaigns"
 msgstr "Campañas"
 
-#: templates/index.pug:170 templates/index.pug:180
+#: templates/index.pug:184 templates/index.pug:194
 msgid ""
 "Information for tourists, migrants and those who want to study or do "
 "business in Chile."
@@ -366,25 +374,31 @@ msgstr ""
 "Información para turistas, migrantes y quienes quieran estudiar o hacer "
 "negocios en Chile."
 
-#: views.py:148
+#: views.py:135
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "No se encontraron %(verbose_name)s para la consulta"
 
-#: views.py:169 views.py:222
+#: views.py:156 views.py:209
 #, python-format
 msgid "Create %s"
 msgstr "Creado %s"
 
-#: views.py:307
+#: views.py:294
 #, python-format
 msgid "Update %s"
 msgstr "Actualizado %s"
 
-#: views.py:322
+#: views.py:309
 #, python-format
 msgid "Delete %s"
 msgstr "Borrado %s"
+
+#~ msgid "check help"
+#~ msgstr "Revisar el centro de ayuda "
+
+#~ msgid "feedback"
+#~ msgstr "contactarnos"
 
 #~ msgid "Our country"
 #~ msgstr "Nuestro País"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"POT-Creation-Date: 2018-05-16 08:17-0400\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,55 +18,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps.py:7 models.py:90
+#: apps.py:7 models.py:105
 msgid "presidencies"
 msgstr "Presidencias"
 
-#: models.py:25 models.py:57
+#: models.py:32 models.py:72
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:30 models.py:66
+#: models.py:37 models.py:81
 msgid "description"
 msgstr "Descripción"
 
-#: models.py:34 models.py:78
+#: models.py:41 models.py:93
 msgid "url"
 msgstr "url"
 
-#: models.py:44
+#: models.py:45
+msgid "order"
+msgstr "orden"
+
+#: models.py:59
 msgid "presidency url"
 msgstr "url presidencia"
 
-#: models.py:45
+#: models.py:60
 msgid "presidency urls"
 msgstr "urls presidencia"
 
-#: models.py:47
+#: models.py:62
 msgid "Can view presidency urls"
 msgstr "Puede ver url presidencia"
 
-#: models.py:54
+#: models.py:69
 msgid "government structure"
 msgstr "Estructura de gobierno"
 
-#: models.py:62
+#: models.py:77
 msgid "title"
 msgstr "Título"
 
-#: models.py:70
+#: models.py:85
 msgid "photo"
 msgstr "Foto"
 
-#: models.py:83
+#: models.py:98
 msgid "urls"
 msgstr "urls"
 
-#: models.py:89
+#: models.py:104
 msgid "presidency"
 msgstr "Presidencia"
 
-#: models.py:92
+#: models.py:107
 msgid "Can view presidency"
 msgstr "Puede ver presidencia"
 
@@ -83,15 +87,22 @@ msgstr "Confirmar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/presidencies/presidency_detail.pug:10
+#: templates/presidencies/presidency_detail.pug:17
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
-#: templates/presidencies/presidency_detail.pug:11
+#: templates/presidencies/presidency_detail.pug:18
 msgid "Institutions"
 msgstr "Instituciones"
 
-#: templates/presidencies/presidency_detail.pug:32
-#: templates/presidencies/presidency_detail.pug:36
+#: templates/presidencies/presidency_detail.pug:42
 msgid "Go to the Presidency Press site"
 msgstr "Ir al sitio de Prensa Presidencia"
+
+#: templates/presidencies/presidency_detail.pug:50
+msgid "edit presidency"
+msgstr "editar presidencia"
+
+#: templates/presidencies/presidency_detail.pug:54
+msgid "Go to the presidency site"
+msgstr "Ir al sitio de Presidencia"

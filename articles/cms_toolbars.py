@@ -3,10 +3,12 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.utils.translation import activate
 from django.utils.translation import ugettext as _, override
 
 from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
+from cms.utils import get_language_from_request
 
 from .models import Article
 
@@ -44,12 +46,24 @@ class ArticleToolbar(CMSToolbar):
         if not public or public.updated_at < article.updated_at:
             classes.append('cms-btn-action')
 
-        publish_url = reverse('articles:article_publish', args=(article.slug,),)
-
         if self.toolbar.edit_mode:
-            button = publisher.add_button(
+            publish_url = reverse(
+                'articles:article_publish', args=(article.slug,),
+            )
+            publisher.add_button(
                 _('Publish'),
                 url=publish_url,
+                active=False,
+                disabled=False,
+                extra_classes=classes,
+            )
+        elif article.is_published:
+            unpublish_url = reverse(
+                'articles:article_unpublish', args=(article.slug,),
+            )
+            publisher.add_button(
+                _('Unpublish'),
+                url=unpublish_url,
                 active=False,
                 disabled=False,
                 extra_classes=classes,
@@ -65,18 +79,25 @@ class ArticleToolbar(CMSToolbar):
         if user and view_name:
             # If we're on an Article detail page, then get the article
             if view_name.endswith('article_detail'):
+
                 kwargs = self.request.resolver_match.kwargs
-                article = Article.objects.translated(
+
+                language = get_language_from_request(self.request)
+                activate(language)
+                article = Article.objects.all().translated(
                     slug=kwargs['slug']
                 )
 
-                if self.toolbar.edit_mode:
-                    article = article.get(is_draft=True)
-                else:
-                    if article.filter(is_draft=False).exists():
-                        article = article.get(is_draft=False)
-                    else:
+                try:
+                    if self.toolbar.edit_mode:
                         article = article.get(is_draft=True)
+                    else:
+                        if article.filter(is_draft=False).exists():
+                            article = article.get(is_draft=False)
+                        else:
+                            article = article.get(is_draft=True)
+                except Article.DoesNotExist:
+                    article = None
 
             else:
                 article = None
