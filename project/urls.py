@@ -31,6 +31,7 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
+    url(_(r'^news/'), include('articles.urls'), name='articles'),
     url(_(r'^news/'), include('gobcl_cms.news_urls')),
     url(r'^api/1.0/', include('api.urls')),
     url(r'^admin/', include('loginas.urls')),
@@ -45,7 +46,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
     url(_(r'^articles/'), include('gobcl_cms.urls')),
-    url(_(r'^'), include('cms.urls')),
+    url(r'^', include('cms.urls')),
     prefix_default_language=False,
 )
 

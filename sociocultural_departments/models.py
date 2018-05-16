@@ -17,8 +17,14 @@ from base.models import BaseModel
 from base.models import file_path
 from base.models import lastest_government_structure
 
-from .managers import SocioculturalDepartmentQueryset
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+from .managers import SocioculturalDepartmentManager
 from .managers import SocioculturalDepartmentURLQueryset
+
+# utils
+from base.utils import remove_tags
 
 
 class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
@@ -48,11 +54,11 @@ class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
 
     class Meta:
         ordering = ('order',)
-        verbose_name = _('sociocultural department url')
-        verbose_name_plural = _('sociocultural department urls')
+        verbose_name = _('Socio Cultural Department url')
+        verbose_name_plural = _('Socio Cultural Department urls')
         permissions = (
             ('view_socioculturaldepartment_url', _(
-                'Can view sociocultural department url')),
+                'Can view Socio Cultural Department url')),
         )
 
     def get_absolute_url(self):
@@ -95,18 +101,37 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
         verbose_name=_('urls'),
     )
 
-    objects = SocioculturalDepartmentQueryset.as_manager()
+    objects = SocioculturalDepartmentManager()
 
     class Meta:
-        verbose_name = _('sociocultural department')
-        verbose_name_plural = _('sociocultural departments')
+        verbose_name = _('Socio Cultural Department')
+        verbose_name_plural = _('Socio Cultural Departments')
         permissions = (
             ('view_socioculturaldepartment', _(
-                'Can view sociocultural department')),
+                'Can view Socio Cultural Department')),
         )
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        return_value = super().save(*args, **kwargs)
+
+        self.reindex_in_elasticsearch()
+
+        return return_value
+
     def get_absolute_url(self):
         return reverse('sociocultural_department_detail')
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            title=self.title,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.title,
+            boost=boost
+        )
+        doc.save(obj=self)

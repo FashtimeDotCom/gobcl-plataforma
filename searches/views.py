@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.views.generic import ListView
 
+# models
 from aldryn_newsblog.models import Article
 from campaigns.models import Campaign
 from ministries.models import Ministry
@@ -21,6 +22,7 @@ from base.view_utils import clean_query_string
 
 # chile atiende
 from services.chile_atiende_client import File
+from .elasticsearch.elasticsearch_client import ElasticSearchClient
 
 
 class ArticleListView(ListView):
@@ -48,13 +50,13 @@ class ArticleListView(ListView):
         chile_atiende_file_client = File()
 
         # set the list as empty by default
-        chileatiende_files = []
+        chile_atiende_files = []
         if self.request.GET.get('q'):
             if settings.CHILEATIENDE_ACCESS_TOKEN:
                 chile_atiende_files = (
                     chile_atiende_file_client.parsed_list(query=self.query)
                 )
-        return chileatiende_files
+        return chile_atiende_files
 
     def get_ministries(self, **kwargs):
         if self.query:
@@ -282,3 +284,92 @@ class ArticleListView(ListView):
         self.count = len(queryset)
 
         return queryset
+
+
+class SearchTemplateView(ListView):
+    template_name = 'search/search.pug'
+    paginate_by = 25
+    page_kwarg = 'p'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.query = request.GET.get('q', '')
+        self.replace_query = request.GET.get('replace') != 'keep'
+        self.category_slug = request.GET.get('category_slug', '')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['clean_query_string'] = clean_query_string(self.request)
+        context['query'] = self.query
+        context['count'] = self.count
+        context['suggest_text'] = self.suggest_text
+        context['replace_query'] = self.replace_query
+
+        return context
+
+    def get_suggest_text(self, response):
+        self.suggest_text = None
+        try:
+            suggest_options = response.suggest['suggestion'][0]['options'][0]
+            if suggest_options is not None:
+                self.suggest_text = {
+                    'text': suggest_options['text'],
+                    'highlighted': suggest_options['highlighted']
+                }
+
+        except (AttributeError, IndexError, KeyError):
+            pass
+
+    def get_chileatiende_files(self, **kwags):
+        chile_atiende_file_client = File()
+
+        # set the list as empty by default
+        chile_atiende_files = []
+        if settings.CHILEATIENDE_ACCESS_TOKEN:
+            chile_atiende_files = (
+                chile_atiende_file_client.parsed_list(query=self.query)
+            )
+        chile_atiende_files = chile_atiende_files[:3]
+        return_results = []
+        for result in chile_atiende_files:
+            return_results.append({
+                '_source': {
+                    'title': result['titulo'],
+                    'url': [result['permalink']],
+                    'description': result['servicio']
+                }
+            })
+
+        return return_results
+
+    def get_search_response(self, query):
+        elastic_search_client = ElasticSearchClient(
+            query,
+            self.request.LANGUAGE_CODE
+        )
+        response = elastic_search_client.execute()
+        self.count = len(response)
+
+        return response
+
+    def get_queryset(self):
+        # search in database
+        response = self.get_search_response(self.query)
+        self.get_suggest_text(response)
+
+        if self.replace_query:
+            #if self.count < settings.MIN_LENGTH_REPLACE_SEARCH and self.suggest_text is not None:
+            if self.suggest_text is not None:
+                response = self.get_search_response(self.suggest_text['text'])
+            #else:
+                #self.suggest_text = None
+
+        chile_atiende_results = self.get_chileatiende_files()
+        self.count += len(chile_atiende_results)
+
+        response_hits = []
+        if len(response) > 0:
+            response_hits = response.hits.hits
+
+        return chile_atiende_results + response_hits

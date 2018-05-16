@@ -13,6 +13,9 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
 # base
 from base import utils
 from base.managers import BaseManager, BaseGovernmentQuerySet
@@ -127,6 +130,57 @@ class BaseModel(models.Model):
         absolute_url = self.get_absolute_url()
         site = Site.objects.get_current().domain
         return 'https://{site}{path}'.format(site=site, path=absolute_url)
+
+    def get_elasticsearch_id(self, language_code=None):
+        if language_code is None:
+            language_code = 'ALL'
+            if hasattr(self, 'language_code'):
+                language_code = self.language_code
+        return (
+            str(type(self).__name__) + '-' +
+            str(self.id) + '-' +
+            language_code
+        )
+
+    def get_elasticsearch_doc(self, language_code=None):
+        """
+        Returns the elasticsearch index corresponding to that document, returns
+        None if it doesn't exist
+        """
+        return SearchIndex.get(
+            id=self.get_elasticsearch_id(language_code=language_code),
+            ignore=404
+        )
+
+    def deindex_in_elasticsearch(self):
+        """
+        Deletes the elasticsearch document related to this object if it exists
+        """
+        languages = ('es', 'en', 'ALL')
+        for language in languages:
+            doc = self.get_elasticsearch_doc(language_code=language)
+
+            if doc is not None:
+                doc.delete()
+
+    def reindex_in_elasticsearch(self):
+        """
+        Deletes index document and index it again, it document doesn't exists,
+        it's the same as index_in_elasticsearch
+        """
+        # TODO: fix boosts
+        self.deindex_in_elasticsearch()
+        self.index_in_elasticsearch(1)
+
+    # TODO: Abstract index_in_elasticsearch method???
+
+    def delete(self, *args, **kwargs):
+        """
+        Override this method to delete the corresponding elasticsearch document
+        when deleting the object
+        """
+        self.deindex_in_elasticsearch()
+        super(BaseModel, self).delete(*args, **kwargs)
 
 
 def lastest_government_structure():

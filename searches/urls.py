@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     url(
         r'^$',
-        views.ArticleListView.as_view(),
+        views.SearchTemplateView.as_view(),
         name='search'
     ),
 ]

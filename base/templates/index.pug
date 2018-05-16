@@ -48,7 +48,7 @@ block content
             for category in categories
               li
                 a.link.link--clean.text-white.a11y-tts(
-                  href="{% namespace_url 'article-list-by-category' category.slug namespace='aldryn_newsblog_default' default=''%}"
+                  href="{% namespace_url 'article-list-by-category' category.slug namespace='articles' default=''%}"
                 )
                   {{ category }}
         .col-md-3.col-xl-2.text-right
@@ -102,11 +102,11 @@ block content
             {% trans 'News' %}
             {% endstatic_placeholder %}
 
-          {% include 'aldryn_newsblog/includes/article_miniature_list.pug' with articles=articles %}
+          {% include 'articles/includes/article_miniature_list.pug' with articles=articles %}
 
           .col-12.col-lg-4.offset-lg-4
             a.button.button--block.button--light.button--clean.button--space.a11y-tts.rs_preserve(
-              href="{% namespace_url 'article-list' namespace='aldryn_newsblog_default' default=''%}"
+              href="{% namespace_url 'article_list' namespace='articles' default=''%}"
             )
               {% trans 'See more' %}
 
@@ -134,7 +134,7 @@ block content
                 .col-md-6.col-lg
                   a(href="{% url 'sociocultural_department_detail' %}").card-data.py-5.py-sm-auto.a11y-tts
                     h2.card-data_title: span
-                        {% static_placeholder 'First lady' or %}
+                        {% static_placeholder 'First Lady' or %}
                         {% trans 'First lady' %}
                         {% endstatic_placeholder %}
                 .col-md-6.col-lg

@@ -1,0 +1,28 @@
+- load i18n staticfiles thumbnail cms_tags apphooks_config_tags
+
+.row
+  .col-sm-12.col-md-12.col-lg-6.col-xl-5
+    p
+      // The image is only shown on the detail view by using the condition "and detail_view"
+      a(href="{% namespace_url 'article_detail' article.slug namespace=namespace default='' %}")
+        if article.featured_image_id
+          img.article-hero_img.img-fluid.w-100(
+            src="{% thumbnail article.featured_image 800x450 crop subject_location=article.featured_image.subject_location %}",
+            alt="{{ article.featured_image.alt }}"
+          )
+        else
+          img.article-hero_img.img-fluid.w-100(
+            src="https://e-gob.github.io/gob.cl/sitio/images/temp/new-hero.jpg", 
+            alt="{{ article.featured_image.alt }}"
+          )
+  .col-sm-12.col-md-12.col-lg-6.col-xl-6
+    time.article-hero_date.a11y-tts
+      {{ article.publishing_date|date }}
+    h2.article-hero_main-title
+      a.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace='articles' default='' %}")
+        {% render_model article "title" %}
+
+    p.a11y-tts
+      {{ article.lead_in|striptags }}
+    a.text-red.a11y-tts(href="{% namespace_url 'article_detail' article.slug namespace='articles' default='' %}")
+      {% trans 'See complete news' %}

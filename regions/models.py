@@ -12,11 +12,17 @@ from phonenumber_field.modelfields import PhoneNumberField
 # models
 from base.models import BaseModel
 from institutions.models import Institution
-
 from institutions.models import institution_translations
+
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
 
 # managers
 from .managers import CommuneQuerySet
+from .managers import RegionManager
+
+# utils
+from base.utils import remove_tags
 
 
 class Region(Institution):
@@ -52,6 +58,8 @@ class Region(Institution):
         default=0,
     )
 
+    objects = RegionManager()
+
     class Meta:
         ordering = ('order',)
         verbose_name = _('region')
@@ -63,10 +71,28 @@ class Region(Institution):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        return_value = super(Region, self).save(*args, **kwargs)
+
+        self.reindex_in_elasticsearch()
+
+        return return_value
+
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
 
         return reverse('region_detail', args=(self.slug,))
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            name=self.name,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.governor.name,
+            boost=boost
+        )
+        doc.save(obj=self)
 
 
 class Commune(BaseModel):

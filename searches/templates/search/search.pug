@@ -1,6 +1,6 @@
 extends base.pug
 
-- load i18n cms_tags staticfiles
+- load i18n cms_tags staticfiles search_utils
 
 block javascripts
   script(src="{% static 'js/search.js' %}")
@@ -14,45 +14,55 @@ block content
   section.section
     .container
       h3.heading-medium.search-results-counts.a11y-tts {{ count }} {% trans 'Results' %}
+      if not replace_query
+        h5 {% trans 'Did you mean:' %}&nbsp;
+          a(href="{% url 'search' %}?q={{ suggest_text.text }}")
+            {{ suggest_text.highlighted|title|safe }}
+      elif suggest_text
+        h5 {% trans 'Showing results for' %}&nbsp;
+          a(href="{% url 'search' %}?q={{ suggest_text.text }}")
+            {{ suggest_text.highlighted|title|safe }}
+        h6 {% trans 'Search instead for' %}&nbsp;
+          a(href="{% url 'search' %}?q={{ query }}&replace=keep")
+            {{ query|title }}
+        
       .results
         .row.row-results
           .col-12.col-md-10.col-lg-7
             for object in object_list
               .result.a11y-tts
-                if object.name
+                {% with obj_source=object|get_from_key:'_source' %}
+                if obj_source.name
                   hashtag = '#'
-                  a.result_link(href="{{ object.get_absolute_url }}{{ hashtag }}{{ object.name|slugify }}")
-                    {{ object.name }}
-                else
-                  a.result_link(href="{{ object.get_absolute_url }}")
-                    if object.title
-                      {{ object.title }}
-                    elif object.titulo
-                      {{ object.titulo }}
+                  a.result_link(href="{{ obj_source.url.0 }}{{ hashtag }}{{ obj_source.name|slugify }}")
+                    if object.highlight.name
+                      {{ object.highlight.name.0|safe }}
+                    else
+                      {{ obj_source.name }}
+                elif obj_source.title
+                  a.result_link(href="{{ obj_source.url.0 }}")
+                    if object.highlight.title
+                      {{ object.highlight.title.0|safe }}
+                    else
+                      {{ obj_source.title }}
                 p.result_excerpt
-                  if object.description
-                    {{ object.description|striptags|truncatechars:100 }}
-                  elif object.lead_in
-                    {{ object.lead_in|striptags|truncatechars:100 }}
-                  elif object.objetivo
-                    {{ object.objetivo|striptags|truncatechars:100 }}
+                  if obj_source.description
+                    if object.highlight.description
+                      {{ object.highlight.description.0|safe|truncatechars:200 }}
+                    else
+                      {{ obj_source.description|safe|truncatechars:200 }}
+                  elif obj_source.lead_in
+                    if object.highlight.lead_in
+                      {{ object.highlight.lead_in.0|safe|truncatechars:200 }}
+                    else
+                      {{ object_source.lead_in|safe|truncatechars:200 }}
                 span.result_date
-                  if object.publishing_date
-                    {{ object.publishing_date|date }}
-                  elif object.charge
-                    {{ object.charge }}
-                  elif object.title
-                    {{ object.title }}
-                  elif object.minister
-                    {% trans 'minister'|capfirst %}: {{ object.minister }}
-                  elif object.governor
-                    {% trans 'region manager'|capfirst %}: {{ object.governor }}
-                  elif object.external_url
-                    {{ object.external_url }}
-                  elif object.url
-                    {{ object.url }}
-                  elif object.fecha
-                    {{ object.fecha|slice:":10" }}  
+                  if object.highlight.detail
+                    {{ object.highlight.detail.0|safe }}
+                  else
+                    {{ obj_source.detail }}
+                {% endwith %}
+
       {% include 'includes/pagination.pug' %}
   section
     .container

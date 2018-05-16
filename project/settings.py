@@ -147,6 +147,7 @@ INSTALLED_APPS = [
     'contingencies',
     'streams',
     'sociocultural_departments',
+    'articles',
 
     # django cms
     'cms',
@@ -403,7 +404,9 @@ NPM_FILE_PATTERNS = {
         'moment.js',
         'locale/es.js',
         'min/moment-with-locales.min.js',
-    ]
+    ],
+    'nprogress': ['nprogress.js'],
+    'lodash': ['lodash.js']
 }
 
 # default keys, replace with somethign your own
@@ -564,6 +567,11 @@ PARLER_LANGUAGES = {
     }
 }
 
+ELASTICSEARCH_DSL = {
+    'HOST': get_local_value('ELASTICSEARCH_DSL_HOST', '127.0.0.1'),
+    'PORT': get_local_value('ELASTICSEARCH_DSL_PORT', '9200'),
+}
+
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
 
 CRON_CLASSES = (
@@ -595,3 +603,11 @@ GOBCL_EMAIL_ACCESS_URL = get_local_value('GOBCL_EMAIL_ACCESS_URL', '')
 GOBCL_EMAIL_CLIENT_ID = get_local_value('GOBCL_EMAIL_CLIENT_ID', '')
 GOBCL_EMAIL_CLIENT_SECRET = get_local_value('GOBCL_EMAIL_CLIENT_SECRET', '')
 GOBCL_EMAIL_TOKEN_APP = get_local_value('GOBCL_EMAIL_TOKEN_APP', '')
+
+# searching
+
+MIN_LENGTH_REPLACE_SEARCH = 5
+
+CKEDITOR_SETTINGS = {
+    'removeButtons': 'cmsplugins'
+}

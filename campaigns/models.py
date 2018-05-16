@@ -20,7 +20,14 @@ from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from cms.utils.i18n import get_current_language
 
+# elasticsearch
+from searches.elasticsearch.documents import SearchIndex
+
+# managers
 from .managers import CampaignManager
+
+# utils
+from base.utils import remove_tags
 
 
 def default_end_datetime():
@@ -151,9 +158,27 @@ class Campaign(BaseModel, TranslatableModel):
         language = get_current_language()
         activate(language=language)
         self.slug = slugify(self.title)
-        return super(Campaign, self).save(*args, **kwargs)
+
+        return_value = super(Campaign, self).save(*args, **kwargs)
+
+        self.deindex_in_elasticsearch()
+        if self.is_active():
+            self.index_in_elasticsearch(1)
+
+        return return_value
 
     def is_active(self):
         now = timezone.now()
         return (self.activation_datetime <= now and
                 self.deactivation_datetime >= now)
+
+    def index_in_elasticsearch(self, boost):
+        doc = SearchIndex(
+            title=self.title,
+            description=remove_tags(self.description),
+            language_code=self.language_code,
+            url=self.get_absolute_url(),
+            detail=self.title,
+            boost=boost
+        )
+        doc.save(obj=self)
