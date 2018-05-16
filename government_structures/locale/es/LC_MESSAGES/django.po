@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-29 10:41-0300\n"
+"POT-Creation-Date: 2018-05-16 08:17-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,23 +42,27 @@ msgstr "copiar estructura"
 msgid "copy without servants"
 msgstr "copiar sin servidores"
 
-#: apps.py:7 models.py:26
+#: apps.py:7 models.py:35
 msgid "government structures"
 msgstr "estructuras de gobierno"
 
-#: models.py:16
+#: models.py:19
 msgid "publication date"
 msgstr "fecha de publicación"
 
-#: models.py:20
+#: models.py:23
 msgid "current government"
 msgstr "gobierno actual"
 
-#: models.py:25
+#: models.py:27
+msgid "archive news"
+msgstr "archivar noticias"
+
+#: models.py:34
 msgid "government structure"
 msgstr "estructura de gobierno"
 
-#: models.py:28
+#: models.py:37
 msgid "Can view government structures"
 msgstr "Puede ver las estructuras de gobierno"
 

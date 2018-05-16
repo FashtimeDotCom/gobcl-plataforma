@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-11 13:29-0300\n"
+"POT-Creation-Date: 2018-05-16 08:17-0400\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,64 +18,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps.py:7 models.py:58
+#: apps.py:7 models.py:66
 msgid "regions"
 msgstr "Regiones"
 
-#: models.py:28
+#: models.py:34
 msgid "region manager"
 msgstr "intendente"
 
-#: models.py:35 models.py:87
+#: models.py:41 models.py:113
 msgid "email"
 msgstr "Correo"
 
-#: models.py:41 models.py:91
+#: models.py:47 models.py:117
 msgid "phone"
 msgstr "Teléfono"
 
-#: models.py:51
+#: models.py:57
 msgid "order"
 msgstr "orden"
 
-#: models.py:57 models.py:76
+#: models.py:65 models.py:102
 msgid "region"
 msgstr "Región"
 
-#: models.py:60
+#: models.py:68
 msgid "Can view regions"
 msgstr "Puedo ver regiones"
 
-#: models.py:80 templates/communes/commune_list.pug:19
+#: models.py:106 templates/communes/commune_list.pug:19
 #: templates/regions/region_list.pug:17
 msgid "name"
 msgstr "Nombre"
 
-#: models.py:84
+#: models.py:110
 msgid "description"
 msgstr "Descripción"
 
-#: models.py:98
+#: models.py:124
 msgid "url"
 msgstr "url"
 
-#: models.py:105
+#: models.py:131
 msgid "latitude"
 msgstr "latitud"
 
-#: models.py:110
+#: models.py:136
 msgid "longitude"
 msgstr "longitud"
 
-#: models.py:121
+#: models.py:147
 msgid "commune"
 msgstr "Comuna"
 
-#: models.py:122
+#: models.py:148
 msgid "communes"
 msgstr "Comunas"
 
-#: models.py:124
+#: models.py:150
 msgid "Can view communes"
 msgstr "Puedo ver comunas"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plataforma-gobcl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 17:37-0300\n"
+"POT-Creation-Date: 2018-05-16 08:17-0400\n"
 "PO-Revision-Date: 2017-10-27 19:22-0300\n"
 "Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
@@ -18,39 +18,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps.py:7 models.py:60
+#: apps.py:7 models.py:74
 msgid "public servants"
 msgstr "funcionarios públicos"
 
-#: models.py:23 templates/public_servants/public_servant_list.pug:17
+#: models.py:33 templates/public_servants/public_servant_list.pug:17
 msgid "name"
 msgstr "nombre"
 
-#: models.py:28
+#: models.py:38
 msgid "charge"
 msgstr "cargo"
 
-#: models.py:33
+#: models.py:43
 msgid "description"
 msgstr "descripción"
 
-#: models.py:37
+#: models.py:48
 msgid "photo"
 msgstr "foto"
 
-#: models.py:43
+#: models.py:55
 msgid "email"
 msgstr "email"
 
-#: models.py:48
+#: models.py:60
 msgid "phone"
 msgstr "teléfono"
 
-#: models.py:59
+#: models.py:73
 msgid "public servant"
 msgstr "funcionario público"
 
-#: models.py:63
+#: models.py:77
 msgid "Can view public servants"
 msgstr "Puede ver funcionarios públicos"
 

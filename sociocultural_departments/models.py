@@ -54,11 +54,11 @@ class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
 
     class Meta:
         ordering = ('order',)
-        verbose_name = _('sociocultural department url')
-        verbose_name_plural = _('sociocultural department urls')
+        verbose_name = _('Socio Cultural Department url')
+        verbose_name_plural = _('Socio Cultural Department urls')
         permissions = (
             ('view_socioculturaldepartment_url', _(
-                'Can view sociocultural department url')),
+                'Can view Socio Cultural Department url')),
         )
 
     def get_absolute_url(self):
@@ -104,18 +104,18 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
     objects = SocioculturalDepartmentManager()
 
     class Meta:
-        verbose_name = _('sociocultural department')
-        verbose_name_plural = _('sociocultural departments')
+        verbose_name = _('Socio Cultural Department')
+        verbose_name_plural = _('Socio Cultural Departments')
         permissions = (
             ('view_socioculturaldepartment', _(
-                'Can view sociocultural department')),
+                'Can view Socio Cultural Department')),
         )
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        return_value = super(SocioculturalDepartment, self).save(*args, **kwargs)
+        return_value = super().save(*args, **kwargs)
 
         self.reindex_in_elasticsearch()
 

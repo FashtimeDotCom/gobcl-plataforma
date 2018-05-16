@@ -46,7 +46,7 @@ urlpatterns += i18n_patterns(
     url(_(r'^search/'), include('searches.urls')),
     url(_(r'^procedures/'), include('services.urls')),
     url(_(r'^articles/'), include('gobcl_cms.urls')),
-    url(_(r'^'), include('cms.urls')),
+    url(r'^', include('cms.urls')),
     prefix_default_language=False,
 )
 
