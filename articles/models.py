@@ -396,8 +396,8 @@ class Article(TranslationHelperMixin,
         kwargs = super(Article, self).get_elasticsearch_kwargs()
 
         if hasattr(self, 'lead_in'):
-            kwargs['description'] = self.lead_in
-            kwargs['lead_in'] = self.lead_in
+            kwargs['description'] = remove_tags(self.lead_in)
+            kwargs['lead_in'] = remove_tags(self.lead_in)
         kwargs['url'] = self.get_index_url()
         kwargs['detail'] = date_format(self.publishing_date)
         if self.tags:
