@@ -3,7 +3,6 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -18,14 +17,8 @@ from djangocms_text_ckeditor.fields import HTMLField
 from base.models import BaseGovernmentStructureModel
 from base.models import file_path
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # managers
 from .managers import PublicServantManager
-
-# utils
-from base.utils import remove_tags
 
 
 class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
@@ -63,6 +56,10 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
     twitter = models.CharField(
         max_length=50,
         blank=True,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=3.0,
     )
 
     objects = PublicServantManager()

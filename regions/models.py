@@ -14,15 +14,9 @@ from base.models import BaseModel
 from institutions.models import Institution
 from institutions.models import institution_translations
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # managers
 from .managers import CommuneQuerySet
 from .managers import RegionManager
-
-# utils
-from base.utils import remove_tags
 
 
 class Region(Institution):
@@ -56,6 +50,10 @@ class Region(Institution):
     order = models.PositiveIntegerField(
         _('order'),
         default=0,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=1.3,
     )
 
     objects = RegionManager()

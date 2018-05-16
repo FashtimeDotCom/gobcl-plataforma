@@ -26,14 +26,14 @@ class CampaignManager(TranslatableManager):
         for obj in queryset:
             obj.deindex_in_elasticsearch()
             if obj.is_active():
-                obj.index_in_elasticsearch(1)
+                obj.index_in_elasticsearch()
 
         return queryset
 
     def active(self):
         return self.get_queryset().active()
 
-    def bulk_index(self, boost=1):
+    def bulk_index(self):
         queryset = self.get_queryset().translated(
             title__isnull=False,
         )
@@ -42,4 +42,4 @@ class CampaignManager(TranslatableManager):
         for language in languages:
             queryset = queryset.language(language)
             for obj in queryset:
-                obj.index_in_elasticsearch(boost)
+                obj.index_in_elasticsearch()

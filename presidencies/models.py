@@ -16,14 +16,8 @@ from parler.models import TranslatedFields
 from base.models import BaseModel
 from base.models import file_path
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 from .managers import PresidencyManager
 from .managers import PresidencyURLQueryset
-
-# utils
-from base.utils import remove_tags
 
 
 class PresidencyURL(BaseModel, TranslatableModel):
@@ -96,6 +90,10 @@ class Presidency(BaseModel, TranslatableModel):
     urls = models.ManyToManyField(
         'PresidencyURL',
         verbose_name=_('urls'),
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=4.0,
     )
 
     objects = PresidencyManager()

@@ -32,7 +32,7 @@ class RegionManager(ManagerMixin, TranslatableManager):
             government_structure
         )
 
-    def bulk_index(self, boost=1, government_structure=None):
+    def bulk_index(self, government_structure=None):
         queryset = self.get_queryset().by_government_structure(
             government_structure
         )
@@ -41,4 +41,4 @@ class RegionManager(ManagerMixin, TranslatableManager):
         for language in languages:
             queryset = queryset.language(language)
             for obj in queryset:
-                obj.index_in_elasticsearch(boost)
+                obj.index_in_elasticsearch()

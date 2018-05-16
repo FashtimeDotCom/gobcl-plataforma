@@ -21,15 +21,9 @@ from base.models import BaseModel
 from institutions.models import Institution
 from institutions.models import institution_translations
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # managers
 from .managers import PublicServiceManager
 from .managers import MinistryManager
-
-# utils
-from base.utils import remove_tags
 
 
 class Ministry(Institution):
@@ -68,6 +62,10 @@ class Ministry(Institution):
     importance = models.PositiveIntegerField(
         _('importance'),
         default=0,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=2.0,
     )
 
     objects = MinistryManager()
@@ -170,6 +168,10 @@ class PublicService(TranslatableModel, BaseModel):
     importance = models.PositiveIntegerField(
         _('importance'),
         default=0,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=1.5,
     )
 
     objects = PublicServiceManager()

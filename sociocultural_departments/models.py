@@ -17,14 +17,8 @@ from base.models import BaseModel
 from base.models import file_path
 from base.models import lastest_government_structure
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 from .managers import SocioculturalDepartmentManager
 from .managers import SocioculturalDepartmentURLQueryset
-
-# utils
-from base.utils import remove_tags
 
 
 class SocioculturalDepartmentURL(BaseModel, TranslatableModel):
@@ -99,6 +93,10 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
     urls = models.ManyToManyField(
         SocioculturalDepartmentURL,
         verbose_name=_('urls'),
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=2.0,
     )
 
     objects = SocioculturalDepartmentManager()

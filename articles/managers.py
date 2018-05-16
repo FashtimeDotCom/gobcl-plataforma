@@ -130,7 +130,7 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             tag.num_articles = counted_tags[tag.pk]
         return sorted(tags, key=attrgetter('num_articles'), reverse=True)
 
-    def bulk_index(self, boost=1):
+    def bulk_index(self):
         languages = ('es', 'en')
         for language in languages:
             activate(language)
@@ -143,4 +143,4 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             )
             for article in articles:
                 # TODO: pass index class??
-                article.index_in_elasticsearch(boost)
+                article.index_in_elasticsearch()

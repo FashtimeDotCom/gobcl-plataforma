@@ -15,7 +15,7 @@ class SocioculturalDepartmentManager(ManagerMixin, TranslatableManager):
     def by_government_structure(self, government_structure):
         return self.get_queryset().by_government_structure(government_structure)
 
-    def bulk_index(self, boost=1, government_structure=None):
+    def bulk_index(self, government_structure=None):
         queryset = self.get_queryset().by_government_structure(
             government_structure
         )
@@ -24,7 +24,7 @@ class SocioculturalDepartmentManager(ManagerMixin, TranslatableManager):
         for language in languages:
             queryset = queryset.language(language)
             for obj in queryset:
-                obj.index_in_elasticsearch(boost)
+                obj.index_in_elasticsearch()
 
 
 class SocioculturalDepartmentURLQueryset(TranslatableQuerySet):

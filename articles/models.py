@@ -12,9 +12,6 @@ from django.utils.formats import date_format
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # models
 from base.models import BaseModel
 from cms.models.fields import PlaceholderField as OriginalPlaceholderField
@@ -189,6 +186,11 @@ class Article(TranslationHelperMixin,
         related_name='draft_article',
         null=True,
         editable=False
+    )
+
+    boost = models.FloatField(
+        _('boost'),
+        default=1.0,
     )
 
     objects = RelatedManager()

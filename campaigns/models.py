@@ -20,14 +20,8 @@ from parler.models import TranslatableModel
 from parler.models import TranslatedFields
 from cms.utils.i18n import get_current_language
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # managers
 from .managers import CampaignManager
-
-# utils
-from base.utils import remove_tags
 
 
 def default_end_datetime():
@@ -117,6 +111,10 @@ class Campaign(BaseModel, TranslatableModel):
         on_delete=models.SET_NULL,
         related_name='campaigns',
     )
+    boost = models.FloatField(
+        _('boost'),
+        default=1.0,
+    )
 
     objects = CampaignManager()
 
@@ -163,7 +161,7 @@ class Campaign(BaseModel, TranslatableModel):
 
         self.deindex_in_elasticsearch()
         if self.is_active():
-            self.index_in_elasticsearch(1)
+            self.index_in_elasticsearch()
 
         return return_value
 

@@ -3,15 +3,11 @@
 # standard library
 
 # django
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 # models
 from base.models import BaseGovernmentStructureModel
-
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
 
 from parler.models import TranslatableModel
 from parler.models import TranslatedFields
@@ -37,6 +33,10 @@ class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
         'ministries.Ministry',
         verbose_name=_('ministries'),
         blank=True,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=1.5,
     )
 
     objects = PublicEnterpriseManager()

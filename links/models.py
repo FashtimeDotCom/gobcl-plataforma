@@ -9,9 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 # models
 from base.models import BaseGovernmentStructureModel
 
-# elasticsearch
-from searches.elasticsearch.documents import SearchIndex
-
 # managers
 from .managers import FooterLinkManager
 
@@ -28,6 +25,10 @@ class FooterLink(BaseGovernmentStructureModel):
     order = models.PositiveSmallIntegerField(
         _('order'),
         default=0,
+    )
+    boost = models.FloatField(
+        _('boost'),
+        default=1.2,
     )
 
     objects = FooterLinkManager()

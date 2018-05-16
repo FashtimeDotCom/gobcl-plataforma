@@ -172,16 +172,22 @@ class BaseModel(models.Model):
         else:
             kwargs['language_code'] = 'ALL'
         kwargs['url'] = self.get_absolute_url()
-        # kwargs['boost'] = boost
+
+        # Every model that calls this method should have boost, but this can be
+        # called from every model, so it's validated for robustness
+        if hasattr(self, 'boost'):
+            kwargs['boost'] = self.boost
+        else:
+            kwargs['boost'] = 1
 
         return kwargs
 
-    def index_in_elasticsearch(self, boost=1):
+    def index_in_elasticsearch(self):
         """
         Indexes a document in elasticearch with the info of this object
         """
         kwargs = self.get_elasticsearch_kwargs()
-        doc = SearchIndex(boost=boost, **kwargs)
+        doc = SearchIndex(**kwargs)
         doc.save(obj=self)
 
     def deindex_in_elasticsearch(self):
@@ -202,7 +208,7 @@ class BaseModel(models.Model):
         """
         # TODO: fix boosts
         self.deindex_in_elasticsearch()
-        self.index_in_elasticsearch(1)
+        self.index_in_elasticsearch()
 
     def delete(self, *args, **kwargs):
         """
