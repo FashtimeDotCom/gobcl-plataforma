@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('articles', '0005_load_news_tags'),
     ]
-uc
     operations = [
         migrations.RunPython(publish_news, unpublish_news),
     ]
