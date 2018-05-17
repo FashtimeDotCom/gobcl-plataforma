@@ -299,8 +299,6 @@ class SearchIndex(DocType):
         '''
         Class method to init index
         '''
-        # create the mappings in elasticsearch
-        cls.init()
 
         # default analyzer
         shingle_filter = token_filter(
@@ -340,14 +338,15 @@ class SearchIndex(DocType):
 
         # Add analyzers, the index has to be closed before any configuration
         searches_index = Index('searches')
-        searches_index.close()
         # default analyzer
         searches_index.analyzer(default_analyzer)
         # languages search analyzers
         for language in languages:
             searches_index.analyzer(languages_analyzers[language])
         searches_index.save()
-        searches_index.open()
+
+        # create the mappings in elasticsearch
+        cls.init()
 
     @classmethod
     def delete_all(cls):
