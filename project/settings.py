@@ -495,7 +495,7 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (328, 342), 'crop': True},
         'avatar_small': {'size': (218, 228), 'crop': True},
         'og_image': {'size': (1200, 630), 'crop': False},
-        'image_home': {'size': (2500, 840), 'crop': True},
+        'image_home': {'size': (2500, 840), 'crop': True, 'quality': 70},
     },
 }
 
