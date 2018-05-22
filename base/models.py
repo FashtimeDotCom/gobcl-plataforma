@@ -12,6 +12,8 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # elasticsearch
 from searches.elasticsearch.documents import SearchIndex
@@ -158,10 +160,10 @@ class BaseModel(models.Model):
         """
         languages = ('es', 'en', 'ALL')
         for language in languages:
-            doc = self.get_elasticsearch_doc(language_code=language)
-
-            if doc is not None:
-                doc.delete()
+            SearchIndex().delete(
+                id=self.get_elasticsearch_id(language_code=language),
+                ignore=404
+            )
 
     def reindex_in_elasticsearch(self):
         """
@@ -174,13 +176,15 @@ class BaseModel(models.Model):
 
     # TODO: Abstract index_in_elasticsearch method???
 
-    def delete(self, *args, **kwargs):
-        """
-        Override this method to delete the corresponding elasticsearch document
-        when deleting the object
-        """
-        self.deindex_in_elasticsearch()
-        super(BaseModel, self).delete(*args, **kwargs)
+
+@receiver(pre_delete)
+def delete_handler(sender, instance, **kwargs):
+    """
+    Signal that detects everytime an object is going to be deleted.
+    It deindexes the corresponding document from the elasticsearch index.
+    """
+    if isinstance(instance, BaseModel):
+        instance.deindex_in_elasticsearch()
 
 
 def lastest_government_structure():
