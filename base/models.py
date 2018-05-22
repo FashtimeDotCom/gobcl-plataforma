@@ -158,10 +158,10 @@ class BaseModel(models.Model):
         """
         languages = ('es', 'en', 'ALL')
         for language in languages:
-            doc = self.get_elasticsearch_doc(language_code=language)
-
-            if doc is not None:
-                doc.delete()
+            SearchIndex().delete(
+                id=self.get_elasticsearch_id(language_code=language),
+                ignore=404
+            )
 
     def reindex_in_elasticsearch(self):
         """
