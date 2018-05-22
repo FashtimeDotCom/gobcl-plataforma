@@ -12,6 +12,8 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # elasticsearch
 from searches.elasticsearch.documents import SearchIndex
@@ -172,22 +174,16 @@ class BaseModel(models.Model):
         else:
             kwargs['language_code'] = 'ALL'
         kwargs['url'] = self.get_absolute_url()
-
-        # Every model that calls this method should have boost, but this can be
-        # called from every model, so it's validated for robustness
-        if hasattr(self, 'boost'):
-            kwargs['boost'] = self.boost
-        else:
-            kwargs['boost'] = 1
+        # kwargs['boost'] = boost
 
         return kwargs
 
-    def index_in_elasticsearch(self):
+    def index_in_elasticsearch(self, boost=1):
         """
         Indexes a document in elasticearch with the info of this object
         """
         kwargs = self.get_elasticsearch_kwargs()
-        doc = SearchIndex(**kwargs)
+        doc = SearchIndex(boost=boost, **kwargs)
         doc.save(obj=self)
 
     def deindex_in_elasticsearch(self):
@@ -209,6 +205,18 @@ class BaseModel(models.Model):
         # TODO: fix boosts
         self.deindex_in_elasticsearch()
         self.index_in_elasticsearch(1)
+
+    # TODO: Abstract index_in_elasticsearch method???
+
+
+@receiver(pre_delete)
+def delete_handler(sender, instance, **kwargs):
+    """
+    Signal that detects everytime an object is going to be deleted.
+    It deindexes the corresponding document from the elasticsearch index.
+    """
+    if isinstance(instance, BaseModel):
+        instance.deindex_in_elasticsearch()
 
 
 def lastest_government_structure():
