@@ -104,6 +104,8 @@ class ArticleListView(PreviewModeMixin, ListView):
 
         context['featured_article'] = featured_qs.first()
 
+        context['is_edit_mode'] = self.edit_mode
+
         return context
 
     def get_queryset(self):
@@ -201,6 +203,7 @@ class ArticleUnpublishView(
 
 class CategoryArticleList(ArticleListView):
     """A list of articles filtered by categories."""
+
     def get_queryset(self):
         return super(CategoryArticleList, self).get_queryset().filter(
             categories=self.category

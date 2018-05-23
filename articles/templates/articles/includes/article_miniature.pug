@@ -15,6 +15,11 @@ article.new.new--mobile.a11y-tts
         alt="{{ article.featured_image.alt }}"
       )
   h2.new_title
+    if is_edit_mode
+      if not article.is_published
+        i.fa.fa-times-circle
+        | &nbsp;
+        {% trans 'Not Published' %}
     a.link.link--text-dark.visited(
       href="{{ article.get_absolute_url }}"
     )
