@@ -46,6 +46,7 @@ class LoginView(auth_views.LoginView):
     title = _('Login')
 
     def dispatch(self, request, *args, **kwargs):
+        return redirect('admin:login')
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
