@@ -19,6 +19,10 @@ from aldryn_apphooks_config.managers.base import ManagerMixin, QuerySetMixin
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from taggit.models import Tag, TaggedItem
 
+from searches.elasticsearch.documents import SearchIndex
+from elasticsearch_dsl import connections
+from elasticsearch.helpers import bulk
+
 
 class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
     def exclude_article(self, article):
@@ -141,6 +145,16 @@ class RelatedManager(ManagerMixin, TranslatableManager):
                 publishing_date__lte=now(),
                 is_draft=False,
             )
+
+            # Bulk indexing using the elasticsearch library instead of
+            # elasticsearch_dsl, to use the method bulk and index documents
+            # more efficiently
+            documents = []
             for article in articles:
-                # TODO: pass index class??
-                article.index_in_elasticsearch(boost)
+                kwargs = article.get_elasticsearch_kwargs()
+                doc_dict = SearchIndex(boost=boost, **kwargs).to_dict(True)
+                doc_dict['_id'] = article.get_elasticsearch_id()
+                documents.append(doc_dict)
+
+            # Index multiple documents
+            bulk(connections.get_connection(), documents)
