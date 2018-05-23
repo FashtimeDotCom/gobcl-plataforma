@@ -116,9 +116,6 @@ class ArticleAdmin(BaseArticleAdmin):
             - plugin_parent (optional)
             - plugin_position (optional)
         """
-        import ipdb
-        ipdb.set_trace()
-        print('whut')
         form = PluginAddValidationForm(request.GET)
 
         if not form.is_valid():
