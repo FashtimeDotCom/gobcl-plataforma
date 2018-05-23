@@ -38,7 +38,6 @@ urlpatterns += i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
     url(r'^api/1.0/', include('api.urls')),
-    # url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
     url(r'^callback/', include(callback_pattern)),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^regions/'), include('regions.urls')),
