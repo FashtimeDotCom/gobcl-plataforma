@@ -149,8 +149,10 @@ def restart():
 @task
 def build_image():
     """Build a docker image specifying a tag"""
+    docker_image = get_os_env('GOBCL_DOCKER_IMAGE')
     image_tag = prompt(green('Type in the image tag: '))
-    local('docker build -t {}'.format(image_tag))
+
+    local('docker build -t "{}:{}" .'.format(docker_image, image_tag))
 
 
 @task
