@@ -81,18 +81,16 @@ class Region(Institution):
     def get_absolute_url(self):
         """ Returns the canonical URL for the region object """
 
-        return reverse('region_detail', args=(self.slug,))
+        if hasattr(self, 'slug') and self.slug:
+            return reverse('region_detail', args=(self.slug,))
+        return None
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.governor.name,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Region, self).get_elasticsearch_kwargs()
+        if self.governor:
+            kwargs['detail'] = self.governor.name
+
+        return kwargs
 
 
 class Commune(BaseModel):

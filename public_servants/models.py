@@ -100,13 +100,9 @@ class PublicServant(TranslatableModel, BaseGovernmentStructureModel):
 
         return ''
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.charge,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(PublicServant, self).get_elasticsearch_kwargs()
+        if hasattr(self, 'charge'):
+            kwargs['detail'] = self.charge
+
+        return kwargs

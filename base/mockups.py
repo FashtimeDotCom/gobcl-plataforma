@@ -9,9 +9,11 @@ from django.apps import apps
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import activate
+from django.contrib.sites.models import Site
 
 # third party
 from cms.models import Page
+from cms.models import TreeNode
 from easy_thumbnails.files import get_thumbnailer
 
 # utils
@@ -83,6 +85,11 @@ class Mockup(object):
 
         if 'site_id' not in kwargs:
             kwargs['site_id'] = 1
+
+        site_id = kwargs.pop('site_id')
+        site = Site.objects.get(id=site_id)
+        tree_node = TreeNode.objects.create(site=site, depth=1)
+        kwargs['node_id'] = tree_node.id
 
         page = Page.objects.create(**kwargs)
 
@@ -291,7 +298,7 @@ class Mockup(object):
         try:
             return Page.objects.get(
                 reverse_id=kwargs['reverse_id'],
-                site_id=kwargs['site_id'],
+                node__site_id=kwargs['site_id'],
             ), False
         except Page.DoesNotExist:
             pass

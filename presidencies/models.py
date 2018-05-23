@@ -122,15 +122,9 @@ class Presidency(BaseModel, TranslatableModel):
 
         return reverse('presidency_detail')
 
-    def index_in_elasticsearch(self, boost):
-        print('index presidency: id={id}, lan={lan}'.format(id=self.id, lan=self.language_code))
-        doc = SearchIndex(
-            name=self.name,
-            title=self.title,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.title,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Presidency, self).get_elasticsearch_kwargs()
+        if hasattr(self, 'title'):
+            kwargs['detail'] = self.title
+
+        return kwargs
