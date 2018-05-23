@@ -12,7 +12,6 @@ from parler.forms import TranslatableModelForm
 from . import models
 
 
-
 from cms.admin.placeholderadmin import PlaceholderAdminMixin
 
 

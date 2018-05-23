@@ -19,3 +19,7 @@ article.new.new--mobile.a11y-tts
       href="{{ article.get_absolute_url }}"
     )
       {% render_model article "title" %}
+    if is_edit_mode
+      if not article.is_published
+        small.text-danger
+          {% trans 'Not Published' %}
