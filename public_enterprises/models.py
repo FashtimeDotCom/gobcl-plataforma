@@ -62,12 +62,8 @@ class PublicEnterprise(TranslatableModel, BaseGovernmentStructureModel):
         """ Returns the canonical URL for the PublicEnterprise object """
         return self.url
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.url,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(PublicEnterprise, self).get_elasticsearch_kwargs()
+        kwargs['detail'] = self.get_absolute_url()
+
+        return kwargs

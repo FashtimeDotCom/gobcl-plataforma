@@ -88,7 +88,7 @@ class ElasticSearchClient:
             pre_tags='<strong>',
             post_tags='</strong>',
             type='unified',
-            fragment_size=100,
+            fragment_size=234,
             no_match_size=100,
             number_of_fragments=1,
         ).update_from_dict(

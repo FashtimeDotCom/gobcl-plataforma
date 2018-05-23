@@ -23,11 +23,6 @@ class CampaignManager(TranslatableManager):
             using=self._db
         ).select_related('image')
 
-        for obj in queryset:
-            obj.deindex_in_elasticsearch()
-            if obj.is_active():
-                obj.index_in_elasticsearch(1)
-
         return queryset
 
     def active(self):
