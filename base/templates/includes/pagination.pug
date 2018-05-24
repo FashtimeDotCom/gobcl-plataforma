@@ -1,43 +1,51 @@
 - load order_by_querystring
 
+style(type='text/css').
+  .clean-link {
+    padding-right: 15px;
+  }
+  .clean-link:after {
+    content: '';
+  }
+
 nav
   ul.pagination.justify-content-center
     if page_obj.has_previous
       li.page-item
-        a.link.link--text-dark.hover(href="?p={{ page_obj.previous_page_number }}&{{clean_query_string}}")
+        a.link.link--text-dark.hover.clean-link(href="?p={{ page_obj.previous_page_number }}&{{clean_query_string}}")
           i.fa.fa-caret-left
-    if page_obj.number|add:'-4' > 1
-      if not page_obj.number|add:'-5' == 1
+    if page_obj.number|add:'-3' > 1
+      if not page_obj.number|add:'-2' == 1
         li.page-item
-          a.link.link--text-dark.hover(href="?p=1&{{clean_query_string}}")
+          a.link.link--text-dark.hover.clean-link(href="?p=1&{{clean_query_string}}")
             | 1
       li.page-item
-        a(href="?p={{ page_obj.number|add:'-5' }}&{{clean_query_string}}").link.link--text-dark.hover
-          if not page_obj.number|add:'-5' == 1
+        a(href="?p={{ page_obj.number|add:'-2' }}&{{clean_query_string}}").link.link--text-dark.hover.clean-link
+          if not page_obj.number|add:'-2' == 1
             | ...
           else
             | 1
     for page in page_obj.paginator.page_range
       if page == page_obj.number
         li
-          a.link.link--text-dark.hover.active(href="?p={{ page }}&{{clean_query_string}}")
+          a.link.link--text-dark.hover.active.clean-link(href="?p={{ page }}&{{clean_query_string}}")
             {{ page }}
-      elif page > page_obj.number|add:'-5' and page < page_obj.number|add:'5'
+      elif page > page_obj.number|add:'-2' and page < page_obj.number|add:'2'
         li
-          a.link.link--text-dark.hover(href="?p={{ page }}&{{clean_query_string}}")
+          a.link.link--text-dark.hover.clean-link(href="?p={{ page }}&{{clean_query_string}}")
             {{ page }}
-    if page_obj.paginator.num_pages > page_obj.number|add:'4'
+    if page_obj.paginator.num_pages > page_obj.number|add:'3'
       li.page-item
-        a(href="?p={{ page_obj.number|add:'5' }}&{{clean_query_string}}").link.link--text-dark.hover
-          if not page_obj.number|add:'5' == page_obj.paginator.num_pages
+        a(href="?p={{ page_obj.number|add:'2' }}&{{clean_query_string}}").link.link--text-dark.hover.clean-link
+          if not page_obj.number|add:'2' == page_obj.paginator.num_pages
             | ...
           else
             {{ page_obj.paginator.num_pages }}
-      if not page_obj.number|add:'5' == page_obj.paginator.num_pages
+      if not page_obj.number|add:'2' == page_obj.paginator.num_pages
         li.page-item
-          a.link.link--text-dark.hover(href="?p={{ page_obj.paginator.num_pages }}&{{clean_query_string}}")
+          a.link.link--text-dark.hover.clean-link(href="?p={{ page_obj.paginator.num_pages }}&{{clean_query_string}}")
             | {{ page_obj.paginator.num_pages }}
     if page_obj.has_next
       li.page-item
-        a.link.link--text-dark.hover(href="?p={{ page_obj.next_page_number }}&{{clean_query_string}}")
+        a.link.link--text-dark.hover.clean-link(href="?p={{ page_obj.next_page_number }}&{{clean_query_string}}")
           i.fa.fa-caret-right
