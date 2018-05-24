@@ -326,14 +326,14 @@ class Article(TranslationHelperMixin,
 
         return_value = super(Article, self).save(*args, **kwargs)
 
-        # Delete previous document (if it exists), and index it again only if
-        # it's published
+        # Index if appropiate (if the document already exists it replaces it)
+        # Otherwise delete the document indexed
         # Called after saving because the id is needed
-        self.deindex_in_elasticsearch()
-
         if not new:
             if self.is_published and not self.is_draft:
                 self.index_in_elasticsearch(1)
+            else:
+                self.deindex_in_elasticsearch()
 
         return return_value
 
@@ -426,18 +426,6 @@ class Article(TranslationHelperMixin,
 
         self.is_published = False
         self.save()
-
-    def delete(self, *args, **kwargs):
-        """
-        Override this method to delete the corresponding elasticsearch document
-        when deleting the object
-        """
-        self.deindex_in_elasticsearch()
-
-        if self.public:
-            self.public.deindex_in_elasticsearch()
-
-        super(BaseModel, self).delete(*args, **kwargs)
 
 
 # Replace the mark as dirty method of placeholders to mark articles as dirty

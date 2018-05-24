@@ -161,9 +161,10 @@ class Campaign(BaseModel, TranslatableModel):
 
         return_value = super(Campaign, self).save(*args, **kwargs)
 
-        self.deindex_in_elasticsearch()
         if self.is_active():
             self.index_in_elasticsearch(1)
+        else:
+            self.deindex_in_elasticsearch()
 
         return return_value
 

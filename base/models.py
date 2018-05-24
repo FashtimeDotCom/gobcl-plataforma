@@ -6,6 +6,7 @@ All apps should use the BaseModel as parent for all models
 
 # standard library
 import json
+import logging
 
 # django
 from django.contrib.sites.models import Site
@@ -17,6 +18,8 @@ from django.dispatch import receiver
 
 # elasticsearch
 from searches.elasticsearch.documents import SearchIndex
+from elasticsearch.exceptions import TransportError
+from elasticsearch.exceptions import ConnectionError
 
 # base
 from base import utils
@@ -43,6 +46,9 @@ def file_path(self, name):
         utils.random_string(30),
         name
     )
+
+
+error_logger = logging.getLogger('django.request')
 
 
 class BaseModel(models.Model):
@@ -184,29 +190,36 @@ class BaseModel(models.Model):
         """
         kwargs = self.get_elasticsearch_kwargs()
         doc = SearchIndex(boost=boost, **kwargs)
-        doc.save(obj=self)
+        try:
+            doc.save(obj=self)
+        except (TransportError, ConnectionError) as e:
+            error_logger.error(
+                'Couldn\'t index document {id} in elasticsearch: {err}'.format(
+                    id=self.get_elasticsearch_id(),
+                    err=str(e)
+                ),
+                exc_info=False
+            )
 
     def deindex_in_elasticsearch(self):
         """
         Deletes the elasticsearch document related to this object if it exists
         """
         languages = ('es', 'en', 'ALL')
-        for language in languages:
-            SearchIndex().delete(
-                id=self.get_elasticsearch_id(language_code=language),
-                ignore=404
+        try:
+            for language in languages:
+                SearchIndex().delete(
+                    id=self.get_elasticsearch_id(language_code=language),
+                    ignore=404
+                )
+        except (TransportError, ConnectionError) as e:
+            error_logger.error(
+                'Couldn\'t delete document {id} in elasticsearch: {err}'.format(
+                    id=self.get_elasticsearch_id(),
+                    err=str(e)
+                ),
+                exc_info=False
             )
-
-    def reindex_in_elasticsearch(self):
-        """
-        Deletes index document and index it again, it document doesn't exists,
-        it's the same as index_in_elasticsearch
-        """
-        # TODO: fix boosts
-        self.deindex_in_elasticsearch()
-        self.index_in_elasticsearch(1)
-
-    # TODO: Abstract index_in_elasticsearch method???
 
 
 @receiver(pre_delete)

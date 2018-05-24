@@ -1,8 +1,6 @@
 from .elasticsearch_config import get_elasticsearch_url
 
 from elasticsearch.exceptions import NotFoundError
-from elasticsearch.exceptions import TransportError
-from elasticsearch.exceptions import ConnectionError
 
 from elasticsearch_dsl import DocType
 from elasticsearch_dsl import Text
@@ -18,9 +16,6 @@ connections.create_connection(
     hosts=[get_elasticsearch_url()],
     timeout=20
 )
-
-
-# government_structure = GovernmentStructure.get_government()
 
 
 class SearchIndex(DocType):
@@ -67,24 +62,7 @@ class SearchIndex(DocType):
         obj = kwargs.pop('obj', None)
         if obj is not None:
             self.meta.id = obj.get_elasticsearch_id()
-
-        try:
-            super(SearchIndex, self).save(**kwargs)
-        except (TransportError, ConnectionError):
-            pass
-
-    def delete(self, **kwargs):
-        try:
-            super(SearchIndex, self).delete(**kwargs)
-        except (TransportError, ConnectionError):
-            pass
-
-    @classmethod
-    def get(cls, id, **kwargs):
-        try:
-            super(SearchIndex, cls).get(id, **kwargs)
-        except (TransportError, ConnectionError):
-            pass
+        super(SearchIndex, self).save(**kwargs)
 
     @classmethod
     def init_index(cls):

@@ -72,7 +72,7 @@ class FooterLink(BaseGovernmentStructureModel):
 
         return_value = super(FooterLink, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 

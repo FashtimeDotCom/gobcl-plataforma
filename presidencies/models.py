@@ -113,7 +113,7 @@ class Presidency(BaseModel, TranslatableModel):
     def save(self, *args, **kwargs):
         return_value = super(Presidency, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 

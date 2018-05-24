@@ -129,7 +129,7 @@ class Ministry(Institution):
 
         return_value = super(Ministry, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
@@ -180,7 +180,7 @@ class PublicService(TranslatableModel, BaseModel):
     def save(self, *args, **kwargs):
         return_value = super(PublicService, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
