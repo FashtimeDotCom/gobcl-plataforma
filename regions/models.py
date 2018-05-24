@@ -74,7 +74,7 @@ class Region(Institution):
     def save(self, *args, **kwargs):
         return_value = super(Region, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 

@@ -1,6 +1,3 @@
-from django.utils.translation import activate
-from django.utils.timezone import now
-
 from .elasticsearch_config import get_elasticsearch_url
 
 from elasticsearch.exceptions import NotFoundError
@@ -19,9 +16,6 @@ connections.create_connection(
     hosts=[get_elasticsearch_url()],
     timeout=20
 )
-
-
-# government_structure = GovernmentStructure.get_government()
 
 
 class SearchIndex(DocType):
