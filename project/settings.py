@@ -457,6 +457,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'elasticsearch_errors': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
         'debug_messages': {
             'handlers': ['debug_file'],
             'level': 'DEBUG',

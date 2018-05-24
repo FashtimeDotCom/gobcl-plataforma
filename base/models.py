@@ -48,7 +48,7 @@ def file_path(self, name):
     )
 
 
-error_logger = logging.getLogger('django.request')
+error_logger = logging.getLogger('elasticsearch_errors')
 
 
 class BaseModel(models.Model):
