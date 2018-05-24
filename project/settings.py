@@ -279,10 +279,6 @@ DATABASES = {
 # The default is to use the SMTP backend.
 # Third-party backends can be specified by providing a Python path
 # to a module that defines an EmailBackend class.
-if DEBUG or not ENABLE_EMAILS:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'project.backends.gobcl_email.EmailBackend'
 
 
