@@ -283,7 +283,7 @@ if DEBUG or not ENABLE_EMAILS:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'project.backends.gobcl_email.EmailBackend'
 
 
 # Password validation
