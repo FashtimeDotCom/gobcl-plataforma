@@ -66,7 +66,7 @@ class GovernmentStructure(BaseModel):
         t.start()
 
     def _archive_news2(self):
-        from aldryn_newsblog.models import Article
+        from articles.models import Article
         from taggit.models import Tag
 
         try:
