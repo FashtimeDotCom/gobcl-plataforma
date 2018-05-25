@@ -50,17 +50,17 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
             is_draft=False,
         ).translated(is_published=True)
 
-    def archived(self):
+    def filter_tag(self, tag):
         """
-        Returns all the archived articles.
+        Returns all the articles with the specified tag.
         """
-        return self.translated(title__startswith='[ARCHIVO]')
+        return self.filter(tags=tag)
 
-    def not_archived(self):
+    def exclude_tag(self, tag):
         """
-        Returns all the artcles that aren't archived.
+        Returns all the articles without the specified tag.
         """
-        return self.exclude(translations__title__startswith='[ARCHIVO]')
+        return self.exclude(tags=tag)
 
 
 class RelatedManager(ManagerMixin, TranslatableManager):
@@ -169,10 +169,16 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             # more efficiently
             documents = []
             if not all:
+                tag = None
+                if language == 'es':
+                    tag = Tag.objects.get(name='archivo')
+                elif language == 'en':
+                    tag = Tag.objects.get(name='archive')
+
                 if archived:
-                    articles = articles.archived()
+                    articles = articles.filter_tag(tag)
                 else:
-                    articles = articles.not_archived()
+                    articles = articles.exclude_tag(tag)
             for article in articles:
                 kwargs = article.get_elasticsearch_kwargs()
                 doc_dict = SearchIndex(boost=boost, **kwargs).to_dict(True)
