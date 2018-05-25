@@ -1,12 +1,7 @@
 import re
 
-from abc import ABCMeta, abstractmethod
-
-from django.utils.formats import date_format
 from django.utils.translation import activate
 
-from elasticsearch_dsl import IndexTemplate
-from elasticsearch_dsl import Index
 from searches.elasticsearch.documents import SearchIndex
 
 # models
@@ -21,7 +16,6 @@ from public_servants.models import PublicServant
 from regions.models import Region
 from sociocultural_departments.models import SocioculturalDepartment
 from public_enterprises.models import PublicEnterprise
-from cms.models.pagemodel import Page
 
 
 def remove_tags(text):
@@ -50,18 +44,23 @@ def bulk_index():
     print('presidency')
     Presidency.objects.bulk_index(4, government_structure=government_structure)
     print('sociocultural department',)
-    SocioculturalDepartment.objects.bulk_index(2, government_structure=government_structure)
+    SocioculturalDepartment.objects.bulk_index(
+        2, government_structure=government_structure)
     print('public enterprises')
-    PublicEnterprise.objects.bulk_index(1.5, government_structure=government_structure)
+    PublicEnterprise.objects.bulk_index(
+        1.5, government_structure=government_structure)
     print('regions')
     Region.objects.bulk_index(1.3, government_structure=government_structure)
     print('public servant')
-    PublicServant.objects.bulk_index(3, government_structure=government_structure)
+    PublicServant.objects.bulk_index(
+        3, government_structure=government_structure)
     print('public services')
-    PublicService.objects.bulk_index(1.5, government_structure=government_structure)
+    PublicService.objects.bulk_index(
+        1.5, government_structure=government_structure)
     print('campaigns')
     Campaign.objects.bulk_index()
     print('footer links')
-    FooterLink.objects.bulk_index(1.2, government_structure=government_structure)
+    FooterLink.objects.bulk_index(
+        1.2, government_structure=government_structure)
     print('ministries')
     Ministry.objects.bulk_index(2, government_structure=government_structure)

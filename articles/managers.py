@@ -136,7 +136,11 @@ class RelatedManager(ManagerMixin, TranslatableManager):
 
     def bulk_index(self, boost=1):
         languages = ('es', 'en')
+        print()
+        print('=' * 30)
+        print('Articles')
         for language in languages:
+            print('Language:', language)
             activate(language)
             articles = self.get_queryset().translated(
                 title__isnull=False,
@@ -145,16 +149,22 @@ class RelatedManager(ManagerMixin, TranslatableManager):
                 publishing_date__lte=now(),
                 is_draft=False,
             )
+            total = articles.count()
+            print('Total:', total)
 
             # Bulk indexing using the elasticsearch library instead of
             # elasticsearch_dsl, to use the method bulk and index documents
             # more efficiently
             documents = []
+            value = 1
             for article in articles:
                 kwargs = article.get_elasticsearch_kwargs()
                 doc_dict = SearchIndex(boost=boost, **kwargs).to_dict(True)
                 doc_dict['_id'] = article.get_elasticsearch_id()
                 documents.append(doc_dict)
+                print(value, 'of', total)
+                value += 1
+            print('*' * 10)
 
             # Index multiple documents
             bulk(connections.get_connection(), documents)
