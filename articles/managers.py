@@ -77,11 +77,11 @@ class RelatedManager(ManagerMixin, TranslatableManager):
     def published(self):
         return self.get_queryset().published()
 
-    def archived(self):
-        return self.get_queryset().archived()
+    def filter_tag(self, tag):
+        return self.get_queryset().filter_tag(tag)
 
-    def not_archived(self):
-        return self.get_queryset().not_archived()
+    def exclude_tag(self, tag):
+        return self.get_queryset().exclude_tag(tag)
 
     def get_months(self, request, namespace):
         """
