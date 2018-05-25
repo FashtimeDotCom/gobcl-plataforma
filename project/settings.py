@@ -579,9 +579,10 @@ ELASTICSEARCH_DSL = {
 
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
 
-CRON_CLASSES = (
+CRON_CLASSES = [
     'services.cron.ChargeChileAtiendeServiceFile',
-)
+    'campaigns.cron.UpdateCampaignsElasticsearchDocuments',
+]
 
 # Google Analytics API
 GA_KEY_FILE_LOCATION = os.getenv('GA_KEY_FILE_LOCATION', '')
