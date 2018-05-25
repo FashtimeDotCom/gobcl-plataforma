@@ -32,9 +32,19 @@ class CampaignManager(TranslatableManager):
         queryset = self.get_queryset().translated(
             title__isnull=False,
         )
+        print()
+        print('=' * 30)
+        print('Campaign')
 
         languages = ('es', 'en')
         for language in languages:
+            print('Language:', language)
             queryset = queryset.language(language)
+            total = queryset.count()
+            print('Total:', total)
+            value = 1
             for obj in queryset:
                 obj.index_in_elasticsearch(boost)
+                print(value, 'of', total)
+                value += 1
+            print('*' * 10)

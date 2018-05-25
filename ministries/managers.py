@@ -30,11 +30,24 @@ class PublicServiceManager(ManagerMixin, TranslatableManager):
             government_structure
         )
 
+        print()
+        print('=' * 30)
+        print('Public services')
+
         languages = ('es', 'en')
         for language in languages:
             queryset = queryset.language(language)
+
+            print('Language:', language)
+            total = queryset.count()
+            print('Total:', total)
+            value = 1
+
             for obj in queryset:
                 obj.index_in_elasticsearch(boost)
+                print(value, 'of', total)
+                value += 1
+            print('*' * 10)
 
 
 class MinistryQueryset(BaseGovernmentQuerySet):
@@ -46,7 +59,8 @@ class MinistryManager(ManagerMixin, TranslatableManager):
         return MinistryQueryset(self.model, using=self.db)
 
     def by_government_structure(self, government_structure):
-        return self.get_queryset().by_government_structure(government_structure)
+        return self.get_queryset().by_government_structure(
+            government_structure)
 
     def bulk_index(self, boost=1, government_structure=None):
         queryset = self.get_queryset().filter(
@@ -55,8 +69,21 @@ class MinistryManager(ManagerMixin, TranslatableManager):
             name__isnull=False,
         )
 
+        print()
+        print('=' * 30)
+        print('Ministries')
+
         languages = ('es', 'en')
         for language in languages:
             queryset = queryset.language(language)
+
+            print('Language:', language)
+            total = queryset.count()
+            print('Total:', total)
+            value = 1
+
             for obj in queryset:
                 obj.index_in_elasticsearch(boost)
+                print(value, 'of', total)
+                value += 1
+            print('*' * 10)
