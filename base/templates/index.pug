@@ -48,7 +48,7 @@ block content
             for category in categories
               li
                 a.link.link--clean.text-white.a11y-tts(
-                  href="{% namespace_url 'article-list-by-category' category.slug namespace='articles' default=''%}"
+                  href="{% namespace_url 'search' %}?q={{category}}"
                 )
                   {{ category }}
         .col-md-3.col-xl-2.text-right

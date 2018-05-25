@@ -16,18 +16,3 @@ form(action="{% url 'search' %}")
           )#input-search.search-form_input
           button(type="submit").search-form_button.search-form_button--submit: i.ic-search
           button(type="button").search-form_button.search-form_button--cancel: i.ic-delete
-  .row
-    .col-12(class="{{custom_class}}")
-      h2.heading-label.heading-label--light.heading-label--wrapped {% trans 'Filter by Topics' %}
-      .tags
-        .tags_content
-          for category in categories
-            .tags_item
-              label(for="category-input-{{category.slug}}").ctag.ctag--clarity {{category}}
-                input.d-none(
-                  type="radio",
-                  id="category-input-{{category.slug}}",
-                  name="category_slug",
-                  value="{{category.slug}}",
-                  checked=category.slug==request.GET.get('category_slug'),
-                )
