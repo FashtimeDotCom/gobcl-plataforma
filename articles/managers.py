@@ -50,6 +50,18 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
             is_draft=False,
         ).translated(is_published=True)
 
+    def archived(self):
+        """
+        Returns all the archived articles.
+        """
+        return self.translated(title__startswith='[ARCHIVO]')
+
+    def not_archived(self):
+        """
+        Returns all the artcles that aren't archived.
+        """
+        return self.exclude(translations__title__startswith='[ARCHIVO]')
+
 
 class RelatedManager(ManagerMixin, TranslatableManager):
     def get_queryset(self):
@@ -64,6 +76,12 @@ class RelatedManager(ManagerMixin, TranslatableManager):
 
     def published(self):
         return self.get_queryset().published()
+
+    def archived(self):
+        return self.get_queryset().archived()
+
+    def not_archived(self):
+        return self.get_queryset().not_archived()
 
     def get_months(self, request, namespace):
         """
@@ -134,7 +152,7 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             tag.num_articles = counted_tags[tag.pk]
         return sorted(tags, key=attrgetter('num_articles'), reverse=True)
 
-    def bulk_index(self, boost=1):
+    def bulk_index(self, boost=1, all=True, archived=False):
         languages = ('es', 'en')
         for language in languages:
             activate(language)
@@ -150,6 +168,11 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             # elasticsearch_dsl, to use the method bulk and index documents
             # more efficiently
             documents = []
+            if not all:
+                if archived:
+                    articles = articles.archived()
+                else:
+                    articles = articles.not_archived()
             for article in articles:
                 kwargs = article.get_elasticsearch_kwargs()
                 doc_dict = SearchIndex(boost=boost, **kwargs).to_dict(True)

@@ -39,8 +39,10 @@ def bulk_index():
     index_class.init_index()
 
     # index models and assign boost for them
-    print('public articles')
-    Article.objects.bulk_index()
+    print('current articles')
+    Article.objects.bulk_index(boost=1, all=False, archived=False)
+    print('archived articles')
+    Article.objects.bulk_index(boost=0.5, all=False, archived=True)
 
     # TODO: Why?
     activate('es')
