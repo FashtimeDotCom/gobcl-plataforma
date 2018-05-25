@@ -18,8 +18,7 @@
     {% elif instance.use_no_cropping %}
         {{ instance.picture.url }}
     {% elif instance.picture %}
-        {% thumbnail instance.picture picture_size.size crop=picture_size.crop upscale=picture_size.upscale subject_location=instance.picture.subject_location quality=70 as thumbnail %}
-        {{ thumbnail.url }}
+        {% thumbnail instance.picture 1440x2000 quality=70 %}
     {% endif %}{% endspaceless %}"
     {% if instance.picture.default_alt_text and not instance.attributes.alt %} alt="{{ instance.picture.default_alt_text }}"{% endif %}
     {% if instance.width %} width="{{ instance.width }}"{% endif %}
