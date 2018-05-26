@@ -182,9 +182,9 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             if not all:
                 tag = None
                 if language == 'es':
-                    tag = Tag.objects.get(name='archivo')
+                    tag = Tag.objects.get_or_create(name='archivo')[0]
                 elif language == 'en':
-                    tag = Tag.objects.get(name='archive')
+                    tag = Tag.objects.get_or_create(name='archive')[0]
 
                 if archived:
                     articles = articles.filter_tag(tag)
