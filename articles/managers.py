@@ -50,6 +50,18 @@ class ArticleQuerySet(QuerySetMixin, TranslatableQuerySet):
             is_draft=False,
         ).translated(is_published=True)
 
+    def filter_tag(self, tag):
+        """
+        Returns all the articles with the specified tag.
+        """
+        return self.filter(tags=tag)
+
+    def exclude_tag(self, tag):
+        """
+        Returns all the articles without the specified tag.
+        """
+        return self.exclude(tags=tag)
+
 
 class RelatedManager(ManagerMixin, TranslatableManager):
     def get_queryset(self):
@@ -64,6 +76,12 @@ class RelatedManager(ManagerMixin, TranslatableManager):
 
     def published(self):
         return self.get_queryset().published()
+
+    def filter_tag(self, tag):
+        return self.get_queryset().filter_tag(tag)
+
+    def exclude_tag(self, tag):
+        return self.get_queryset().exclude_tag(tag)
 
     def get_months(self, request, namespace):
         """
@@ -134,11 +152,17 @@ class RelatedManager(ManagerMixin, TranslatableManager):
             tag.num_articles = counted_tags[tag.pk]
         return sorted(tags, key=attrgetter('num_articles'), reverse=True)
 
-    def bulk_index(self, boost=1):
+    def bulk_index(self, boost=1, all=True, archived=False):
         languages = ('es', 'en')
         print()
         print('=' * 30)
-        print('Articles')
+        if all:
+            print('Articles')
+        else:
+            if archived:
+                print('Archived articles')
+            else:
+                print('Current articles')
         for language in languages:
             print('Language:', language)
             activate(language)
@@ -149,14 +173,27 @@ class RelatedManager(ManagerMixin, TranslatableManager):
                 publishing_date__lte=now(),
                 is_draft=False,
             )
-            total = articles.count()
-            print('Total:', total)
 
             # Bulk indexing using the elasticsearch library instead of
             # elasticsearch_dsl, to use the method bulk and index documents
             # more efficiently
             documents = []
             value = 1
+            if not all:
+                tag = None
+                if language == 'es':
+                    tag = Tag.objects.get_or_create(name='archivo')[0]
+                elif language == 'en':
+                    tag = Tag.objects.get_or_create(name='archive')[0]
+
+                if archived:
+                    articles = articles.filter_tag(tag)
+                else:
+                    articles = articles.exclude_tag(tag)
+
+            total = articles.count()
+            print('Total:', total)
+
             for article in articles:
                 kwargs = article.get_elasticsearch_kwargs()
                 doc_dict = SearchIndex(boost=boost, **kwargs).to_dict(True)
