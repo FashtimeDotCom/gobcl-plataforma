@@ -53,6 +53,7 @@ class SearchIndex(DocType):
     class Meta:
         # Name of index
         index = 'searches'
+        doc_type = 'gobcl_result'
 
     def save(self, **kwargs):
         """
