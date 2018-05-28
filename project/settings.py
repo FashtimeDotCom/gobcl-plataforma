@@ -125,7 +125,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'hitcount',
-    'haystack',
     'modeltranslation',
     'django_cron',
     'adminsortable2',
@@ -530,16 +529,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
 ALDRYN_NEWSBLOG_SEARCH = False
-
 AWS_STORAGE_BUCKET_NAME = get_local_value('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
 AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
