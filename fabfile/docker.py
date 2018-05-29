@@ -133,6 +133,17 @@ def restart_container():
 
 
 @task
+def rerun_container():
+    """Rerun the container with its same options"""
+    container_name = get_os_env('GOBCL_DOCKER_CONTAINER_NAME')
+
+    current_container = run('runlike {}'.format(container_name))
+    run('docker stop {}'.format(container_name))
+    run('docker rm {}'.format(container_name))
+    run(current_container)
+
+
+@task
 def restart_nginx():
     """Restart nginx on host"""
     print(green('Restarting nginx on host'))
