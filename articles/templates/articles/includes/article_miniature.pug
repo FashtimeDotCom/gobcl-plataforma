@@ -20,6 +20,8 @@ article.new.new--mobile.a11y-tts
     )
       {% render_model article "title" %}
     if is_edit_mode
-      if not article.is_published
+      if not article.public.is_published
         small.text-danger
           {% trans 'Not Published' %}
+          
+          
