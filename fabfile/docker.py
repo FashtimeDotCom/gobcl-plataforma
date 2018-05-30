@@ -173,3 +173,13 @@ def push_image():
     image_tag = prompt(green('Type in the image tag: '))
 
     local('docker push "{}:{}"'.format(docker_image, image_tag))
+
+@task
+def full_deployment():
+    """Run tasks for a full project deployment"""
+    update_docker_image()
+    rerun_container()
+    update_host()
+    migrate_db()
+    restart()
+    
