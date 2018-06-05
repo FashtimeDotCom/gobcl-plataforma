@@ -14,6 +14,10 @@ def send_emails(emails, template_name, subject, from_email=None,
                 attachments=None, headers=None):
     """ Sends an email to a list of emails using a given template name """
 
+    # do not send emails if emails are disabled
+    if not settings.ENABLE_EMAILS:
+        return
+
     if context is None:
         context = {}
 
