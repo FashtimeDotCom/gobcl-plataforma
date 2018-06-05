@@ -129,24 +129,23 @@ class Ministry(Institution):
 
         return_value = super(Ministry, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
     def get_absolute_url(self):
         """ Returns the canonical URL for the ministry object """
-        return reverse('ministry_detail', args=(self.slug,))
+        if hasattr(self, 'slug') and self.slug:
+            return reverse('ministry_detail', args=(self.slug,))
+        else:
+            return None
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.minister.name,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(Ministry, self).get_elasticsearch_kwargs()
+        if self.minister:
+            kwargs['detail'] = self.minister.name
+
+        return kwargs
 
 
 class PublicService(TranslatableModel, BaseModel):
@@ -181,7 +180,7 @@ class PublicService(TranslatableModel, BaseModel):
     def save(self, *args, **kwargs):
         return_value = super(PublicService, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
@@ -193,12 +192,8 @@ class PublicService(TranslatableModel, BaseModel):
         verbose_name = _('public service')
         verbose_name_plural = _('public services')
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.url,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(PublicService, self).get_elasticsearch_kwargs()
+        kwargs['detail'] = self.get_absolute_url()
+
+        return kwargs

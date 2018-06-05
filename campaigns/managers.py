@@ -23,11 +23,6 @@ class CampaignManager(TranslatableManager):
             using=self._db
         ).select_related('image')
 
-        for obj in queryset:
-            obj.deindex_in_elasticsearch()
-            if obj.is_active():
-                obj.index_in_elasticsearch(1)
-
         return queryset
 
     def active(self):
@@ -37,9 +32,37 @@ class CampaignManager(TranslatableManager):
         queryset = self.get_queryset().translated(
             title__isnull=False,
         )
+        print()
+        print('=' * 30)
+        print('Campaign')
 
         languages = ('es', 'en')
         for language in languages:
+            print('Language:', language)
             queryset = queryset.language(language)
+            total = queryset.count()
+            print('Total:', total)
+            value = 1
             for obj in queryset:
                 obj.index_in_elasticsearch(boost)
+                print(value, 'of', total)
+                value += 1
+            print('*' * 10)
+
+    def update_elasticsearch_documents(self):
+        languages = ('es', 'en')
+        for language in languages:
+            queryset = self.language(language).filter(
+                translations__title__isnull=False
+            )
+            for campaign in queryset:
+                # Check if it's indexed
+                doc = campaign.get_elasticsearch_doc()
+
+                # Campaign is not indexed and should be indexed
+                if doc is None and campaign.is_active():
+                    campaign.index_in_elasticsearch()
+
+                # Campaign is indexed and should be deindexed
+                elif doc is not None and not campaign.is_active():
+                    campaign.deindex_in_elasticsearch()

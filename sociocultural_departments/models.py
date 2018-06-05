@@ -117,21 +117,16 @@ class SocioculturalDepartment(BaseModel, TranslatableModel):
     def save(self, *args, **kwargs):
         return_value = super().save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
     def get_absolute_url(self):
         return reverse('sociocultural_department_detail')
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            title=self.title,
-            description=remove_tags(self.description),
-            language_code=self.language_code,
-            url=self.get_absolute_url(),
-            detail=self.title,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(SocioculturalDepartment, self).get_elasticsearch_kwargs()
+        if hasattr(self, 'title'):
+            kwargs['detail'] = self.title
+
+        return kwargs

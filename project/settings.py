@@ -125,7 +125,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'hitcount',
-    'haystack',
     'modeltranslation',
     'django_cron',
     'adminsortable2',
@@ -279,11 +278,7 @@ DATABASES = {
 # The default is to use the SMTP backend.
 # Third-party backends can be specified by providing a Python path
 # to a module that defines an EmailBackend class.
-if DEBUG or not ENABLE_EMAILS:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'project.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'project.backends.gobcl_email.EmailBackend'
 
 
 # Password validation
@@ -457,6 +452,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'elasticsearch_errors': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
         'debug_messages': {
             'handlers': ['debug_file'],
             'level': 'DEBUG',
@@ -495,7 +495,7 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (328, 342), 'crop': True},
         'avatar_small': {'size': (218, 228), 'crop': True},
         'og_image': {'size': (1200, 630), 'crop': False},
-        'image_home': {'size': (2500, 840), 'crop': True},
+        'image_home': {'size': (2500, 840), 'crop': True, 'quality': 70},
     },
 }
 
@@ -529,16 +529,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    },
-}
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
 ALDRYN_NEWSBLOG_SEARCH = False
-
 AWS_STORAGE_BUCKET_NAME = get_local_value('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_SECURE_URLS = True
 AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
@@ -574,9 +565,10 @@ ELASTICSEARCH_DSL = {
 
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
 
-CRON_CLASSES = (
+CRON_CLASSES = [
     'services.cron.ChargeChileAtiendeServiceFile',
-)
+    'campaigns.cron.UpdateCampaignsElasticsearchDocuments',
+]
 
 # Google Analytics API
 GA_KEY_FILE_LOCATION = os.getenv('GA_KEY_FILE_LOCATION', '')

@@ -370,8 +370,6 @@ def create_news_from_json(json_name: str='gobcl-posts.json'):
         }
 
         if image_url:
-            # import ipdb ; ipdb.set_trace()
-
             '''
             if exists image_url get image from
             gobcl-uploads folder and create add image to Article

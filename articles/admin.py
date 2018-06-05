@@ -12,7 +12,6 @@ from parler.forms import TranslatableModelForm
 from . import models
 
 
-
 from cms.admin.placeholderadmin import PlaceholderAdminMixin
 
 
@@ -53,7 +52,6 @@ class ArticleAdminForm(TranslatableModelForm):
     class Meta:
         model = models.Article
         fields = [
-            'categories',
             'featured_image',
             'is_featured',
             'is_published',
@@ -91,9 +89,6 @@ class ArticleAdmin(
         'is_dirty',
         'created_by',
     )
-    list_filter = [
-        'categories',
-    ]
     actions = (
         make_featured, make_not_featured,
         make_published, make_unpublished,
@@ -121,14 +116,10 @@ class ArticleAdmin(
             'classes': ('collapse',),
             'fields': (
                 'tags',
-                'categories',
                 'created_by',
             )
         }),
     )
-    filter_horizontal = [
-        'categories',
-    ]
 
     def get_prepopulated_fields(self, request, obj=None):
         # can't use `prepopulated_fields = ..` because it breaks the admin

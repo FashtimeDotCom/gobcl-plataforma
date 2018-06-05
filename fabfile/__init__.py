@@ -1,5 +1,6 @@
 from . import config
 from . import db
+from . import docker
 from . import gunicorn
 from . import nginx
 from . import project
@@ -7,6 +8,7 @@ from . import utils
 
 assert config
 assert db
+assert docker
 assert gunicorn
 assert nginx
 assert project

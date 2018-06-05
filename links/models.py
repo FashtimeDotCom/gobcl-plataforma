@@ -72,16 +72,12 @@ class FooterLink(BaseGovernmentStructureModel):
 
         return_value = super(FooterLink, self).save(*args, **kwargs)
 
-        self.reindex_in_elasticsearch()
+        self.index_in_elasticsearch()
 
         return return_value
 
-    def index_in_elasticsearch(self, boost):
-        doc = SearchIndex(
-            name=self.name,
-            language_code='ALL',
-            url=self.get_absolute_url(),
-            detail=self.url,
-            boost=boost
-        )
-        doc.save(obj=self)
+    def get_elasticsearch_kwargs(self):
+        kwargs = super(FooterLink, self).get_elasticsearch_kwargs()
+        kwargs['detail'] = self.get_absolute_url()
+
+        return kwargs

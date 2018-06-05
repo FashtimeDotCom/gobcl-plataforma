@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import ugettext_lazy as _
 
-from base import views as base_views
 from users.urls import callback_pattern
 
 
@@ -38,7 +37,6 @@ urlpatterns += i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('users.urls')),
     url(r'^api/1.0/', include('api.urls')),
-    url(r'^$', base_views.IndexTemplateView.as_view(), name='home'),
     url(r'^callback/', include(callback_pattern)),
     url(_(r'^institutions/'), include('institutions.urls')),
     url(_(r'^regions/'), include('regions.urls')),
@@ -54,6 +52,7 @@ if settings.TEST or settings.TRAVIS:
     urlpatterns += [
         url(r'^campaigns/', include('campaigns.urls'), name='campaigns'),
         url(r'^streams/', include('streams.urls'), name='streams'),
+        url(r'^', include('gobcl_cms.index_urls')),
     ]
 
 if settings.DEBUG:

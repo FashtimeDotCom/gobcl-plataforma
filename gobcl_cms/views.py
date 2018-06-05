@@ -8,14 +8,24 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
 from django.contrib.redirects.models import Redirect
+from django.views.generic import TemplateView
 
 # base
 from django.views.generic import FormView
 from django.shortcuts import get_object_or_404
 
+# utils
+from base.utils import get_or_set_cache
+from base.view_utils import get_home_campaigns
+
 # models
-from aldryn_newsblog.models import Article
 from aldryn_newsblog.models import NewsBlogConfig
+from articles.models import Article
+from gobcl_cms.models import HeaderImage
+from ministries.models import Ministry
+from ministries.models import PublicService
+from regions.models import Region
+from streams.models import Stream
 
 # forms
 from .forms import ArticleForm
@@ -148,3 +158,41 @@ class ArticleDateRedirectView(RedirectView):
         )
         r = get_object_or_404(Redirect, old_path=slug)
         return r.new_path
+
+
+class IndexTemplateView(TemplateView):
+    template_name = 'index.pug'
+
+    def get_context_data(self, **kwargs):
+        """ view that renders a default home"""
+
+        articles = Article.objects.published().order_by('-publishing_date')[:4]
+
+        stream = Stream.objects.active().first()
+        header_image = HeaderImage.objects.active().order_by('?').first()
+
+        gov_structure = self.request.government_structure
+
+        context = {
+            'procedures_and_benefits': None,
+            'header_image': header_image,
+            'articles': articles,
+            'stream': stream,
+            'ministries_count': get_or_set_cache(
+                'ministries_count',
+                Ministry.objects.by_government_structure(gov_structure).count
+            ),
+            'public_services_count': get_or_set_cache(
+                'public_services_count',
+                PublicService.objects.by_government_structure(
+                    gov_structure
+                ).count
+            ),
+            'regions_count': get_or_set_cache(
+                'regions_count',
+                Region.objects.by_government_structure(gov_structure).count
+            ),
+        }
+
+        context.update(get_home_campaigns(self.request))
+        return context

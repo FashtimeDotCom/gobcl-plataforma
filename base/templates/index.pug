@@ -48,7 +48,7 @@ block content
             for category in categories
               li
                 a.link.link--clean.text-white.a11y-tts(
-                  href="{% namespace_url 'article-list-by-category' category.slug namespace='articles' default=''%}"
+                  href="{% namespace_url 'search' %}?q={{category}}"
                 )
                   {{ category }}
         .col-md-3.col-xl-2.text-right
@@ -135,7 +135,7 @@ block content
                   a(href="{% url 'sociocultural_department_detail' %}").card-data.py-5.py-sm-auto.a11y-tts
                     h2.card-data_title: span
                       {% static_placeholder 'Primera Dama' or %}
-                      {% trans 'Primera Dama' %}
+                      {% trans 'First Lady' %}
                       {% endstatic_placeholder %}
                 .col-md-6.col-lg
                   a(href="{% url 'institution_list' %}#ministries").card-data.py-5.py-sm-auto.a11y-tts
