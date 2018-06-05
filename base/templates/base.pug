@@ -247,12 +247,9 @@ html(lang="{{ LANGUAGE_CODE }}").a11y-font-0
     script(src="{% static 'js/social.js' %}")
     script(src="{% static 'js/application.js' %}")
     script(src="{% static 'cms_plugins/gallery/js/gallery.js' %}")
+    script(src="{% static 'articles/js/editor.js' %}")
     {% endcompress %}
 
-    if user.is_authenticated
-      {% compress js %}
-      script(src="{% static 'articles/js/editor.js' %}")
-      {% endcompress %}
     block javascripts
 
     block javascript_context
