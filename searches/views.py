@@ -333,13 +333,16 @@ class SearchTemplateView(ListView):
         chile_atiende_files = chile_atiende_files[:3]
         return_results = []
         for result in chile_atiende_files:
-            return_results.append({
-                '_source': {
-                    'title': result['titulo'],
-                    'url': [result['permalink']],
-                    'description': result['servicio']
-                }
-            })
+            try:
+                return_results.append({
+                    '_source': {
+                        'title': result['titulo'],
+                        'url': [result['permalink']],
+                        'description': result['servicio']
+                    }
+                })
+            except KeyError:
+                pass
 
         return return_results
 
