@@ -97,13 +97,16 @@ msgid "Institutions"
 msgstr "Instituciones"
 
 #: templates/sociocultural_departments/sociocultural_department_detail.pug:42
-#: templates/sociocultural_departments/sociocultural_department_detail.pug:54
 msgid "Go to the Socio Cultural Department site"
 msgstr "Ir al sitio de la Dirección Socio Cultural"
 
 #: templates/sociocultural_departments/sociocultural_department_detail.pug:50
 msgid "edit Socio Cultural Department"
 msgstr "editar Dirección Socio Cultural"
+
+#: templates/sociocultural_departments/sociocultural_department_detail.pug:54
+msgid "Click here to visit the First Lady's website"
+msgstr "Ir al sitio de la Primera Dama"
 
 #: templates/sociocultural_departments/sociocultural_department_detail.pug:61
 msgid "Foundations"

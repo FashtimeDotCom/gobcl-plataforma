@@ -40,7 +40,6 @@ msgstr "Instituciones"
 
 #: templates/institutions/institution_list.pug:21
 #: templates/institutions/institution_list.pug:36
-#: templates/institutions/institution_list.pug:50
 #: templates/institutions/institution_list.pug:64
 #: templates/institutions/institution_list.pug:78
 #: templates/institutions/institution_list.pug:92
@@ -66,6 +65,10 @@ msgstr "Ver más."
 #: templates/institutions/institution_list.pug:46
 msgid "Sociocultural Department"
 msgstr "Dirección sociocultural"
+
+#: templates/institutions/institution_list.pug:50
+msgid "Presidency of the Republic's Foundations Network"
+msgstr "Red de Fundaciones de la Presidencia de la República"
 
 #: templates/institutions/institution_list.pug:60
 #: templates/institutions/institution_list.pug:116
