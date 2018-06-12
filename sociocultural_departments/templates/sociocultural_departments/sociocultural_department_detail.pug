@@ -39,7 +39,7 @@ block content
                 .overflowed-xs
                   a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block
                     {% static_placeholder 'Go to the socioculturaldepartment Press site' or %}
-                    {% trans 'Go to the Socio Cultural Department site' %}
+                    {% trans "Click here to visit the First Lady's website" %}
                     {% endstatic_placeholder %}
                   if perms.presidencies.change_socioculturaldepartments
                     - get_current_language as current_language
@@ -51,7 +51,7 @@ block content
         .row.d-sm-none.d-none.d-sm-flex.d-lg-none
           .col-md-12.mt-3
             .overflowed-xs
-              a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block {% trans 'Go to the Socio Cultural Department site' %}
+              a(href="{{ socioculturaldepartment.url }}", target="blank").button.button--block {% trans "Click here to visit the First Lady's website" %}
 
   section.section
     .container
